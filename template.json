@@ -1,0 +1,122 @@
+{
+  "Actor": {
+    "types": ["character", "npc", "monster"],
+    "templates": {
+      "base": {
+        "health": {
+          "value": 10,
+          "min": 0,
+          "max": 10
+        },
+        "abilities": {
+          "pwr": {
+            "value": 8,
+            "mod": null
+          },
+          "fin": {
+            "value": 8,
+            "mod": null
+          },
+          "ins": {
+            "value": 8,
+            "mod": null
+          },
+          "chr": {
+            "value": 8,
+            "mod": null
+          },
+          "arc": {
+            "value": 8,
+            "mod": null
+          },
+          "occ": {
+            "value": 8,
+            "mod": null
+          },
+          "lck": {
+            "value": 8,
+            "mod": null
+          }
+        },
+        "critrange": 6,
+        "biography": "",
+        "species": "",
+        "homeland": "",
+        "age": "",
+        "height": "",
+        "gender": ""
+      }
+    },
+    "character": {
+      "templates": ["base"],
+      "attributes": {
+        "level": {
+          "value": 1
+        },
+        "corruption": {
+          "min": 0,
+          "value": 0,
+          "max": 10
+        },
+        "job": {
+          "title": null,
+          "uniqueability": null,
+          "features": {
+            "tier1": [],
+            "tier2": [],
+            "tier3": [],
+            "tier4": []
+          }
+        },
+        "specialtyclass": {
+          "title": null,
+
+          "features": {
+            "tier1": [],
+            "tier2": [],
+            "tier3": [],
+            "tier4": []
+          }
+        },
+        "banes": {
+          "size": 0
+        },
+        "boons": {
+          "size": 0
+        },
+        "curses": {
+          "size": 0
+        }
+      }
+    },
+    "npc": {
+      "templates": ["base"]
+    },
+    "monster": {
+      "templates": ["base"],
+      "boss": false,
+      "elite": false
+    }
+  },
+  "Item": {
+    "types": ["item", "feature", "spell"],
+    "templates": {
+      "base": {
+        "description": ""
+      }
+    },
+    "item": {
+      "templates": ["base"],
+      "quantity": 1,
+      "weight": 0,
+      "formula": "d20 + @str.mod + ceil(@lvl / 2)"
+    },
+    "feature": {
+      "templates": ["base"]
+    },
+    "spell": {
+      "templates": ["base"],
+      "spellLevel": 1
+    }
+  }
+}

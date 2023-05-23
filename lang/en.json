@@ -1,0 +1,24 @@
+{
+  "TALESFROMMYRIAD.AbilityPwr": "Power",
+  "TALESFROMMYRIAD.AbilityFin": "Finesse",
+  "TALESFROMMYRIAD.AbilityIns": "Insight",
+  "TALESFROMMYRIAD.AbilityChr": "Charm",
+  "TALESFROMMYRIAD.AbilityArc": "Arcane",
+  "TALESFROMMYRIAD.AbilityOcc": "Occult",
+  "TALESFROMMYRIAD.AbilityLck": "Luck",
+
+  "TALESFROMMYRIAD.AbilityPwrAbbr": "pwr",
+  "TALESFROMMYRIAD.AbilityFinAbbr": "fin",
+  "TALESFROMMYRIAD.AbilityInsAbbr": "ins",
+  "TALESFROMMYRIAD.AbilityChrAbbr": "chr",
+  "TALESFROMMYRIAD.AbilityArcAbbr": "arc",
+  "TALESFROMMYRIAD.AbilityOccAbbr": "occ",
+  "TALESFROMMYRIAD.AbilityLckAbbr": "lck",
+
+  "TALESFROMMYRIAD.EffectCreate": "Create Effect",
+  "TALESFROMMYRIAD.EffectToggle": "Toggle Effect",
+  "TALESFROMMYRIAD.EffectEdit": "Edit Effect",
+  "TALESFROMMYRIAD.EffectDelete": "Delete Effect",
+
+  "TALESFROMMYRIAD.Add": "Add"
+}
