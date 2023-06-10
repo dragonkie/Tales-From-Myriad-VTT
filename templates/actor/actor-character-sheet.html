@@ -5,7 +5,13 @@
     <img class="profile-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" height="100" width="100"/>
     <div class="header-fields">
       <h1 class="charname"><input name="name" type="text" value="{{actor.name}}" placeholder="Name"/></h1>
-      {{!-- The grid classes are defined in scss/global/_grid.scss. To use,
+      <div class="resource flex-group-center">
+          <label for="system.attributes.level.value" class="resource-label">Level</label>
+          <div class="resource-content flexrow flex-center flex-between">
+          <input type="text" name="system.attributes.level.value" value="{{system.attributes.level.value}}" data-dtype="Number"/>
+          </div>
+      </div>
+      {{!-- The grid classes are defined in scss/global/_grid.scss. To use,vvvvvvvvvvv
       use both the "grid" and "grid-Ncol" class where "N" can be any number
       from 1 to 12 and will create that number of columns.  --}}
       <div class="resources grid grid-3col">
@@ -20,6 +26,9 @@
           <span> / </span>
           <span data-label="{{system.health.max}}">{{system.health.max}}</span>
           </div>
+          <div class="health-bar">
+              <div class="health-fill" style="width: {{system.health.value}}%; background-color: red;"></div>
+            </div>
         </div>
 
         <div class="resource flex-group-center">
@@ -29,15 +38,10 @@
           <span> / </span>
           <span data-label="{{system.attributes.corruption.max}}">{{system.attributes.corruption.max}}</span>
           </div>
+            <div class="health-bar">
+              <div class="health-fill" style="width: {{system.attributes.corruption.value}}%;"></div>
+            </div>
         </div>
-
-        <div class="resource flex-group-center">
-          <label for="system.attributes.level.value" class="resource-label">Level</label>
-          <div class="resource-content flexrow flex-center flex-between">
-          <input type="text" name="system.attributes.level.value" value="{{system.attributes.level.value}}" data-dtype="Number"/>
-          </div>
-        </div>
-
       </div>
     </div>
   </header>

@@ -4,6 +4,22 @@
   font-family: "Roboto", sans-serif;
 }
 
+/*--------- CUSTOM MADE STUFF ------------*/
+.health-bar {
+  /*width: 200px; /* Set the width of the health bar container */
+  height: 20px; /* Set the height of the health bar container */
+  background-color: #eee; /* Set the background color of the health bar container */
+  border-radius: 5px; /* Add rounded corners to the health bar container */
+  overflow: hidden; /* Clip the contents of the health bar container */
+}
+
+.health-fill {
+  height: 100%; /* Set the height of the health fill to 100% */
+  background-color: purple; /* Set the color of the health fill */
+  transition: width 0.3s ease-in-out; /* Add a smooth transition effect to width changes */
+}
+/*------------END CUSTOM MADE STUFF -------------*/
+
 .rollable:hover, .rollable:focus {
   color: #000;
   text-shadow: 0 0 10px red;
