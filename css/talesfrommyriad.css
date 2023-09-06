@@ -239,13 +239,13 @@
   text-align: center;
 }
 
-/* Styles limited to talesfrommyriad sheets */
+/* Styles limited to talesfrommyriad sheets 
 .talesfrommyriad {
   /* ----------------------------------------- */
   /*  Items Lists                              */
   /* ----------------------------------------- */
   /* Example style for TalesFromMyriad (can be removed if not needed) */
-}
+/*}*/
 .talesfrommyriad .item-form {
   font-family: "Roboto", sans-serif;
 }
