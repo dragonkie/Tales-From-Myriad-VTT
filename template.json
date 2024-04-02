@@ -1,122 +1,188 @@
 {
-  "Actor": {
-    "types": ["character", "npc", "monster"],
-    "templates": {
-      "base": {
-        "health": {
-          "value": 10,
-          "min": 0,
-          "max": 10
+    "Actor": {
+        "types": [
+            "character",
+            "npc"
+        ],
+        "templates": {
+            "base": {
+                "attributes": {
+                    "dodge": {
+                        "value": 0
+                    },
+                    "hp": {
+                        "min": 0,
+                        "value": 3,
+                        "max": 3,
+                        "levels": [],
+                        "bonuses": []
+                    },
+                    "dr": {
+                        "value": 0
+                    }
+                },
+                "abilities": {
+                    "pwr": {
+                        "value": 6,
+                        "mod": 0
+                    },
+                    "fin": {
+                        "value": 6,
+                        "mod": 0
+                    },
+                    "ins": {
+                        "value": 6,
+                        "mod": 0
+                    },
+                    "chr": {
+                        "value": 6,
+                        "mod": 0
+                    },
+                    "arc": {
+                        "value": 6,
+                        "mod": 0
+                    },
+                    "occ": {
+                        "value": 6,
+                        "mod": 0
+                    },
+                    "lck": {
+                        "value": 6,
+                        "mod": 0
+                    }
+                },
+                "bonuses": {}
+            },
+            "biography": {
+                "bio": {
+                    "kindred": "",
+                    "homeland": "",
+                    "age": "",
+                    "height": "",
+                    "gender": "",
+                    "eye": "",
+                    "hair": ""
+                }
+            }
         },
-        "abilities": {
-          "pwr": {
-            "value": 8,
-            "mod": null
-          },
-          "fin": {
-            "value": 8,
-            "mod": null
-          },
-          "ins": {
-            "value": 8,
-            "mod": null
-          },
-          "chr": {
-            "value": 8,
-            "mod": null
-          },
-          "arc": {
-            "value": 8,
-            "mod": null
-          },
-          "occ": {
-            "value": 8,
-            "mod": null
-          },
-          "lck": {
-            "value": 8,
-            "mod": null
-          }
+        "character": {
+            "templates": [
+                "base",
+                "biography"
+            ],
+            "attributes": {
+                "lvl": {
+                    "xp": 0,
+                    "value": 1
+                },
+                "corruption": {
+                    "value": 0,
+                    "min": 0,
+                    "max": 10
+                }
+            },
+            "inventory": {
+                "size": {
+                    "bonuses": [],
+                    "value": 0,
+                    "min": 0,
+                    "max": 10
+                }
+            }
         },
-        "critrange": 6,
-        "biography": "",
-        "species": "",
-        "homeland": "",
-        "age": "",
-        "height": "",
-        "gender": ""
-      }
-    },
-    "character": {
-      "templates": ["base"],
-      "attributes": {
-        "level": {
-          "value": 1
-        },
-        "corruption": {
-          "min": 0,
-          "value": 0,
-          "max": 10
-        },
-        "job": {
-          "title": null,
-          "uniqueability": null,
-          "features": {
-            "tier1": [],
-            "tier2": [],
-            "tier3": [],
-            "tier4": []
-          }
-        },
-        "specialtyclass": {
-          "title": null,
-
-          "features": {
-            "tier1": [],
-            "tier2": [],
-            "tier3": [],
-            "tier4": []
-          }
-        },
-        "banes": {
-          "size": 0
-        },
-        "boons": {
-          "size": 0
-        },
-        "curses": {
-          "size": 0
+        "npc": {
+            "templates": [
+                "base"
+            ],
+            "description": ""
         }
-      }
     },
-    "npc": {
-      "templates": ["base"]
-    },
-    "monster": {
-      "templates": ["base"],
-      "boss": false,
-      "elite": false
+    "Item": {
+        "types": [
+            "weapon",
+            "armour",
+            "trinket",
+            "consumable",
+            "job",
+            "feature",
+            "spell",
+            "performance"
+        ],
+        "templates": {
+            "base": {
+                "description": ""
+            },
+            "physical": {
+                "size": "medium",
+                "quantity": 1,
+                "canStack": false,
+                "cost": 10
+            },
+            "consumable": {
+                "consumable": true,
+                "duration": 0,
+                "targets": "self"
+            },
+            "equipment": {
+                "equipped": false,
+                "enchantments": [],
+                "curses": []
+            }
+        },
+        "armour": {
+            "templates": [
+                "base",
+                "physical",
+                "equipment"
+            ],
+            "dr": -1,
+            "slot": "head, shoulder, torso, back, legs, feet, shield",
+            "type": "minimal, light, medium, heavy"
+        },
+        "weapon": {
+            "templates": [
+                "base",
+                "physical",
+                "equipment"
+            ],
+            "ability": "pwr",
+            "damage": {
+                "formula": "1d6 + @mod",
+                "type": "Piercing"
+            },
+            "hands": 1,
+            "type": "medium",
+            "ranged": false,
+            "range": 5,
+            "rarity": "common",
+            "identified": false,
+            "properties": [
+                "thrown"
+            ]
+        },
+        "trinket": {},
+        "job": {},
+        "feature": {},
+        "spell": {
+            "templates": [
+                "base"
+            ],
+            "type": "arcane",
+            "difficulty": 1,
+            "targets": "any",
+            "channeled": false,
+            "ritual": false,
+            "successes": 1,
+            "range": 30,
+            "area": "square",
+            "size": 10
+        },
+        "performance": {},
+        "consumable": {
+            "templates": [
+                "base",
+                "consumable"
+            ]
+        }
     }
-  },
-  "Item": {
-    "types": ["item", "feature", "spell"],
-    "templates": {
-      "base": {
-        "description": ""
-      }
-    },
-    "item": {
-      "templates": ["base"],
-      "quantity": 1,
-      "weight": 0,
-      "formula": "d20 + @str.mod + ceil(@lvl / 2)"
-    },
-    "feature": {
-      "templates": ["base"]
-    },
-    "spell": {
-      "templates": ["base"],
-      "spellLevel": 1
-    }
-  }
 }

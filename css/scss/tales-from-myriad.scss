@@ -12,10 +12,11 @@
 @import 'global/grid';
 @import 'global/flex';
 
-/* Styles limited to talesfrommyriad sheets */
-.talesfrommyriad {
+/* Styles limited to tales from myriad sheets */
+.tfm {
   @import 'components/forms';
   @import 'components/resource';
   @import 'components/items';
   @import 'components/effects';
+  @import 'sheets/actor';
 }

@@ -1,0 +1,37 @@
+<header class="actor-header flexrow" style="flex: 0;">
+
+
+    {{> "tfm.actor-portrait"}}
+
+    <div class="identity">
+
+
+        <div class="flexrow">
+            <input class="name" name="name" type="text" value="{{actor.name}}" placeholder="Name" />
+            <div class="exp">
+
+                <div class="counter flexrow">
+                    <div class="flexrow" style="flex: 2;">
+                        <input type="number" name="system.attributes.lvl.xp" value="{{system.attributes.lvl.xp}}">
+                        <div style="margin-left: 4px;">/ {{system.attributes.lvl.toLevel}}</div>
+                    </div>
+                </div>
+                <div class="xp-bar">
+                    <div style="width: {{system.attributes.lvl.progress}}%;"></div>
+                </div>
+
+            </div>
+            <div style="font-size: 18px; font-weight: bold; flex: 0;">
+                Lvl.{{system.attributes.lvl.value}}
+            </div>
+        </div>
+        <input name="job" type="text" value="job" placeholder="{{localize 'TFM.generic.job'}}" />
+        <div style="display: inline;">
+            &#8226{{system.bio.kindred}} &#8226{{system.bio.homeland}}
+        </div>
+
+        {{> "tfm.actor-abilities"}}
+    </div>
+
+
+</header>

@@ -1,18 +1,18 @@
 {
-  "id": "talesfrommyriad",
+  "id": "tales-from-myriad",
   "title": "Tales From Myriad",
-  "description": "The Tales From Myriad system for FoundryVTT!",
+  "description": "The Tales From Myriad system for FoundryVTT",
   "version": "1.2.0",
   "compatibility": {
     "minimum": 10,
     "verified": "11.287",
-    "maximum": 11
+    "maximum": 12
   },
   "authors": [{
     "name": "dragonkie"
   }],
-  "esmodules": ["module/talesfrommyriad.mjs"],
-  "styles": ["css/talesfrommyriad.css"],
+  "esmodules": ["module/tales-from-myriad.mjs"],
+  "styles": ["css/main.css"],
   "scripts": [],
   "packs": [],
   "languages": [
@@ -25,7 +25,7 @@
   "gridDistance": 5,
   "gridUnits": "ft",
   "primaryTokenAttribute": "health",
-  "secondaryTokenAttribute": "power",
+  "secondaryTokenAttribute": "dodge",
   "url": "",
   "manifest": "",
   "download": "",

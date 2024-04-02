@@ -1,0 +1,11 @@
+<div style="flex: 0; margin-right: 10px;">
+    <img class="profile-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" height="100" width="100" />
+    <div class="healthbar">
+        <div class="bar" style="width: {{system.attributes.hp.percent}}%;"></div>
+        <div class="value flexrow">
+            <input type="number" name="system.attributes.hp.value" value="{{system.attributes.hp.value}}" />
+            <div>/</div>
+            <input type="number" name="system.attributes.hp.max" value="{{system.attributes.hp.max}}" />
+        </div>
+    </div>
+</div>

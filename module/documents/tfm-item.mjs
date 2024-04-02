@@ -2,7 +2,7 @@
  * Extend the basic Item with some very simple modifications.
  * @extends {Item}
  */
-export class TalesFromMyriadItem extends Item {
+export class TFMItem extends Item {
   /**
    * Augment the basic Item data model with additional dynamic data.
    */

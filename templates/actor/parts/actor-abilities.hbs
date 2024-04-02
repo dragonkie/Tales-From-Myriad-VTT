@@ -1,0 +1,41 @@
+<!-- List of actors ability scores and modifiers -->
+<div class="flexrow ability-list" style="align-items: flex-start">
+
+    <!-- Damage resistance -->
+    <div class="ability">
+        <label class="label">{{system.attributes.dr.abbr}}</label>
+        <div class="modifier">{{numberFormat system.attributes.dr.value decimals=0 sign=true}}</div>
+    </div>
+    <!-- Dodge class -->
+    <div class="ability">
+        <label class="label">{{system.attributes.dodge.abbr}}</label>
+        <div class="modifier">{{numberFormat system.attributes.dodge.value decimals=0 sign=false}}</div>
+    </div>
+
+
+    {{#each system.abilities as |ability key|}}
+    <div class="ability">
+        <label class="label">{{ability.abbr}}</label>
+
+        <div class="modifier">{{numberFormat ability.mod decimals=0 sign=true}}</div>
+        <input class="score" type="number" name="system.abilities.{{key}}.value" value="{{ability.value}}">
+
+    </div>
+    {{/each}}
+</div>
+
+
+<!-- Example modifiers for reference
+
+<div class="ability flexrow flex-group-center">
+    <label for="system.abilities.{{key}}.value" class="resource-label rollable flexlarge align-left"
+        data-roll="min(2d6x>=@critrange,((3+max(@abilities.lck.mod,0)) * 6))+@abilities.{{key}}.mod"
+        data-label="{{ability.label}}">{{ability.label}}</label>
+    <input type="text" name="system.abilities.{{key}}.value" value="{{ability.value}}" data-dtype="Number" />
+    <span> / </span>
+    <span class="ability-mod rollable"
+        data-roll="min(2d6x>=@critrange,((3+max(@abilities.lck.mod,0)) * 6))+@abilities.{{key}}.mod"
+        data-label="{{ability.label}}">{{numberFormat ability.mod decimals=0 sign=true}}</span>
+</div>
+
+-->

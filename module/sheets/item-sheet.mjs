@@ -2,12 +2,12 @@
  * Extend the basic ItemSheet with some very simple modifications
  * @extends {ItemSheet}
  */
-export class TalesFromMyriadItemSheet extends ItemSheet {
+export class TFMItemSheet extends ItemSheet {
 
   /** @override */
   static get defaultOptions() {
     return mergeObject(super.defaultOptions, {
-      classes: ["talesfrommyriad", "sheet", "item"],
+      classes: ["tfm", "sheet", "item"],
       width: 520,
       height: 480,
       tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "description" }]
@@ -16,13 +16,13 @@ export class TalesFromMyriadItemSheet extends ItemSheet {
 
   /** @override */
   get template() {
-    const path = "systems/talesfrommyriad/templates/item";
+    const path = `systems/${game.system.id}/templates/item`;
     // Return a single sheet for all item types.
     // return `${path}/item-sheet.html`;
 
     // Alternatively, you could use the following return statement to do a
     // unique item sheet by type, like `weapon-sheet.html`.
-    return `${path}/item-${this.item.type}-sheet.html`;
+    return `${path}/item-${this.item.type}-sheet.hbs`;
   }
 
   /* -------------------------------------------- */
