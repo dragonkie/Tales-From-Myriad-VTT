@@ -12,6 +12,10 @@ export default class LOGGER {
         console.log(`TFM TRC |`, msg);
     }
 
+    static debug(msg, ...extraInfo) {
+        console.debug(`TFM | ${msg}`, ...extraInfo);
+    }
+
     static error(msg, ...extraInfo) {
         if (typeof msg === "object") {
             console.error(msg, ...extraInfo);

@@ -9,6 +9,7 @@ export default class TFMCharacter extends TFMActor {
         const system = this.system;
         const attributes = system.attributes;
         const abilities = system.abilities;
+        const inventory = system.inventory;
 
         // Loop through ability scores, and add their modifiers to our sheet output.
         for (let [key, ability] of Object.entries(abilities)) {
@@ -19,10 +20,10 @@ export default class TFMCharacter extends TFMActor {
         // Calculate dodge
         attributes.dodge.value = 8 + abilities.fin.mod;
         // Max inventory slots
-        attributes.inventory.size.max = 10 + abilities.pwr.mod;
-        for (var bonus of attributes.inventory.size.bonuses) {
+        inventory.size.max = 10 + abilities.pwr.mod;
+        for (var bonus of inventory.size.bonuses) {
             // Bonus structure {label: "Where this comes from", value: Number}
-            if (typeof bonus === "object") attributes.inventory.size.max += bonus.value;
+            if (typeof bonus === "object") inventory.size.max += bonus.value;
         }
     }
 

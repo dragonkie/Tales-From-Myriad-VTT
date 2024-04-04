@@ -1,3 +1,4 @@
+import LOGGER from "../../helpers/logger.mjs";
 import { TFMItem } from "../tfm-item.mjs";
 
 export default class TFMWeapon extends TFMItem {
@@ -12,9 +13,9 @@ export default class TFMWeapon extends TFMItem {
 
     async roll() {
         // Attack roll
-        let rollData = this.rollData;
-
-        let rAttack = new Roll(`2d6 + @mod`, rollData);
+        let rollData = this.getRollData();
+        LOGGER.debug(rollData);
+        let rAttack = new Roll(this.attack, rollData);
         await rAttack.evaluate();
         return rAttack.toMessage();
 
@@ -46,7 +47,8 @@ export default class TFMWeapon extends TFMItem {
     }
     /**Returns the finished attack roll */
     get attack() {
-        return `2d6 + @mod`;
+        if (this.actor) return `2d6x6kf${Math.max(this.actor.system.abilities.lck.mod+3, 3)} + @mod`;
+        return null;
     }
     get ranged() {
         return this.system.ranged;
@@ -62,5 +64,9 @@ export default class TFMWeapon extends TFMItem {
     }
     get identified() {
         return this.system.identified;
+    }
+    /**If there is a parent actor, check if its proficient */
+    get proficient() {
+
     }
 }

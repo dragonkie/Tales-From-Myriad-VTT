@@ -55,7 +55,7 @@ export class TFMActor extends Actor {
         // Prepare character roll data.
         this._getCharacterRollData(data);
         this._getNpcRollData(data);
-        console.log(data);
+
         return data;
     }
 
@@ -74,6 +74,9 @@ export class TFMActor extends Actor {
         for (let [k, v] of Object.entries(data.attributes)) {
             data[k] = foundry.utils.deepClone(v);
         }
+
+        // used for exploding dice based on luck, so 2d6kf@maxDice
+        data.maxDice = Math.max(3, data.lck.mod);
     }
 
     /**
@@ -85,4 +88,8 @@ export class TFMActor extends Actor {
         // Process additional NPC data here.
     }
 
+
+    get explosionLimit() {
+        
+    }
 }

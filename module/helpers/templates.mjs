@@ -32,7 +32,5 @@
     paths[`tfm.${path.split("/").pop().replace(".hbs", "")}`] = path;
   }
 
-  console.log(paths)
-
   return loadTemplates(paths);
 };

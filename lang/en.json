@@ -102,6 +102,9 @@
 
   "TFM.Add": "Add",
 
+  
+  "TFM.magic.miscast": "Miscast",
+
   "TYPES.weapon.dagger": "Dagger",
   "TYPES.weapon.unarmed": "Unarmed",
   "TYPES.weapon.whip": "Whip",
@@ -119,6 +122,12 @@
   "TYPES.weapon.light": "Light",
   "TYPES.weapon.medium": "Medium",
   "TYPES.weapon.heavy": "Heavy",
+
+  "TYPES.magic.occ": "Occult",
+  "TYPES.magic.arc": "Arcane",
+  "TYPES.magic.nat": "Natural",
+  "TYPES.magic.div": "Divine",
+  "TYPES.magic.prf": "Performance",
 
   "TYPES.damage.cold": "Cold",
   "TYPES.damage.fire": "Fire",

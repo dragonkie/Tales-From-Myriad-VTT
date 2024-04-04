@@ -11,6 +11,7 @@ import sysUtil from "./helpers/sysUtil.mjs";
 import LOGGER from "./helpers/logger.mjs";
 
 import { actorConstructor, itemConstructor } from "./proxy-doc.mjs";
+import registerDiceModifiers from "./helpers/dice.mjs";
 
 /* -------------------------------------------- */
 /*  Init Hook                                   */
@@ -49,51 +50,8 @@ Hooks.once('init', async function () {
     Items.unregisterSheet("core", ItemSheet);
     Items.registerSheet(`tfm`, TFMItemSheet, { makeDefault: true });
 
-    /*
-    Modify foundrys core Die class to accept new terms
-    This is much easier to do than to go and attempt to extend foundry's classes
-    this way theres no need to go and define an entire custome dice and re create the wheel
-    instead we just intercept the Die object and add in the bit of data we need instead of 
-    going and completely over writing it with a new Die type
-
-    Modifiers {
-        kf: registers with the keep function to save and only use the number of specified first dice
-    }
-
-    */
-
-    // Registers new modifier types
-    Die.MODIFIERS.kf = "keep";
-
-    Die.prototype.keep = function (modifier) {
-        const rgx = /k([hlf])?([0-9]+)?/i;
-        const match = modifier.match(rgx);
-        if (!match) return false;
-        let [direction, number] = match.slice(1);
-
-        LOGGER.log(modifier);
-        LOGGER.log(match);
-        LOGGER.log(direction);
-        LOGGER.log(number);
-        LOGGER.log(this.results);
-
-        if (direction === `f`) {
-            LOGGER.log(`IT MOTHER FUCKING WORKS!!!!!!!!!`);
-            const results = this.results;
-            if (results.length > number) {
-                for (var a = 0; a < results.length; a++) {
-                    if (a >= number) {
-                        results[a].active = false;
-                        results[a].discarded = true;
-                    }
-                }
-            }
-        } else {
-            direction = direction ? direction.toLowerCase() : "h";
-            number = parseInt(number) || 1;
-            DiceTerm._keepOrDrop(this.results, number, { keep: true, highest: direction === "h" });
-        }
-    }
+    // Registers new dice modifiers with the system using a util function
+    registerDiceModifiers();
 
     // Preload Handlebars templates.
     return preloadHandlebarsTemplates();

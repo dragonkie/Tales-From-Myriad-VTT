@@ -1,5 +1,5 @@
 <!-- List of actors ability scores and modifiers -->
-<div class="flexrow ability-list" style="align-items: flex-start">
+<div class="flexrow ability-list" style="align-items: flex-start; flex-wrap: nowrap;">
 
     <!-- Damage resistance -->
     <div class="ability">
@@ -15,7 +15,7 @@
 
     {{#each system.abilities as |ability key|}}
     <div class="ability">
-        <label class="label">{{ability.abbr}}</label>
+        <a class="label rollable" data-label="{{ability.label}}" data-roll="2d6x6kf(max(3, 3+@lck.mod))+{{ability.mod}}">{{ability.abbr}}</a>
 
         <div class="modifier">{{numberFormat ability.mod decimals=0 sign=true}}</div>
         <input class="score" type="number" name="system.abilities.{{key}}.value" value="{{ability.value}}">

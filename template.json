@@ -167,12 +167,14 @@
             "templates": [
                 "base"
             ],
-            "type": "arcane",
-            "difficulty": 1,
+            "type": "arc",
+            "difficulty": {
+                "value": 3,
+                "count": 1
+            },
             "targets": "any",
             "channeled": false,
             "ritual": false,
-            "successes": 1,
             "range": 30,
             "area": "square",
             "size": 10

@@ -1,3 +1,4 @@
+import LOGGER from "./logger.mjs";
 
 export default class sysUtil {
     static notify(msg) {
@@ -100,5 +101,17 @@ export default class sysUtil {
     static lerp(start, end, val) {
         const s = end - start; // The actual size of the lerp function
         return start + (s * val);
+    }
+
+    /**
+     * Adds the given function in as a valid modifier for foundry dice roll formulas
+     * @param {String} term 
+     * @param {String} label 
+     * @param {Function} func 
+     */
+    static registerMod(term, label, func) {
+        LOGGER.log(`Registering die modifier: [${term}] to [${label}]`, func);
+        Die.prototype.constructor.MODIFIERS[term] = label;
+        Die.prototype[label] = func;
     }
 }
