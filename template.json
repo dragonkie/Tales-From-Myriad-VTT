@@ -18,7 +18,8 @@
                         "bonuses": []
                     },
                     "dr": {
-                        "value": 0
+                        "value": 0,
+                        "parts": []
                     }
                 },
                 "abilities": {
@@ -125,6 +126,7 @@
             },
             "equipment": {
                 "equipped": false,
+                "broken": false,
                 "enchantments": [],
                 "curses": []
             }
@@ -136,8 +138,8 @@
                 "equipment"
             ],
             "dr": -1,
-            "slot": "head, shoulder, torso, back, legs, feet, shield",
-            "type": "minimal, light, medium, heavy"
+            "slot": "torso",
+            "weight": "medium"
         },
         "weapon": {
             "templates": [
@@ -148,7 +150,8 @@
             "ability": "pwr",
             "damage": {
                 "formula": "1d6 + @mod",
-                "type": "Piercing"
+                "type": "stabbing",
+                "penalty": 0
             },
             "hands": 1,
             "type": "medium",
@@ -160,7 +163,13 @@
                 "thrown"
             ]
         },
-        "trinket": {},
+        "trinket": {
+            "ability": "arc",
+            "spells": [],
+            "invocation": null,
+            "empowered": false
+
+        },
         "job": {},
         "feature": {},
         "spell": {

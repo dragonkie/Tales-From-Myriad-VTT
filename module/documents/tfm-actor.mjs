@@ -87,9 +87,4 @@ export class TFMActor extends Actor {
 
         // Process additional NPC data here.
     }
-
-
-    get explosionLimit() {
-        
-    }
 }

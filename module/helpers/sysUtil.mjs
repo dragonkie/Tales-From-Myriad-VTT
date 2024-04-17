@@ -114,4 +114,12 @@ export default class sysUtil {
         Die.prototype.constructor.MODIFIERS[term] = label;
         Die.prototype[label] = func;
     }
+
+    static registerDragDrop(drag, drop) {
+        return {dragSelector: drag, dropSelector: drop};
+    }
+
+    static getDragData(event) {
+        return JSON.parse(event.dataTransfer.getData("text/plain"));
+    }
 }

@@ -46,9 +46,14 @@ Hooks.once('init', async function () {
 
     // Register sheet application classes
     Actors.unregisterSheet("core", ActorSheet);
-    Actors.registerSheet(`tfm`, TFMActorSheet, { makeDefault: true });
+    Actors.registerSheet(game.system.id, TFMActorSheet, {
+        label: `TFM.sheets.actorSheet`,
+        types: [`character`, `npc`],
+        makeDefault: true 
+    });
+
     Items.unregisterSheet("core", ItemSheet);
-    Items.registerSheet(`tfm`, TFMItemSheet, { makeDefault: true });
+    Items.registerSheet(game.system.id, TFMItemSheet, { makeDefault: true });
 
     // Registers new dice modifiers with the system using a util function
     registerDiceModifiers();

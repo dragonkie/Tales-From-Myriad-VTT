@@ -1,63 +1,80 @@
+import LOGGER from "../helpers/logger.mjs";
+import sysUtil from "../helpers/sysUtil.mjs";
+
 /**
  * Extend the basic ItemSheet with some very simple modifications
  * @extends {ItemSheet}
  */
 export class TFMItemSheet extends ItemSheet {
 
-  /** @override */
-  static get defaultOptions() {
-    return mergeObject(super.defaultOptions, {
-      classes: ["tfm", "sheet", "item"],
-      width: 520,
-      height: 480,
-      tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "description" }]
-    });
-  }
-
-  /** @override */
-  get template() {
-    const path = `systems/${game.system.id}/templates/item`;
-    // Return a single sheet for all item types.
-    // return `${path}/item-sheet.html`;
-
-    // Alternatively, you could use the following return statement to do a
-    // unique item sheet by type, like `weapon-sheet.html`.
-    return `${path}/item-${this.item.type}-sheet.hbs`;
-  }
-
-  /* -------------------------------------------- */
-
-  /** @override */
-  getData() {
-    // Retrieve base data structure.
-    const context = super.getData();
-
-    // Use a safe clone of the item data for further operations.
-    const itemData = context.item;
-
-    // Retrieve the roll data for TinyMCE editors.
-    context.rollData = {};
-    let actor = this.object?.parent ?? null;
-    if (actor) {
-      context.rollData = actor.getRollData();
+    /** @override */
+    static get defaultOptions() {
+        return mergeObject(super.defaultOptions, {
+            classes: ["tfm", "sheet", "item"],
+            width: 520,
+            height: 480,
+            tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "description" }],
+            dragDrop: [{ dragSelector: ".item .itemlist", dropSelector: null }]
+        });
     }
 
-    // Add the actor's data to context.data for easier access, as well as flags.
-    context.system = itemData.system;
-    context.flags = itemData.flags;
+    /** @override */
+    get template() {
+        const path = `systems/${game.system.id}/templates/item`;
+        // Return a single sheet for all item types.
+        // return `${path}/item-sheet.html`;
 
-    return context;
-  }
+        // Alternatively, you could use the following return statement to do a
+        // unique item sheet by type, like `weapon-sheet.html`.
+        return `${path}/item-${this.item.type}-sheet.hbs`;
+    }
 
-  /* -------------------------------------------- */
+    /** @override */
+    getData() {
+        // Retrieve base data structure.
+        const context = super.getData();
 
-  /** @override */
-  activateListeners(html) {
-    super.activateListeners(html);
+        // Use a safe clone of the item data for further operations.
+        const itemData = context.item;
 
-    // Everything below here is only needed if the sheet is editable
-    if (!this.isEditable) return;
+        // Retrieve the roll data for TinyMCE editors.
+        context.rollData = {};
+        let actor = this.object?.parent ?? null;
+        if (actor) {
+            context.rollData = actor.getRollData();
+        }
 
-    // Roll handlers, click handlers, etc. would go here.
-  }
+        // Add the actor's data to context.data for easier access, as well as flags.
+        context.system = itemData.system;
+        context.flags = itemData.flags;
+
+        return context;
+    }
+
+    /** @override */
+    activateListeners(html) {
+        super.activateListeners(html);
+
+        // Everything below here is only needed if the sheet is editable
+        if (!this.isEditable) return;
+
+        // Roll handlers, click handlers, etc. would go here.
+    }
+
+    /**
+     * Called when foundry registers a drop of any kind on this item sheet
+     * if the item defines its own drop handler, it is called
+     * otherwise we output a console error for uncaught drop
+     */
+    async _onDrop(event) {
+        LOGGER.debug("ITEM | DROP");
+        var dragData = sysUtil.getDragData(event);
+        var item = this.item;
+
+        if (typeof item._onDrop === `function`) item._onDrop(dragData);
+        else {
+            LOGGER.error(`No drop function defined for item of type ${item.type}`);
+            LOGGER.error(`Event Data:`, dragData);
+        }
+    }
 }

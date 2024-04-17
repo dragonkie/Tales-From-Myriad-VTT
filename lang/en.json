@@ -102,7 +102,6 @@
 
   "TFM.Add": "Add",
 
-  
   "TFM.magic.miscast": "Miscast",
 
   "TYPES.weapon.dagger": "Dagger",
@@ -140,7 +139,8 @@
   "TYPES.damage.necrotic": "Necrotic",
   "TYPES.damage.force": "Force",
   "TYPES.damage.psychic": "Psychic",
+
   "TYPES.damage.slashing": "Slashing",
-  "TYPES.damage.piercing": "Piercing",
+  "TYPES.damage.stabbing": "Stabbing",
   "TYPES.damage.bludgeoning": "Bludgeoning"
 }

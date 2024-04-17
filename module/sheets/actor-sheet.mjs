@@ -138,6 +138,13 @@ export class TFMActorSheet extends ActorSheet {
             item.sheet.render(true);
         });
 
+        // Configure item equipping if applicable
+        html.find('.item-equip').click(ev => {
+            const li = $(ev.currentTarget).parents(".item");
+            const item = this.actor.items.get(li.data("itemId"));
+            item.update({"system.equipped": !item.system.equipped});
+        });
+
         // -------------------------------------------------------------
         // Everything below here is only needed if the sheet is editable
         if (!this.isEditable) return;

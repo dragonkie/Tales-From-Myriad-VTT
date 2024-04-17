@@ -1,19 +1,19 @@
 
 export default class LOGGER {
-    static log(msg) {
-        console.log(`TFM LOG |`, msg);
+    static log(msg, ...extraInfo) {
+        console.log(`TFM LOG | ${msg}`, ...extraInfo);
     }
 
-    static warn(msg) {
-        console.warn(`TFM WRN |`, msg);
+    static warn(msg, ...extraInfo) {
+        console.warn(`TFM WRN | ${msg}`, ...extraInfo);
     }
 
-    static trace(msg) {
-        console.log(`TFM TRC |`, msg);
+    static trace(msg, ...extraInfo) {
+        console.log(`TFM TRC |${msg}`, ...extraInfo);
     }
 
     static debug(msg, ...extraInfo) {
-        console.debug(`TFM | ${msg}`, ...extraInfo);
+        console.debug(`TFM DBG | ${msg}`, ...extraInfo);
     }
 
     static error(msg, ...extraInfo) {
