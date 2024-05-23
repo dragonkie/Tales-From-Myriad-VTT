@@ -154,7 +154,7 @@
                 "penalty": 0
             },
             "hands": 1,
-            "type": "medium",
+            "type": "med",
             "ranged": false,
             "range": 5,
             "rarity": "common",
@@ -165,22 +165,20 @@
         },
         "trinket": {
             "ability": "arc",
-            "spells": [],
+            "type": "arcane",
+            "spells": {},
             "invocation": null,
             "empowered": false
 
         },
-        "job": {},
-        "feature": {},
         "spell": {
             "templates": [
                 "base"
             ],
-            "type": "arc",
-            "difficulty": {
-                "value": 3,
-                "count": 1
-            },
+            "ability": "arc",
+            "type": "arcane",
+            "cs": 1,
+            "cd": 1,
             "targets": "any",
             "channeled": false,
             "ritual": false,
@@ -188,6 +186,8 @@
             "area": "square",
             "size": 10
         },
+        "job": {},
+        "feature": {},
         "performance": {},
         "consumable": {
             "templates": [

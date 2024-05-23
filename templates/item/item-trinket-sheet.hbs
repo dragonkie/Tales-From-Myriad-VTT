@@ -1,3 +1,52 @@
 <form class="{{cssClass}}" autocomplete="off">
     {{> "tfm.item-header"}}
+
+    {{!-- Sheet Tab Navigation --}}
+    <nav class="sheet-tabs tabs" data-group="primary">
+        <a class="item" data-tab="description">Description</a>
+        <a class="item" data-tab="settings">Settings</a>
+    </nav>
+
+    <section class="sheet-body">
+
+        {{!-- Description Tab --}}
+        <div class="tab description" data-group="primary" data-tab="description">
+            {{editor system.description target="system.description" rollData=rollData button=true owner=owner
+            editable=editable}}
+        </div>
+
+        {{!-- Settings Tab --}}
+        <div class="tab settings" data-group="primary" data-tab="settings">
+
+            <ol>
+                <li class="item flexrow items-header">
+                    <div class="item-name">{{localize 'TFM.spells'}}</div>
+                    <div class="item-name">{{localize 'TFM.difficulty'}}</div>
+                    <div class="item-name">{{localize 'TFM.controls'}}</div>
+                </li>
+                {{#each system.spells as |spell id|}}
+                <li class="item flexrow spell" data-item-uuid="{{spell.uuid}}" data-target="system.spells">
+                    <div class="item-name">
+                        <h4 style="float: left; padding-left: 5px;">{{spell.name}}</h4>
+                    </div>
+
+                    <div class="casting-difficulty flexrow">
+                        <div class="item-cd item-prop">{{spell.cd}}</div>
+                        <div class="item-cs item-prop">{{spell.cs}}</div>
+                    </div>
+
+                    <div class="item-controls" style="whitespace: nowrap;">
+                        <a class="item-control item-edit" title="Edit Item">
+                            <i class="fas fa-edit"></i>
+                        </a>
+                        <a class="item-control item-delete" title="Delete Item">
+                            <i class="fas fa-trash"></i>
+                        </a>
+                    </div>
+                </li>
+                {{/each}}
+            </ol>
+
+        </div>
+    </section>
 </form>

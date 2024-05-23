@@ -110,9 +110,9 @@ export default class sysUtil {
      * @param {Function} func 
      */
     static registerMod(term, label, func) {
-        LOGGER.log(`Registering die modifier: [${term}] to [${label}]`, func);
-        Die.prototype.constructor.MODIFIERS[term] = label;
-        Die.prototype[label] = func;
+        LOGGER.debug(`Registering die modifier: [${term}] to [${label}]`, func);
+        foundry.dice.terms.Die.prototype.constructor.MODIFIERS[term] = label;
+        foundry.dice.terms.Die.prototype[label] = func;
     }
 
     static registerDragDrop(drag, drop) {
@@ -121,5 +121,34 @@ export default class sysUtil {
 
     static getDragData(event) {
         return JSON.parse(event.dataTransfer.getData("text/plain"));
+    }
+
+    /**
+     * Used to wait for a given element to load into the DOM
+     * a bit of a bulky soloution, but its the best one I have
+     * 
+     * REMINDER - Study mutation observers as this will be important for other projects!
+     * @param {Selector} selector 
+     * @returns 
+     */
+    static waitForElm(selector) {
+        //use a promise to allow for await to work as well as the use of .then()
+        return new Promise(resolve => {
+            if (document.querySelector(selector)) {
+                return resolve(document.querySelector(selector));
+            }
+    
+            const observer = new MutationObserver(mutations => {
+                if (document.querySelector(selector)) {
+                    observer.disconnect();
+                    resolve(document.querySelector(selector));
+                }
+            });
+    
+            observer.observe(document.body, {
+                childList: true,
+                subtree: true
+            });
+        });
     }
 }

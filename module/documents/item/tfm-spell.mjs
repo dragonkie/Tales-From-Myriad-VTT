@@ -3,6 +3,7 @@ import sysUtil from "../../helpers/sysUtil.mjs";
 import { TFMItem } from "../tfm-item.mjs";
 
 export default class TFMSpell extends TFMItem {
+
     prepareBaseData() {
 
     }
@@ -20,6 +21,31 @@ export default class TFMSpell extends TFMItem {
         return rollData;
     }
 
+    // prepares data for rendering sheets
+    getData(context) {
+        context.selectors = {};
+
+        context.selectors.spellSchool = foundry.applications.fields.createSelectInput({
+            options: [
+                { value: "arc", label: "TYPES.magic.arc" },
+                { value: "div", label: "TYPES.magic.div" },
+                { value: "nat", label: "TYPES.magic.nat" },
+                { value: "occ", label: "TYPES.magic.occ" },
+                { value: "per", label: "TYPES.magic.per" },
+            ],
+            groups: [],
+            value: this.system.type,
+            valueAttr: "value",
+            labelAttr: "label",
+            localize: true,
+            invert: false,
+            sort: false,
+            name: "system.type"
+        }).outerHTML;
+
+        return context;
+    }
+
     async roll() {
         const rollData = this.getRollData();
         if (!rollData) {
@@ -31,42 +57,43 @@ export default class TFMSpell extends TFMItem {
             sysUtil.error(`TFM.notify.error.castingModZero`);
             return null;
         }
-        // Rolls a number of dice, up to the modifier value, chosen by the player
 
+        const template = await renderTemplate(`systems/${game.system.id}/templates/dialog/dialog-roll-spell.hbs`, rollData);
+        const options = await new Promise(async (resolve, reject) => {
 
-        /* 
-        This is here to help me with understanding promises
-        so to start off a promise requires a total of 3 functions, one that determins if its succesful or not
-        then the resolve / reject functions which you can call from inside the main function to return if the 
-        promise is succesful or not
-        
-        resolve and reject as such act like a return value
-
-        dialog boxs always attempt to pass their HTML to the callback functions as the first and only paramater
-        */
-        async function getRollOptions(data) {
-            const template = await renderTemplate(`systems/${game.system.id}/templates/dialog/dialog-roll-spell.hbs`, data);
-            return new Promise((resolve, reject) => {
-                const dialog = new Dialog({
-                    title: "TFM.dialog.rollSpell",
-                    content: template,
-                    buttons: {
-                        disadvantage: {
-                            label: "disadvantage",
-                            callback: (html) => resolve(html[0].querySelector(`form`))
-                        },
-                        normal: {
-                            label: "normal",
-                            callback: (html) => resolve(html[0].querySelector(`form`))
-                        }
-                    },
-                    close: () => reject(null)
-                });
-                const jqHtml = dialog.render(true);
+            const dialog = new foundry.applications.api.DialogV2({
+                window: { title: "TFM.dialog.rollSpell" },
+                content: template,
+                buttons: [{
+                    action: "disadvantage",
+                    label: "disadvantage",
+                    callback: (event, button, dialog) => resolve(dialog.querySelector(`form`))
+                }, {
+                    label: "normal",
+                    callback: (event, button, dialog) => resolve(dialog.querySelector(`form`))
+                }],
+                submit: result => {
+                    LOGGER.warn(`Dialog testing`, result);
+                },
+                close: () => reject(null)
             })
-        }
 
-        const options = await getRollOptions(rollData);
+            var app = dialog.render({force: true});
+            sysUtil.waitForElm(`#${dialog.id}`).then(() => {
+                var element = document.getElementById(dialog.id);
+                element.querySelector(`[name="plus"]`).addEventListener(`click`, () => {
+                    var val = Number(element.querySelector(`[name="diceCount"]`).value);
+                    val = Math.min(val + 1, rollData.mod);
+                    element.querySelector(`[name="diceCount"]`).value = val;
+                });
+
+                element.querySelector(`[name="minus"]`).addEventListener(`click`, () => {
+                    var val = Number(element.querySelector(`[name="diceCount"]`).value);
+                    val = Math.max(val - 1, 1);
+                    element.querySelector(`[name="diceCount"]`).value = val;
+                });
+            });
+        });
 
         if (!options) return null;
         if (options.diceCount.value <= 0) {
@@ -74,7 +101,7 @@ export default class TFMSpell extends TFMItem {
             return null;
         }
 
-        //Sets the maximum number of dice equal to the ammount rolled + explosions allowed which is min of 1
+        //Sets the maximum number of dice equal to the ammount rolled + explosions allowed with min of one
         const mDice = parseInt(options.diceCount.value) + Math.max(1, 1 + rollData.lck.mod);
         let r = new Roll(`${options.diceCount.value}d6x6kf${mDice}cs>=${this.cd}`, rollData);
         await r.roll();
@@ -85,14 +112,16 @@ export default class TFMSpell extends TFMItem {
         const l = results.length;
         var miscasts = {};
         var tier = 0;
-        //Grabs the counts of dice
-        results.forEach(function (i) { miscasts[i.result] = (miscasts[i.result] || 0) + 1; });
+        //Counts dice duplicates for any active dice
+        results.forEach((i) => {
+            if (i.active) miscasts[i.result] = (miscasts[i.result] || 0) + 1;
+        });
+
         //Adds up the miscast tiers
         for (var key in miscasts) {
-            if (miscasts.hasOwnProperty(key)) {
-                tier += miscasts[key] - 1;
-            }
+            tier += Math.max(miscasts[key] - 1, 0);
         }
+
         // Add the miscast prompt to the chat log
         if (tier > 0) {
             render += `
@@ -109,22 +138,22 @@ export default class TFMSpell extends TFMItem {
             rollMode: game.settings.get('core', 'rollMode')
         });
     }
+
     /**Retruns the spell school */
     get school() {
         return this.system.type;
     }
+
     /**Returns a data object of the ability this spell uses from the parent actor */
     get ability() {
-        // Changes the ability returned based off the spell type
-        // Types: Arcane, Occult, Divine, Nature
-        // Divine and Nature both use insight
-        // Performances use charm
         const actor = this.actor;
         if (!actor) return null;
 
         var a = {};
 
-        switch (this.system.type) {
+        return foundry.utils.duplicate(this.actor.system.abilities[this.system.ability])
+
+        switch (this.system.ability) {
             case "arc":
                 a = duplicate(this.actor.system.abilities.arc);
                 a.label = "arc";
@@ -133,8 +162,7 @@ export default class TFMSpell extends TFMItem {
                 a = duplicate(this.actor.system.abilities.occ);
                 a.label = "occ";
                 break;
-            case "dic":
-            case "nat":
+            case "ins":
                 a = duplicate(this.actor.system.abilities.ins);
                 a.label = "ins";
                 break;
@@ -142,19 +170,33 @@ export default class TFMSpell extends TFMItem {
         }
         return a;
     }
+
     get cd() {
-        return this.system.difficulty.value;
+        return this.system.cd;
     }
+
     get cs() {
-        return this.system.difficulty.count;
+        return this.system.cs;
     }
+
     get isRitual() {
         return this.system.ritual;
     }
+
     get isChanneled() {
         return this.system.channeled;
     }
+
     get range() {
         return this.system.range;
+    }
+
+    // Used to check if this spells trinket exists
+    get hasTrinket() {
+        if (this.isOwned) {
+            switch (this.system.type) {
+
+            }
+        }
     }
 }

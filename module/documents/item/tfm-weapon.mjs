@@ -22,21 +22,21 @@ export default class TFMWeapon extends TFMItem {
         }
 
         // Attack roll
-        if (this.penalty <= 4) {
+        if (this.system.damage.penalty >= 4) {
             //When a weapon is beyond repair, the next attack roll always hits, and has special modifiers applied to it
             //Ignore the attack roll, and skip straight to damage, all dice except 1's explode here, and ignore damage penalty
             var formula = this.damage;
             var matches = formula.match(/\d+d\d+/g);
             for (var a of matches) {
-                const count = Number( a.match(/\d+d/)[0].slice(0, -1) );
-                const faces = Number( a.match(/d\d+/)[0].substring(1) );
+                const count = Number(a.match(/\d+d/)[0].slice(0, -1));
+                const faces = Number(a.match(/d\d+/)[0].substring(1));
                 const max = count + Math.max(1, 1 + rollData.lck.mod);
-                formula = formula.replace(a, `${count}d${faces}x>1kf${max}`);
+                formula = formula.replace(a, `${count}d${faces}x>=${faces}kf${max}`);
             }
 
             LOGGER.warn("FORMULA", formula);
             const rDamage = new Roll(formula);
-            await rDamage.evaluate();
+            await rDamage.evaluate(rollData);
             return rDamage.toMessage();
         } else {
             // Roll the attack normally
@@ -64,6 +64,76 @@ export default class TFMWeapon extends TFMItem {
         let rMsg = rDamage.toMessage();
         */
 
+    }
+
+    // prepares data for rendering item sheets
+    getData(context) {
+        context.selectors = {};
+
+        // Damage type selector
+        context.selectors.damageTypes = foundry.applications.fields.createSelectInput({
+            options: [
+                { value: "sla", label: "TYPES.dmg.sla", group: "TYPES.dmg.phy" },
+                { value: "stb", label: "TYPES.dmg.stb", group: "TYPES.dmg.phy" },
+                { value: "blg", label: "TYPES.dmg.blg", group: "TYPES.dmg.phy" },
+                { value: "cld", label: "TYPES.dmg.cld", group: "TYPES.dmg.ele" },
+                { value: "fir", label: "TYPES.dmg.fir", group: "TYPES.dmg.ele" },
+                { value: "thu", label: "TYPES.dmg.thu", group: "TYPES.dmg.ele" },
+                { value: "lig", label: "TYPES.dmg.lig", group: "TYPES.dmg.ele" },
+                { value: "poi", label: "TYPES.dmg.poi", group: "TYPES.dmg.ele" },
+                { value: "acd", label: "TYPES.dmg.acd", group: "TYPES.dmg.ele" },
+                { value: "rad", label: "TYPES.dmg.rad", group: "TYPES.dmg.spe" },
+                { value: "nec", label: "TYPES.dmg.nec", group: "TYPES.dmg.spe" },
+                { value: "frc", label: "TYPES.dmg.frc", group: "TYPES.dmg.spe" },
+                { value: "psy", label: "TYPES.dmg.phy", group: "TYPES.dmg.spe" },
+            ],
+            groups: ["TYPES.dmg.phy", "TYPES.dmg.ele", "TYPES.dmg.spe"],
+            value: this.system.damage.type,
+            valueAttr: "value",
+            labelAttr: "label",
+            localize: true,
+            sort: true,
+            name: "system.damage.type"
+        }).outerHTML;
+
+        // Weapon type
+        context.selectors.weaponType = foundry.applications.fields.createSelectInput({
+            options: [
+                { value: "lit", label: "TYPES.weapon.lit" },
+                { value: "med", label: "TYPES.weapon.med" },
+                { value: "hvy", label: "TYPES.weapon.hvy" },
+                { value: "rng", label: "TYPES.weapon.rng" },
+            ],
+            groups: [],
+            value: this.system.type,
+            valueAttr: "value",
+            labelAttr: "label",
+            name: "system.type",
+            sort: false,
+            localize: true,
+        }).outerHTML;
+
+        // Ability selector
+        context.selectors.ability = foundry.applications.fields.createSelectInput({
+            options: [
+                { value: "pwr", label: "TFM.ability.pwr" },
+                { value: "fin", label: "TFM.ability.fin" },
+                { value: "ins", label: "TFM.ability.ins" },
+                { value: "chr", label: "TFM.ability.chr" },
+                { value: "arc", label: "TFM.ability.arc" },
+                { value: "occ", label: "TFM.ability.occ" },
+                { value: "lck", label: "TFM.ability.lck" },
+            ],
+            groups: [],
+            value: this.system.ability,
+            valueAttr: "value",
+            labelAttr: "label",
+            name: "system.ability",
+            sort: false,
+            localize: true,
+        }).outerHTML;
+
+        return context;
     }
 
     getRollData() {

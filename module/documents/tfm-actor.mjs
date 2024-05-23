@@ -37,15 +37,11 @@ export class TFMActor extends Actor {
         const flags = actorData.flags.tfm || {};
     }
 
-    /**
-     * Prepare Monster type specific data.
-     */
-    _prepareMonsterData(actorData) {
-        if (actorData.type !== 'monster') return;
-
-        // Make modifications to data here. For example:
-        const systemData = actorData.system;
+    
+    prepareEmbeddedDocuments() {
+        const data = super.prepareEmbeddedDocuments();
     }
+
     /**
      * Override getRollData() that's supplied to rolls.
      */

@@ -6,6 +6,7 @@ import { TFMActorSheet } from "./sheets/actor-sheet.mjs";
 import { TFMItemSheet } from "./sheets/item-sheet.mjs";
 // Import helper/utility classes and constants.
 import { preloadHandlebarsTemplates } from "./helpers/templates.mjs";
+import registerHandelbarsHelpers from "./helpers/registerHelpers.mjs";
 import { TFM } from "./helpers/config.mjs";
 import sysUtil from "./helpers/sysUtil.mjs";
 import LOGGER from "./helpers/logger.mjs";
@@ -59,6 +60,8 @@ Hooks.once('init', async function () {
     registerDiceModifiers();
 
     // Preload Handlebars templates.
+    registerHandelbarsHelpers();
+
     return preloadHandlebarsTemplates();
 });
 

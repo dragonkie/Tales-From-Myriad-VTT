@@ -1,5 +1,22 @@
 &.sheet.item {
-    .description {
-        height: 100%;
+
+    .tab[data-tab].active {
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+    }
+
+    form {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .sheet-body {
+        display: flex;
+        flex: 1;
+    }
+
+    .editor {
+        flex: 1;
     }
 }

@@ -9,37 +9,21 @@
     <section class="sheet-body">
         {{!-- Description Tab --}}
         <div class="tab description" data-group="primary" data-tab="description">
-            {{editor system.description target="system.description" rollData=rollData button=true owner=owner
-            editable=editable}}
+            {{> 'tfm.item-description'}}
         </div>
 
         <div class="tab settings" data-group="primary" data-tab="settings">
-            <div class="resource">
+            <div class="resource flexrow">
                 <label class="resource-label">Armour Weight</label>
-                <select name="system.weight">
-                    <option selected value="{{system.weight}}" hidden>{{system.weight}}</option>
-                    <option value="minimal">Minimal</option>
-                    <option value="light">Light</option>
-                    <option value="medium">Medium</option>
-                    <option value="heavy">Heavy</option>
-                </select>
+                {{{ selectors.weightClass }}}
             </div>
 
-            <div class="resource">
+            <div class="resource flexrow">
                 <label class="resource-label">Armour Slot</label>
-                <select name="system.slot">
-                    <option selected value="{{system.slot}}" hidden>{{system.slot}}</option>
-                    <option value="head">Head</option>
-                    <option value="shoulder">Shoulder</option>
-                    <option value="torso">Torso</option>
-                    <option value="back">Back</option>
-                    <option value="legs">Legs</option>
-                    <option value="feet">Feet</option>
-                    <option value="shield">Shield</option>
-                </select>
+                {{{ selectors.itemSlot }}}
             </div>
 
-            <div class="resource">
+            <div class="resource flexrow">
                 <label class="resource-label">Damage Reduction</label>
                 <input type="number" name="system.dr" value="{{system.dr}}" data-dtype="Number" />
             </div>

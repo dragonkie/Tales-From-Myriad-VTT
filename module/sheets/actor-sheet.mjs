@@ -1,4 +1,5 @@
 import { onManageActiveEffect, prepareActiveEffectCategories } from "../helpers/effects.mjs";
+import LOGGER from "../helpers/logger.mjs";
 import sysUtil from "../helpers/sysUtil.mjs";
 /**
  * Extend the basic ActorSheet with some very simple modifications
@@ -8,7 +9,7 @@ export class TFMActorSheet extends ActorSheet {
 
     /** @override */
     static get defaultOptions() {
-        return mergeObject(super.defaultOptions, {
+        return foundry.utils.mergeObject(super.defaultOptions, {
             classes: ["tfm", "sheet", "actor"],
             template: `systems/${game.system.id}/templates/actor/actor-sheet.hbs`,
             width: 600,
@@ -22,7 +23,98 @@ export class TFMActorSheet extends ActorSheet {
         return `systems/${game.system.id}/templates/actor/actor-${this.actor.type}-sheet.hbs`;
     }
 
-    /* -------------------------------------------- */
+    /* ----------- RENDER OVERIDES --------------------*/
+    render(...data) {
+        LOGGER.warn(`RENDER START`, ...data);
+        var val = super.render(...data);
+        LOGGER.warn(`RENDER VAL`, val);
+        LOGGER.warn(`RENDER END`, ...data);
+        return val;
+    }
+
+    _render(...data) {
+        LOGGER.warn(`_RENDER START`, ...data);
+        var val = super._render(...data);
+        LOGGER.warn(`_RENDER VAL`, val);
+        LOGGER.warn(`_RENDER END`, ...data);
+        return val;
+    }
+
+    /* ----------- DRAG AND DROP OVERIDES ------------- */
+
+    /**
+     * Built in drop event handeler, will automatically parse and get data from the event
+     * triggers appropriate registered action as listed below, any others are added
+     * from this system
+     * 
+     * _onDropItem    _onDropActor
+     * _onDropFolder  _onDropActiveEffect
+     * 
+     * these functions can be overiden, or an interception can be added into this function
+     * to access a custom handler instead of calling super._onDrop() to use the default
+     * handlers
+     * 
+     * @param {DragEvent} event 
+     */
+    _onDrop(event) {
+        LOGGER.log(`Drop event:`, event);
+        super._onDrop(event);
+    }
+
+    async _onDropItem(event, data) {
+        if ( !this.actor.isOwner ) return false;
+
+        LOGGER.log(`Event data`, data);
+
+        const item = await fromUuid(data.uuid);
+        const itemData = item.toObject();
+
+        LOGGER.log(`_onDropItem:`, item);
+
+        // Handels if this item is already owned
+        if ( this.actor.uuid === item.parent?.uuid ) return this._onSortItem(event, itemData);
+
+        switch (item.type) {
+            case `trinket`:
+                const spells = item.system.spells;
+                const spellList = [];
+                // Add spells from the trinket
+                for (var [key, value] of Object.entries(spells)) {
+                    var s = await fromUuid(value.uuid);
+                    spellList.push(s.toObject());
+                }
+                // Creates the new splles and trinkets
+                const newTrinket = await this.actor.createEmbeddedDocuments(`Item`, [itemData]);
+                const newSpells = await this.actor.createEmbeddedDocuments(`Item`, spellList);
+
+                // Add flags to the spells so they know to delete themselves
+                for (var spell of newSpells) {
+                    LOGGER.log(`Trinket uuid:`, newTrinket[0])
+                    spell.setFlag(game.system.id, `spell-source`, newTrinket[0].uuid);
+                }
+
+                return newTrinket;
+                break;
+            default:
+                return super._onDropItem(event, data);
+                break;
+        }
+    }
+
+    async _onDropActor(event, data) {
+        super._onDropActor(event, data);
+        LOGGER.log(`Event data`, data);
+    }
+
+    async _onDropFolder(event, data) {
+        super._onDropFolder(event, data);
+        LOGGER.log(`Event data`, data);
+    }
+
+    async _onDropActiveEffect(event, data) {
+        super._onDropActiveEffect(event, data);
+        LOGGER.log(`Event data`, data);
+    }
 
     /** @override */
     getData() {
@@ -63,10 +155,6 @@ export class TFMActorSheet extends ActorSheet {
             context.system.attributes.dr.abbr = sysUtil.localize(`TFM.attr.abbr.dr`);
 
             this._prepareItems(context);
-        }
-
-        if (actorData.type == 'monster') {
-            //this._prepareMonster(context);
         }
 
         // Add roll data for TinyMCE editors.
@@ -114,11 +202,12 @@ export class TFMActorSheet extends ActorSheet {
     _prepareItems(context) {
         // Grab list of item types from the template
         const itemTypes = {};
-        for (let [key, value] of Object.entries(game.template.Item)) {
+        for (let [key, value] of Object.entries(game.system.documentTypes.Item)) {
             itemTypes[key] = [];
         }
-        // Sort the items based on types
+        // Sort the items into lists by type
         for (let item of context.items) {
+            LOGGER.log(`Adding [${item.type}] to list`, itemTypes);
             itemTypes[item.type].push(item);
         }
         // Assign and return
@@ -142,7 +231,7 @@ export class TFMActorSheet extends ActorSheet {
         html.find('.item-equip').click(ev => {
             const li = $(ev.currentTarget).parents(".item");
             const item = this.actor.items.get(li.data("itemId"));
-            item.update({"system.equipped": !item.system.equipped});
+            item.update({ "system.equipped": !item.system.equipped });
         });
 
         // -------------------------------------------------------------

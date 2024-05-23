@@ -1,12 +1,19 @@
 <form>
     <div class="flexcol">
+
         <div class="flexrow">
-            <div>TFM.dialog.roll.spell.component</div>
+            <p>TFM.dialog.roll.spell.component</p>
             <input name="component" type="checkbox"/>
         </div>
+
         <div class="flexrow">
-            <div>TFM.dialog.roll.spell.dice</div>
-            <input name="diceCount" type="number" placeholder="{{maxDice}}" value="{{mod}}"/>
+            <p>TFM.dialog.roll.spell.dice</p>
+            <div class="flexrow">
+                <input name="minus" type="button">
+                <input name="diceCount" type="number" placeholder="{{maxDice}}" value="{{mod}}" disabled/>
+                <input name="plus" type="button">
+            </div>
+            
         </div>
     </div>
 </form>

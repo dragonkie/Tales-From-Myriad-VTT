@@ -10,7 +10,7 @@
   "TFM.ability.abbr.pwr": "Pwr",
   "TFM.ability.abbr.fin": "Fin",
   "TFM.ability.abbr.ins": "Ins",
-  "TFM.ability.abbr.chr": "Cha",
+  "TFM.ability.abbr.chr": "Chr",
   "TFM.ability.abbr.arc": "Arc",
   "TFM.ability.abbr.occ": "Occ",
   "TFM.ability.abbr.lck": "Lck",
@@ -104,6 +104,10 @@
 
   "TFM.magic.miscast": "Miscast",
 
+  "TYPES.Actor.character": "Character",
+  "TYPES.Actor.npc": "Npc",
+
+
   "TYPES.weapon.dagger": "Dagger",
   "TYPES.weapon.unarmed": "Unarmed",
   "TYPES.weapon.whip": "Whip",
@@ -117,30 +121,45 @@
   "TYPES.weapon.thrown": "Thrown",
   "TYPES.weapon.katana": "Katana",
 
-  "TYPES.weapon.ranged": "Ranged",
-  "TYPES.weapon.light": "Light",
-  "TYPES.weapon.medium": "Medium",
-  "TYPES.weapon.heavy": "Heavy",
+  "TYPES.weapon.rng": "Ranged",
+  "TYPES.weapon.lit": "Light",
+  "TYPES.weapon.med": "Medium",
+  "TYPES.weapon.hvy": "Heavy",
 
-  "TYPES.magic.occ": "Occult",
+  "TYPES.armour.min": "Minimal",
+  "TYPES.armour.lit": "Light",
+  "TYPES.armour.med": "Medium",
+  "TYPES.armour.hvy": "Heavy",
+
+  "TYPES.armour.head" : "Head",
+  "TYPES.armour.shoulder" : "Shoulder",
+  "TYPES.armour.torso" : "Torso",
+  "TYPES.armour.back" : "Back",
+  "TYPES.armour.legs" : "Legs",
+  "TYPES.armour.feet" : "Feet",
+  "TYPES.armour.shield" : "Shield",
+  
   "TYPES.magic.arc": "Arcane",
-  "TYPES.magic.nat": "Natural",
   "TYPES.magic.div": "Divine",
-  "TYPES.magic.prf": "Performance",
+  "TYPES.magic.nat": "Natural",
+  "TYPES.magic.occ": "Occult",
+  "TYPES.magic.per": "Performance",
 
-  "TYPES.damage.cold": "Cold",
-  "TYPES.damage.fire": "Fire",
-  "TYPES.damage.thunder": "Thunder",
-  "TYPES.damage.lightning": "Lightning",
-  "TYPES.damage.poison": "Poison",
-  "TYPES.damage.acid": "Acid",
+  "TYPES.dmg.phy": "Physical",
+  "TYPES.dmg.ele": "Elemental",
+  "TYPES.dmg.spe": "Special",
 
-  "TYPES.damage.radiant": "Radiant",
-  "TYPES.damage.necrotic": "Necrotic",
-  "TYPES.damage.force": "Force",
-  "TYPES.damage.psychic": "Psychic",
-
-  "TYPES.damage.slashing": "Slashing",
-  "TYPES.damage.stabbing": "Stabbing",
-  "TYPES.damage.bludgeoning": "Bludgeoning"
+  "TYPES.dmg.cld": "Cold",
+  "TYPES.dmg.fir": "Fire",
+  "TYPES.dmg.thu": "Thunder",
+  "TYPES.dmg.lig": "Lightning",
+  "TYPES.dmg.poi": "Poison",
+  "TYPES.dmg.acd": "Acid",
+  "TYPES.dmg.rad": "Radiant",
+  "TYPES.dmg.nec": "Necrotic",
+  "TYPES.dmg.frc": "Force",
+  "TYPES.dmg.psy": "Psychic",
+  "TYPES.dmg.sla": "Slashing",
+  "TYPES.dmg.stb": "Stabbing",
+  "TYPES.dmg.blg": "Bludgeoning"
 }

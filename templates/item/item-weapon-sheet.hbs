@@ -6,66 +6,28 @@
     </nav>
     <section class="sheet-body">
         <div class="tab description" data-group="primary" data-tab="description">
-
+            {{> 'tfm.item-description'}}
         </div>
         <div class="tab settings" data-group="primary" data-tab="settings">
 
-            <div class="weapon-type" style="white-space: nowrap;">
+            <div class="resource flexrow" style="white-space: nowrap;">
                 <label>Weapon Type:</label>
-                <select name="system.type">
-                    <option value="{{system.type}}" selected="true" hidden="true">{{system.type}}</option>
-                    <option value="light">Light</option>
-                    <option value="medium">Medium</option>
-                    <option value="heavy">Heavy</option>
-                    <option value="ranged">Ranged</option>
-                </select>
+                {{{selectors.weaponType}}}
             </div>
 
-            <div class="damage">
-                <label>Damage:</label>
-                <div>
-                    <input type="string" name="system.damage.formula" value="{{system.damage.formula}}"/>
-                    <select name="system.damage.type">
-                        <option value="{{system.damage.type}}" selected="true" hidden="true">{{system.damage.type}}</option>
-                        <optgroup label="Physical">
-                            <option value="slashing">{{localize "TYPES.damage.slashing"}}</option>
-                            <option value="stabbing">{{localize "TYPES.damage.stabbing"}}</option>
-                            <option value="bludgeoning">{{localize "TYPES.damage.bludgeoning"}}</option>
-                        </optgroup>
-                        <optgroup label="Elemental">
-                            <option value="fire">{{localize "TYPES.damage.fire"}}</option>
-                            <option value="cold">{{localize "TYPES.damage.cold"}}</option>
-                            <option value="thunder">{{localize "TYPES.damage.thunder"}}</option>
-                            <option value="lightning">{{localize "TYPES.damage.lightning"}}</option>
-                            <option value="poison">{{localize "TYPES.damage.poison"}}</option>
-                            <option value="acid">{{localize "TYPES.damage.acid"}}</option>
-                        </optgroup>
-                        <optgroup label="Special">
-                            <option value="psychic">{{localize "TYPES.damage.psychic"}}</option>
-                            <option value="force">{{localize "TYPES.damage.force"}}</option>
-                            <option value="radiant">{{localize "TYPES.damage.radiant"}}</option>
-                            <option value="necrotic">{{localize "TYPES.damage.fire"}}</option>
-                        </optgroup>
-                    </select>
-                    <select name="system.ability">
-                        <option value="{{system.ability}}" selected="true" hidden="true">{{system.ability}}</option>
-                        <option value="pwr">Power</option>
-                        <option value="fin">Finesse</option>
-                        <option value="ins">Insight</option>
-                        <option value="cha">Charm</option>
-                        <option value="arc">Arcane</option>
-                        <option value="occ">Occult</option>
-                        <option value="lck">Luck</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="hands" style="white-space: nowrap;">
+            <div class="resource flexrow" style="white-space: nowrap;">
                 <label>Hands:</label>
-                <input type="number" name="system.hands" value="{{system.hands}}" style="max-width: 60px;"/>
+                <input type="number" name="system.hands" value="{{system.hands}}"/>
             </div>
 
-            
+            <div class="resource flexrow">
+                <label>Damage:</label>
+                <input type="string" name="system.damage.formula" value="{{system.damage.formula}}" />
+
+                {{{selectors.damageTypes}}}
+                {{{selectors.ability}}}
+
+            </div>
         </div>
     </section>
 </form>
