@@ -1,8 +1,8 @@
-import { TFMActor } from "../tfm-actor.mjs";
+import { MyriadActor } from "../tfm-actor.mjs";
 import sysUtil from "../../helpers/sysUtil.mjs";
 import LOGGER from "../../helpers/logger.mjs";
 
-export default class TFMCharacter extends TFMActor {
+export default class MyriadCharacter extends MyriadActor {
 
     prepareBaseData() {
         super.prepareBaseData();

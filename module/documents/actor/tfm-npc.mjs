@@ -1,7 +1,7 @@
-import { TFMActor } from "../tfm-actor.mjs";
+import { MyriadActor } from "../tfm-actor.mjs";
 import sysUtil from "../../helpers/sysUtil.mjs";
 
-export default class TFMNpc extends TFMActor {
+export default class MyriadNpc extends MyriadActor {
 
 
     prepareDerivedData() {

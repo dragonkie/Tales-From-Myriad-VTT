@@ -1,21 +1,22 @@
 import { onManageActiveEffect, prepareActiveEffectCategories } from "../helpers/effects.mjs";
 import LOGGER from "../helpers/logger.mjs";
 import sysUtil from "../helpers/sysUtil.mjs";
+import { MyriadSheetMixin } from "./base-sheet.mjs";
 /**
  * Extend the basic ActorSheet with some very simple modifications
  * @extends {ActorSheet}
  */
-export class TFMActorSheet extends ActorSheet {
+export class MyriadActorSheet extends MyriadSheetMixin(foundry.applications.sheets.ActorSheetV2) {
 
     /** @override */
-    static get defaultOptions() {
-        return foundry.utils.mergeObject(super.defaultOptions, {
-            classes: ["tfm", "sheet", "actor"],
-            template: `systems/${game.system.id}/templates/actor/actor-sheet.hbs`,
-            width: 600,
-            height: 600,
-            tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "features" }]
-        });
+    static DEFAULT_OPTIONS = {
+        classes: ["tfm", "sheet", "actor"],
+        position: { height: 600, width: 500, top: 100, left: 200 },
+        actions: {
+            useItem: this._onUseItem,
+            editItem: this._onEditItem,
+            deleteItem: this._onDeleteItem
+        }
     }
 
     /** @override */
@@ -23,21 +24,44 @@ export class TFMActorSheet extends ActorSheet {
         return `systems/${game.system.id}/templates/actor/actor-${this.actor.type}-sheet.hbs`;
     }
 
-    /* ----------- RENDER OVERIDES --------------------*/
-    render(...data) {
-        LOGGER.warn(`RENDER START`, ...data);
-        var val = super.render(...data);
-        LOGGER.warn(`RENDER VAL`, val);
-        LOGGER.warn(`RENDER END`, ...data);
-        return val;
+    static PARTS = {
+        header: { template: "systems/tales-from-myriad/templates/actor/character/character-header.hbs" },
+        tabs: { template: "systems/tales-from-myriad/templates/actor/character/character-tabs.hbs" },
+        items: { template: "systems/tales-from-myriad/templates/actor/parts/actor-items.hbs" },
+        spells: { template: "systems/tales-from-myriad/templates/actor/parts/actor-spells.hbs" }
     }
 
-    _render(...data) {
-        LOGGER.warn(`_RENDER START`, ...data);
-        var val = super._render(...data);
-        LOGGER.warn(`_RENDER VAL`, val);
-        LOGGER.warn(`_RENDER END`, ...data);
-        return val;
+    static TABS = {
+        items: { id: "items", group: "primary", label: "TFM.generic.item" },
+        spells: { id: "spells", group: "primary", label: "TFM.generic.spells" }
+    }
+
+    tabGroups = {
+        primary: "spells",
+        inventory: "backpack"
+    }
+
+    async _prepareContext(options) {
+        const doc = this.document;
+        const src = doc.toObject();
+        const rollData = doc.getRollData();
+
+        const context = {
+            document: doc,
+            config: CONFIG.TFM,
+            system: doc.system,
+            name: doc.name,
+            items: doc.items,
+            itemTypes: doc.itemTypes,
+            rollData: rollData,
+        }
+
+        return context;
+    }
+
+    /* ----------- RENDER OVERIDES --------------------*/
+    _onRender(context, options) {
+        super._onRender(context, options);
     }
 
     /* ----------- DRAG AND DROP OVERIDES ------------- */
@@ -56,65 +80,63 @@ export class TFMActorSheet extends ActorSheet {
      * 
      * @param {DragEvent} event 
      */
-    _onDrop(event) {
+    async _onDrop(event) {
         LOGGER.log(`Drop event:`, event);
         super._onDrop(event);
     }
 
     async _onDropItem(event, data) {
-        if ( !this.actor.isOwner ) return false;
-
-        LOGGER.log(`Event data`, data);
+        if (!this.actor.isOwner) return false;
 
         const item = await fromUuid(data.uuid);
         const itemData = item.toObject();
 
-        LOGGER.log(`_onDropItem:`, item);
-
-        // Handels if this item is already owned
-        if ( this.actor.uuid === item.parent?.uuid ) return this._onSortItem(event, itemData);
-
         switch (item.type) {
             case `trinket`:
                 const spells = item.system.spells;
-                const spellList = [];
+                const itemList = [itemData];
                 // Add spells from the trinket
                 for (var [key, value] of Object.entries(spells)) {
                     var s = await fromUuid(value.uuid);
-                    spellList.push(s.toObject());
+                    itemList.push(s.toObject());
                 }
+                LOGGER.log(itemList)
                 // Creates the new splles and trinkets
-                const newTrinket = await this.actor.createEmbeddedDocuments(`Item`, [itemData]);
-                const newSpells = await this.actor.createEmbeddedDocuments(`Item`, spellList);
+                const newSpells = await this.actor.createEmbeddedDocuments(`Item`, itemList);
 
                 // Add flags to the spells so they know to delete themselves
-                for (var spell of newSpells) {
-                    LOGGER.log(`Trinket uuid:`, newTrinket[0])
-                    spell.setFlag(game.system.id, `spell-source`, newTrinket[0].uuid);
+                LOGGER.log(`Trinket uuid:`, newSpells[0].uuid)
+                for (var a = 1; a < itemList.length; a++) {
+                    newSpells[a].setFlag(game.system.id, `spell-source`, newSpells[0].uuid);
                 }
-
-                return newTrinket;
                 break;
             default:
-                return super._onDropItem(event, data);
+                return true;
                 break;
         }
     }
 
-    async _onDropActor(event, data) {
-        super._onDropActor(event, data);
-        LOGGER.log(`Event data`, data);
+    /* ------------------- ACTION EVENTS ------------------------*/
+    static async _onUseItem(event, target) {
+        const uuid = target.closest(".item[data-item-uuid]").dataset.itemUuid;
+        const item = await fromUuid(uuid);
+        return item.use();
     }
 
-    async _onDropFolder(event, data) {
-        super._onDropFolder(event, data);
-        LOGGER.log(`Event data`, data);
+    static async _onEditItem(event, target) {
+        const uuid = target.closest(".item[data-item-uuid]").dataset.itemUuid;
+        const item = await fromUuid(uuid);
+
+        if (!item.sheet.rendered) item.sheet.render(true);
+        else item.sheet.bringToFront();
     }
 
-    async _onDropActiveEffect(event, data) {
-        super._onDropActiveEffect(event, data);
-        LOGGER.log(`Event data`, data);
+    static async _onDeleteItem(event, target) {
+        const uuid = target.closest(".item[data-item-uuid]").dataset.itemUuid;
+        const item = await fromUuid(uuid);
+        return item.delete();
     }
+
 
     /** @override */
     getData() {

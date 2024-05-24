@@ -5,7 +5,7 @@ import sysUtil from "../helpers/sysUtil.mjs";
  * Extend the basic ItemSheet with some very simple modifications
  * @extends {ItemSheet}
  */
-export class TFMItemSheet extends ItemSheet {
+export class MyriadItemSheet extends ItemSheet {
 
     /** @override */
     static get defaultOptions() {

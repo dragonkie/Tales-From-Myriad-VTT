@@ -1,8 +1,8 @@
 import LOGGER from "../../helpers/logger.mjs";
 import sysUtil from "../../helpers/sysUtil.mjs";
-import { TFMItem } from "../tfm-item.mjs";
+import { MyriadItem } from "../tfm-item.mjs";
 
-export default class TFMSpell extends TFMItem {
+export default class MyriadSpell extends MyriadItem {
 
     prepareBaseData() {
 
@@ -125,7 +125,7 @@ export default class TFMSpell extends TFMItem {
         // Add the miscast prompt to the chat log
         if (tier > 0) {
             render += `
-                <div>TFM.chat.miscast</div>
+                <div>Myriad.chat.miscast</div>
                 <div>${this.actor.name} Suffers a tier ${tier} miscast</div>
             `
         }

@@ -1,8 +1,8 @@
 import LOGGER from "../../helpers/logger.mjs";
 import sysUtil from "../../helpers/sysUtil.mjs";
-import { TFMItem } from "../tfm-item.mjs";
+import { MyriadItem } from "../tfm-item.mjs";
 
-export default class TFMTrinket extends TFMItem {
+export default class MyriadTrinket extends MyriadItem {
 
     async _onDrop(data) {
         //Called by the item sheet class

@@ -1,5 +1,5 @@
-import { TFMItem } from "../tfm-item.mjs";
+import { MyriadItem } from "../tfm-item.mjs";
 
-export default class TFMJob extends TFMItem {
+export default class MyriadJob extends MyriadItem {
     
 }

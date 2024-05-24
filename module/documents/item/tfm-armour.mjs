@@ -1,7 +1,7 @@
 import LOGGER from "../../helpers/logger.mjs";
-import { TFMItem } from "../tfm-item.mjs";
+import { MyriadItem } from "../tfm-item.mjs";
 
-export default class TFMArmour extends TFMItem {
+export default class MyriadArmour extends MyriadItem {
     prepareBaseData() {
         super.prepareBaseData();
     }

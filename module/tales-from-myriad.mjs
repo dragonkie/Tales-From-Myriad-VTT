@@ -1,9 +1,9 @@
 // Import document classes.
-import { TFMActor } from "./documents/tfm-actor.mjs";
-import { TFMItem } from "./documents/tfm-item.mjs";
+import { MyriadActor } from "./documents/tfm-actor.mjs";
+import { MyriadItem } from "./documents/tfm-item.mjs";
 // Import sheet classes.
-import { TFMActorSheet } from "./sheets/actor-sheet.mjs";
-import { TFMItemSheet } from "./sheets/item-sheet.mjs";
+import { MyriadActorSheet } from "./sheets/actor-sheet.mjs";
+import { MyriadItemSheet } from "./sheets/item-sheet.mjs";
 // Import helper/utility classes and constants.
 import { preloadHandlebarsTemplates } from "./helpers/templates.mjs";
 import registerHandelbarsHelpers from "./helpers/registerHelpers.mjs";
@@ -22,9 +22,9 @@ Hooks.once('init', async function () {
 
     // Add utility classes to the global game object so that they're more easily
     // accessible in global contexts.
-    game.TFM = {
-        TFMActor,
-        TFMItem,
+    game.Myriad = {
+        MyriadActor,
+        MyriadItem,
         sysUtil,
         LOGGER,
     };
@@ -47,14 +47,14 @@ Hooks.once('init', async function () {
 
     // Register sheet application classes
     Actors.unregisterSheet("core", ActorSheet);
-    Actors.registerSheet(game.system.id, TFMActorSheet, {
+    Actors.registerSheet(game.system.id, MyriadActorSheet, {
         label: `TFM.sheets.actorSheet`,
         types: [`character`, `npc`],
         makeDefault: true 
     });
 
     Items.unregisterSheet("core", ItemSheet);
-    Items.registerSheet(game.system.id, TFMItemSheet, { makeDefault: true });
+    Items.registerSheet(game.system.id, MyriadItemSheet, { makeDefault: true });
 
     // Registers new dice modifiers with the system using a util function
     registerDiceModifiers();

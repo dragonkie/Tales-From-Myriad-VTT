@@ -1,5 +1,5 @@
-import { TFMItem } from "../tfm-item.mjs";
+import { MyriadItem } from "../tfm-item.mjs";
 
-export default class TFMConsumable extends TFMItem {
+export default class MyriadConsumable extends MyriadItem {
     
 }

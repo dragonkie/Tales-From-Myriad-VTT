@@ -265,6 +265,7 @@
 .tfm .items-header > * {
   font-size: 14px;
   text-align: center;
+  color: #888;
 }
 .tfm .items-header .item-name {
   font-weight: bold;
@@ -289,15 +290,17 @@
   flex: 2;
   margin: 0;
   overflow: hidden;
-  font-size: 13px;
+  font-size: 10px;
   text-align: left;
   align-items: center;
   display: flex;
 }
 .tfm .items-list .item-name h3, .tfm .items-list .item-name h4 {
   margin: 0;
+  font-size: 20px;
   white-space: nowrap;
   overflow-x: hidden;
+  overflow-y: hidden;
 }
 .tfm .items-list .item-controls {
   display: flex;
@@ -318,7 +321,7 @@
   border-bottom: none;
 }
 .tfm .items-list .item .item-name {
-  color: #191813;
+  color: #888;
 }
 .tfm .items-list .item .item-name .item-image {
   flex: 0 0 30px;

@@ -18,6 +18,7 @@ export const preloadHandlebarsTemplates = async function () {
 
         // Character specific partials
         `${sys}/actor/character/character-header.hbs`,
+        `${sys}/actor/character/character-tabs.hbs`,
 
         // NPC partials
         `${sys}/actor/npc/npc-header.hbs`,

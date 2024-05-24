@@ -4,7 +4,7 @@ import sysUtil from "../helpers/sysUtil.mjs";
  * Extend the base Actor document by defining a custom roll data structure which is ideal for the Simple system.
  * @extends {Actor}
  */
-export class TFMActor extends Actor {
+export class MyriadActor extends Actor {
 
     
     /** @override */
