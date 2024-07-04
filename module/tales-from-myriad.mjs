@@ -1,9 +1,3 @@
-// Import document classes.
-import { MyriadActor } from "./documents/tfm-actor.mjs";
-import { MyriadItem } from "./documents/tfm-item.mjs";
-// Import sheet classes.
-import { MyriadActorSheet } from "./sheets/actor-sheet.mjs";
-import { MyriadItemSheet } from "./sheets/item-sheet.mjs";
 // Import helper/utility classes and constants.
 import { preloadHandlebarsTemplates } from "./helpers/templates.mjs";
 import registerHandelbarsHelpers from "./helpers/registerHelpers.mjs";
@@ -11,26 +5,28 @@ import { TFM } from "./helpers/config.mjs";
 import sysUtil from "./helpers/sysUtil.mjs";
 import LOGGER from "./helpers/logger.mjs";
 
+import * as applications from "./applications/_module.mjs";
+import * as documents from "./documents/_module.mjs"
+
 import { actorConstructor, itemConstructor } from "./proxy-doc.mjs";
 import registerDiceModifiers from "./helpers/dice.mjs";
+
+globalThis.tfm = {
+    applications: applications,
+    documents: documents.documents,
+    dataModels: documents.dataModels,
+    util: sysUtil,
+    config: TFM
+}
 
 /* -------------------------------------------- */
 /*  Init Hook                                   */
 /* -------------------------------------------- */
 
 Hooks.once('init', async function () {
-
-    // Add utility classes to the global game object so that they're more easily
-    // accessible in global contexts.
-    game.Myriad = {
-        MyriadActor,
-        MyriadItem,
-        sysUtil,
-        LOGGER,
-    };
-
     // Add custom constants for configuration.
     CONFIG.TFM = TFM;
+    tfm.id = game.system.id;
 
     /**
      * Set an initiative formula for the system
@@ -47,14 +43,14 @@ Hooks.once('init', async function () {
 
     // Register sheet application classes
     Actors.unregisterSheet("core", ActorSheet);
-    Actors.registerSheet(game.system.id, MyriadActorSheet, {
-        label: `TFM.sheets.actorSheet`,
+    Actors.registerSheet(tfm.id, tfm.applications.TfmActorSheet, {
+        label: `TFM.sheets.actor`,
         types: [`character`, `npc`],
-        makeDefault: true 
+        makeDefault: true
     });
 
     Items.unregisterSheet("core", ItemSheet);
-    Items.registerSheet(game.system.id, MyriadItemSheet, { makeDefault: true });
+    Items.registerSheet(tfm.id, tfm.applications.TfmItemSheet, { makeDefault: true });
 
     // Registers new dice modifiers with the system using a util function
     registerDiceModifiers();

@@ -1,0 +1,10 @@
+<section class="sheet-body" style="flex-direction: row;">
+    <div data-application-part="panel" ></div>
+    {{#each tabs}}
+    <div class="{{tabCssClass}}" data-group="primary" data-tab="{{id}}">
+        <div class="tab-content" data-application-part="{{id}}">
+            
+        </div>
+    </div>
+    {{/each}}
+</section>

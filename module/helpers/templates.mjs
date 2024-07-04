@@ -15,11 +15,11 @@ export const preloadHandlebarsTemplates = async function () {
         `${sys}/actor/parts/actor-abilities.hbs`,
         `${sys}/actor/parts/actor-portrait.hbs`,
         `${sys}/actor/parts/actor-items-sorted.hbs`,
+        `${sys}/parts/sheet-tabs.hbs`,
 
         // Character specific partials
         `${sys}/actor/character/character-header.hbs`,
-        `${sys}/actor/character/character-tabs.hbs`,
-
+        
         // NPC partials
         `${sys}/actor/npc/npc-header.hbs`,
 

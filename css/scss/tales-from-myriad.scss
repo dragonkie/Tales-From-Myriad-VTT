@@ -14,11 +14,26 @@
 
 /* Styles limited to tales from myriad sheets */
 .tfm {
-  @import 'components/forms';
-  @import 'components/resource';
-  @import 'components/items';
-  @import 'components/effects';
-  /* Styles for the different sheets*/
-  @import 'sheets/actor';
-  @import 'sheets/item';
+    @import 'components/forms';
+    @import 'components/resource';
+    @import 'components/items';
+    @import 'components/effects';
+    /* Styles for the different sheets*/
+    @import 'sheets/actor';
+    @import 'sheets/item';
+}
+
+.form-field {
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+
+    :first-child {
+        flex: 2;
+    }
+
+    >* {
+        align-items: center;
+        flex: 1;
+    }
 }

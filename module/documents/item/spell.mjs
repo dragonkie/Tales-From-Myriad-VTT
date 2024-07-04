@@ -1,8 +1,8 @@
 import LOGGER from "../../helpers/logger.mjs";
 import sysUtil from "../../helpers/sysUtil.mjs";
-import { MyriadItem } from "../tfm-item.mjs";
+import { TfmItem } from "./item.mjs";
 
-export default class MyriadSpell extends MyriadItem {
+export default class TfmSpell extends TfmItem {
 
     prepareBaseData() {
 
@@ -21,11 +21,10 @@ export default class MyriadSpell extends MyriadItem {
         return rollData;
     }
 
-    // prepares data for rendering sheets
-    getData(context) {
-        context.selectors = {};
-
-        context.selectors.spellSchool = foundry.applications.fields.createSelectInput({
+    _getSelectors(context) {
+        const selectors = {};
+        
+        selectors.spellSchool = foundry.applications.fields.createSelectInput({
             options: [
                 { value: "arc", label: "TYPES.magic.arc" },
                 { value: "div", label: "TYPES.magic.div" },
@@ -43,7 +42,7 @@ export default class MyriadSpell extends MyriadItem {
             name: "system.type"
         }).outerHTML;
 
-        return context;
+        return selectors;
     }
 
     async roll() {
@@ -78,7 +77,7 @@ export default class MyriadSpell extends MyriadItem {
                 close: () => reject(null)
             })
 
-            var app = dialog.render({force: true});
+            var app = dialog.render({ force: true });
             sysUtil.waitForElm(`#${dialog.id}`).then(() => {
                 var element = document.getElementById(dialog.id);
                 element.querySelector(`[name="plus"]`).addEventListener(`click`, () => {

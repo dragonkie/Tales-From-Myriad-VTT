@@ -1,10 +1,10 @@
-import LOGGER from "../helpers/logger.mjs";
+import LOGGER from "../../helpers/logger.mjs";
 
 /**
  * Extend the basic Item with some very simple modifications.
  * @extends {Item}
  */
-export class MyriadItem extends Item {
+export class TfmItem extends Item {
     /**
      * Augment the basic Item data model with additional dynamic data.
      */
@@ -26,6 +26,33 @@ export class MyriadItem extends Item {
         rollData.item = foundry.utils.deepClone(this.system);
 
         return rollData;
+    }
+
+    /**
+     * Should be overiden to provide additional values for unique items to the sheets prepareContext() function
+     * @param {Object} context 
+     */
+    async getData(context) {
+        context.selectors = this._getSelectors();
+        context.settings = await this._getSettings(context);
+        return context;
+    }
+
+    async _getSettings(context) {
+        return await renderTemplate(`systems/tales-from-myriad/templates/item/settings/${this.type}.hbs`, context); // Default items dont have an item sheet
+    }
+
+    _getSelectors(context) {
+        return {};
+    }
+
+    _getTags() {
+        return {};
+    }
+
+    /* ------------------------- ACTION EVENTS ------------------------------- */
+    async _onDeleteItem(event, target) {
+        LOGGER.debug("Unhandled _onDelteItem in ", this);
     }
 
     /**

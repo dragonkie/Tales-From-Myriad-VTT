@@ -19,12 +19,7 @@ export default class sysUtil {
 
 
     /** 
-     * Returns the modifier for the value of a given stat
-     * stats work like a curve with a step in the middle
-     * there is a plateau at the average roll of 6-8 where
-     * your stat has no modifier to begin with
-     * Rapidly ascends / declines outside of here before slowing
-     * down after reaching a +4 at 12
+     * Returns the modifier for the given value
      * @param {Number} value Ability score
      * @returns {Number} Modifier for the given ability
      */
@@ -35,7 +30,7 @@ export default class sysUtil {
         if (value > 12) return 4 + Math.floor((value - 12) / 2);
         //Normal positive stat rolls
         if (value > 8) return value - 8;
-        return 0;    
+        return 0;
     }
 
     /**
@@ -56,8 +51,12 @@ export default class sysUtil {
         return 1;
     }
 
+    /**
+     * @param {Number} lvl 
+     * @returns {Number} The ammount of XP required to level up
+     */
     static nextLevel(lvl) {
-        if (lvl == 1) return 30;
+        if (lvl <= 1) return 30;
         if (lvl == 2) return 60;
         if (lvl == 3) return 100;
         if (lvl == 4) return 150;
@@ -68,39 +67,40 @@ export default class sysUtil {
         return 550;
     }
 
-    static joinFormula(val1, val2) {
-        if (!val1) return val2;
-        if (!val2) return val1;
-        if (typeof val1 === "number" && typeof val2 === "number") return val1 + val2;
+    /**
+     * Returns a random localzied string for a personal quest
+     * @returns {String} Localized quest description
+     */
+    static getQuest() {
+        let roll = Math.floor(Math.random() * 50);
 
-        if (typeof val1 === "string" || typeof val2 === "string") {
-            const mod = Array.from(val2)[0];
-            if (mod === `-` || mod === `+`)  return val1 + val2;
-        }
-
-        return this.stringAdd(val1, val2);
-
+        let num = ``
+        if (roll < 10) num += `0`;
+        if (roll < 100) num += `0`;
+        num += `${roll}`;
+        return sysUtil.localize(`TFM.quest.${num}`);
     }
 
-    static stringAdd(base, suffix) {
-        if (base === ``) return suffix;
-        if (suffix === ``) return base;
-        return base + `+` + suffix;
-    }
-
-    static stringSub(base, prefix) {
-        if (base === ``) return `-${prefix}`;
-        if (prefix === ``) return base;
-        return base + `-` + prefix;
-    }
-
+    /**
+     * Math function to ensure a value falls within a specified range
+     * @param {*} value 
+     * @param {*} min 
+     * @param {*} max 
+     * @returns 
+     */
     static clamp(value, min, max) {
         return Math.max(Math.min(value, max), min);
     }
 
-    static lerp(start, end, val) {
-        const s = end - start; // The actual size of the lerp function
-        return start + (s * val);
+    /**
+     * Linear interpolation of a value between points a and b
+     * @param {Number} start 
+     * @param {Number} end 
+     * @param {Number} t 
+     * @returns {Number}
+     */
+    static lerp(start, end, t) {
+        return start * (1 - t) + end * t
     }
 
     /**
@@ -115,12 +115,30 @@ export default class sysUtil {
         foundry.dice.terms.Die.prototype[label] = func;
     }
 
-    static registerDragDrop(drag, drop) {
-        return {dragSelector: drag, dropSelector: drop};
-    }
-
     static getDragData(event) {
         return JSON.parse(event.dataTransfer.getData("text/plain"));
+    }
+
+    static getFormData(form, selectors) {
+        const matches = form.querySelectorAll(selectors);
+        LOGGER.log(matches)
+        const data = {};
+        for (const element of matches) {
+            // Parse the input data based on type
+            switch (element.type) {
+                case 'number':
+                    data[element.name] = +element.value;
+                    break;
+                case 'checkbox':
+                    data[element.name] = element.checked;
+                    break;
+                default:
+                    data[element.name] = element.value;
+                    break;
+            }
+        }
+
+        return data;
     }
 
     /**
@@ -137,18 +155,37 @@ export default class sysUtil {
             if (document.querySelector(selector)) {
                 return resolve(document.querySelector(selector));
             }
-    
+
             const observer = new MutationObserver(mutations => {
                 if (document.querySelector(selector)) {
                     observer.disconnect();
                     resolve(document.querySelector(selector));
                 }
             });
-    
+
             observer.observe(document.body, {
                 childList: true,
                 subtree: true
             });
         });
+    }
+
+    /**
+     * Convinient and light weight method to clone most data to prevent mutating source
+     * @param {*} original 
+     * @returns 
+     */
+    static duplicate(original) {
+        return JSON.parse(JSON.stringify(original));
+    }
+
+    /**
+     * Returns the ending ID value from a foundry UUID
+     * @param {*} uuid 
+     * @returns 
+     */
+    static IdFromUuid(uuid) {
+        if (typeof uuid === 'string') return uuid.match(/[a-zA-Z]+$/);
+        return null;
     }
 }

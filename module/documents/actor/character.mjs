@@ -1,8 +1,8 @@
-import { MyriadActor } from "../tfm-actor.mjs";
+import { TfmActor } from "./actor.mjs";
 import sysUtil from "../../helpers/sysUtil.mjs";
 import LOGGER from "../../helpers/logger.mjs";
 
-export default class MyriadCharacter extends MyriadActor {
+export default class TfmCharacter extends TfmActor {
 
     prepareBaseData() {
         super.prepareBaseData();
@@ -10,7 +10,6 @@ export default class MyriadCharacter extends MyriadActor {
 
     prepareDerivedData() {
         const system = this.system;
-        const attributes = system.attributes;
         const abilities = system.abilities;
         const inventory = system.inventory;
         const itemTypes = this.itemTypes;
@@ -20,43 +19,43 @@ export default class MyriadCharacter extends MyriadActor {
             ability.mod = sysUtil.abilityMod(ability.value);
         }
         // Calculate character level
-        attributes.lvl.value = sysUtil.levelXp(attributes.lvl.xp);
+        system.lvl.value = sysUtil.levelXp(system.lvl.xp);
         // Calculate dodge
-        attributes.dodge.value = 8 + abilities.fin.mod;
+        system.dodge.value = 8 + abilities.fin.mod;
         // Max inventory slots
-        inventory.size.max = 10 + abilities.pwr.mod;
+        inventory.size.max = 10 + abilities.pow.mod;
         for (var bonus of inventory.size.bonuses) {
             // Bonus structure {label: "Where this comes from", value: Number}
             if (typeof bonus === "object") inventory.size.max += bonus.value;
         }
 
-        LOGGER.debug(`PREPARE | DERIVED | ITEMS`);
         // Compile values from armour types
         for (const item of itemTypes.armour) {
-            LOGGER.debug("ARMOUR:", item);
             if (item.equipped) {
-                if (item.system.dr < attributes.dr.value) {
-                    LOGGER.log(`Equipped armour ${item.name} with value ${item.system.dr}`, item);
-                    attributes.dr.value = item.system.dr;
+                // Only use the best DR value
+                if (item.system.dr < system.dr.value) {
+                    system.dr.value = item.system.dr;
                 }
-                if (item.system.weight === `heavy`) attributes.dodge.value = Math.min(attributes.dodge.value, 8);
+                if (item.system.weight === `heavy`) system.dodge.value = Math.min(system.dodge.value, 8);
             }
         }
 
-        // If dual wielding weapons, dodge is capped to 8, do NOT add modifier to attack rolls
+        // If dual wielding weapons without prof, dodge is capped to 8, don't add modifier to attack rolls
         var weaponCount = 0;
         system.dualWield = false;
         for (const item of itemTypes.weapon) {
-            LOGGER.debug("WEAPON:", item);
             if (item.system.equipped) {
                 weaponCount += 1;
             }
         }
 
         if (weaponCount > 1) {
-            attributes.dodge.value = Math.min(attributes.dodge.value, 8);
+            system.dodge.value = Math.min(system.dodge.value, 8);
             system.dualWield = true;
         }
+    }
 
+    get level() {
+        return this.system.lvl.value;
     }
 }

@@ -10,7 +10,6 @@ class TFMHelpers {
     static linkUuid(uuid, text="") {
         // handelbars escapes returned values, use {{{ this }}} to insert this link as an actual element
         var link = TextEditor._createContentLink(["", "UUID", uuid]).outerHTML;
-        console.log(link);
         return link;
     }
 }

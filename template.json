@@ -6,24 +6,22 @@
         ],
         "templates": {
             "base": {
-                "attributes": {
-                    "dodge": {
-                        "value": 0
-                    },
-                    "hp": {
-                        "min": 0,
-                        "value": 3,
-                        "max": 3,
-                        "levels": [],
-                        "bonuses": []
-                    },
-                    "dr": {
-                        "value": 0,
-                        "parts": []
-                    }
+                "dodge": {
+                    "value": 0
+                },
+                "hp": {
+                    "min": 0,
+                    "value": 3,
+                    "max": 3,
+                    "levels": [],
+                    "bonuses": []
+                },
+                "dr": {
+                    "value": 0,
+                    "parts": []
                 },
                 "abilities": {
-                    "pwr": {
+                    "pow": {
                         "value": 6,
                         "mod": 0
                     },
@@ -71,16 +69,14 @@
                 "base",
                 "biography"
             ],
-            "attributes": {
-                "lvl": {
-                    "xp": 0,
-                    "value": 1
-                },
-                "corruption": {
-                    "value": 0,
-                    "min": 0,
-                    "max": 10
-                }
+            "lvl": {
+                "xp": 0,
+                "value": 1
+            },
+            "corruption": {
+                "value": 0,
+                "min": 0,
+                "max": 10
             },
             "inventory": {
                 "size": {
@@ -89,6 +85,21 @@
                     "min": 0,
                     "max": 10
                 }
+            },
+            "prof": {
+                "axe": 0,
+                "bow": 0,
+                "dagger": 0,
+                "flail": 0,
+                "hammer": 0,
+                "natural": 0,
+                "firearm": 0,
+                "polearm": 0,
+                "scythe": 0,
+                "sword": 0,
+                "thrown": 0,
+                "unarmed": 0,
+                "whip": 0
             }
         },
         "npc": {
@@ -127,6 +138,7 @@
             "equipment": {
                 "equipped": false,
                 "broken": false,
+                "damaged": false,
                 "enchantments": [],
                 "curses": []
             }
@@ -147,7 +159,7 @@
                 "physical",
                 "equipment"
             ],
-            "ability": "pwr",
+            "ability": "pow",
             "damage": {
                 "formula": "1d6 + @mod",
                 "type": "stabbing",
@@ -155,6 +167,7 @@
             },
             "hands": 1,
             "type": "med",
+            "proficiency": "sword",
             "ranged": false,
             "range": 5,
             "rarity": "common",
@@ -166,10 +179,9 @@
         "trinket": {
             "ability": "arc",
             "type": "arcane",
-            "spells": {},
+            "spells": [],
             "invocation": null,
             "empowered": false
-
         },
         "spell": {
             "templates": [

@@ -3,19 +3,19 @@
 
     <!-- Damage resistance -->
     <div class="ability">
-        <label class="label">{{system.attributes.dr.abbr}}</label>
-        <div class="modifier">{{numberFormat system.attributes.dr.value decimals=0 sign=true}}</div>
+        <label class="label">{{localize 'TFM.attr.abbr.dr'}}</label>
+        <div class="modifier">{{system.dr.value}}</div>
     </div>
     <!-- Dodge class -->
     <div class="ability">
-        <label class="label">{{system.attributes.dodge.abbr}}</label>
-        <div class="modifier">{{numberFormat system.attributes.dodge.value decimals=0 sign=false}}</div>
+        <label class="label">{{localize 'TFM.attr.abbr.dodge'}}</label>
+        <div class="modifier">{{system.dodge.value}}</div>
     </div>
 
 
-    {{#each system.abilities as |ability key|}}
+    {{#each abilities as |ability key|}}
     <div class="ability">
-        <a class="label rollable" data-label="{{ability.label}}" data-roll="2d6x6kf(max(3, 3+@lck.mod))+{{ability.mod}}">{{ability.abbr}}</a>
+        <a class="label rollable" data-label="TFM.ability.{{key}}" data-roll="2d6x6kf(max(3, 3+@lck.mod))+{{ability.mod}}">{{ability.abbr}}</a>
 
         <div class="modifier">{{numberFormat ability.mod decimals=0 sign=true}}</div>
         <input class="score" type="number" name="system.abilities.{{key}}.value" value="{{ability.value}}">

@@ -1,10 +1,11 @@
-import sysUtil from "../helpers/sysUtil.mjs";
+import LOGGER from "../../helpers/logger.mjs";
+import sysUtil from "../../helpers/sysUtil.mjs";
 
 /**
  * Extend the base Actor document by defining a custom roll data structure which is ideal for the Simple system.
  * @extends {Actor}
  */
-export class MyriadActor extends Actor {
+export class TfmActor extends Actor {
 
     
     /** @override */
@@ -46,7 +47,7 @@ export class MyriadActor extends Actor {
      * Override getRollData() that's supplied to rolls.
      */
     getRollData() {
-        const data = super.getRollData();
+        const data = foundry.utils.deepClone(this.system);
 
         // Prepare character roll data.
         this._getCharacterRollData(data);
@@ -62,12 +63,8 @@ export class MyriadActor extends Actor {
         if (this.type !== 'character') return;
 
         // Copy the ability scores to the top level, so that rolls can use
-        // formulas like `@pwr.mod + 4`.
+        // formulas like `@pow.mod + 4`.
         for (let [k, v] of Object.entries(data.abilities)) {
-            data[k] = foundry.utils.deepClone(v);
-        }
-        // Copy attributes to the the top level
-        for (let [k, v] of Object.entries(data.attributes)) {
             data[k] = foundry.utils.deepClone(v);
         }
 

@@ -1,10 +1,10 @@
 import LOGGER from "../helpers/logger.mjs";
 
-export const MyriadSheetMixin = Base => {
+export const TfmSheetMixin = Base => {
     const mixin = foundry.applications.api.HandlebarsApplicationMixin;
-    console.log("Adding mixin...");
-    console.log(`Base:`, Base);
-    console.log("Mixin:", mixin);
+    LOGGER.debug("Adding mixin...");
+    LOGGER.debug(`Base:`, Base);
+    LOGGER.debug("Mixin:", mixin);
     return class DocumentSheetMyriad extends mixin(Base) {
 
         static SHEET_MODES = { EDIT: 0, PLAY: 1 };
@@ -60,10 +60,10 @@ export const MyriadSheetMixin = Base => {
             }, {});
         }
 
+        /* --------------------------------------- SHEET RENDERING ----------------------------------------------- */
         _onRender(context, options) {
             super._onRender(context, options);
             if (!this.isEditable) {
-                LOGGER.log(`Disabling sheet inputs`);
                 this.element.querySelectorAll("input, select, textarea, multi-select").forEach(n => {
                     n.disabled = true;
                 })
@@ -71,6 +71,27 @@ export const MyriadSheetMixin = Base => {
             this._setupDragAndDrop();
         }
 
+        async _renderHTML(context, options) {
+            return super._renderHTML(context, options);
+        }
+
+        _replaceHTML(result, content, options) {
+            return super._replaceHTML(result, content, options);
+        }
+
+        async _preparePartContext(partId, context, options) {
+            return super._preparePartContext(partId, context, options);
+        }
+
+        _preSyncPartState(partId, newElement, priorElement, state) {
+            return super._preSyncPartState(partId, newElement, priorElement, state);
+        }
+
+        _syncPartState(partId, newElement, priorElement, state) {
+            return super._syncPartState(partId, newElement, priorElement, state);
+        }
+
+        /* ------------------------------------------ DRAG AND DROP ---------------------------------------- */
         _setupDragAndDrop() {
             const dd = new DragDrop({
                 dragSelector: "[data-item-uuid]",
@@ -138,7 +159,11 @@ export const MyriadSheetMixin = Base => {
                     break;
                 }
                 case "Item": {
-                    if (this._onDropItem(event, item) != true) return;
+                    // Allows users to overide and dodge the base item creation
+                    if (await this._onDropItem(event, item) != true) {
+                        LOGGER.debug(`Item create overiden`);
+                        return;
+                    }
                     break;
                 }
                 default: return;
@@ -149,6 +174,7 @@ export const MyriadSheetMixin = Base => {
         }
 
         async _onDropItem(event, data) {
+            LOGGER.debug('Recieved standard item drop');
             // Item dorps can be intercepted by overiding this function and returning a non true value
             // if returning !true, this will make _onDrop() skip default
             // document creation
@@ -159,22 +185,37 @@ export const MyriadSheetMixin = Base => {
             LOGGER.error(`Unhandled actor drop`, this);
         }
 
+        async _onSortItem(item, target) {
+            if (item.documentName !== "Item") return;
+            LOGGER.debug('Sorting item');
+            const self = target.closest("[data-tab]")?.querySelector(`[data-item-uuid="${item.uuid}"]`);
+            if (!self || !target.closest("[data-item-uuid]")) return;
+
+            let sibling = target.closest("[data-item-uuid]") ?? null;
+            if (sibling?.dataset.itemUuid === item.uuid) return;
+            if (sibling) sibling = await fromUuid(sibling.dataset.itemUuid);
+
+            let siblings = target.closest("[data-tab]").querySelectorAll("[data-item-uuid]");
+            siblings = await Promise.all(Array.from(siblings).map(s => fromUuid(s.dataset.itemUuid)));
+            siblings.findSplice(i => i === item);
+
+            let updates = SortingHelpers.performIntegerSort(item, { target: sibling, siblings: siblings, sortKey: "sort" });
+            updates = updates.map(({ target, update }) => ({ _id: target.id, sort: update.sort }));
+            this.document.updateEmbeddedDocuments("Item", updates);
+        }
+
+        /* ------------------------------- ACTION EVENTS ----------------------------------*/
         static _onEditImage(event, target) {
             if (!this.isEditable) return;
             const current = this.document.img;
             const fp = new FilePicker({
                 type: "image",
                 current: current,
-                callback: path => this.document.update({ img: path }),
+                callback: path => this.document.update({ 'img': path }),
                 top: this.position.top + 40,
                 left: this.position.left + 10
             });
             fp.browse();
-        }
-
-        async createEmbeddedDocuments(type, list) {
-            LOGGER.log('Creating new items', list);
-            return super.createEmbeddedDocuments(type, list);
         }
     }
 }

@@ -1,7 +1,7 @@
-import { MyriadActor } from "../tfm-actor.mjs";
+import { TfmActor } from "./actor.mjs";
 import sysUtil from "../../helpers/sysUtil.mjs";
 
-export default class MyriadNpc extends MyriadActor {
+export default class TfmNpc extends TfmActor {
 
 
     prepareDerivedData() {
@@ -15,6 +15,6 @@ export default class MyriadNpc extends MyriadActor {
             ability.mod = sysUtil.abilityMod(ability.value);
         }
         // Calculate dodge
-        attributes.dodge.value = 7 + abilities.fin.mod;
+        system.dodge.value = 7 + abilities.fin.mod;
     }
 }

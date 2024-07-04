@@ -1,15 +1,15 @@
-import { MyriadActor } from "./documents/tfm-actor.mjs";
-import MyriadCharacter from "./documents/actor/tfm-character.mjs";
-import MyriadNpc from "./documents/actor/tfm-npc.mjs";
-import { MyriadItem } from "./documents/tfm-item.mjs";
-import MyriadWeapon from "./documents/item/tfm-weapon.mjs";
-import MyriadTrinket from "./documents/item/tfm-trinket.mjs";
-import MyriadJob from "./documents/item/tfm-job.mjs";
-import MyriadFeature from "./documents/item/tfm-feature.mjs";
-import MyriadConsumable from "./documents/item/tfm-consumable.mjs";
-import MyriadSpell from "./documents/item/tfm-spell.mjs";
-import MyriadPerformance from "./documents/item/tfm-performance.mjs";
-import MyriadArmour from "./documents/item/tfm-armour.mjs";
+import { TfmActor } from "./documents/actor/actor.mjs";
+import TfmCharacter from "./documents/actor/character.mjs";
+import TfmNpc from "./documents/actor/npc.mjs";
+import { TfmItem } from "./documents/item/item.mjs";
+import TfmWeapon from "./documents/item/weapon.mjs";
+import TfmTrinket from "./documents/item/trinket.mjs";
+import TfmJob from "./documents/item/job.mjs";
+import TfmFeature from "./documents/item/feature.mjs";
+import TfmConsumable from "./documents/item/consumable.mjs";
+import TfmSpell from "./documents/item/spell.mjs";
+import TfmPerformance from "./documents/item/performance.mjs";
+import TfmArmour from "./documents/item/armour.mjs";
 
 
 /**
@@ -36,18 +36,18 @@ function mapProxies(entityTypes, baseClass) {
 }
 
 const actorTypes = {};
-actorTypes.character = MyriadCharacter;
-actorTypes.npc = MyriadNpc;
+actorTypes.character = TfmCharacter;
+actorTypes.npc = TfmNpc;
 
 const itemTypes = {};
-itemTypes.weapon = MyriadWeapon;
-itemTypes.armour = MyriadArmour;
-itemTypes.trinket = MyriadTrinket;
-itemTypes.job = MyriadJob;
-itemTypes.feature = MyriadFeature;
-itemTypes.spell = MyriadSpell;
-itemTypes.performance = MyriadPerformance;
-itemTypes.consumable = MyriadConsumable;
+itemTypes.weapon = TfmWeapon;
+itemTypes.armour = TfmArmour;
+itemTypes.trinket = TfmTrinket;
+itemTypes.job = TfmJob;
+itemTypes.feature = TfmFeature;
+itemTypes.spell = TfmSpell;
+itemTypes.performance = TfmPerformance;
+itemTypes.consumable = TfmConsumable;
 
-export const actorConstructor = mapProxies(actorTypes, MyriadActor);
-export const itemConstructor = mapProxies(itemTypes, MyriadItem);
+export const actorConstructor = mapProxies(actorTypes, TfmActor);
+export const itemConstructor = mapProxies(itemTypes, TfmItem);
