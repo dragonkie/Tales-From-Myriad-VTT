@@ -105,9 +105,11 @@
 
   "TFM.confirm.deleteItem": "Are you sure you would like to delete",
 
-  "TFM.dialog.weapon.damage": "Damage",
-  "TFM.dialog.weapon.penalty": "Penalty",
-  "TFM.dialog.weapon.criticalThrow": " throw",
+  "TFM.dialog.attack.ability": "Ability {label}",
+  "TFM.dialog.attack.penalty": "Penalty",
+  "TFM.dialog.attack.bonus": "Bonus",
+  "TFM.dialog.attack.throw": "Throw",
+  "TFM.dialog.attack.prof": "Proficient",
 
   "TFM.quest.001": "Scare off a group of enemies without engaging in combat",
   "TFM.quest.002": "Execute an ambush",
@@ -159,6 +161,10 @@
   "TFM.quest.048": "Be fully equipped and have descriptive clothing on your head, torso, legs, feet, and hands",
   "TFM.quest.049": "Use two consecutive turns to assist an ally in combat without dealing damage",
   "TFM.quest.050": "Explode your dice while rolling for a Stunt, twice",
+
+  "TFM.ContextMenu.Edit": "Edit",
+  "TFM.ContextMenu.Delete": "Delete",
+  "TFM.ContextMenu.Gift": "Gift",
 
   "TFM.corruption.label": "Corruption",
 
@@ -220,7 +226,7 @@
   "TYPES.weapon.med": "Medium",
   "TYPES.weapon.hvy": "Heavy",
 
-  "TFM.prof.label": "Proficient",
+  "TFM.prof.label": "Proficiency",
   "TFM.prof.abbr": "Prof",
   "TFM.prof.none": "None",
   "TFM.prof.half": "Half",

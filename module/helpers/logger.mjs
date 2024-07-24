@@ -13,7 +13,7 @@ export default class LOGGER {
     }
 
     static debug(...extraInfo) {
-        console.debug(`TFM DBG |`, ...extraInfo);
+        if (game.settings.get(tfm.id, 'debug')) console.debug(`TFM DBG |`, ...extraInfo);
     }
 
     static error(...extraInfo) {

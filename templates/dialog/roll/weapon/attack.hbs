@@ -1,0 +1,27 @@
+<form class="tfm">
+
+    <div class="form-field">
+        <label>{{ localize 'TFM.dialog.ability' }}</label>
+        <input name="ability" type="number" disabled value="{{mod}}"/>
+    </div>
+
+    <div class="form-field">
+        <label>{{ localize 'TFM.dialog.attack.bonus' }} / {{ localize 'TFM.dialog.attack.penalty' }}</label>
+        <input name="penalty" type="number" disabled/>
+    </div>
+
+    <div class="form-field">
+        <label>{{ localize 'TFM.prof.label' }}:</label>
+        <input name="proficient" type="text" disabled value="{{localize prof.label}}"/>
+    </div>
+
+    {{#if (gt prof.level 0)}}
+        <div class="form-field">
+            <label>{{ localize 'TFM.critRange' }}</label>
+            <input name="crit" type="number" disabled value="{{crit}}" />
+        </div>
+    {{/if}}
+
+    {{> 'tfm.roll-options'}}
+
+</form>

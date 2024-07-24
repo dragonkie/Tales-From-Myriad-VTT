@@ -23,7 +23,7 @@ export default class TfmSpell extends TfmItem {
 
     _getSelectors(context) {
         const selectors = {};
-        
+
         selectors.spellSchool = foundry.applications.fields.createSelectInput({
             options: [
                 { value: "arc", label: "TYPES.magic.arc" },
@@ -45,7 +45,7 @@ export default class TfmSpell extends TfmItem {
         return selectors;
     }
 
-    async roll() {
+    async use() {
         const rollData = this.getRollData();
         if (!rollData) {
             sysUtil.error(`TFM.notify.error.itemNoActor`);
@@ -57,60 +57,29 @@ export default class TfmSpell extends TfmItem {
             return null;
         }
 
-        const template = await renderTemplate(`systems/${game.system.id}/templates/dialog/dialog-roll-spell.hbs`, rollData);
-        const options = await new Promise(async (resolve, reject) => {
+        let dialog = await tfm.applications.TfmDialog.spell(`systems/${tfm.id}/templates/dialog/roll/spell.hbs`, rollData);
+        const options = sysUtil.getFormData(dialog.html, '[name]');
 
-            const dialog = new foundry.applications.api.DialogV2({
-                window: { title: "TFM.dialog.rollSpell" },
-                content: template,
-                buttons: [{
-                    action: "disadvantage",
-                    label: "disadvantage",
-                    callback: (event, button, dialog) => resolve(dialog.querySelector(`form`))
-                }, {
-                    label: "normal",
-                    callback: (event, button, dialog) => resolve(dialog.querySelector(`form`))
-                }],
-                submit: result => {
-                    LOGGER.warn(`Dialog testing`, result);
-                },
-                close: () => reject(null)
-            })
+        LOGGER.debug(options);
+        LOGGER.debug(rollData);
 
-            var app = dialog.render({ force: true });
-            sysUtil.waitForElm(`#${dialog.id}`).then(() => {
-                var element = document.getElementById(dialog.id);
-                element.querySelector(`[name="plus"]`).addEventListener(`click`, () => {
-                    var val = Number(element.querySelector(`[name="diceCount"]`).value);
-                    val = Math.min(val + 1, rollData.mod);
-                    element.querySelector(`[name="diceCount"]`).value = val;
-                });
-
-                element.querySelector(`[name="minus"]`).addEventListener(`click`, () => {
-                    var val = Number(element.querySelector(`[name="diceCount"]`).value);
-                    val = Math.max(val - 1, 1);
-                    element.querySelector(`[name="diceCount"]`).value = val;
-                });
-            });
-        });
-
-        if (!options) return null;
+        if (!options || options.cancled) return null;
         if (options.diceCount.value <= 0) {
             sysUtil.warn(`TFM.notify.warn.spellMinDice`);
             return null;
         }
 
         //Sets the maximum number of dice equal to the ammount rolled + explosions allowed with min of one
-        const mDice = parseInt(options.diceCount.value) + Math.max(1, 1 + rollData.lck.mod);
-        let r = new Roll(`${options.diceCount.value}d6x6kf${mDice}cs>=${this.cd}`, rollData);
+        const mDice = options.diceCount + Math.max(1, 1 + rollData.lck);
+        let r = new Roll(`${options.diceCount}d6x6kf${mDice}cs>=${this.cd}`, rollData);
         await r.roll();
-        var render = await r.render();
 
+        var render = await r.render();
         //Parse the numbers rolled to count for duplicate dice values to track miscast levels
         const results = r.dice[0].results;
-        const l = results.length;
         var miscasts = {};
         var tier = 0;
+
         //Counts dice duplicates for any active dice
         results.forEach((i) => {
             if (i.active) miscasts[i.result] = (miscasts[i.result] || 0) + 1;
@@ -120,22 +89,37 @@ export default class TfmSpell extends TfmItem {
         for (var key in miscasts) {
             tier += Math.max(miscasts[key] - 1, 0);
         }
+        // Max level of miscast is 4, so we cap it off at 4
+        tier = Math.min(4, tier);
 
-        // Add the miscast prompt to the chat log
-        if (tier > 0) {
-            render += `
+        if (options.miscast) {
+            // Add the miscast prompt to the chat log
+            if (tier > 0) {
+                render += `
                 <div>Myriad.chat.miscast</div>
                 <div>${this.actor.name} Suffers a tier ${tier} miscast</div>
             `
+            }
         }
+        let success = ``;
+        if (r.total >= this.cs) {
+            success = `<div>Success!</div>`;
+        } else success = `<div>Failure</div>`;
+
+        
 
         let msg = await r.toMessage({
             speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-            flavor: `Casting: ${this.name}`,
+            flavor: `
+            <div>Casting: ${this.name}</div>
+            <div>${success}</div>
+            `,
             content: render,
             create: true,
             rollMode: game.settings.get('core', 'rollMode')
         });
+
+        LOGGER.debug(r);
     }
 
     /**Retruns the spell school */
@@ -148,26 +132,7 @@ export default class TfmSpell extends TfmItem {
         const actor = this.actor;
         if (!actor) return null;
 
-        var a = {};
-
-        return foundry.utils.duplicate(this.actor.system.abilities[this.system.ability])
-
-        switch (this.system.ability) {
-            case "arc":
-                a = duplicate(this.actor.system.abilities.arc);
-                a.label = "arc";
-                break;
-            case "occ":
-                a = duplicate(this.actor.system.abilities.occ);
-                a.label = "occ";
-                break;
-            case "ins":
-                a = duplicate(this.actor.system.abilities.ins);
-                a.label = "ins";
-                break;
-            default: return null;
-        }
-        return a;
+        return sysUtil.duplicate(this.actor.system.abilities[this.system.ability])
     }
 
     get cd() {

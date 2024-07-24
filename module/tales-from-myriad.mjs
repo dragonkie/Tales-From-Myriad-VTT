@@ -10,13 +10,17 @@ import * as documents from "./documents/_module.mjs"
 
 import { actorConstructor, itemConstructor } from "./proxy-doc.mjs";
 import registerDiceModifiers from "./helpers/dice.mjs";
+import registerSocketHandler from "./helpers/socket.mjs";
+import TfmSocket from "./helpers/socket.mjs";
+import registerSystemSettings from "./helpers/settings.mjs";
 
 globalThis.tfm = {
     applications: applications,
     documents: documents.documents,
     dataModels: documents.dataModels,
     util: sysUtil,
-    config: TFM
+    config: TFM,
+    socket: TfmSocket
 }
 
 /* -------------------------------------------- */
@@ -36,6 +40,9 @@ Hooks.once('init', async function () {
         formula: "2d6",
         decimals: 2
     };
+
+    // Register myriads custom system settings
+    registerSystemSettings();
 
     // Define custom Document classes
     CONFIG.Actor.documentClass = actorConstructor;
@@ -57,6 +64,9 @@ Hooks.once('init', async function () {
 
     // Preload Handlebars templates.
     registerHandelbarsHelpers();
+
+    // Prepare sockets
+    tfm.socket.registerHandler();
 
     return preloadHandlebarsTemplates();
 });

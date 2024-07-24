@@ -14,10 +14,9 @@ export default class TfmItemSheet extends TfmSheetMixin(foundry.applications.she
         position: { height: 400, width: 700, top: 100, left: 200 },
         window: { resizable: true },
         actions: {
-            useItem: this._onUseItem,
             editItem: this._onEditItem,// For opening links to other items
             deleteItem: this._onDeleteItem,// For deleting item links
-            equipItem: this._onEquipItem
+            equipItem: this._onEquipItem,
         }
     }
 
@@ -34,7 +33,7 @@ export default class TfmItemSheet extends TfmSheetMixin(foundry.applications.she
     static TABS = {
         description: { id: 'description', group: 'primary', label: 'TFM.tab.description' },
         settings: { id: 'settings', group: 'primary', label: 'TFM.tab.settings' },
-        rules: { id: 'rules', group: 'primary', label: 'TFM.tab.rules' },
+        rules: { id: 'rules', group: 'primary', label: 'TFM.tab.rules' }
     }
 
     tabGroups = {
@@ -49,6 +48,7 @@ export default class TfmItemSheet extends TfmSheetMixin(foundry.applications.she
             system: doc.system,
             config: CONFIG.TFM,
             name: doc.name,
+            flags: this.document.flags,
             tabs: this._getTabs(),
             tags: this._getTags(),
             isEditMode: this.isEditMode,

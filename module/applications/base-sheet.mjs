@@ -2,10 +2,7 @@ import LOGGER from "../helpers/logger.mjs";
 
 export const TfmSheetMixin = Base => {
     const mixin = foundry.applications.api.HandlebarsApplicationMixin;
-    LOGGER.debug("Adding mixin...");
-    LOGGER.debug(`Base:`, Base);
-    LOGGER.debug("Mixin:", mixin);
-    return class DocumentSheetMyriad extends mixin(Base) {
+    return class TfmDocumentSheet extends mixin(Base) {
 
         static SHEET_MODES = { EDIT: 0, PLAY: 1 };
 
@@ -20,11 +17,12 @@ export const TfmSheetMixin = Base => {
                 deleteEffect: this._onDeleteEffect,
                 createEffect: this._onCreateEffect,
                 toggleDescription: this._onToggleDescription,
+                toggleMode: this._onToggleMode,
             }
         };
 
         _onClickAction(event, target) {
-            var data = { event: event, target: target }
+            var data = { event: event, target: target };
             LOGGER.warn(`Uncaught sheet action missing handler`, data);
         }
 
@@ -59,8 +57,20 @@ export const TfmSheetMixin = Base => {
                 return acc;
             }, {});
         }
+        /*****************************************************************************************/
+        /*                                                                                       */
+        /*                                  SHEET RENDERING                                      */
+        /*                                                                                       */
+        /*****************************************************************************************/
+        async render(options, _options) {
+            return super.render(options, _options);
+        }
 
-        /* --------------------------------------- SHEET RENDERING ----------------------------------------------- */
+        _onFirstRender(context, options) {
+            super._onFirstRender(context, options);
+            this._setupContextMenu();
+        }
+
         _onRender(context, options) {
             super._onRender(context, options);
             if (!this.isEditable) {
@@ -75,8 +85,31 @@ export const TfmSheetMixin = Base => {
             return super._renderHTML(context, options);
         }
 
+        async _renderFrame(options) {
+            const frame = super._renderFrame(options);
+
+            // Insert additional buttons into the window header
+            // In this scenario we want to add a lock button
+            if (this.isEditable && !this.document.getFlag("core", "sheetLock")) {
+                const label = game.i18n.localize("SHEETS.toggleLock");
+                let icon = this.isEditMode ? 'fa-lock-open' : 'fa-lock';
+                const sheetConfig = `<button type="button" class="header-control fa-solid ${icon}" data-action="toggleMode" data-tooltip="${label}" aria-label="${label}"></button>`;
+                this.window.close.insertAdjacentHTML("beforebegin", sheetConfig);
+            }
+
+            return frame;
+        }
+
         _replaceHTML(result, content, options) {
             return super._replaceHTML(result, content, options);
+        }
+
+        _insertElement(element) {
+            return super._insertElement(element);
+        }
+
+        _removeElement(element) {
+            return super._removeElement(element);
         }
 
         async _preparePartContext(partId, context, options) {
@@ -204,6 +237,52 @@ export const TfmSheetMixin = Base => {
             this.document.updateEmbeddedDocuments("Item", updates);
         }
 
+        /***********************************************************************************/
+        /*                                                                                 */
+        /*                              CONTEXT MENU                                       */
+        /*                                                                                 */
+        /***********************************************************************************/
+
+        _setupContextMenu() {
+            new tfm.applications.TfmContextMenu(this.element, "[data-item-uuid]", [], {
+                onOpen: element => {
+                    const item = fromUuidSync(element.dataset.itemUuid);
+                    if (!item) return;
+                    ui.context.menuItems = this._getItemContextOptions(item);
+                }
+            })
+        }
+
+        _getItemContextOptions(item) {
+            const isOwner = item.isOwner;
+            const isCharacter = item.actor.type === "character";
+            const isNpc = item.actor.type === "npc";
+            const isEquipped = item.isEquipped;
+            return [{
+                name: "TFM.ContextMenu.Edit",
+                icon: "<i class='fa-solid fa-fw fa-edit'></i>",
+                condition: () => isOwner,
+                callback: () => item.sheet.render(true),
+                group: "manage"
+            }, {
+                name: "TFM.ContextMenu.Delete",
+                icon: "<i class='fa-solid fa-fw fa-trash'></i>",
+                condition: () => isOwner,
+                callback: () => item.delete(),
+                group: "manage"
+            }, {
+                name: "TFM.ContextMenu.Gift",
+                icon: "<i class='fa-solid fa-fw fa-gift'></i>",
+                condition: () => isOwner,
+                callback: () => item.delete(),
+                group: "manage"
+            }];
+        }
+
+        _getEffectContextOptions() {
+
+        }
+
         /* ------------------------------- ACTION EVENTS ----------------------------------*/
         static _onEditImage(event, target) {
             if (!this.isEditable) return;
@@ -216,6 +295,18 @@ export const TfmSheetMixin = Base => {
                 left: this.position.left + 10
             });
             fp.browse();
+        }
+
+        static _onToggleMode() {
+            if (this.isPlayMode) this._sheetMode = this.constructor.SHEET_MODES.EDIT;
+            else this._sheetMode = this.constructor.SHEET_MODES.PLAY;
+            LOGGER.debug('Sheet mode toggled to:', this.sheetMode);
+
+            const lock = this.window.header.querySelector('.fa-lock, .fa-lock-open');
+            lock.classList.toggle('fa-lock');
+            lock.classList.toggle('fa-lock-open');
+
+            this.render(true);
         }
     }
 }

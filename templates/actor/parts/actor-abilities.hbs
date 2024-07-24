@@ -15,7 +15,7 @@
 
     {{#each abilities as |ability key|}}
     <div class="ability">
-        <a class="label rollable" data-label="TFM.ability.{{key}}" data-roll="2d6x6kf(max(3, 3+@lck.mod))+{{ability.mod}}">{{ability.abbr}}</a>
+        <a class="label" data-action="rollAbility" data-ability="{{key}}">{{ability.abbr}}</a>
 
         <div class="modifier">{{numberFormat ability.mod decimals=0 sign=true}}</div>
         <input class="score" type="number" name="system.abilities.{{key}}.value" value="{{ability.value}}">

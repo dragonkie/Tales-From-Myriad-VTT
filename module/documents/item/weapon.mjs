@@ -13,52 +13,21 @@ export default class TfmWeapon extends TfmItem {
 
         this.system.broken = this.isBroken;
         this.system.damaged = this.isDamaged;
-    }
 
-    async roll() {
-        // Attack roll
-        let rollData = this.getRollData();
-        if (!rollData) {
-            sysUtil.error(`TFM.notify.error.weapon.unownedRoll`);
-            return null;
+        // sets the weapons damage dice based on type
+        this.system.damage.dice = 4;
+        switch (this.system.type) {
+            case 'lit': 
+                this.system.damage.dice = 4;
+                break;
+            case 'med':
+            case 'rng':
+                this.system.damage.dice = 8;
+                break;
+            case 'hvy':
+                this.system.damage.dice = 12;
+                break;
         }
-
-        // Attack roll
-        if (this.system.damage.penalty >= 4) {
-            //When a weapon is beyond repair, the next attack roll always hits, and has special modifiers applied to it
-            //Ignore the attack roll, and skip straight to damage, all dice except 1's explode here, and ignore damage penalty
-            var formula = this.damage;
-            var matches = formula.match(/\d+d\d+/g);
-            for (var a of matches) {
-                const count = Number(a.match(/\d+d/)[0].slice(0, -1));
-                const faces = Number(a.match(/d\d+/)[0].substring(1));
-                const max = count + Math.max(1, 1 + rollData.lck.mod);
-                formula = formula.replace(a, `${count}d${faces}x>=${faces}kf${max}`);
-            }
-
-            LOGGER.warn("FORMULA", formula);
-            const rDamage = new Roll(formula);
-            await rDamage.evaluate(rollData);
-            return rDamage.toMessage();
-        } else {
-            // Roll the attack normally
-            const rAttack = new Roll(this.attack, rollData);
-            await rAttack.evaluate();
-            let aMsg = await rAttack.toMessage();
-
-            // Track to see if double 1's were rolled for the attack, if so, damage the weapon
-            var attackDice = rAttack.dice;
-            var counter = 0;
-            for (var v of attackDice[0].results) {
-                if (v.result === 1 && v.active) counter += 1;
-            }
-
-            if (counter > 1) {
-                LOGGER.warn(`WEAPON | DAMAGED`, this);
-                this.breakWeapon();
-            }
-        }
-
     }
 
     /* --------------------------------------------- RENDER CONTEXT ----------------------------------------------------*/
@@ -133,11 +102,11 @@ export default class TfmWeapon extends TfmItem {
                 { value: "axe", label: "TFM.weapon.axe" },
                 { value: "bow", label: "TFM.weapon.bow" },
                 { value: "dagger", label: "TFM.weapon.dagger" },
+                { value: "firearm", label: "TFM.weapon.firearm" },
                 { value: "fist", label: "TFM.weapon.fist" },
                 { value: "flail", label: "TFM.weapon.flail" },
                 { value: "hammer", label: "TFM.weapon.hammer" },
                 { value: "katana", label: "TFM.weapon.katana" },
-                { value: "pistol", label: "TFM.weapon.pistol" },
                 { value: "polearm", label: "TFM.weapon.polearm" },
                 { value: "sword", label: "TFM.weapon.sword" },
                 { value: "thrown", label: "TFM.weapon.thrown" },
@@ -161,18 +130,56 @@ export default class TfmWeapon extends TfmItem {
             damage: { label: "Damage", value: sysUtil.localize(`TYPES.dmg.${this.system.damage.type}`) },
             ability: { label: "Ability", value: sysUtil.localize(`TFM.ability.${this.system.ability}`) },
             formula: { label: "Formula", value: this.system.damage.formula },
-
+            identified: { label: "Identified", value: this.identified}
         }
 
         if (this.system.broken) tags.broken = { label: 'Broken' };
 
-
         return tags;
     }
 
+    // Used when rendering an item to an actor sheet
+    _getActions() {
+        const list = this.constructor.ACTIONS;
+        const actions = [];
+
+
+    }
+
+    getRollData() {
+        const rollData = super.getRollData();
+        if (!rollData) return null; // Doesnt return anything if there is no actor found
+        rollData.mod = this.mod;
+        rollData.penalty = this.system.damage.penalty;
+        rollData.attack = rollData.mod + rollData.penalty;
+        rollData.ranged = this.ranged;
+
+        // Adds the weapons critical bonus to the actors
+        rollData.crit += this.system.crit;
+
+        // Get users weapon proficiency level
+        rollData.prof.level = this.isProficient;
+        rollData.prof.label = 'TFM.prof.none';
+        if (rollData.prof.level > 0) rollData.prof.label = 'TFM.prof.half';
+        if (rollData.prof.level == 3) rollData.prof.label = 'TFM.prof.full';
+
+        return rollData;
+    }
+
     /* --------------------------------------------------- ACTION EVENTS -------------------------------------------------------- */
-    async use() {
-        // Load the dialog template
+    async use(action) {
+
+        switch (action) {
+            case 'damage':
+                return this._onUseDamage();
+            case 'critical':
+                return this._onUseCritical();
+            default:
+                return this._onUseAttack();
+        }
+    }
+
+    async _onUseAttack() {
         const rollData = this.getRollData();
 
         // Grabs any targeted tokens to automate damage if enabled
@@ -186,72 +193,113 @@ export default class TfmWeapon extends TfmItem {
             })
         }
 
-
-        LOGGER.log(rollData)
-        const template = await renderTemplate(`systems/${game.system.id}/templates/dialog/tfm-weapon.hbs`, rollData);
+        const template = this.constructor.TEMPLATES.attack;
 
         // Create roll options dialog
-        let options = await new Promise(async (resolve, reject) => {
-            const buttons = [{
-                action: "disadvantage",
-                label: "disadvantage",
-                callback: (event, button, dialog) => resolve({ form: dialog.querySelector(`form`), mode: 'disadvantage' })
-            }, {
-                label: "normal",
-                action: "roll",
-                callback: (event, button, dialog) => resolve({ form: dialog.querySelector(`form`), mode: 'normal' })
-            }]
+        let dialog = await tfm.applications.TfmDialog.roll(template, rollData);
+        const formData = sysUtil.getFormData(dialog.html, '[name]');
 
-            // if the weapon is damaged, add the button to throw the weapon, should trigger a confirmation popup to be sure
-            if (this.isDamaged) {
-                buttons.push({
-                    label: "thrown crit",
-                    action: "crit",
-                    callback: (event, button, dialog) => resolve({ form: dialog.querySelector(`form`), mode: 'crit' })
-                })
-            }
+        // Prepare dice data
+        let rDice = 2;
+        let rFaces = 6;
+        let rCrit = sysUtil.clamp(rFaces - rollData.crit, 2, rFaces);
+        let rKarma = rollData.karma;
+        let rBonus = rollData.attack;
 
-            const dialog = new foundry.applications.api.DialogV2({
-                window: { title: "TFM.dialog.useWeapon" },
-                content: template,
-                buttons: buttons,
-                submit: result => {
-                    LOGGER.warn(`Dialog testing`, result);
-                },
-                close: () => reject(null)
-            })
+        // Prep formula pieces
+        let rAdv = ``;
+        let rExp = `x>=`;
 
-            let app = dialog.render(true);
-        });
-
-        const formData = sysUtil.getFormData(options.form, '[name]');
-
-        if (options.mode === `crit`) {
-            // Confirm that the player wants to throw and destroy their weapon
-            confirm = await foundry.applications.api.DialogV2.confirm({
-                windw: { title: `Confirm` },
-                content: `${sysUtil.localize('TFM.confirm.criticalThrow')}: ${this.name}`,
-                rejectClose: false,
-                modal: true
-            });
-            if (confirm) {
-                // If the user does want to make a critical throw, change the explosion ranged to x>1kf@lck.mod min 1
-                // This damage does not include the damaged penalty, but is affected by proficiency so the dice crits wont help if you arent proficient
-            }
-            else return null;
+        // No proficiency means at disadvantage and no explosions, weapon buttons should reflect this
+        if (rollData.prof.level == 0) {
+            rExp = ``;
         }
 
-        // Get actors proficiency with the weapon, values of 0 - 2
+        //Half proficiency, Limited to one explosion on dice, no performing stunts
+        if (rollData.prof.level > 0 && rollData.prof.level < 3) {
+            rKarma = 3;// 3 = 2d6 + 1 explosion dice
+        }
 
-        // Get weapon state, normal, damaged, broken
+        // Check if we have advantage / disadvantage (unprofficient weapons are always at disadvantage)
+        if (dialog.button.dataset.action == 'advantage') {
+            rDice += 1;
+            rAdv = `dl1`;
+        }
+
+        if (dialog.button.dataset.action == 'disadvantage' || rollData.prof.level == 0) {
+            rDice += 1;
+            rAdv = `dh1`
+        }
+        
+        // Prep the formula
+        let formula = `${rDice}d${rFaces}${rAdv}`;
+        if (rExp != ``) formula += `${rExp}${rCrit}kf${rKarma}`;
+        formula += `+ ${rBonus}`;
+        
+
+        // Append any situational bonus
+        if (formData.situation != '') {
+            if (Array.from(formData.situation)[0] != '-') formula += `+`;// Inject a + sign if theres nothing in front of the situation bonus already
+            formula += formData.situation;
+        }
+
+        // Roll the dice
+        let roll = new Roll(formula, rollData);
+        await roll.evaluate();
+
+        // Collect active dice roll results
+        let results = [];
+        for (var a = 0; a < roll.dice.length; a++) {
+            for (var b = 0; b < roll.dice[a].results.length; b++) {
+                let d = roll.dice[a].results[b];
+                if (d.active) results.push(d.result);
+            }
+        }
+
+        // Special conditions based on dice results
+        if (results.length > 1) {
+            // Check for critical failure (double 1's) by summing hte first two dice values
+            if (results[0] + results[1] === 2) await this._onDamageWeapon(-1);
+
+            // Check for critical success (double 6's) on melee weapons to perform a free stunt
+            if (results[0] + results[1] === 12 && !this.ranged) {
+                // Attack becomes a stunt, increasing the critical range, and forcing the first two dice to explode
+                // This formula is complex since were accounting for the first two dice having already exploded
+                // so it should look like 2d6 were rolled naturally and have exploded as usual
+                // the actual formula will look more like [12]+(@karma)d6x>(@crit-1, min 1) + @mod
+            }
+        }
+
+        await roll.toMessage();
+        LOGGER.debug(roll);
     }
 
-    getRollData() {
-        const rollData = super.getRollData();
-        if (!rollData) return null; // Doesnt return anything if there is no actor found
-        rollData.mod = this.mod;
+    async _onUseDamage() {
+        const rollData = this.getRollData();
+        const template = this.constructor.TEMPLATES.damage;
 
-        return rollData;
+        // Grabs any targeted tokens to automate damage if enabled
+        const targets = game.user.targets;
+        const targetActors = [];
+        let hasTargets = false;
+        if (targets.size > 0) {
+            hasTargets = true;
+            game.user.targets.forEach((token) => {
+                targetActors.push(token.actor);
+            })
+        }
+
+        let dialog = await tfm.applications.TfmDialog.roll(template, rollData, {buttons: tfm.applications.TfmDialog.buttons.simple});
+        LOGGER.debug(dialog)
+        const formData = sysUtil.getFormData(dialog.html, '[name]');
+
+        let roll = new Roll(`1d${this.system.damage.dice}x>=${this.system.damage.dice - rollData.crit}kf${2+Math.max(rollData.lck, 0)} + @attack`, rollData);
+        await roll.evaluate();
+        roll.toMessage();
+    }
+
+    async _onUseCritical() {
+
     }
 
     getProperty(property) {
@@ -308,7 +356,9 @@ export default class TfmWeapon extends TfmItem {
     }
     /**If there is a parent actor, check if its proficient */
     get isProficient() {
-        if (!this.isOwned) return null;
+        if (!this.actor) return null;
+        const proficiencies = this.actor.system.prof;
+        return proficiencies[this.system.proficiency];
     }
 
     // Convinience checker to see if a weapon can be thrown
@@ -325,11 +375,16 @@ export default class TfmWeapon extends TfmItem {
         return this.penalty <= -3;
     }
 
-    /**Quick function for applying damage penalty from rolling double 1's on an attack */
-    async breakWeapon(value = -1) {
+    /**Quick function for applying damage penalty from rolling double 1's on an attack, or anything else someone deems neccesary I suppose */
+    async _onDamageWeapon(value = -1) {
         const p = this.penalty + value;
         if (p <= -3) await this.update({ "system.broken": true, "system.damage.penalty": p });// Broken weapon thrown threshold
         else await this.update({ "system.damage.penalty": p });
+    }
+
+    static TEMPLATES = {
+        attack: `systems/tales-from-myriad/templates/dialog/roll/weapon/attack.hbs`,
+        damage: `systems/tales-from-myriad/templates/dialog/roll/weapon/damage.hbs`
     }
 
     // Quick reference to the different available weapon proficiencies
@@ -373,5 +428,34 @@ export default class TfmWeapon extends TfmItem {
 
     static TYPE = {
 
+    }
+
+    // List of actions available as buttons on item sheet to trigger this item, managed by the use() function
+    static ACTIONS = {
+        attack: {
+            label: 'Attack',
+            icon: 'fa-sword',
+            action: 'attack'
+        },
+        damage: {
+            label: 'Damage',
+            icon: 'fa-droplet',
+            action: 'damage'
+        },
+        throw: {
+            label: 'Throw',
+            icon: 'fa-dagger',
+            action: 'throw'
+        },
+        shoot: {
+            label: 'Shoot',
+            icon: 'fa-bow-arrow',
+            action: 'shoot'
+        },
+        fire: {
+            label: 'Fire',
+            icon: 'fa-gun',
+            action: 'fire'
+        }
     }
 }

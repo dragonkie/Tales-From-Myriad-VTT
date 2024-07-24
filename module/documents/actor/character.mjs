@@ -36,7 +36,8 @@ export default class TfmCharacter extends TfmActor {
                 if (item.system.dr < system.dr.value) {
                     system.dr.value = item.system.dr;
                 }
-                if (item.system.weight === `heavy`) system.dodge.value = Math.min(system.dodge.value, 8);
+                // Cap off the max dodge value when wearing heavy armour
+                if (item.system.weight === `hvy`) system.dodge.value = Math.min(system.dodge.value, 8);
             }
         }
 
@@ -57,5 +58,12 @@ export default class TfmCharacter extends TfmActor {
 
     get level() {
         return this.system.lvl.value;
+    }
+
+    getRollData() {
+        const data = super.getRollData();
+
+        
+        return data;
     }
 }

@@ -25,7 +25,10 @@ export const preloadHandlebarsTemplates = async function () {
 
         // Item partials
         `${sys}/item/parts/item-header.hbs`,
-        `${sys}/item/parts/item-description.hbs`
+        `${sys}/item/parts/item-description.hbs`,
+
+        // Dialog partials
+        `${sys}/dialog/parts/roll-options.hbs`
     ];
 
     const paths = {};

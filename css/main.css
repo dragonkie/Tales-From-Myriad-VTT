@@ -364,6 +364,9 @@
   background-color: var(--color-cool-4);
   padding: 4px;
 }
+.tfm .item-action {
+  padding-right: 2px;
+}
 .tfm .effects .item .effect-source,
 .tfm .effects .item .effect-duration,
 .tfm .effects .item .effect-controls {
@@ -518,6 +521,12 @@
 .form-field > * {
   align-items: center;
   flex: 1;
+}
+
+#context-menu {
+  width: auto;
+  min-width: 100px;
+  max-width: 200px;
 }
 
 /*# sourceMappingURL=main.css.map */

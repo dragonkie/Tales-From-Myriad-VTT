@@ -4,18 +4,18 @@
 </div>
 
 {{#if (eq system.type 'div')}}
-<div class="resource flexrow">
-    <p>Empowered:</p>
-    <input type="checkbox" name="system.empowered" {{#if system.empowered}}checked="true" {{/if}}>
-</div>
+    <div class="resource flexrow">
+        <p>Empowered:</p>
+        <input type="checkbox" name="system.empowered" {{#if system.empowered}}checked="true" {{/if}}>
+    </div>
 {{/if}}
 
 <ol class="items-list">
     {{#if (eq system.type 'occ')}}
-    <li class="item flexrow items-header">
-        <div class="item-name">{{localize 'TFM.invocation'}}</div>
-        <div class="item-controls">{{localize 'TFM.controls'}}</div>
-    </li>
+        <li class="item flexrow items-header">
+            <div class="item-name">{{localize 'TFM.invocation'}}</div>
+            <div class="item-controls">{{localize 'TFM.controls'}}</div>
+        </li>
     {{/if}}
 
     <li class="item flexrow items-header">
@@ -24,22 +24,27 @@
     </li>
     {{#each spells}}
 
-    <li class="item flexrow" data-item-uuid="{{uuid}}">
+        <li class="item flexrow" data-item-uuid="{{uuid}}">
 
-        <div class="item-name" data-action="itemEdit" style="flex: 2 0 auto">
-            <img src="{{img}}" title="{{name}}" width="30" height="30" /></a>
-            <h4 style="padding-left: 4px;">{{name}}</h4>
-        </div>
+            <div class="item-name" data-action="itemEdit" style="flex: 2 0 auto">
+                {{#if isActive}}
+                    <img src="{{img}}" title="{{name}}" width="30" height="30" /></a>
+                {{/if}}
+                {{#unless isActive}}
+                    <i class="fa-solid fa-unlink fa-lg"></i>
+                {{/unless}}
+                <h4 style="padding-left: 4px;">{{name}}</h4>
+            </div>
 
-        <div class="item-controls" style="whitespace: nowrap;">
-            <a class="item-control item-edit" title="Edit Item" data-action="editItem">
-                <i class="fas fa-edit"></i>
-            </a>
-            <a class="item-control item-delete" title="Delete Item" data-action="deleteItem">
-                <i class="fas fa-trash"></i>
-            </a>
-        </div>
-    </li>
+            <div class="item-controls" style="whitespace: nowrap;">
+                <a class="item-control item-edit" title="Edit Item" data-action="editItem">
+                    <i class="fas fa-edit"></i>
+                </a>
+                <a class="item-control item-delete" title="Delete Item" data-action="deleteItem">
+                    <i class="fas fa-trash"></i>
+                </a>
+            </div>
+        </li>
 
     {{/each}}
 </ol>

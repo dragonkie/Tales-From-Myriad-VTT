@@ -9,12 +9,15 @@ function keep(modifier) {
 
     if (direction === `f`) {
         const results = this.results;
-        if (results.length > number) {
-            for (var a = 0; a < results.length; a++) {
-                if (a >= number) {
-                    results[a].active = false;
-                    results[a].discarded = true;
-                }
+        let counter = 0;
+        // Loops through dice results
+        for (var a = 0; a < results.length; a++) {
+            // Counts the number of active dice, when over the allowance, drop the rest
+            if (results[a].active && counter < number) {
+                counter += 1;
+            } else if (counter >= number) {
+                results[a].active = false;
+                results[a].discarded = true;
             }
         }
     } else {

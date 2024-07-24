@@ -110,7 +110,7 @@ export default class sysUtil {
      * @param {Function} func 
      */
     static registerMod(term, label, func) {
-        LOGGER.debug(`Registering die modifier: [${term}] to [${label}]`, func);
+        LOGGER.debug(`Registering die modifier: [${term}] to [${label}]`);
         foundry.dice.terms.Die.prototype.constructor.MODIFIERS[term] = label;
         foundry.dice.terms.Die.prototype[label] = func;
     }
@@ -121,19 +121,21 @@ export default class sysUtil {
 
     static getFormData(form, selectors) {
         const matches = form.querySelectorAll(selectors);
-        LOGGER.log(matches)
         const data = {};
         for (const element of matches) {
+            let key = '';
+            if (element.name) key = element.name;
+            else if (element.id) key = element.id;
             // Parse the input data based on type
             switch (element.type) {
                 case 'number':
-                    data[element.name] = +element.value;
+                    data[key] = +element.value;
                     break;
                 case 'checkbox':
-                    data[element.name] = element.checked;
+                    data[key] = element.checked;
                     break;
                 default:
-                    data[element.name] = element.value;
+                    data[key] = element.value;
                     break;
             }
         }
@@ -185,7 +187,7 @@ export default class sysUtil {
      * @returns 
      */
     static IdFromUuid(uuid) {
-        if (typeof uuid === 'string') return uuid.match(/[a-zA-Z]+$/);
+        if (typeof uuid === 'string') return uuid.match(/[a-zA-Z1-9]+$/);
         return null;
     }
 }

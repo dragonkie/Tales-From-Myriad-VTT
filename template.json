@@ -20,6 +20,7 @@
                     "value": 0,
                     "parts": []
                 },
+                "crit": 0,
                 "abilities": {
                     "pow": {
                         "value": 6,
@@ -50,7 +51,15 @@
                         "mod": 0
                     }
                 },
-                "bonuses": {}
+                "bonuses": {
+                    "ability": {
+                        "check": "",
+                        "save": ""
+                    },
+                    "spell": {
+
+                    }
+                }
             },
             "biography": {
                 "bio": {
@@ -165,16 +174,14 @@
                 "type": "stabbing",
                 "penalty": 0
             },
+            "crit": 0,
             "hands": 1,
             "type": "med",
             "proficiency": "sword",
-            "ranged": false,
             "range": 5,
             "rarity": "common",
             "identified": false,
-            "properties": [
-                "thrown"
-            ]
+            "properties": []
         },
         "trinket": {
             "ability": "arc",

@@ -1,3 +1,16 @@
 <div>
-    DA RULES
+    Flags
+    {{#each flags as |scope key|}}
+        <div class="form-group">
+            <label>{{key}}:</label>
+            <div class="flexcol">
+            {{#each scope as |data key|}}
+                <div class="form-group">
+                    <label>{{key}}:</label>
+                    <input type="text" disabled value="{{data}}">
+                </div>
+            {{/each}}
+            </div>
+        </div>
+    {{/each}}
 </div>

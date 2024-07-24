@@ -7,7 +7,7 @@ import sysUtil from "../../helpers/sysUtil.mjs";
  */
 export class TfmActor extends Actor {
 
-    
+
     /** @override */
     prepareData() {
         // Prepare data for the actor. Calling the super version of this executes
@@ -36,11 +36,22 @@ export class TfmActor extends Actor {
         const actorData = this;
         const systemData = actorData.system;
         const flags = actorData.flags.tfm || {};
+
+
     }
 
-    
+
     prepareEmbeddedDocuments() {
-        const data = super.prepareEmbeddedDocuments();
+        super.prepareEmbeddedDocuments();
+
+        for (const item of this.items.contents) {
+            switch (item.type) {
+                case 'trinket': // Handles the managment of spells, if enabled
+                    //let spells = item._prepareSpells();
+                    break;
+                default: break;
+            }
+        }
     }
 
     /**
@@ -49,35 +60,16 @@ export class TfmActor extends Actor {
     getRollData() {
         const data = foundry.utils.deepClone(this.system);
 
-        // Prepare character roll data.
-        this._getCharacterRollData(data);
-        this._getNpcRollData(data);
+        // Copy the ability scores to the top level, so that rolls can use
+        // formulas like `@pow.mod + 4`.
+        for (let [k, v] of Object.entries(data.abilities)) {
+            data[k] = foundry.utils.deepClone(v.mod);
+        }
+
+        // used for exploding dice based on luck, so 2d6kf@karma
+        data.karma = Math.max(3, 3 + data.lck);
 
         return data;
     }
 
-    /**
-     * Prepare character roll data.
-     */
-    _getCharacterRollData(data) {
-        if (this.type !== 'character') return;
-
-        // Copy the ability scores to the top level, so that rolls can use
-        // formulas like `@pow.mod + 4`.
-        for (let [k, v] of Object.entries(data.abilities)) {
-            data[k] = foundry.utils.deepClone(v);
-        }
-
-        // used for exploding dice based on luck, so 2d6kf@maxDice
-        data.maxDice = Math.max(3, data.lck.mod);
-    }
-
-    /**
-     * Prepare NPC roll data.
-     */
-    _getNpcRollData(data) {
-        if (this.type !== 'npc') return;
-
-        // Process additional NPC data here.
-    }
 }

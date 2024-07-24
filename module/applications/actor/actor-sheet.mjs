@@ -18,7 +18,10 @@ export default class TfmActorSheet extends TfmSheetMixin(foundry.applications.sh
             editItem: this._onEditItem,
             deleteItem: this._onDeleteItem,
             equipItem: this._onEquipItem,
+            giveItem: this._onGiveItem,
             changeProf: this._onChangeProficiency,
+            roll: this._onRoll,
+            rollAbility: this._onRollAbility
         }
     }
 
@@ -81,7 +84,7 @@ export default class TfmActorSheet extends TfmSheetMixin(foundry.applications.sh
     _prepareHealth() {
         const hp = sysUtil.duplicate(this.document.system.hp);
         hp.percent = sysUtil.clamp((hp.value / hp.max * 100).toFixed(0), 0, 100)
-        
+
         return hp;
     }
 
@@ -143,27 +146,29 @@ export default class TfmActorSheet extends TfmSheetMixin(foundry.applications.sh
 
         switch (item.type) {
             case `trinket`:
-                const spells = item.system.spells;
-                const spellList = [];
-                // Add spells from the trinket
-                for (var [key, value] of Object.entries(spells)) {
-                    var s = await fromUuid(value.uuid);
-                    spellList.push(s.toObject());
-                }
+            /*
+            const spells = item.system.spells;
+            const spellList = [];
+            // Add spells from the trinket
+            for (var [key, value] of Object.entries(spells)) {
+                var s = await fromUuid(value.uuid);
+                spellList.push(s.toObject());
+            }
 
-                const trinket = await this.actor.createEmbeddedDocuments(`Item`, [itemData]);
-                const newSpells = await this.actor.createEmbeddedDocuments(`Item`, spellList);
+            const trinket = await this.actor.createEmbeddedDocuments(`Item`, [itemData]);
+            const newSpells = await this.actor.createEmbeddedDocuments(`Item`, spellList);
 
-                LOGGER.log('trinket', trinket)
-                LOGGER.log('Spell list', spellList);
+            LOGGER.log('trinket', trinket)
+            LOGGER.log('Spell list', spellList);
 
-                for (const spell of newSpells) {
-                    trinket[0].setFlag(game.system.id, 'spells', {
-                        [spell.id]: spell.name
-                    })
-                }
+            for (const spell of newSpells) {
+                trinket[0].setFlag(game.system.id, 'spells', {
+                    [spell.id]: spell.name
+                })
+            }
 
-                return false;
+            return false;
+            */
             default:
                 LOGGER.log('Actor recieved item drop');
                 break;
@@ -171,12 +176,15 @@ export default class TfmActorSheet extends TfmSheetMixin(foundry.applications.sh
 
         return true;
     }
-
-    /* ------------------- ACTION EVENTS ------------------------*/
+    /**********************************************************************************************/
+    /*                                                                                            */
+    /*                                    ACTION TRIGGERS                                         */
+    /*                                                                                            */
+    /**********************************************************************************************/
     static async _onUseItem(event, target) {
         const uuid = target.closest(".item[data-item-uuid]").dataset.itemUuid;
         const item = await fromUuid(uuid);
-        return item.use();
+        return item.use(target.dataset.use);
     }
 
     static async _onEditItem(event, target) {
@@ -190,7 +198,6 @@ export default class TfmActorSheet extends TfmSheetMixin(foundry.applications.sh
     static async _onDeleteItem(event, target) {
         const uuid = target.closest(".item[data-item-uuid]").dataset.itemUuid;
         const item = await fromUuid(uuid);
-        const content = TextEditor
         const confirm = await foundry.applications.api.DialogV2.confirm({
             content: `${sysUtil.localize('TFM.confirm.deleteItem')}: ${item.name}`,
             rejectClose: false,
@@ -207,6 +214,11 @@ export default class TfmActorSheet extends TfmSheetMixin(foundry.applications.sh
         return item.update({ 'system.equipped': !item.system.equipped })
     }
 
+    static async _onGiveItem(event, target) {
+        const uuid = target.closest(".item[data-item-uuid]").dataset.itemUuid;
+        tfm.socket.sendItem(uuid);
+    }
+
     // This is only relevant on player characters and can be ignore otherwise
     static async _onChangeProficiency(event, target) {
         if (this.document.type != `character`) return;
@@ -220,29 +232,42 @@ export default class TfmActorSheet extends TfmSheetMixin(foundry.applications.sh
         doc.update({ [path]: value });
     }
 
-    /* -------------------------------------------- */
+    static async _onRollAbility(event, target) {
+        const template = `systems/${tfm.id}/templates/dialog/roll/ability.hbs`;
+        const rollData = this.document.getRollData();
+        const data = {
+            ability: rollData[target.dataset.ability],
+            label: `TFM.ability.${target.dataset.ability}`
+        };
 
-    /** @override */
-    activateListeners(html) {
-        super.activateListeners(html);
+        const dialog = await tfm.applications.TfmDialog.roll(template, data);
 
-        // Render the item sheet for viewing/editing prior to the editable check.
-        html.find('.item-edit').click(ev => {
-            const li = $(ev.currentTarget).parents(".item");
-            const item = this.actor.items.get(li.data("itemId"));
-            item.sheet.render(true);
+        if (dialog.cancled) return;
+        const options = sysUtil.getFormData(dialog.html, '[name]');
+
+        // Create the roll formula from input
+        let formula = '2d6x6kf@karma+@ability';
+        if (dialog.button.dataset.action == 'advantage') formula = `3d6dl1x6kf@karma+@ability`;
+        else if (dialog.button.dataset.action == 'disadvantage') formula = `3d6dh1x6kf@karma+@ability`;
+        if (!options.explode) formula = formula.replace(/x6/, '');
+
+        if (options.situation != '') {
+            if (Array.from(options.situation)[0] != '-') formula += `+${options.situation}`;
+            else formula += ` ${options.situation}`;
+        }
+
+        LOGGER.debug(formula);
+
+        // Assembles the final roll
+        let label = `TFM.generic.ability: <b>${data.label}</b>`;
+        let roll = new Roll(formula, { ability: rollData[target.dataset.ability], karma: rollData.karma });
+        await roll.evaluate();
+        roll.toMessage({
+            speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+            flavor: label,
+            rollMode: game.settings.get('core', 'rollMode'),
         });
-
-        // Configure item equipping if applicable
-        html.find('.item-equip').click(ev => {
-            const li = $(ev.currentTarget).parents(".item");
-            const item = this.actor.items.get(li.data("itemId"));
-            item.update({ "system.equipped": !item.system.equipped });
-        });
-
-        // -------------------------------------------------------------
-        // Everything below here is only needed if the sheet is editable
-        if (!this.isEditable) return;
+        return roll;
     }
 
     /**
@@ -250,31 +275,56 @@ export default class TfmActorSheet extends TfmSheetMixin(foundry.applications.sh
      * @param {Event} event   The originating click event
      * @private
      */
-    _onRoll(event) {
-        event.preventDefault();
-        const element = event.currentTarget;
-        const dataset = element.dataset;
+    static async _onRoll(event, target) {
+        const rollData = this.document.getRollData();
+        const data = target.dataset;
 
-        // Handle item rolls.
-        if (dataset.rollType) {
-            if (dataset.rollType == 'item') {
-                const itemId = element.closest('.item').dataset.itemId;
-                const item = this.actor.items.get(itemId);
-                if (item) return item.roll();
-            }
-        }
+        const dialog = await tfm.applications.TfmDialog.roll(`systems/${tfm.id}/templates/dialog/default.hbs`);
 
-        // Handle rolls that supply the formula directly.
-        if (dataset.roll) {
-            let label = dataset.label ? `[ability] ${dataset.label}` : '';
-            let roll = new Roll(dataset.roll, this.actor.getRollData());
-            roll.toMessage({
-                speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-                flavor: label,
-                rollMode: game.settings.get('core', 'rollMode'),
-            });
-            return roll;
-        }
+        if (dialog.cancled) return;
+        const rollOptions = sysUtil.getFormData(dialog.html, '[name]');
+
+        LOGGER.debug(rollOptions);
+
+
+        let roll = new Roll(data.roll, rollData);
+        await roll.evaluate();
+        roll.toMessage({
+            speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+            rollMode: game.settings.get('core', 'rollMode'),
+        });
+        return roll;
     }
 
+    /***********************************************************************************/
+    /*                                                                                 */
+    /*                              CONTEXT MENU                                       */
+    /*                                                                                 */
+    /***********************************************************************************/
+
+    _getItemContextOptions(item) {
+        const isOwner = item.isOwner;
+        const isCharacter = item.actor.type === "character";
+        const isNpc = item.actor.type === "npc";
+        const isEquipped = item.isEquipped;
+        return [{
+            name: "TFM.ContextMenu.Edit",
+            icon: "<i class='fa-solid fa-fw fa-edit'></i>",
+            condition: () => isOwner,
+            callback: () => item.sheet.render(true),
+            group: "manage"
+        }, {
+            name: "TFM.ContextMenu.Gift",
+            icon: "<i class='fa-solid fa-fw fa-gift'></i>",
+            condition: () => isOwner,
+            callback: () => tfm.socket.sendItem(item.uuid),
+            group: "manage"
+        }, {
+            name: "TFM.ContextMenu.Delete",
+            icon: "<i class='fa-solid fa-fw fa-trash'></i>",
+            condition: () => isOwner,
+            callback: () => item.delete(),
+            group: "manage"
+        }];
+    }
 }
