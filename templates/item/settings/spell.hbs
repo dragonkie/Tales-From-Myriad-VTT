@@ -1,30 +1,30 @@
-<div class="resource flexrow">
+<div class="form-group flexrow">
     <label class="resource-label">Spell School</label>
     {{{selectors.spellSchool}}}
 </div>
 
-<div class="resource flexrow">
+<div class="form-group flexrow">
     <label class="resource-label">Casting Difficulty</label>
     <input type="text" name="system.cd" value="{{system.cd}}" data-dtype="Number" />
 </div>
 
-<div class="resource flexrow">
+<div class="form-group flexrow">
     <label class="resource-label">Needed Successes</label>
     <input type="text" name="system.cs" value="{{system.cs}}" data-dtype="Number" />
 </div>
 
-<div class="resource flexrow">
+<div class="form-group flexrow">
     <label class="resource-label">Range</label>
     <input type="number" name="system.range" value="{{system.range}}" data-dtype="Number" />
 </div>
 
 <!-- Checkboxs -->
-<div class="resource flexrow">
+<div class="form-group flexrow">
     <label class="resource-label">Ritual</label>
-    <input type="checkbox" name="system.ritual"  data-dtype="Boolean" />
+    <input type="checkbox" name="system.ritual"  {{checked system.ritual}} />
 </div>
 
-<div class="resource flexrow">
+<div class="form-group flexrow">
     <label class="resource-label">Channeled</label>
-    <input type="checkbox" name="system.channeled" value="{{system.channeled}}" data-dtype="Number" />
+    <input type="checkbox" name="system.channeled" {{checked system.channeled}}/>
 </div>

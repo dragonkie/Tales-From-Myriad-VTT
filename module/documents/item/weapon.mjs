@@ -28,6 +28,10 @@ export default class TfmWeapon extends TfmItem {
                 this.system.damage.dice = 12;
                 break;
         }
+
+        if (this.system.oversized) {
+            this.system.damage.dice = Math.min(this.system.damage.dice, 12);
+        }
     }
 
     /* --------------------------------------------- RENDER CONTEXT ----------------------------------------------------*/
@@ -48,7 +52,7 @@ export default class TfmWeapon extends TfmItem {
                 { value: "rad", label: "TYPES.dmg.rad", group: "TYPES.dmg.spe" },
                 { value: "nec", label: "TYPES.dmg.nec", group: "TYPES.dmg.spe" },
                 { value: "frc", label: "TYPES.dmg.frc", group: "TYPES.dmg.spe" },
-                { value: "psy", label: "TYPES.dmg.phy", group: "TYPES.dmg.spe" },
+                { value: "psy", label: "TYPES.dmg.psy", group: "TYPES.dmg.spe" },
             ],
             groups: ["TYPES.dmg.phy", "TYPES.dmg.ele", "TYPES.dmg.spe"],
             value: this.system.damage.type,
@@ -156,6 +160,7 @@ export default class TfmWeapon extends TfmItem {
 
         // Adds the weapons critical bonus to the actors
         rollData.crit += this.system.crit;
+        if (rollData.crit < 0) rollData.crit = 0;
 
         // Get users weapon proficiency level
         rollData.prof.level = this.isProficient;

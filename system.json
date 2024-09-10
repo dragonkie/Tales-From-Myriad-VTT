@@ -27,8 +27,8 @@
   "gridUnits": "ft",
   "primaryTokenAttribute": "health",
   "secondaryTokenAttribute": "dodge",
-  "url": "",
-  "manifest": "",
+  "url": "https://github.com/dragonkie/Tales-From-Myriad-VTT",
+  "manifest": "https://raw.githubusercontent.com/dragonkie/Tales-From-Myriad-VTT/main/system.json",
   "download": "",
   "license": "LICENSE.txt",
   "changelog": "CHANGELOG.md"

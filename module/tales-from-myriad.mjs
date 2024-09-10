@@ -20,7 +20,42 @@ globalThis.tfm = {
     dataModels: documents.dataModels,
     util: sysUtil,
     config: TFM,
-    socket: TfmSocket
+    socket: TfmSocket,
+    types: {
+        weapon: [
+            'axe',
+            'bow',
+            'dagger',
+            'firearm',
+            'fist',
+            'flail',
+            'hammer',
+            'polearm',
+            'sword',
+            'thrown',
+            'whip',
+        ],
+        damage: {
+            physical: [
+                'blg',
+                'sla',
+                'stb'
+            ],
+            elemental: [
+                'acd',
+                'cld',
+                'fir',
+                'lig',
+                'poi',
+                'thu'
+            ],
+            special: [
+                'frc',
+                'nec',
+                'psy'
+            ]
+        }
+    }
 }
 
 /* -------------------------------------------- */

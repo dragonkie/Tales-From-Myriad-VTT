@@ -132,7 +132,7 @@ export default class TfmSpell extends TfmItem {
         const actor = this.actor;
         if (!actor) return null;
 
-        return sysUtil.duplicate(this.actor.system.abilities[this.system.ability])
+        return sysUtil.duplicate(this.actor.system.abilities[this.system.type])
     }
 
     get cd() {

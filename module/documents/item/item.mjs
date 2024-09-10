@@ -55,17 +55,19 @@ export class TfmItem extends Item {
         return super._preDelete(options, user);
     }
 
-    async deleteDialog(options = {}) {
-        const type = game.i18n.localize(this.constructor.metadata.label);
-        return foundry.applications.api.DialogV2.confirm({
+    async deleteDialog(options={}) {
+        const type = tfm.util.localize(this.constructor.metadata.label);
+        let confirm = await foundry.applications.api.DialogV2.confirm({
             title: `${game.i18n.format("DOCUMENT.Delete", { type })}: ${this.name}`,
             content: `<h4>${game.i18n.localize("AreYouSure")}</h4><p>${game.i18n.format("SIDEBAR.DeleteWarning", { type })}</p>`,
-            yes: () => this.delete(),
             options: options
         });
+
+        if (confirm) {
+            this.delete();
+            return true;
+        } else return false;
     }
-
-
 
     /* ------------------------- ACTION EVENTS ------------------------------- */
     async _onDeleteItem(event, target) {

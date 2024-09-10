@@ -30,13 +30,15 @@ export default class TfmActorSheet extends TfmSheetMixin(foundry.applications.sh
         tabs: { template: "systems/tales-from-myriad/templates/parts/sheet-tabs.hbs" },
         features: { template: "systems/tales-from-myriad/templates/actor/parts/actor-features.hbs" },
         items: { template: "systems/tales-from-myriad/templates/actor/parts/actor-items.hbs" },
-        spells: { template: "systems/tales-from-myriad/templates/actor/parts/actor-spells.hbs" }
+        spells: { template: "systems/tales-from-myriad/templates/actor/parts/actor-spells.hbs" },
+        biography: { template: "systems/tales-from-myriad/templates/actor/parts/actor-bio.hbs"}
     }
 
     static TABS = {
         features: { id: "features", group: "primary", label: "TFM.tab.features" },
         items: { id: "items", group: "primary", label: "TFM.tab.items" },
-        spells: { id: "spells", group: "primary", label: "TFM.tab.spells" }
+        spells: { id: "spells", group: "primary", label: "TFM.tab.spells" },
+        biography: {id: "biography", group: "primary", label: "TFM.tab.biography"}
     }
 
     tabGroups = {
