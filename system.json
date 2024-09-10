@@ -29,7 +29,7 @@
   "secondaryTokenAttribute": "dodge",
   "url": "https://github.com/dragonkie/Tales-From-Myriad-VTT",
   "manifest": "https://raw.githubusercontent.com/dragonkie/Tales-From-Myriad-VTT/main/system.json",
-  "download": "",
+  "download": "https://github.com/dragonkie/Tales-From-Myriad-VTT/zipball/master",
   "license": "LICENSE.txt",
   "changelog": "CHANGELOG.md"
 }
