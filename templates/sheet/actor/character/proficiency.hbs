@@ -1,0 +1,30 @@
+<div class="proficiency">
+    <div class="flexcol" style="width: 120px">
+        <b style="text-align: center;">Weapons</b>
+        {{!-- Weapons with proficiency --}}
+        {{#each system.proficiency as | prof key |}}
+            {{#unless (eq prof.value 0)}}
+                <div style="margin: 2px 0; border-bottom: 1px solid white;" data-prof="{{key}}">
+                    <div style="display: inline-block;">{{localize prof.label}}</div>
+                    <div style="text-align: right; float: right; display: inline-block;" data-action="levelProf">
+                        <a class="fa-{{#if (gte prof.value 1)}}solid{{else}}regular{{/if}} fa-diamond"></a>
+                        <a class="fa-{{#if (gte prof.value 2)}}solid{{else}}regular{{/if}} fa-diamond"></a>
+                        <a class="fa-{{#if (gte prof.value 3)}}solid{{else}}regular{{/if}} fa-diamond"></a>
+                    </div>
+                </div>
+            {{/unless}}
+        {{/each}}
+
+        {{!-- Weapons without proficiency --}}
+        {{#each system.proficiency as | prof key |}}
+            {{#if (eq prof.value 0)}}
+                <div style="margin: 2px 0; border-bottom: 1px solid white;" data-prof="{{key}}">
+                    <div style="display: inline-block;">{{localize prof.label}}</div>
+                    <div style="text-align: right; float: right; display: inline-block;" data-action="levelProf">
+                        {{#repeat 3}}<a class="fa-regular fa-diamond"></a>{{/repeat}}
+                    </div>
+                </div>
+            {{/if}}
+        {{/each}}
+    </div>
+</div>

@@ -1,4 +1,3 @@
-export {default as TfmActorSheet} from "./actor/actor-sheet.mjs";
-export {default as TfmItemSheet} from "./item/item-sheet.mjs";
-export {default as TfmDialog} from "./dialog/dialog.mjs";
-export {default as TfmContextMenu} from "./context-menu.mjs";
+export { default as sheet } from "./sheets/_module.mjs";
+export { default as TfmApplication} from "./application.mjs"
+export { default as TfmContextMenu } from "./context-menu.mjs";

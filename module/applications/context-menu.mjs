@@ -6,10 +6,8 @@ export default class TfmContextMenu extends ContextMenu {
     /** @override */
     _setPosition([html], [target], { event }) {
         document.body.appendChild(html);
-        
         const { clientWidth, clientHeight } = document.documentElement;
         const { width, height } = html.getBoundingClientRect();
-
         const { clientX, clientY } = event;
         const left = Math.min(clientX, clientWidth - width) + 1;
 

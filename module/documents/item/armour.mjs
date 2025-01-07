@@ -1,6 +1,6 @@
 import LOGGER from "../../helpers/logger.mjs";
 import sysUtil from "../../helpers/sysUtil.mjs";
-import { TfmItem } from "./item.mjs";
+import TfmItem from "./item.mjs";
 
 export default class TfmArmour extends TfmItem {
     prepareBaseData() {

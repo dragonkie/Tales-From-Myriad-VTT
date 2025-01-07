@@ -1,6 +1,6 @@
 import LOGGER from "../../helpers/logger.mjs";
 import sysUtil from "../../helpers/sysUtil.mjs";
-import { TfmItem } from "./item.mjs";
+import TfmItem from "./item.mjs";
 
 export default class TfmWeapon extends TfmItem {
 
@@ -83,10 +83,10 @@ export default class TfmWeapon extends TfmItem {
         // Ability selector
         selectors.ability = foundry.applications.fields.createSelectInput({
             options: [
-                { value: "pow", label: "TFM.ability.pow" },
+                { value: "pwr", label: "TFM.ability.pwr" },
                 { value: "fin", label: "TFM.ability.fin" },
                 { value: "ins", label: "TFM.ability.ins" },
-                { value: "chr", label: "TFM.ability.chr" },
+                { value: "chm", label: "TFM.ability.chm" },
                 { value: "arc", label: "TFM.ability.arc" },
                 { value: "occ", label: "TFM.ability.occ" },
                 { value: "lck", label: "TFM.ability.lck" },
@@ -201,7 +201,7 @@ export default class TfmWeapon extends TfmItem {
         const template = this.constructor.TEMPLATES.attack;
 
         // Create roll options dialog
-        let dialog = await tfm.applications.TfmDialog.roll(template, rollData);
+        let dialog = await tfm.application.TfmDialog.roll(template, rollData);
         const formData = sysUtil.getFormData(dialog.html, '[name]');
 
         // Prepare dice data
@@ -294,7 +294,7 @@ export default class TfmWeapon extends TfmItem {
             })
         }
 
-        let dialog = await tfm.applications.TfmDialog.roll(template, rollData, {buttons: tfm.applications.TfmDialog.buttons.simple});
+        let dialog = await tfm.application.TfmDialog.roll(template, rollData, {buttons: tfm.application.TfmDialog.buttons.simple});
         LOGGER.debug(dialog)
         const formData = sysUtil.getFormData(dialog.html, '[name]');
 
@@ -388,8 +388,8 @@ export default class TfmWeapon extends TfmItem {
     }
 
     static TEMPLATES = {
-        attack: `systems/tales-from-myriad/templates/dialog/roll/weapon/attack.hbs`,
-        damage: `systems/tales-from-myriad/templates/dialog/roll/weapon/damage.hbs`
+        attack: `${tfm.filepath.template}/dialog/roll/weapon/attack.hbs`,
+        damage: `${tfm.filepath.template}/dialog/roll/weapon/damage.hbs`
     }
 
     // Quick reference to the different available weapon proficiencies

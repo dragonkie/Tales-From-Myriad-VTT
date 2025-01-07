@@ -1,6 +1,6 @@
 import LOGGER from "../../helpers/logger.mjs";
 import sysUtil from "../../helpers/sysUtil.mjs";
-import { TfmItem } from "./item.mjs";
+import TfmItem from "./item.mjs";
 
 export default class TfmSpell extends TfmItem {
 
@@ -57,7 +57,7 @@ export default class TfmSpell extends TfmItem {
             return null;
         }
 
-        let dialog = await tfm.applications.TfmDialog.spell(`systems/${tfm.id}/templates/dialog/roll/spell.hbs`, rollData);
+        let dialog = await tfm.application.TfmDialog.spell(`systems/${tfm.id}/templates/dialog/roll/spell.hbs`, rollData);
         const options = sysUtil.getFormData(dialog.html, '[name]');
 
         LOGGER.debug(options);

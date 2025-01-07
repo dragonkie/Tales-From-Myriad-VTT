@@ -1,191 +1,137 @@
-import sysUtil from "./sysUtil.mjs";
+import sysUtil from "./sysUtil.mjs"
 
-export default class TfmSocket {
-    static async registerHandler() {
-        // Packet type sorter
-        let handler = ({ type, data }) => {
-            switch (type) {
+// Socket sending test
+export default class TfmSocketManager {
 
-                // Handels the giving and recieving of items
-                case 'ITEMSEND': return this._onSendItem(data);
-                case 'ITEMTAKE': return this._onTakeItem(data);
-                default:
-                    throw new Error('Recieved unknown socket type');
-            }
-        }
-
-        // Register the socket handler for myriad
-        game.socket.on(`system.${tfm.id}`, (request, options, callback) => {
-            console.log('Recieved socket event emit', request, options, callback);
-
-            const response = handler(sysUtil.duplicate(request));
-            if (callback) callback(response);
-        });
-
-        return true;
+    constructor() {
+        this.identifier = 'system.tales-from-myriad';
+        this.registerSocketListeners();
+        this.callbacks = new Map();
     }
 
-    static _id = `system.tales-from-myriad`;
+    registerSocketListeners() {
+        game.socket.on(this.identifier, ({ type, data, target, user, id }) => {
+            // if a target was assigned for the socket, and this isnt them
+            if (target && target != game.userId) return;
+
+            // Manage the event type
+            switch (type) {
+                /*----------------------------------------------------------------------------*/
+                /*                                USER NOTIFICATIONS                          */
+                /*----------------------------------------------------------------------------*/
+                case 'NOTIFY':
+                    sysUtil.notify(data.message);
+                    this.emit('RESOLVE', { resolved: true, id: id }, user);
+                    break;
+
+                case 'WARN':
+                    sysUtil.warn(data.message);
+                    this.emit('RESOLVE', { resolved: true, id: id }, user);
+                    break;
+
+                case 'ERROR':
+                    sysUtil.error(data.message);
+                    this.emit('RESOLVE', { resolved: true, id: id }, user);
+                    break;
+
+                /*----------------------------------------------------------------------------*/
+                /*                            DIALOG POPUPS                                   */
+                /*----------------------------------------------------------------------------*/
+                case 'CONFIRM':
+                    foundry.applications.api.DialogV2.confirm().then(response => {
+                        this.emit('RESOLVE', { resolved: response, id: id }, user);
+                    })
+                    break;
+
+                case 'GIFT':
+                    // confirm dialog always returns true or false, and this is the value of the .then(response)
+                    foundry.applications.api.DialogV2.confirm({
+                        content: `<p>User <b>${game.users.get(user).name}</b> would like to send you: ${data.item.name}</p><p>Do you accept?</p>`,
+                        rejectClose: true,
+                        window: 'NEWEDO.recieveGiftOffer'
+                    }).then(response => {
+                        // if response is true, we agreed to take the item, and create it on the sheet from out own actor
+                        if (response) {
+                            let actor = game.user.character;
+                            if (!actor) {
+                                // no controlled actor, can't do it so we cancel the transaction
+                                sysUtil.error('NEWEDO.error.noControlledActor');
+                                response = false;
+                            } else {
+                                // we confirmed we want the item and have a controlled actor, so create the item and respond 
+                                // saying that we accepted the item
+                                let newItem = Item.create(data.item, { parent: actor });
+                            }
+                        }
+                        // send back our response
+                        this.emit('RESOLVE', { resolved: response, id: id }, user);
+                    })
+
+                    break;
+
+                case 'RESOLVE':
+                    let cb = this.callbacks.get(data.id);
+                    return cb(data);
+                default:
+                    throw new Error('Recieved unknown socket type', type);
+            }
+        });
+    }
 
     /**
-     * Prompts the targeted user to recieve an item from you
-     * @param {*} item 
+     * Data follows a strict format, it mus include
+     * [type]: String
+     * [target]: user ID or null for all
+     * [data]: object with relevant things
+     * 
+     * @param {*} type 
+     * @param {Object} data 
+     * @returns EmitData
      */
-    static async sendItem(itemUuid) {
-        const item = await fromUuid(itemUuid);
+    async emit(type, data, target = null, callback = null) {
 
-        // Get list of users
-        let userList = [];
-        for (let user of game.users.players) {
-            if (user.character && user.active && user.id != game.user.id) {
-                userList.push({ value: user.id, label: user.character.name });
-            }
+        const args = {
+            type: type,// Event type
+            data: data,// Data for this event
+            target: target,// User targeted for this event
+            user: game.userId,// The user who triggered this event
+            id: foundry.utils.randomID(),// ID used to watch for this specific event and it's callbacks
         }
 
-        // Create the character selector for the list of possible recievers
-        let selector = foundry.applications.fields.createSelectInput({
-            options: userList,
-            valueAttr: 'value',
-            labelAttr: 'label',
-            localize: false,
-            sort: true,
-            name: 'userSelect'
+        let serverAck = new Promise(resolve => {
+            game.socket.emit(this.identifier, args, response => {
+                resolve(args);
+            });
         })
 
-        // Create a dialog box with a selection of valid users
-        let options = await new Promise((resolve, reject) => {
-            let dialog = new tfm.applications.TfmDialog({
-                window: { title: "Gift Item" },
-                content: `
-                    <div> Who would you like to gift your <b>${item.name}</b> too? </div>
-                    ${selector.outerHTML}
-                `,
-                buttons: [{
-                    label: 'confirm',
-                    action: 'confirm',
-                    callback: (event, button, dialog) => resolve({ event: event, button: button, html: dialog })
-                }, {
-                    label: 'Cancel',
-                    action: 'cancel',
-                    callback: (event, button, dialog) => reject('User canceld transaction')
-                }]
-            })
+        // If this is a resoloution confirmation for a previous event, we dont need to register a callback
+        if (type == 'RESOLVE') return serverAck;
 
-            dialog.render(true);
-        });
-        // Proccess the input data
-        let formData = sysUtil.getFormData(options.html, '[name]');
-
-        // Tag the item being sent so we know its in transit, and lock it with a key until this transaction is complete
-        // This flag should time itself out after 15 seconds if not recieved, or I guess an input time would be better
-        const lock = foundry.utils.randomID(8)
-        item.setFlag('world', 'transfer', lock);
-
-        // Promises to resolve the emit when it recieves a response
+        // registers a client callback for when the target has resolved the request
+        // and returns a promise that will be resolved when the callback is retrieved
         return new Promise(resolve => {
-            const packet = {
-                type: 'ITEMSEND',
-                data: {
-                    itemUuid: itemUuid,
-                    targetId: formData.userSelect,
-                    lock: lock
-                }
-            }
 
-            game.socket.emit(this._id, packet, {}, (response) => {
-                console.log('Emit is acknowledged:', response);
-                resolve(response);
-            });
-        });
-    }
+            this.callbacks.set(args.id, (response) => {
+                if (typeof callback == 'function') {
+                    callback()
+                    resolve(response);
+                } else resolve(response);
+                this.callbacks.delete(response.id);
+            })
+        })
+    };
 
-    /**
-     * Prompts the user to take an item offered by another player
-     * @param {*} data 
-     * @returns 
-     */
-    static async _onSendItem(data) {
-
-        if (game.user.id != data.targetId) return 'Wrong Player';
-        else {
-            // The item being recieved
-            let item = await fromUuid(data.itemUuid);
-            // User that sent the item
-            let name = item.actor.name;
-
-            // Character recieving
-            let character = game.user.character;
-
-            let options = await new Promise((resolve, reject) => {
-                let dialog = new tfm.applications.TfmDialog({
-                    window: { title: "Gift Item" },
-                    content: `<div><b>${name}</b> would like to give you <b>${item.name}</b></div>`,
-                    buttons: [{
-                        label: 'Accept',
-                        action: 'confirm',
-                        callback: (event, button, dialog) => resolve({ event: event, button: button, html: dialog })
-                    }, {
-                        label: 'Reject',
-                        action: 'cancel',
-                        callback: (event, button, dialog) => reject('Reciever did not want the item')
-                    }]
-                })
-
-                dialog.render(true);
-            });
-
-            if (options.button.dataset.action == 'confirm') {
-                let itemData = item.toObject();
-                const modification = {
-                    "-=_id": null,
-                    "-=ownership": null,
-                    "-=folder": null,
-                    "-=sort": null,
-                    "-=flags": {}
-                };
-
-                foundry.utils.mergeObject(itemData, modification, { performDeletions: true });
-                getDocumentClass('Item').create(itemData, { parent: character });
-
-                const packet = {
-                    type: 'ITEMTAKE',
-                    data: {
-                        targetId: item.actor.id,
-                        itemUuid: data.itemUuid,
-                        lock: data.lock,
-                    }
-                }
-                return new Promise(resolve => {
-                    game.socket.emit(this._id, packet, {}, response => {
-                        console.log('Emit is acknowledged:', response);
-                        resolve(response);
-                    })
-                })
-            } else return 'Rejected';
-        }
+    async request() {
 
     }
 
-    /**
-     * Follow up to _onRecieveItem(), used to remove the item from the original actors inventory
-     * @param {*} data 
-     */
-    static async _onTakeItem(data) {
-        const item = await fromUuid(data.itemUuid);
-        if (item.actor.id != data.targetId) return 'Wrong actor';
+    async requestAll() {
 
-        const character = game.user.character;
-        if (!character) return 'Rejected';
+    }
 
-
-        let flag = item.getFlag('world', 'transfer');
-        console.log('Item from uuid', item);
-        if (flag == data.lock) {
-            console.log('Found matching item, deleting');
-            await item.delete();
-            console.log('Item Deleted');
-        }
+    // Includes the client calling this event in the execution, cannot wait for a resoloution
+    emitAll(type, data) {
+        this.eventHandler({ type, data });
+        return this.emit(type, data);
     }
 }
-
-

@@ -5,31 +5,79 @@
   "version": "1.2.0",
   "socket": true,
   "compatibility": {
-    "minimum": 11,
-    "verified": "12.324",
-    "maximum": 12
+    "minimum": "11",
+    "verified": "12.333",
+    "maximum": "13"
   },
-  "authors": [{
-    "name": "dragonkie"
-  }],
-  "esmodules": ["module/tales-from-myriad.mjs"],
-  "styles": ["css/main.css"],
-  "scripts": [],
-  "packs": [],
+  "authors": [
+    {
+      "name": "dragonkie",
+      "url": "https://github.com/dragonkie",
+      "flags": {}
+    }
+  ],
+  "esmodules": [
+    "module/tales-from-myriad.mjs"
+  ],
+  "styles": [
+    "css/main.css"
+  ],
   "languages": [
     {
       "lang": "en",
       "name": "English",
-      "path": "lang/en.json"
+      "path": "lang/en.json",
+      "flags": {}
     }
   ],
-  "gridDistance": 5,
-  "gridUnits": "ft",
   "primaryTokenAttribute": "health",
   "secondaryTokenAttribute": "dodge",
   "url": "https://github.com/dragonkie/Tales-From-Myriad-VTT",
   "manifest": "https://raw.githubusercontent.com/dragonkie/Tales-From-Myriad-VTT/main/system.json",
-  "download": "https://github.com/dragonkie/Tales-From-Myriad-VTT/zipball/master",
+  "download": "https://github.com/dragonkie/Tales-From-Myriad-VTT/releases/latest/download/tfm.zip",
+  "background": "systems/tales-from-myriad/assets/images/system-background.png",
   "license": "LICENSE.txt",
-  "changelog": "CHANGELOG.md"
+  "changelog": "CHANGELOG.md",
+  "documentTypes": {
+    "Actor": {
+      "character": {
+        "htmlFields": [],
+        "filePathFields": {}
+      },
+      "npc": {
+        "htmlFields": [],
+        "filePathFields": {}
+      },
+      "party": {
+        "htmlFields": [],
+        "filePathFields": {}
+      },
+      "shop": {
+        "htmlFields": [],
+        "filePathFields": {}
+      }
+    },
+    "Item": {
+      "weapon": {
+        "htmlFields": [],
+        "filePathFields": {}
+      },
+      "spell": {
+        "htmlFields": [],
+        "filePathFields": {}
+      },
+      "armour": {
+        "htmlFields": [],
+        "filePathFields": {}
+      },
+      "job": {
+        "htmlFields": [],
+        "filePathFields": {}
+      },
+      "trinket": {
+        "htmlFields": [],
+        "filePathFields": {}
+      }
+    }
+  }
 }

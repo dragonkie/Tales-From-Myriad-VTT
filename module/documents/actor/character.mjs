@@ -1,9 +1,8 @@
-import { TfmActor } from "./actor.mjs";
-import sysUtil from "../../helpers/sysUtil.mjs";
-import LOGGER from "../../helpers/logger.mjs";
+import TfmActor from "./actor.mjs";
 
 export default class TfmCharacter extends TfmActor {
 
+    /*
     prepareBaseData() {
         super.prepareBaseData();
     }
@@ -23,7 +22,7 @@ export default class TfmCharacter extends TfmActor {
         // Calculate dodge
         system.dodge.value = 8 + abilities.fin.mod;
         // Max inventory slots
-        inventory.size.max = 10 + abilities.pow.mod;
+        inventory.size.max = 10 + abilities.pwr.mod;
         for (var bonus of inventory.size.bonuses) {
             // Bonus structure {label: "Where this comes from", value: Number}
             if (typeof bonus === "object") inventory.size.max += bonus.value;
@@ -55,6 +54,7 @@ export default class TfmCharacter extends TfmActor {
             system.dualWield = true;
         }
     }
+        */
 
     get level() {
         return this.system.lvl.value;
