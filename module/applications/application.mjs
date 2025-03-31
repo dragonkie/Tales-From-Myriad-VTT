@@ -1,4 +1,3 @@
-import sysUtil from "../helpers/sysUtil.mjs"
 let {HandlebarsApplicationMixin, ApplicationV2} = foundry.applications.api
 
 export default class TfmApplication extends HandlebarsApplicationMixin(ApplicationV2) {

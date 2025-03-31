@@ -1,5 +1,4 @@
 import LOGGER from "../../helpers/logger.mjs";
-import sysUtil from "../../helpers/sysUtil.mjs";
 import TfmSheetMixin from "./mixin.mjs";
 /**
  * Extend the basic ActorSheet with some very simple modifications
@@ -48,21 +47,13 @@ export default class TfmActorSheet extends TfmSheetMixin(foundry.applications.sh
 
     /* ------------------------- RENDER CONTEXT DATA PREP ----------------------------------*/
     async _prepareContext(options) {
+        const context = await super._prepareContext();
         const doc = this.document;
         const rollData = doc.getRollData();
+        
+        context.itemTypes = doc.itemTypes;
+        context.rollData = rollData;
 
-        const context = {
-            document: doc,
-            system: doc.system,
-            config: CONFIG.TFM,
-            name: doc.name,
-            itemTypes: doc.itemTypes,
-            rollData: rollData,
-            tabs: this._getTabs(),
-            isEditMode: this.isEditMode,
-            isPlayMode: this.isPlayMode,
-            isEditable: this.isEditable
-        };
 
         return context;
     }
@@ -149,7 +140,7 @@ export default class TfmActorSheet extends TfmSheetMixin(foundry.applications.sh
         const uuid = target.closest(".item[data-item-uuid]").dataset.itemUuid;
         const item = await fromUuid(uuid);
         const confirm = await foundry.applications.api.DialogV2.confirm({
-            content: `${sysUtil.localize('TFM.confirm.deleteItem')}: ${item.name}`,
+            content: `${tfm.utils.localize('TFM.confirm.deleteItem')}: ${item.name}`,
             rejectClose: false,
             modal: true
         });
@@ -192,7 +183,7 @@ export default class TfmActorSheet extends TfmSheetMixin(foundry.applications.sh
         const dialog = await tfm.application.TfmDialog.roll(template, data);
 
         if (dialog.cancled) return;
-        const options = sysUtil.getFormData(dialog.html, '[name]');
+        const options = tfm.utils.getFormData(dialog.html, '[name]');
 
         // Create the roll formula from input
         let formula = '2d6x6kf@karma+@ability';
@@ -231,7 +222,7 @@ export default class TfmActorSheet extends TfmSheetMixin(foundry.applications.sh
         const dialog = await tfm.application.TfmDialog.roll(`systems/${tfm.id}/templates/dialog/default.hbs`);
 
         if (dialog.cancled) return;
-        const rollOptions = sysUtil.getFormData(dialog.html, '[name]');
+        const rollOptions = tfm.utils.getFormData(dialog.html, '[name]');
 
         LOGGER.debug(rollOptions);
 

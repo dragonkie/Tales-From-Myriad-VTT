@@ -1,5 +1,3 @@
-import sysUtil from "./sysUtil.mjs";
-
 export const TFM = {};
 
 TFM.ability = {
@@ -25,12 +23,12 @@ TFM.corruption = {
     label: "TFM.corruption",
     level: (num) => {
         if (num === undefined) return `TFM.corruption.name.00`;
-        var sNum = String(sysUtil.clamp(num, 0, 10));
+        var sNum = String(tfm.utils.clamp(num, 0, 10));
         return `TFM.corruption.name.${sNum.padStart(2, '0')}`;
     },
     description: (num) => {
         if (num === undefined) return `TFM.corruption.desc.00`;
-        var sNum = String(sysUtil.clamp(num, 0, 10));
+        var sNum = String(tfm.utils.clamp(num, 0, 10));
         return `TFM.corruption.desc.${sNum.padStart(2, '0')}`;
     }
 };
@@ -61,7 +59,7 @@ TFM.generic = {
 
 TFM.quest = (num) => {
     if (num === undefined) return `TFM.quest.000`;
-    var sNum = String(sysUtil.clamp(num, 1, 50));
+    var sNum = String(tfm.utils.clamp(num, 1, 50));
     return `TFM.quest.${sNum.padStart(3, '0')}`;
 }
 

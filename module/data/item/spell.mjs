@@ -1,4 +1,4 @@
-import ItemDataModel from "../item.mjs";
+import { ItemDataModel } from "../abstract.mjs";
 
 export default class SpelLData extends ItemDataModel {
     static defineSchema() {

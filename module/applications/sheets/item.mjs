@@ -1,5 +1,4 @@
 import LOGGER from "../../helpers/logger.mjs";
-import sysUtil from "../../helpers/sysUtil.mjs";
 import TfmSheetMixin from "./mixin.mjs";
 
 /**
@@ -90,7 +89,7 @@ export default class TfmItemSheet extends TfmSheetMixin(foundry.applications.she
      */
     async _onDrop(event) {
         LOGGER.debug("ITEM | DROP");
-        var dragData = sysUtil.getDragData(event);
+        var dragData = tfm.utils.getDragData(event);
         var item = this.item;
 
         // If the item has a relevant handler, delegate the work to it instead

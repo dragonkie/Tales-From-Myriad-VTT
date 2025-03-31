@@ -1,13 +1,14 @@
-import ActorDataModel from "../actor.mjs";
+import { ActorDataModel } from "../abstract.mjs";
+
 const { ArrayField, NumberField, SchemaField, SetField, StringField, HTMLField } = foundry.data.fields;
 
 export default class CharacterData extends ActorDataModel {
     static defineSchema() {
         const schema = super.defineSchema();
 
-        schema.skills = new ArrayField(new StringField({ initial: tfm.util.localize("TFM.ActorSheet.newSkill") }), { initial: [] });
+        schema.skills = new ArrayField(new StringField({ initial: tfm.utils.localize("TFM.ActorSheet.newSkill") }), { initial: [] });
         
-        let weaponTypes = tfm.config.weapon.type;
+        let weaponTypes = tfm.config.WeaponTypes;
         let profData = {};
 
         for (const [key, weapon] of Object.entries(weaponTypes)) {

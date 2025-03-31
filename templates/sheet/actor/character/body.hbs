@@ -1,33 +1,19 @@
 <div>
     <section class="header">
         <div class="flexrow" style="gap: 5px;">
-
-            <div data-application-part="identity">
-            </div>
-
-            <div data-application-part="details">
-            </div>
-
+            <div data-application-part="identity"></div>
+            <div data-application-part="details"></div>
         </div>
+        {{> "tfm.tab-nav"}}
+    </section>
 
-        <div data-application-part="abilities">
+    <section class="body scrollable" style="flex-wrap: nowrap; align-items: start; overflow-y: auto;">
+        
+
+        <div class="main">
+            {{> "tfm.tab-content"}}
         </div>
         
     </section>
-    <section>
-        <section class="body flexrow scrollable" style="flex-wrap: nowrap; align-items: start; overflow-y: auto;">
-            <div class="sidebar" style="flex: 0 0 120px">
-                <div data-application-part="proficiency">
-                </div>
-                <div data-application-part="skills">
-                </div>
-            </div>
-            <div class="main">
-                {{> "tfm.tab-nav"}}
-                {{> "tfm.tab-content"}}
-            </div>
-            <div data-application-part="defence">
-            </div>
-        </section>
-    </section>
+
 </div>

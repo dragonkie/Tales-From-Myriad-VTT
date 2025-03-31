@@ -1,5 +1,4 @@
 import LOGGER from "../helpers/logger.mjs";
-import sysUtil from "../helpers/sysUtil.mjs";
 
 /**
  * Extend the base Actor document by defining a custom roll data structure which is ideal for the Simple system.

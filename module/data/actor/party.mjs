@@ -1,4 +1,5 @@
-import ActorDataModel from "../actor.mjs";
+import { ActorDataModel } from "../abstract.mjs";
+
 export default class PartyData extends ActorDataModel {
     static defineSchema() {
         const schema = super.defineSchema();

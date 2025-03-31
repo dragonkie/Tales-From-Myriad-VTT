@@ -1,21 +1,21 @@
 import LOGGER from "./logger.mjs";
 
-export default class sysUtil {
-    static notify(msg) {
+export default {
+    notify(msg) {
         ui.notifications.notify(this.localize(msg));
-    }
+    },
 
-    static warn(msg) {
+    warn(msg) {
         ui.notifications.warn(this.localize(msg));
-    }
+    },
 
-    static error(msg) {
+    error(msg) {
         ui.notifications.error(this.localize(msg));
-    }
+    },
 
-    static localize(text) {
+    localize(text) {
         return game.i18n.localize(text) ?? text;
-    }
+    },
 
 
     /** 
@@ -23,7 +23,7 @@ export default class sysUtil {
      * @param {Number} value Ability score
      * @returns {Number} Modifier for the given ability
      */
-    static abilityMod(value) {
+    abilityMod(value) {
         //Calculates negative ability modifiers
         if (value < 6) return value - 6;
         //Calculates modifiers that exceed the base stat rolls available
@@ -31,14 +31,14 @@ export default class sysUtil {
         //Normal positive stat rolls
         if (value > 8) return value - 8;
         return 0;
-    }
+    },
 
     /**
      * Returns the level of a character based on the ammount of xp they have
      * @param {*} exp Ammount of exp the character has
      * @returns {Number} The level the character should be at
      */
-    static levelXp(exp) {
+    levelXp(exp) {
         if (exp >= 550) return 10;
         if (exp >= 420) return 9;
         if (exp >= 330) return 8;
@@ -49,13 +49,13 @@ export default class sysUtil {
         if (exp >= 60) return 3;
         if (exp >= 30) return 2;
         return 1;
-    }
+    },
 
     /**
      * @param {Number} lvl 
      * @returns {Number} The ammount of XP required to level up
      */
-    static nextLevel(lvl) {
+    nextLevel(lvl) {
         if (lvl <= 1) return 30;
         if (lvl == 2) return 60;
         if (lvl == 3) return 100;
@@ -65,21 +65,21 @@ export default class sysUtil {
         if (lvl == 7) return 330;
         if (lvl == 8) return 420;
         return 550;
-    }
+    },
 
     /**
      * Returns a random localzied string for a personal quest
      * @returns {String} Localized quest description
      */
-    static getQuest() {
+    getQuest() {
         let roll = Math.floor(Math.random() * 50);
 
         let num = ``
         if (roll < 10) num += `0`;
         if (roll < 100) num += `0`;
         num += `${roll}`;
-        return sysUtil.localize(`TFM.quest.${num}`);
-    }
+        return tfm.utils.localize(`TFM.quest.${num}`);
+    },
 
     /**
      * Math function to ensure a value falls within a specified range
@@ -88,9 +88,9 @@ export default class sysUtil {
      * @param {*} max 
      * @returns 
      */
-    static clamp(value, min, max) {
+    clamp: function(value, min, max) {
         return Math.max(Math.min(value, max), min);
-    }
+    },
 
     /**
      * Linear interpolation of a value between points a and b
@@ -99,9 +99,9 @@ export default class sysUtil {
      * @param {Number} t 
      * @returns {Number}
      */
-    static lerp(start, end, t) {
+    lerp: function(start, end, t) {
         return start * (1 - t) + end * t
-    }
+    },
 
     /**
      * Adds the given function in as a valid modifier for foundry dice roll formulas
@@ -109,17 +109,17 @@ export default class sysUtil {
      * @param {String} label 
      * @param {Function} func 
      */
-    static registerMod(term, label, func) {
+    registerMod(term, label, func) {
         LOGGER.debug(`Registering die modifier: [${term}] to [${label}]`);
         foundry.dice.terms.Die.prototype.constructor.MODIFIERS[term] = label;
         foundry.dice.terms.Die.prototype[label] = func;
-    }
+    },
 
-    static getDragData(event) {
+    getDragData(event) {
         return JSON.parse(event.dataTransfer.getData("text/plain"));
-    }
+    },
 
-    static getFormData(form, selectors) {
+    getFormData: function(form, selectors) {
         const matches = form.querySelectorAll(selectors);
         const data = {};
         for (const element of matches) {
@@ -141,7 +141,7 @@ export default class sysUtil {
         }
 
         return data;
-    }
+    },
 
     /**
      * Used to wait for a given element to load into the DOM
@@ -151,7 +151,7 @@ export default class sysUtil {
      * @param {Selector} selector 
      * @returns 
      */
-    static waitForElm(selector) {
+    waitForElm: function(selector) {
         //use a promise to allow for await to work as well as the use of .then()
         return new Promise(resolve => {
             if (document.querySelector(selector)) {
@@ -170,23 +170,23 @@ export default class sysUtil {
                 subtree: true
             });
         });
-    }
+    },
 
     /**
      * Convinient and light weight method to clone most data to prevent mutating source
      * @param {*} original 
      * @returns 
      */
-    static duplicate(original) {
+    duplicate: function(original) {
         return JSON.parse(JSON.stringify(original));
-    }
+    },
 
     /**
      * Returns the ending ID value from a foundry UUID
      * @param {*} uuid 
      * @returns 
      */
-    static IdFromUuid(uuid) {
+    IdFromUuid: function(uuid) {
         if (typeof uuid === 'string') return uuid.match(/[a-zA-Z1-9]+$/);
         return null;
     }

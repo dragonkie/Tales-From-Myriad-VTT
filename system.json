@@ -35,7 +35,7 @@
   "url": "https://github.com/dragonkie/Tales-From-Myriad-VTT",
   "manifest": "https://raw.githubusercontent.com/dragonkie/Tales-From-Myriad-VTT/main/system.json",
   "download": "https://github.com/dragonkie/Tales-From-Myriad-VTT/releases/latest/download/tfm.zip",
-  "background": "systems/tales-from-myriad/assets/images/system-background.png",
+  "background": "systems/tales-from-myriad/assets/images/system-background.webp",
   "license": "LICENSE.txt",
   "changelog": "CHANGELOG.md",
   "documentTypes": {

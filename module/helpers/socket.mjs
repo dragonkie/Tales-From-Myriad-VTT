@@ -1,15 +1,13 @@
-import sysUtil from "./sysUtil.mjs"
-
 // Socket sending test
 export default class TfmSocketManager {
 
     constructor() {
         this.identifier = 'system.tales-from-myriad';
-        this.registerSocketListeners();
         this.callbacks = new Map();
+        this.#initalize();
     }
 
-    registerSocketListeners() {
+    #initalize() {
         game.socket.on(this.identifier, ({ type, data, target, user, id }) => {
             // if a target was assigned for the socket, and this isnt them
             if (target && target != game.userId) return;
@@ -20,17 +18,17 @@ export default class TfmSocketManager {
                 /*                                USER NOTIFICATIONS                          */
                 /*----------------------------------------------------------------------------*/
                 case 'NOTIFY':
-                    sysUtil.notify(data.message);
+                    tfm.utils.notify(data.message);
                     this.emit('RESOLVE', { resolved: true, id: id }, user);
                     break;
 
                 case 'WARN':
-                    sysUtil.warn(data.message);
+                    tfm.utils.warn(data.message);
                     this.emit('RESOLVE', { resolved: true, id: id }, user);
                     break;
 
                 case 'ERROR':
-                    sysUtil.error(data.message);
+                    tfm.utils.error(data.message);
                     this.emit('RESOLVE', { resolved: true, id: id }, user);
                     break;
 
@@ -55,7 +53,7 @@ export default class TfmSocketManager {
                             let actor = game.user.character;
                             if (!actor) {
                                 // no controlled actor, can't do it so we cancel the transaction
-                                sysUtil.error('NEWEDO.error.noControlledActor');
+                                tfm.utils.error('NEWEDO.error.noControlledActor');
                                 response = false;
                             } else {
                                 // we confirmed we want the item and have a controlled actor, so create the item and respond 
@@ -79,13 +77,15 @@ export default class TfmSocketManager {
     }
 
     /**
-     * Data follows a strict format, it mus include
+     * Data follows a strict format, it must include
      * [type]: String
      * [target]: user ID or null for all
      * [data]: object with relevant things
      * 
-     * @param {*} type 
-     * @param {Object} data 
+     * @param {string} type // the event type
+     * @param {Object} data the payload delievered to the other user
+     * @param {string} target UUID of the user you are emiting too
+     * @param {Function} callback function to be triggered on this events resoloution
      * @returns EmitData
      */
     async emit(type, data, target = null, callback = null) {

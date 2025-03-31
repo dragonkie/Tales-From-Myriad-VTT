@@ -13,10 +13,10 @@ export default function TfmSheetMixin(Base) {
                 editImage: this._onEditImage,
                 toggleSheet: this._onToggleSheet,
                 toggleOpacity: this._ontoggleOpacity,
-                toggleEffect: this._onToggleEffect,
-                editEffect: this._onEditEffect,
-                deleteEffect: this._onDeleteEffect,
-                createEffect: this._onCreateEffect,
+                effectToggle: this._onToggleEffect,
+                effectEdit: this._onEditEffect,
+                effectDelete: this._onDeleteEffect,
+                effectCreate: this._onCreateEffect,
                 toggleDescription: this._onToggleDescription,
                 toggleMode: this._onToggleMode,
             }
@@ -46,7 +46,6 @@ export default function TfmSheetMixin(Base) {
         /*****************************************************************************************/
         async _prepareContext(options) {
             const doc = this.document;
-    
             const context = {
                 document: doc,
                 system: doc.system,
@@ -311,14 +310,10 @@ export default function TfmSheetMixin(Base) {
         /*                                                                                     */
         /***************************************************************************************/
         _onClickAction(event, target) {
-            LOGGER.error(`Sheet missing action handler for uuid ${this.document.uuid}:`, target.dataset.action);
-        }
-
-        _onClickAction(event, target) {
             var data = { event: event, target: target };
             LOGGER.error(`Sheet action missing handler`, data);
         }
-
+  
         
         static _onEditImage(event, target) {
             if (!this.isEditable) return;
@@ -336,13 +331,13 @@ export default function TfmSheetMixin(Base) {
         static _onToggleMode() {
             if (this.isPlayMode) this._sheetMode = this.constructor.SHEET_MODES.EDIT;
             else this._sheetMode = this.constructor.SHEET_MODES.PLAY;
-            LOGGER.debug('Sheet mode toggled to:', this.sheetMode);
+            LOGGER.log('Sheet mode toggled to:', this.sheetMode);
 
             const lock = this.window.header.querySelector('.fa-lock, .fa-lock-open');
             lock.classList.toggle('fa-lock');
             lock.classList.toggle('fa-lock-open');
 
-            this.render(true);
+            this.render(false);
         }
     }
 }

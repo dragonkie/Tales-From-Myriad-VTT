@@ -1,3 +1,5 @@
+import LOGGER from "../helpers/logger.mjs";
+
 /**
  * Extend the basic Item with some very simple modifications.
  * @extends {Item}
@@ -32,7 +34,7 @@ export default class TfmItem extends Item {
     }
 
     async deleteDialog(options={}) {
-        const type = tfm.util.localize(this.constructor.metadata.label);
+        const type = tfm.utils.localize(this.constructor.metadata.label);
         let confirm = await foundry.applications.api.DialogV2.confirm({
             title: `${game.i18n.format("DOCUMENT.Delete", { type })}: ${this.name}`,
             content: `<h4>${game.i18n.localize("AreYouSure")}</h4><p>${game.i18n.format("SIDEBAR.DeleteWarning", { type })}</p>`,

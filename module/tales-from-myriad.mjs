@@ -6,7 +6,7 @@ tfm.filepath = {
 
 // Import helper/utility classes and constants.
 import { TFM } from "./config.mjs";
-import sysUtil from "./helpers/sysUtil.mjs";
+import utils from "./helpers/utils.mjs";
 
 import * as applications from "./applications/_module.mjs";
 import * as dataModels from "./data/_module.mjs";
@@ -24,7 +24,7 @@ LOGGER.log('Gathering astral dust...')
 
 tfm.application = applications;
 tfm.document = documents;
-tfm.util = sysUtil;
+tfm.utils = Object.assign(utils, foundry.utils);
 tfm.config = TFM;
 tfm.data = dataModels;
 

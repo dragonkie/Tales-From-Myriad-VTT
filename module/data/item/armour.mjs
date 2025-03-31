@@ -1,4 +1,5 @@
-import ItemDataModel from "../item.mjs";
+import { ItemDataModel } from "../abstract.mjs";
+
 
 export default class ArmourData extends ItemDataModel {
     static defineSchema() {

@@ -4,6 +4,8 @@ function registerTemplates() {
         // Actor Partials
         `${tfm.filepath.template}/sheet/shared/tab-content.hbs`,
         `${tfm.filepath.template}/sheet/shared/tab-nav.hbs`,
+        
+        `${tfm.filepath.template}/sheet/shared/actor-items-sorted.hbs`,
 
         // Dialog partials
         `${tfm.filepath.template}/dialog/parts/roll-options.hbs`

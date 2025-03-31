@@ -1,5 +1,4 @@
 import LOGGER from "./logger.mjs";
-import sysUtil from "./sysUtil.mjs";
 
 function keep(modifier) {
     const rgx = /k([hlf])?([0-9]+)?/i;
@@ -29,5 +28,5 @@ function keep(modifier) {
 
 /**Called on system init hook to register all the custom dice terms used by myriad */
 export default function registerDiceModifiers() {
-    sysUtil.registerMod(`kf`, `keep`, keep);
+    tfm.utils.registerMod(`kf`, `keep`, keep);
 }
