@@ -14,7 +14,6 @@ export default class CharacterData extends ActorDataModel {
         for (const [key, weapon] of Object.entries(weaponTypes)) {
             profData[key] = new SchemaField({
                 value: new NumberField({initial: 0, min: 0, max: 3}),
-                label : new StringField({initial: weapon})
             });
         }
 

@@ -57,12 +57,15 @@ export default class TfmActor extends Actor {
      * Override getRollData() that's supplied to rolls.
      */
     getRollData() {
-        const data = foundry.utils.deepClone(this.system);
+        const data = this.system.getRollData();
 
         // Copy the ability scores to the top level, so that rolls can use
-        // formulas like `@pwr.mod + 4`.
-        for (let [k, v] of Object.entries(data.abilities)) {
-            data[k] = foundry.utils.deepClone(v.mod);
+        // formulas like `1d20 + @pwr`.
+        // @pwr = abilities modifier
+        // @pwoer = abilities score
+        for (let [k, v] of Object.entries(this.system.abilities)) {
+            data[k] = v.mod;
+            data[tfm.utils.localize(tfm.config.Abilities[k]).toLowerCase()] = v.value;
         }
 
         // used for exploding dice based on luck, so 2d6kf@karma

@@ -1,0 +1,34 @@
+<div class="tab-content">
+
+    <div><b>Damage Parts:</b></div>
+    {{#each system.damage_parts as |part key|}}
+        <div class="flexrow" style="gap: 10px;">
+            <input type="text" value="{{part.formula}}" style="flex: 2;">
+            <select>
+                <option value="{{part.type}}">{{part.type}}</option>
+            </select>
+        </div>
+    {{/each}}
+    <a><b>Add Damage Part +</b></a>
+
+
+
+    {{toFieldGroup system.schema 'penalty' value=system.penalty}}
+
+    {{toFieldGroup system.schema 'ranged' value=system.ranged}}
+    {{toFieldGroup system.schema 'identified' value=system.identified}}
+
+    {{#if system.ranged}}
+        <b>Ranged Weapon Options:</b>
+        {{toFieldGroup system.schema 'great' value=system.great}}
+    {{else}}
+        <b>Melee Weapon Options:</b>
+        {{toFieldGroup system.schema 'finesse' value=system.finesse}}
+        {{toFieldGroup system.schema 'thrown' value=system.thrown}}
+        {{toFieldGroup system.schema 'reach' value=system.reach}}
+    {{/if}}
+    <b>Market Details</b>
+    {{toFieldGroup system.schema 'quantity' value=system.quantity}}
+    {{toFieldGroup system.schema 'price' value=system.price}}
+    {{toFieldGroup system.schema 'size' value=system.size}}
+</div>

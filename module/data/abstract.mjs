@@ -1,4 +1,4 @@
-const { ArrayField, NumberField, SchemaField, SetField, StringField, HTMLField } = foundry.data.fields;
+const { ArrayField, NumberField, SchemaField, SetField, StringField, HTMLField, ObjectField, DataField } = foundry.data.fields;
 
 /* ---------------------------------------------- */
 /* Generic system data model                      */
@@ -33,9 +33,22 @@ export class SystemDataModel extends foundry.abstract.TypeDataModel {
         });
     }
 
+
+    static RequiredConfig() {
+        return { required: true, nullable: false };
+    }
+
+    static PrivateConfig() {
+        return { required: true, nullable: false, gmOnly: true };
+    }
+
     getRollData() {
         const data = { ...this };
         return data;
+    }
+
+    get document() {
+        return this.parent;
     }
 };
 
@@ -64,7 +77,10 @@ export class ActorDataModel extends SystemDataModel {
     prepareDerivedData() {
         super.prepareDerivedData();
         for (const ability in this.abilities) this.abilities[ability].mod = tfm.utils.abilityMod(this.abilities[ability].value);
+        this.level = tfm.utils.levelXp(this.xp);
     }
+
+
 };
 
 /* ---------------------------------------------- */
@@ -74,8 +90,10 @@ export class ItemDataModel extends SystemDataModel {
     static defineSchema() {
         const schema = {};
 
+        // Item descriptions
         schema.description = new HTMLField({ initial: "" });// enriched text description of item
-        schema.price = new NumberField({ initial: 3 });// price in crowns to purchase
+        schema.description_unidentified = new HTMLField({ initial: "" });// description to show when an item is unidentified
+        schema.description_chat = new HTMLField({ initial: "" });// description for use in chat cards
 
         /*
         Large items take 2 slots - heavy weapons, spare heavy armour, etc
@@ -91,6 +109,7 @@ export class ItemDataModel extends SystemDataModel {
                 return tfm.config.ItemSizes;
             }
         });
+        schema.price = new NumberField({ initial: 3, label: tfm.config.Generic.price });// price in crowns to purchase
 
         return schema;
     }

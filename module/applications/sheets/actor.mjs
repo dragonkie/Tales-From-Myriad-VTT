@@ -25,12 +25,12 @@ export default class TfmActorSheet extends TfmSheetMixin(foundry.applications.sh
 
     static get PARTS() {
         return {
-            header: { template: `${tfm.filepath.template}/sheet/actor/character/header.hbs` },
-            tabs: { template: `${tfm.filepath.template}/sheet/parts/sheet-tabs.hbs` },
-            features: { template: `${tfm.filepath.template}/sheet/actor/parts/actor-features.hbs` },
-            items: { template: `${tfm.filepath.template}/sheet/actor/parts/actor-items.hbs` },
-            spells: { template: `${tfm.filepath.template}/sheet/actor/parts/actor-spells.hbs` },
-            biography: { template: `${tfm.filepath.template}/sheet/actor/parts/actor-bio.hbs` }
+            header: { template: `${tfm.filepath.template}/actor/character/header.hbs` },
+            tabs: { template: `${tfm.filepath.template}/parts/sheet-tabs.hbs` },
+            features: { template: `${tfm.filepath.template}/actor/parts/actor-features.hbs` },
+            items: { template: `${tfm.filepath.template}/actor/parts/actor-items.hbs` },
+            spells: { template: `${tfm.filepath.template}/actor/parts/actor-spells.hbs` },
+            biography: { template: `${tfm.filepath.template}/actor/parts/actor-bio.hbs` }
         }
     }
 
@@ -48,12 +48,14 @@ export default class TfmActorSheet extends TfmSheetMixin(foundry.applications.sh
     /* ------------------------- RENDER CONTEXT DATA PREP ----------------------------------*/
     async _prepareContext(options) {
         const context = await super._prepareContext();
-        const doc = this.document;
-        const rollData = doc.getRollData();
-        
-        context.itemTypes = doc.itemTypes;
-        context.rollData = rollData;
 
+        context.itemTypes = this.document.itemTypes;
+
+        // prepare ability localization tags
+        for (const [key, ability] of Object.entries(context.system.abilities)) {
+            ability.label = tfm.config.Abilities[key]
+            ability.abbr = tfm.config.AbilitiesAbbr[key]
+        }
 
         return context;
     }

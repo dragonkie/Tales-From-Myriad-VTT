@@ -9,14 +9,14 @@ export default class CharacterSheet extends TfmActorSheet {
 
     static get PARTS() {
         const parts = {
-            body: { template: `${tfm.filepath.template}/sheet/actor/character/body.hbs` },
-            identity: { template: `${tfm.filepath.template}/sheet/actor/character/identity.hbs` },
-            details: { template: `${tfm.filepath.template}/sheet/actor/character/details.hbs` },
-            features: { template: `${tfm.filepath.template}/sheet/actor/character/features.hbs` },
-            abilities: { template: `${tfm.filepath.template}/sheet/actor/character/abilities.hbs` },
-            inventory: { template: `${tfm.filepath.template}/sheet/actor/character/inventory.hbs` },
-            proficiency: { template: `${tfm.filepath.template}/sheet/actor/character/proficiency.hbs` },
-            skills: { template: `${tfm.filepath.template}/sheet/actor/character/skills.hbs` },
+            body: { template: `${tfm.filepath.template}/actor/character/body.hbs` },
+            identity: { template: `${tfm.filepath.template}/actor/character/identity.hbs` },
+            details: { template: `${tfm.filepath.template}/actor/character/details.hbs` },
+            features: { template: `${tfm.filepath.template}/actor/character/features.hbs` },
+            abilities: { template: `${tfm.filepath.template}/actor/character/abilities.hbs` },
+            inventory: { template: `${tfm.filepath.template}/actor/character/inventory.hbs` },
+            proficiency: { template: `${tfm.filepath.template}/actor/character/proficiency.hbs` },
+            skills: { template: `${tfm.filepath.template}/actor/character/skills.hbs` },
         }
 
         return parts;
@@ -34,12 +34,12 @@ export default class CharacterSheet extends TfmActorSheet {
     async _prepareContext() {
         const context = await super._prepareContext();
 
-        // prepare ability localization tags
-        for (const [key, ability] of Object.entries(context.system.abilities)) {
-            ability.label = tfm.config.Abilities[key]
-            ability.abbr = tfm.config.AbilitiesAbbr[key]
+        // get labels for weapon proficiencies
+        for (const [key, prof] of Object.entries(context.system.proficiency)) {
+            prof.label = tfm.config.WeaponTypes[key];
         }
-
+        
+        console.log('Context', context);
         return context;
     }
 }

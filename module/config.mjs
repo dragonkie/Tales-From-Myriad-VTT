@@ -16,6 +16,17 @@ TFM.Abilities = {
     lck: 'TFM.Ability.Lck.long',
 };
 
+// quick reference list for the full length names
+TFM.AbilitiesLong = {
+    pwr: 'power',
+    fin: 'finesse',
+    ins: 'insight',
+    chm: 'charm',
+    arc: 'arcane',
+    occ: 'occult',
+    lck: 'luck'
+}
+
 TFM.CreatureTypes = {
     beast: 'TFM.Creature.Beast',
     plant: 'TFM.Creature.Plant',
@@ -32,7 +43,12 @@ TFM.Generic = {
     health: 'TFM.Generic.Health',
     level: 'TFM.Generic.Level',
     experience: 'TFM.Generic.Experience',
-    corruption: 'TFM.Generic.Corruption'
+    corruption: 'TFM.Generic.Corruption',
+    curse: 'TFM.Generic.Curse',
+    enchatment: 'TFM.Generic.Enchantment',
+    identified: 'TFM.Generic.Identified',
+    ranged: "TFM.Generic.Ranged",
+    price: "TFM.Generic.Price"
 };
 
 TFM.Kindred = {
@@ -67,11 +83,11 @@ TFM.ArmourTypes = {
     shield: 'TYPES.Armour.Shield',
 };
 
-TFM.ArmourTags = {
-    minimal: '',
-    light: '',
-    medium: '',
-    heavy: '',
+TFM.ArmourClass = {
+    minimal: 'TFM.Armour.Minimal',
+    light: 'TFM.Armour.Light',
+    medium: 'TFM.Armour.Medium',
+    heavy: 'TFM.Armour.Heavy',
 }
 
 TFM.WeaponTypes = {
@@ -94,14 +110,14 @@ TFM.WeaponTypes = {
 }
 
 TFM.WeaponTags = {
-    thrown: '',
-    reach: '',
-    finesse: '',
-    great: '',
-    light: '',
-    medium: '',
-    heavy: '',
-    ranged: '',
+    thrown: 'TFM.Generic.Thrown',
+    reach: 'TFM.Generic.Reach',
+    finesse: 'TFM.Generic.Finesse',
+    great: 'TFM.Generic.Great',
+    light: 'TFM.Generic.Light',
+    medium: 'TFM.Generic.Medium',
+    heavy: 'TFM.Generic.Heavy',
+    ranged: 'TFM.Generic.Ranged',
 };
 
 TFM.MagicTypes = {

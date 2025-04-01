@@ -1,0 +1,32 @@
+<div class="tab-content flexcol item-descriptions">
+    {{#if (and isGM isEditMode)}}
+        {{!-- Game master layout, includes all description options --}}
+        Game master
+
+        <div class="description">
+            <div class="editor">
+                <div class="editor-header flexrow">
+                    <a><i class="fa-solid fa-caret-down"></i></a>
+                    <label>Title</label>
+                    <a class="editor-edit"><i class="fa-solid fa-feather-pointed"></i></a>
+                </div>
+                <div class="editor-content" data-engine="prosemirror" data-collaborate="false" data-edit="description">
+                    {{system.description}}
+                </div>
+            </div>
+        </div>
+
+    {{else}}
+        {{!-- Player layout --}}
+        Player
+        {{#if system.identified}}
+            {{!-- if the item is identified --}}
+
+        {{else}}
+            {{!-- unidentified items --}}
+
+        {{/if}}
+    {{/if}}
+    {{!-- chat card item description --}}
+
+</div>

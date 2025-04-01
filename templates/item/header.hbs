@@ -1,0 +1,23 @@
+<div>
+    <header class="sheet-header">
+        <img class="profile-img" data-action="editImage" src="{{document.img}}" title="{{name}}" />
+        <div class="header-fields" style="text-align: center;">
+            <h1 class="item-name">
+                <input class="name" type="text" name="name" value="{{name}}" placeholder="Name" />
+            </h1>
+        </div>
+        {{!-- Inventory details, used for all physical items --}}
+        <div style="flex: 0 0 100px">
+            {{#if isEditMode}}
+                <div>x {{toFieldInput system.schema 'quantity' value=system.quantity}}</div>
+                <div><i class="fa-solid fa-coin"></i> {{toFieldInput system.schema 'price' value=system.price}} </div>
+                <div><i class="fa-solid fa-sack"></i> {{toFieldInput system.schema 'size' value=system.size}}</div>
+            {{else}}
+                <div>x {{system.quantity}}</div>
+                <div><i class="fa-solid fa-coin"></i> {{system.price}}</div>
+                <div><i class="fa-solid fa-sack"></i> {{system.size}}</div>
+            {{/if}}
+        </div>
+    </header>
+    {{> 'tfm.tabs-nav'}}
+</div>

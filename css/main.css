@@ -225,7 +225,6 @@
 .tfm .sheet-header .profile-img {
   flex: 0 0 100px;
   height: 100px;
-  margin-right: 10px;
 }
 .tfm .sheet-header .header-fields {
   flex: 1;
@@ -233,8 +232,14 @@
 .tfm .sheet-header h1.charname input {
   font-size: 28px;
 }
+.tfm .sheet-header h1.item-name input {
+  font-size: 36px;
+}
 .tfm .sheet-tabs {
   flex: 0;
+}
+.tfm .tab.active .tab-content {
+  height: 100%;
 }
 .tfm .tox .tox-editor-container {
   background: #fff;
@@ -508,6 +513,24 @@
 }
 .tfm.sheet.item .editor {
   flex: 1;
+}
+.tfm.sheet.item .item-descriptions {
+  gap: 5px;
+}
+.tfm.sheet.item .item-descriptions .description {
+  padding: 5px;
+  background-color: rgba(255, 255, 255, 0.2);
+}
+.tfm.sheet.item .item-descriptions .description .editor-header > * {
+  flex: 1;
+}
+.tfm.sheet.item .item-descriptions .description .editor-header a {
+  flex: 0 0 36px;
+  height: 36px;
+}
+.tfm.sheet.item .item-descriptions .description .editor-header label {
+  font-size: 28px;
+  flex: 3;
 }
 
 .form-field {

@@ -21,18 +21,16 @@ export default class TfmItemSheet extends TfmSheetMixin(foundry.applications.she
 
     static get PARTS() {
         return {
-            header: { template: `${tfm.filepath.template}/sheet/item/parts/header.hbs` },
-            tabs: { template: `${tfm.filepath.template}/sheet/parts/sheet-tabs.hbs` },
-            body: { template: `${tfm.filepath.template}/sheet/item/parts/body.hbs` },
-            panel: { template: `${tfm.filepath.template}/sheet/item/parts/summary.hbs` },
-            description: { template: `${tfm.filepath.template}/sheet/item/parts/description.hbs` },
-            rules: { template: `${tfm.filepath.template}/sheet/item/parts/rules.hbs` },
+            header: { template: `${tfm.filepath.template}/item/header.hbs` },
+            body: { template: `${tfm.filepath.template}/item/body.hbs` },
+            description: { template: `${tfm.filepath.template}/item/description.hbs` },
+            details: {template: `${tfm.filepath.template}/item/details.hbs`}
         }
     }
 
     static TABS = {
         description: { id: 'description', group: 'primary', label: 'TFM.tab.description' },
-        settings: { id: 'settings', group: 'primary', label: 'TFM.tab.settings' },
+        details: { id: 'details', group: 'primary', label: 'TFM.tab.details' },
         rules: { id: 'rules', group: 'primary', label: 'TFM.tab.rules' }
     }
 

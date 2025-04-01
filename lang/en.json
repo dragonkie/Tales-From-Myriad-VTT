@@ -24,7 +24,9 @@
       "Job": { "long": "Job" },
       "Miscast": { "long": "Misscast" },
       "Curse": { "abbr": "Crs", "long": "Curse", "plrl": "Curses" },
-      "Enchantment": { "abbr": "encht", "long": "Enchantment", "plrl": "Enchantments" }
+      "Enchantment": { "abbr": "encht", "long": "Enchantment", "plrl": "Enchantments" },
+      "Ranged": "Ranged",
+      "Price": "Price"
     },
     "Kindred": {
       "Animus": "Animus",
@@ -122,7 +124,11 @@
       "Back": "Back",
       "Legs": "Legs",
       "Feet": "Feet",
-      "Shield": "Shield"
+      "Shield": "Shield",
+      "Minimal": "Minimal",
+      "Light": "Light",
+      "Medium": "Medium",
+      "Heavy": "Heavy"
     },
     "Tags": {
       "Thrown": "Thrown",

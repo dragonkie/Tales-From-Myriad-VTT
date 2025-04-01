@@ -7,7 +7,7 @@
     "compile": "gulp css",
     "watch": "gulp",
     "gulp": "gulp",
-    "sass": "sass --watch css/scss/tales-from-myriad.scss css/main.css"
+    "sass": "sass --watch src/scss/tales-from-myriad.scss css/main.css"
   },
   "browserslist": [
     "last 3 versions"

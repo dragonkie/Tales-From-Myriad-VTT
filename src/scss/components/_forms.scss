@@ -2,9 +2,7 @@
     font-family: $font-primary;
 }
 
-.dialog-form {
-
-}
+.dialog-form {}
 
 .sheet-header {
     flex: 0 auto;
@@ -18,7 +16,6 @@
     .profile-img {
         flex: 0 0 100px;
         height: 100px;
-        margin-right: 10px;
     }
 
     .header-fields {
@@ -30,6 +27,12 @@
             font-size: 28px;
         }
     }
+
+    h1.item-name {
+        input {
+            font-size: 36px;
+        }
+    }
 }
 
 .sheet-tabs {
@@ -39,6 +42,10 @@
 .sheet-body,
 .sheet-body .tab,
 .sheet-body .tab .editor {}
+
+.tab.active .tab-content {
+    height: 100%;
+}
 
 .tox {
     .tox-editor-container {

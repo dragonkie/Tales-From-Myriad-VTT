@@ -48,16 +48,24 @@ export default function TfmSheetMixin(Base) {
             const doc = this.document;
             const context = {
                 document: doc,
-                system: doc.system,
+                system: {},
                 config: CONFIG.TFM,
+                rollData: doc.getRollData(),
                 name: doc.name,
                 flags: this.document.flags,
                 tabs: this._getTabs(),
                 isEditMode: this.isEditMode,
                 isPlayMode: this.isPlayMode,
-                isEditable: this.isEditable
+                isEditable: this.isEditable,
+                isGM: game.user.isGM,
             }
-    
+
+            // special method for copying the system, utils.deepClone doesnt decouple its version from the copy
+            for (const [key, value] of Object.entries(doc.system)) {
+                context.system[key] = tfm.utils.duplicate(value);
+            }
+            context.system.schema = doc.system.schema;
+
             return context;
         }
 
@@ -313,8 +321,8 @@ export default function TfmSheetMixin(Base) {
             var data = { event: event, target: target };
             LOGGER.error(`Sheet action missing handler`, data);
         }
-  
-        
+
+
         static _onEditImage(event, target) {
             if (!this.isEditable) return;
             const current = this.document.img;

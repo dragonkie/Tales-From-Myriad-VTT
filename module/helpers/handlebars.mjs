@@ -1,10 +1,13 @@
 
 function registerTemplates() {
     const partials = [
+        // Sheet partials
+        `${tfm.filepath.template}/shared/tabs-nav.hbs`,
+        `${tfm.filepath.template}/shared/tabs-content.hbs`,
+
         // Actor Partials
         `${tfm.filepath.template}/sheet/shared/tab-content.hbs`,
         `${tfm.filepath.template}/sheet/shared/tab-nav.hbs`,
-        
         `${tfm.filepath.template}/sheet/shared/actor-items-sorted.hbs`,
 
         // Dialog partials
@@ -12,6 +15,7 @@ function registerTemplates() {
     ];
 
     // Strips the partials down to barebones and prefixs them with the tfm tag to be used for easy loading and legibility in the .hbs sheets
+    // @example {{> 'tfm.sheet-tabs'}}
     const paths = {};
     for (const path of partials) {
         paths[`tfm.${path.split("/").pop().replace(".hbs", "")}`] = path;
@@ -21,41 +25,63 @@ function registerTemplates() {
 };
 
 function registerHelpers() {
+    Handlebars.registerHelper('ledger', (target, id, label) => {
+        return `<a data-action="editLedger" data-target="${target}" data-id="${id}" data-label="${label}"><i class="fa-solid fa-memo-pad"></i></a>`
+    });
     Handlebars.registerHelper('toLowerCase', (str) => str.toLowerCase());
+    Handlebars.registerHelper('toTitleCase', (str) => str.replace(/\w\S*/g, text => text.charAt(0).toUpperCase() + text.substring(1).toLowerCase()))
     Handlebars.registerHelper('isGM', () => game.user.isGM);
-    Handlebars.registerHelper('disabled', (a) => a == true ? 'disabled' : '');
-
+    Handlebars.registerHelper('objectIsEmpty', (obj) => Object.keys(obj).length <= 0);
+    Handlebars.registerHelper('getField', (schema, path) => schema.getField(path));
+    Handlebars.registerHelper('toFieldGroup', (schema, path, options) => {
+        let field = schema.getField(path);
+        const { classes, label, hint, rootId, stacked, units, widget, ...inputConfig } = options.hash;
+        const groupConfig = {
+            label, hint, rootId, stacked, widget, localize: true, units,
+            classes: typeof classes === "string" ? classes.split(" ") : []
+        };
+        const group = field.toFormGroup(groupConfig, inputConfig);
+        return new Handlebars.SafeString(group.outerHTML);
+    });
+    Handlebars.registerHelper('toFieldInput', (schema, path, options) => {
+        let field = schema.getField(path);
+        const { classes, label, hint, rootId, stacked, units, widget, ...inputConfig } = options.hash;
+        const groupConfig = {
+            label, hint, rootId, stacked, widget, localize: true, units,
+            classes: typeof classes === "string" ? classes.split(" ") : []
+        };
+        const group = field.toInput(groupConfig, inputConfig);
+        return new Handlebars.SafeString(group.outerHTML);
+    })
     /* -------------------------------------------- */
     /*  Math helpers                                */
     /* -------------------------------------------- */
-    Handlebars.registerHelper('math_div', (a, b) => a / b);
-    Handlebars.registerHelper('math_mult', (a, b) => a * b);
-    Handlebars.registerHelper('math_add', (a, b) => a + b);
-    Handlebars.registerHelper('math_sub', (a, b) => a - b);
-    Handlebars.registerHelper('math_pct', (a, b) => a / b * 100);
+    Handlebars.registerHelper('addition', (a, b) => a + b);
+    Handlebars.registerHelper('ceil', (a) => Math.ceil(a));
+    Handlebars.registerHelper('divide', (a, b) => a / b);
+    Handlebars.registerHelper('floor', (a) => Math.floor(a));
+    Handlebars.registerHelper('max', (...num) => Math.max(...num));
+    Handlebars.registerHelper('min', (...num) => Math.min(...num));
+    Handlebars.registerHelper('multiply', (a, b) => a * b);
+    Handlebars.registerHelper('percent', (a, b) => a / b * 100);
+    Handlebars.registerHelper('round', (a) => Math.ceil(a));
+    Handlebars.registerHelper('subtraction', (a, b) => a - b);
 
     /* -------------------------------------------- */
     /*  Iterators                                   */
     /* -------------------------------------------- */
     Handlebars.registerHelper('repeat', (context, options) => {
-        let ret = '';
-
-        for (var i = 0; i < context; i++) {
-            ret = ret + options.fn(context[i]);
-            console.log("current stirng: ", ret);
-        }
-
+        for (var i = 0, ret = ''; i < context; i++) ret = ret + options.fn(context[i]);
         return ret;
     });
 
-    Handlebars.registerHelper('getSchemaField', (schema, path) => {
-        console.log('schema: ', schema);
-        console.log('path: ', path)
-        if (schema instanceof foundry.abstract.TypeDataModel) throw new Error('Helper getSchemaField must be passed a Schemafield as its initital argument');
-        if (typeof path != 'string') throw new Error('Helper getSchemaField must be passed a string path to a schema field as its secondary argument');
-        
-        return schema.getField(path);
-    });
+    /* -------------------------------------------- */
+    /*  element creators                            */
+    /* -------------------------------------------- */
+    Handlebars.registerHelper('selectDamage', (v, n) => newedo.elements.select.DamageTypes(v, n));
+    Handlebars.registerHelper('selectSkill', (v, n) => newedo.elements.select.Skills(v, n));
+    Handlebars.registerHelper('selectWeaponSkill', (v, n) => newedo.elements.select.WeaponSkills(v, n));
+    Handlebars.registerHelper('selectTrait', (v, n) => newedo.elements.select.Traits(v, n));
 }
 
 /**
