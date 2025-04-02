@@ -1,4 +1,4 @@
-&.sheet.item {
+.sheet.item {
 
     .tab[data-tab].active {
         display: flex;
@@ -28,16 +28,12 @@
             background-color: rgba(255, 255, 255, 0.2);
 
             .editor-header {
-                >* {
-                    flex: 1;
-                }
-
                 a {
-                    flex: 0 0 36px;
-                    height: 36px;
+                    flex: 0 0;
                 }
 
                 label {
+                    text-align: center;
                     font-size: 28px;
                     flex: 3;
                 }

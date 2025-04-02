@@ -1,32 +1,29 @@
 <div class="tab-content flexcol item-descriptions">
     {{#if (and isGM isEditMode)}}
         {{!-- Game master layout, includes all description options --}}
-        Game master
-
         <div class="description">
-            <div class="editor">
-                <div class="editor-header flexrow">
-                    <a><i class="fa-solid fa-caret-down"></i></a>
-                    <label>Title</label>
-                    <a class="editor-edit"><i class="fa-solid fa-feather-pointed"></i></a>
-                </div>
-                <div class="editor-content" data-engine="prosemirror" data-collaborate="false" data-edit="description">
-                    {{system.description}}
-                </div>
-            </div>
+            {{editor system.description target="system.description" engine="prosemirror" collaborate=false button=true class='fill-space'}}
         </div>
-
+        <div class="description">
+            {{editor system.description_unidentified target="system.description_unidentified" engine="prosemirror" collaborate=false button=true class='fill-space'}}
+        </div>
     {{else}}
         {{!-- Player layout --}}
         Player
         {{#if system.identified}}
             {{!-- if the item is identified --}}
-
+            <div class="description">
+                {{editor system.description target="system.description" engine="prosemirror" collaborate=false button=true class='fill-space'}}
+            </div>
         {{else}}
             {{!-- unidentified items --}}
-
+            <div class="description">
+                {{editor system.description_unidentified target="system.description_unidentified" engine="prosemirror" collaborate=false button=true class='fill-space'}}
+            </div>
         {{/if}}
     {{/if}}
     {{!-- chat card item description --}}
-
+    <div class="description">
+        {{editor system.description_chat target="system.description_chat" engine="prosemirror" collaborate=false button=true class='fill-space'}}
+    </div>
 </div>

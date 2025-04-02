@@ -1,27 +1,47 @@
+//==================================================
+// ||Scripts to use
+//==================================================
+@use "sass:meta";
+
+/* Global styles */
+@use 'global/window';
+@use 'global/grid';
+@use 'global/flex';
+
+@use 'components/forms';
+@use 'components/resource';
+@use 'components/items';
+@use 'components/effects';
+
+@use 'sheets/actor';
+@use 'sheets/item';
+
 // Add custom fonts by visiting and search https://fonts.google.com
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
 
-// Import utilities.
-@import 'utils/typography';
-@import 'utils/colors';
-@import 'utils/mixins';
-@import 'utils/variables';
+//==================================================
+// ||Variables
+//==================================================
 
-/* Global styles */
-@import 'global/window';
-@import 'global/grid';
-@import 'global/flex';
+$padding-sm: 5px;
+$padding-md: 10px;
+$padding-lg: 20px;
+
+$border-groove: 2px groove #eeede0;
+
+$c-white: #fff;
+$c-black: #000;
+
+$c-dark: #191813;
+$c-faint: #c9c7b8;
+$c-beige: #b5b3a4;
+$c-tan: #444;
+
+$font-primary: 'Roboto', sans-serif;
+$font-secondary: 'Roboto', sans-serif;
 
 /* Styles limited to tales from myriad sheets */
-.tfm {
-    @import 'components/forms';
-    @import 'components/resource';
-    @import 'components/items';
-    @import 'components/effects';
-    /* Styles for the different sheets*/
-    @import 'sheets/actor';
-    @import 'sheets/item';
-}
+.tfm {}
 
 .form-field {
     display: flex;

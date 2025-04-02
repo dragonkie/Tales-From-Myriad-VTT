@@ -5,7 +5,7 @@
     padding: 0;
     align-items: center;
     background: rgba(0, 0, 0, 0.05);
-    border: $border-groove;
+    border: 1px groove white;
     font-weight: bold;
 
     >* {
@@ -33,7 +33,6 @@
     padding: 0;
     overflow-y: auto;
     scrollbar-width: thin;
-    color: $c-tan;
 
     // Child lists
     .item-list {
@@ -79,7 +78,7 @@
     .item {
         align-items: center;
         padding: 0 2px; // to align with the header border
-        border-bottom: 1px solid $c-faint;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 
         &:last-child {
             border-bottom: none;
@@ -112,7 +111,7 @@
         padding: 0;
         align-items: center;
         background: rgba(0, 0, 0, 0.05);
-        border: $border-groove;
+        border: 1px groove white;
         font-weight: bold;
 
         >* {
