@@ -11,8 +11,10 @@ export default class WeaponData extends ItemDataModel {
             formula: new StringField({ initial: '1d6' }),
             type: new StringField({
                 initial: 'sharp',
+                blank: false,
+                ...this.RequiredConfig,
                 choices: () => {
-                    return { ...tfm.config.DamageTypes }
+                    return { ...tfm.config.DamageTypes,  }
                 }
             })
         }), { initial: [{ formula: '1d6', type: 'sharp' }] });

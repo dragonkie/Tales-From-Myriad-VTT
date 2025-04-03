@@ -1,15 +1,43 @@
-const { ArrayField, NumberField, SchemaField, SetField, StringField, HTMLField, ObjectField, DataField } = foundry.data.fields;
+const { ArrayField, NumberField, SchemaField, SetField, StringField, HTMLField, ObjectField, DataField, BooleanField } = foundry.data.fields;
+const fields = foundry.data.fields;
+
+/**
+ * @typedef {Function} DataFieldValidator
+ * @example field.validate(value, options) => {isNaN(value) ? false : true}
+ */
+
+/**
+ * @typedef {Object} DataFieldOptions
+ * @prop {Boolean} required - 
+ * @prop {Boolean} nullable - 
+ * @prop {Boolean} gmOnly - 
+ * @prop {any} initial - 
+ * @prop {String} label - 
+ * @prop {String} hint - 
+ * @prop {DataFieldValidator} validate - 
+ * @prop {String} validationError - 
+ */
+
+/**
+ * @typedef {Object} StringFieldParams
+ * @prop {Boolean} blank - can this field be an empty string
+ * @prop {Boolean} trim - Should string be trimmed as part of cleaning
+ * @prop {Object|Function|String[]} - An array of values or an object of values/labels which represent allowed choices for the field.
+ * @prop {Boolean} textSearch - Is this string field a target for text search
+ */
+
+/**
+ * @typedef {DataFieldOptions & StringFieldParams} StringFieldOptions 
+ */
 
 /* ---------------------------------------------- */
 /* Generic system data model                      */
 /* ---------------------------------------------- */
 export class SystemDataModel extends foundry.abstract.TypeDataModel {
+
     /**
-     * Adds a field that can be used for token bars with a value, min, and max
-     * @param {String} value The starting value
-     * @param {String} min minimum clamping value
-     * @param {String} max Maximum clamping value
-     * @returns {SchemaField} New ValueField
+     * @param {Number} value 
+     * @returns {SchemaField}
      */
     static ValueField(value) {
         return new SchemaField({
@@ -17,6 +45,13 @@ export class SystemDataModel extends foundry.abstract.TypeDataModel {
         });
     }
 
+    /**
+     * Adds a field that can be used for token bars with a value, min, and max
+     * @param {Number} value The starting value
+     * @param {Number} min minimum clamping value
+     * @param {Number} max Maximum clamping value
+     * @returns {SchemaField} New ValueField
+     */
     static ResourceField(value = 10, max = 10, min = 0) {
         return new SchemaField({
             value: new NumberField({ initial: value, required: true, nullable: false }),
@@ -29,16 +64,21 @@ export class SystemDataModel extends foundry.abstract.TypeDataModel {
         return new SchemaField({
             value: new NumberField({ initial: 0, min: 0, max: 3, required: true, nullable: false }),// 0 - 3
             label: new StringField({ initial: '', required: false, nullable: true }),// Sword, bow, dagger, etc
-            type: new StringField({ initial: "None" }), // None, Half, Full
         });
     }
 
 
-    static RequiredConfig() {
+    /**
+     * @returns {DataFieldOptions}
+     */
+    static get RequiredConfig() {
         return { required: true, nullable: false };
     }
 
-    static PrivateConfig() {
+    /**
+     * @returns {DataFieldOptions}
+     */
+    static get PrivateConfig() {
         return { required: true, nullable: false, gmOnly: true };
     }
 
@@ -79,8 +119,6 @@ export class ActorDataModel extends SystemDataModel {
         for (const ability in this.abilities) this.abilities[ability].mod = tfm.utils.abilityMod(this.abilities[ability].value);
         this.level = tfm.utils.levelXp(this.xp);
     }
-
-
 };
 
 /* ---------------------------------------------- */
@@ -114,5 +152,15 @@ export class ItemDataModel extends SystemDataModel {
         schema.price = new NumberField({ initial: 3, label: tfm.config.Generic.price });// price in crowns to purchase
 
         return schema;
+    }
+
+    static get MixinIdentify() {
+        return class EquipmentData extends this {
+            static defineSchema() {
+                const schema = super.defineSchema();
+                schema.identified = new BooleanField
+                return schema;
+            }
+        }
     }
 };
