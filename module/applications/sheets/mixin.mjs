@@ -18,6 +18,7 @@ export default function TfmSheetMixin(Base) {
                 effectDelete: this._onDeleteEffect,
                 effectCreate: this._onCreateEffect,
                 toggleDescription: this._onToggleDescription,
+                collapse: this._onToggleCollapse,
                 toggleMode: this._onToggleMode,
             }
         };
@@ -86,23 +87,57 @@ export default function TfmSheetMixin(Base) {
         /*                                  SHEET RENDERING                                      */
         /*                                                                                       */
         /*****************************************************************************************/
+
+        /**
+         * Querys the server to render the application
+         * @param {*} options 
+         * @param {*} _options 
+         * @returns 
+         */
         async render(options, _options) {
             return super.render(options, _options);
         }
 
+        /**
+         * Called once when the sheet is initially opened
+         * @param {*} context 
+         * @param {*} options 
+         */
         _onFirstRender(context, options) {
             super._onFirstRender(context, options);
             this._setupContextMenu();
+
+            console.log('First render');
         }
 
+        /**
+         * Called after every time the sheet is rendered / re rendered
+         * @param {*} context 
+         * @param {*} options 
+         */
         _onRender(context, options) {
             super._onRender(context, options);
+
+            // disables all input elements if this isnt editable for the user
             if (!this.isEditable) {
                 this.element.querySelectorAll("input, select, textarea, multi-select").forEach(n => {
                     n.disabled = true;
                 })
             }
             this._setupDragAndDrop();
+
+            // manipulate editor toggle buttons to be better
+            /**@type {Array<Element>} */
+            let editors = this.element.querySelectorAll('.description prose-mirror');
+            for (const editor of editors) {
+
+                const btn = editor.querySelector('button.toggle');
+                const icon = btn.querySelector('i');
+                const header = editor.parentElement.querySelector('.header');
+
+                icon.classList.toggle('fa-edit');
+                icon.classList.toggle('fa-feather-pointed');
+            }
         }
 
         async _renderHTML(context, options) {
@@ -317,12 +352,20 @@ export default function TfmSheetMixin(Base) {
         /*                                    SHEET ACTIONS                                    */
         /*                                                                                     */
         /***************************************************************************************/
-        _onClickAction(event, target) {
-            var data = { event: event, target: target };
-            LOGGER.error(`Sheet action missing handler`, data);
-        }
 
+        /**
+         * Called whenever an action event is clicked
+         * @param {Event} event 
+         * @param {Element} target 
+         */
+        _onClickAction(event, target) { }
 
+        /**
+         * 
+         * @param {Event} event 
+         * @param {Element} target 
+         * @returns 
+         */
         static _onEditImage(event, target) {
             if (!this.isEditable) return;
             const current = this.document.img;
@@ -336,7 +379,13 @@ export default function TfmSheetMixin(Base) {
             fp.browse();
         }
 
-        static _onToggleMode() {
+        /**
+         * 
+         * @param {Event} event 
+         * @param {Element} target 
+         * @returns 
+         */
+        static _onToggleMode(event, target) {
             if (this.isPlayMode) this._sheetMode = this.constructor.SHEET_MODES.EDIT;
             else this._sheetMode = this.constructor.SHEET_MODES.PLAY;
             LOGGER.log('Sheet mode toggled to:', this.sheetMode);
@@ -346,6 +395,18 @@ export default function TfmSheetMixin(Base) {
             lock.classList.toggle('fa-lock-open');
 
             this.render(false);
+        }
+
+        /**
+         * 
+         * @param {Event} event 
+         * @param {Element} target 
+         * @returns 
+         */
+        static _onToggleCollapse(event, target) {
+            let container = target.querySelector('.collapsible') || target.closest('.collapsible');
+            container.classList.toggle('collapsed');
+            console.log(container)
         }
     }
 }

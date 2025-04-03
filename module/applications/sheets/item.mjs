@@ -24,7 +24,7 @@ export default class TfmItemSheet extends TfmSheetMixin(foundry.applications.she
             header: { template: `${tfm.filepath.template}/item/header.hbs` },
             body: { template: `${tfm.filepath.template}/item/body.hbs` },
             description: { template: `${tfm.filepath.template}/item/description.hbs` },
-            details: {template: `${tfm.filepath.template}/item/details.hbs`}
+            details: { template: `${tfm.filepath.template}/item/details.hbs` }
         }
     }
 
@@ -49,10 +49,25 @@ export default class TfmItemSheet extends TfmSheetMixin(foundry.applications.she
             rollData: context.rollData
         };
 
-        context.description = {
-            field: this.document.system.schema.getField('description'),
-            value: this.document.system.description,
-            enriched: await TextEditor.enrichHTML(context.system.description, enrichmentOptions),
+        context.descriptions = {
+            value: {
+                label: tfm.utils.localize('TFM.Generic.Description'),
+                field: this.document.system.schema.getField('description.value'),
+                value: this.document.system.description.value,
+                enriched: await TextEditor.enrichHTML(context.system.description.value, enrichmentOptions),
+            },
+            unidentified: {
+                label: `${tfm.utils.localize('TFM.Generic.Unidentified')} ${tfm.utils.localize('TFM.Generic.Description')}`,
+                field: this.document.system.schema.getField('description.unidentified'),
+                value: this.document.system.description.unidentified,
+                enriched: await TextEditor.enrichHTML(context.system.description.unidentified, enrichmentOptions),
+            },
+            chat: {
+                label: `${tfm.utils.localize('CHAT.Chat')} ${tfm.utils.localize('TFM.Generic.Description')}`,
+                field: this.document.system.schema.getField('description.chat'),
+                value: this.document.system.description.chat,
+                enriched: await TextEditor.enrichHTML(context.system.description.chat, enrichmentOptions),
+            },
         }
 
         return context;

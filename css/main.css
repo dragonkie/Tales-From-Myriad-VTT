@@ -230,8 +230,29 @@
   height: 100%;
 }
 
-.tox .tox-edit-area {
-  padding: 0 8px;
+/*
+|| Collapsible items
+
+.collapsible - Repersents a container with collapsible elements inside of it
+.collapsible-content - a container to be shrunk down when the container is collapsed
+.wrapper - the actual content being shrunk down
+*/
+.collapsible .fa-caret-down {
+  transition: all 0.3s ease-in-out;
+}
+.collapsible.collapsed .fa-caret-down {
+  transform: rotate(-90deg);
+}
+.collapsible.collapsed .collapsible-content {
+  grid-template-rows: 0fr;
+}
+.collapsible .collapsible-content {
+  display: grid;
+  grid-template-rows: 1fr;
+  transition: all 0.3s ease-in-out;
+}
+.collapsible .collapsible-content > .wrapper {
+  overflow: hidden;
 }
 
 .resource-label {
@@ -512,22 +533,28 @@
   flex: 1;
 }
 .sheet.item .item-descriptions {
-  gap: 5px;
+  gap: 10px;
 }
 .sheet.item .item-descriptions .description {
   padding: 5px;
   background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
 }
-.sheet.item .item-descriptions .description .editor-header a {
-  flex: 0 0;
-}
-.sheet.item .item-descriptions .description .editor-header label {
+.sheet.item .item-descriptions .description label {
   text-align: center;
-  font-size: 28px;
+  font-size: 18px;
   flex: 3;
+  border-bottom: 1px solid gold;
+}
+.sheet.item .item-descriptions .description a {
+  flex: 0;
 }
 
 /* Styles limited to tales from myriad sheets */
+.tfm {
+  font-family: Georgia, "Times New Roman", Times, serif;
+}
+
 .form-field {
   display: flex;
   flex-direction: row;

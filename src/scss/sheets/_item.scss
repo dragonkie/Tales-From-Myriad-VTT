@@ -21,25 +21,23 @@
     }
 
     .item-descriptions {
-        gap: 5px;
+        gap: 10px;
 
         .description {
             padding: 5px;
             background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
 
-            .editor-header {
-                a {
-                    flex: 0 0;
-                }
-
-                label {
-                    text-align: center;
-                    font-size: 28px;
-                    flex: 3;
-                }
+            label {
+                text-align: center;
+                font-size: 18px;
+                flex: 3;
+                border-bottom: 1px solid gold;
             }
 
-
+            a {
+                flex: 0;
+            }
         }
     }
 }

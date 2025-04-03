@@ -91,9 +91,11 @@ export class ItemDataModel extends SystemDataModel {
         const schema = {};
 
         // Item descriptions
-        schema.description = new HTMLField({ initial: "" });// enriched text description of item
-        schema.description_unidentified = new HTMLField({ initial: "" });// description to show when an item is unidentified
-        schema.description_chat = new HTMLField({ initial: "" });// description for use in chat cards
+        schema.description = new SchemaField({
+            value: new HTMLField({ initial: "" }),
+            chat: new HTMLField({ initial: "" }),
+            unidentified: new HTMLField({ initial: "" }),
+        })
 
         /*
         Large items take 2 slots - heavy weapons, spare heavy armour, etc

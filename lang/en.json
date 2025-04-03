@@ -26,7 +26,10 @@
       "Curse": { "abbr": "Crs", "long": "Curse", "plrl": "Curses" },
       "Enchantment": { "abbr": "encht", "long": "Enchantment", "plrl": "Enchantments" },
       "Ranged": "Ranged",
-      "Price": "Price"
+      "Price": "Price",
+      "Description": "Description",
+      "Unidentified": "Unidentified",
+      "Identified": "Identified"
     },
     "Kindred": {
       "Animus": "Animus",

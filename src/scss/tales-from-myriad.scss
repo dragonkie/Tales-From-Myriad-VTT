@@ -41,7 +41,9 @@ $font-primary: 'Roboto', sans-serif;
 $font-secondary: 'Roboto', sans-serif;
 
 /* Styles limited to tales from myriad sheets */
-.tfm {}
+.tfm {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
 
 .form-field {
     display: flex;

@@ -1,19 +1,29 @@
 <div class="tab-content flexcol item-descriptions">
-    {{#if (and isGM isEditMode)}}
+    {{#if (or isGM system.identified)}}
         {{!-- Game master layout, includes all description options --}}
-        <div class="description">
-            {{editor system.description target="system.description" engine="prosemirror" collaborate=false button=true class='fill-space'}}
-        </div>
-        <div class="description">
-            {{editor system.description_unidentified target="system.description_unidentified" engine="prosemirror" collaborate=false button=true class='fill-space'}}
-        </div>
+        {{#each descriptions as | text key |}}
+            <div class="description collapsible">
+                <div class="flexrow" data-action="collapse">
+                    <a><i class="fa-solid fa-caret-down"></i></a>
+                    <label>{{text.label}}</label>
+                </div>
+                <div class="collapsible-content">
+                    <div class="wrapper">
+                        <prose-mirror name="system.description.{{key}}" value="{{text.value}}" editable="false" toggled>
+                            {{{text.enriched}}}
+                        </prose-mirror>
+                    </div>
+                </div>
+            </div>
+        {{/each}}
+
     {{else}}
         {{!-- Player layout --}}
         Player
         {{#if system.identified}}
             {{!-- if the item is identified --}}
             <div class="description">
-                {{editor system.description target="system.description" engine="prosemirror" collaborate=false button=true class='fill-space'}}
+                {{editor description target="system.description" engine="prosemirror" collaborate=false button=true class='fill-space'}}
             </div>
         {{else}}
             {{!-- unidentified items --}}
@@ -21,9 +31,11 @@
                 {{editor system.description_unidentified target="system.description_unidentified" engine="prosemirror" collaborate=false button=true class='fill-space'}}
             </div>
         {{/if}}
+        {{!-- chat card item description, visible to all players --}}
+        <div class="description">
+            {{editor system.description_chat target="system.description_chat" engine="prosemirror" collaborate=false button=true class='fill-space'}}
+        </div>
     {{/if}}
-    {{!-- chat card item description --}}
-    <div class="description">
-        {{editor system.description_chat target="system.description_chat" engine="prosemirror" collaborate=false button=true class='fill-space'}}
-    </div>
+
+
 </div>
