@@ -40,15 +40,20 @@ TFM.CreatureTypes = {
 };
 
 TFM.Generic = {
-    health: 'TFM.Generic.Health',
-    level: 'TFM.Generic.Level',
-    experience: 'TFM.Generic.Experience',
+    broken: 'TFM.Generic.Broken',
+    chatDescription: 'TFM.Generic.ChatDescription',
     corruption: 'TFM.Generic.Corruption',
-    curse: 'TFM.Generic.Curse',
+    curse: 'TFM.Generic.Curse.long',
+    cursed: 'TFM.Generic.Cursed',
+    description: 'TFM.Generic.Description',
     enchatment: 'TFM.Generic.Enchantment',
+    experience: 'TFM.Generic.Experience',
+    health: 'TFM.Generic.Health',
     identified: 'TFM.Generic.Identified',
+    label: 'TFM.Generic.Label',
+    level: 'TFM.Generic.Level',
+    price: "TFM.Generic.Price",
     ranged: "TFM.Generic.Ranged",
-    price: "TFM.Generic.Price"
 };
 
 TFM.Kindred = {

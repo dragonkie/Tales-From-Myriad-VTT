@@ -34,7 +34,6 @@ const fields = foundry.data.fields;
 /* Generic system data model                      */
 /* ---------------------------------------------- */
 export class SystemDataModel extends foundry.abstract.TypeDataModel {
-
     /**
      * @param {Number} value 
      * @returns {SchemaField}
@@ -153,14 +152,46 @@ export class ItemDataModel extends SystemDataModel {
 
         return schema;
     }
+    /*
+    ==============================================
+    Item specific fields
+    ==============================================
+    */
 
-    static get MixinIdentify() {
-        return class EquipmentData extends this {
-            static defineSchema() {
-                const schema = super.defineSchema();
-                schema.identified = new BooleanField
-                return schema;
-            }
-        }
+    /**
+     * Returns a schema for defining a singular enchantment (also curses)
+     */
+    static EnchantmentField() {
+        return new SchemaField({
+            label: new StringField({ ...this.PrivateConfig, initial: '', label: tfm.config.Generic.label }), // localizable curse name
+            description: new HTMLField({ ...this.PrivateConfig, initial: '', label: tfm.config.Generic.description }), // description of enchantment, supports enriched HTML
+            chat: new HTMLField({ ...this.PrivateConfig, initial: '', label: tfm.config.Generic.chatDescription }), // Chat card to output for enchantment, supports enriched html
+            curse: new BooleanField({ ...this.PrivateConfig, initial: false, label: tfm.config.Generic.curse }), // does this enchantment qualify as a curse
+            identified: new BooleanField({ ...this.PrivateConfig, initial: false, label: tfm.config.Generic.identified }), // is this effect visible to players
+        });
+    }
+
+    /**
+     * Returns the list for holding enchantments, curses and blessings
+     * @returns {ArrayField}
+     */
+    static EnchantmentsField() {
+        // arrays for magical effects on the item
+        return new ArrayField(this.EnchantmentField(), {
+            initial: [], 
+            label: tfm.config.Generic.enchantment,
+        });
+    }
+
+    /**
+     * returns a selection of equipment specific modifications to be applied to a schema
+     */
+    static EquipmentFields() {
+        return {
+            enchantments: this.EnchantmentsField(),
+            identified: new BooleanField({ ...this.PrivateConfig, initial: false }),
+            broken: new BooleanField({ ...this.RequiredConfig, initial: false, label: tfm.config.Generic.broken }),
+            equipped: new BooleanField({...this.RequiredConfig, initial: false, label: tfm.config.Generic})
+        };
     }
 };

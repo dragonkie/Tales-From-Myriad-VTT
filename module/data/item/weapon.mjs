@@ -14,7 +14,7 @@ export default class WeaponData extends ItemDataModel {
                 blank: false,
                 ...this.RequiredConfig,
                 choices: () => {
-                    return { ...tfm.config.DamageTypes,  }
+                    return { ...tfm.config.DamageTypes, }
                 }
             })
         }), { initial: [{ formula: '1d6', type: 'sharp' }] });
@@ -26,21 +26,8 @@ export default class WeaponData extends ItemDataModel {
             schema[key] = new BooleanField({ initial: false, label: value });
         }
 
-        // arrays for magical effects on the item
-        schema.curses = new ArrayField(new SchemaField({
-            label: new StringField({ initial: '' }),
-            description: new StringField({ initial: '' }),
-            revealed: new BooleanField({ initial: false, ...this.PrivateConfig })
-        }), { initial: [], label: tfm.config.Generic.curse });
-
-        schema.enchantments = new ArrayField(new SchemaField({
-            label: new StringField({ initial: '' }),
-            description: new StringField({ initial: '' }),
-            revealed: new BooleanField({ initial: false, ...this.PrivateConfig })
-        }), { initial: [], label: tfm.config.Generic.enchantment });
-
-        // identified check to see if enchantments and curses should all be revealed
-        schema.identified = new BooleanField({ initial: false });
+        // adds equipment fields
+        Object.assign(schema, this.EquipmentFields());
 
         return schema;
     }
