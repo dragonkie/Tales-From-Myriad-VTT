@@ -194,4 +194,8 @@ export class ItemDataModel extends SystemDataModel {
             equipped: new BooleanField({...this.RequiredConfig, initial: false, label: tfm.config.Generic})
         };
     }
+
+    async use(event, options) {
+        if (game.settings.get(game.system.id, 'debug')) console.log(`Item type[${this.parent.type}] system.use() called but with no handler`, this.parent);
+    }
 };

@@ -31,4 +31,6 @@ export default class WeaponData extends ItemDataModel {
 
         return schema;
     }
+
+    
 }
