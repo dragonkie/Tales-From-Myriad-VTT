@@ -16,8 +16,10 @@
 @use 'sheets/actor';
 @use 'sheets/item';
 
+@use 'utils/variables';
+
 // Add custom fonts by visiting and search https://fonts.google.com
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
 
 //==================================================
 // ||Variables
@@ -29,20 +31,9 @@ $padding-lg: 20px;
 
 $border-groove: 2px groove #eeede0;
 
-$c-white: #fff;
-$c-black: #000;
-
-$c-dark: #191813;
-$c-faint: #c9c7b8;
-$c-beige: #b5b3a4;
-$c-tan: #444;
-
-$font-primary: 'Roboto', sans-serif;
-$font-secondary: 'Roboto', sans-serif;
-
 /* Styles limited to tales from myriad sheets */
 .tfm {
-    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-family: 'Roboto', sans-serif;
 }
 
 .form-field {

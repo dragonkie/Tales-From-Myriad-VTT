@@ -71,6 +71,10 @@
     }
 }
 
+
+//========================================================================================
+// Fillable bars
+//========================================================================================
 /*
 || Fillable bars
 .bar - main wrapper
@@ -84,8 +88,6 @@
     --tfm-bar-colour: green;
     --tfm-bar-bg: black;
     --tfm-bar-padding: 2px;
-
-    label {}
 
     // Configuration classes
     &.tfm-large {
@@ -107,6 +109,10 @@
             background-color: var(--tfm-bar-colour);
             max-width: 100%;
         }
-
     }
+}
+
+// wrapper for a resource fillable bar and it's inputs
+.tfm-input-bar {
+    padding: 5px;
 }
