@@ -199,6 +199,18 @@
   text-align: center;
 }
 
+.flex-gap-s {
+  gap: 4px;
+}
+
+.flex-gap-m {
+  gap: 8px;
+}
+
+.flex-gap-l {
+  gap: 12px;
+}
+
 .sheet-header {
   flex: 0 auto;
   overflow: hidden;
@@ -253,6 +265,37 @@
 }
 .collapsible .collapsible-content > .wrapper {
   overflow: hidden;
+}
+
+/*
+|| Fillable bars
+.bar - main wrapper
+.bar
+.bar.fill
+*/
+.tfm-bar {
+  padding: 4px;
+  --tfm-bar-size: 8px;
+  --tfm-bar-colour: green;
+  --tfm-bar-bg: black;
+  --tfm-bar-padding: 2px;
+}
+.tfm-bar.tfm-large {
+  --tfm-bar-size: 12px;
+}
+.tfm-bar.tfm-small {
+  --tfm-bar-size: 4px;
+}
+.tfm-bar .wrapper {
+  background-color: var(--tfm-bar-bg);
+  height: calc(var(--tfm-bar-size) + var(--tfm-bar-padding));
+  border-radius: calc((var(--tfm-bar-size) + var(--tfm-bar-padding)) / 2);
+}
+.tfm-bar .wrapper .fill {
+  height: calc(var(--tfm-bar-size));
+  border-radius: calc(var(--tfm-bar-size) / 2);
+  background-color: var(--tfm-bar-colour);
+  max-width: 100%;
 }
 
 .resource-label {
@@ -400,33 +443,48 @@
   border: none;
 }
 
-.sheet.actor .ability-list {
+.sheet.actor .tfm-actor-header {
+  display: flex;
+  flex-direction: row;
+}
+.sheet.actor .tfm-actor-header img {
+  flex: 0;
+}
+.sheet.actor .tfm-actor-header > .wrapper {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+.sheet.actor .tfm-actor-header > .wrapper .tfm-actor-name {
+  font-size: 36px;
+  height: 1.2em;
+}
+.sheet.actor .tfm-abilities-list {
   font-size: 14px;
-  height: 60px;
+  display: flex;
+  flex: 0;
+  display: flex;
+  flex-direction: column;
 }
-.sheet.actor .ability-list .ability {
+.sheet.actor .tfm-abilities-list.tfm-row {
+  flex-direction: row;
+}
+.sheet.actor .tfm-abilities-list .tfm-ability {
+  text-align: center;
+  border-radius: 5px;
+  flex: 0;
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  text-align: center;
-  border-right: 1px solid black;
-  padding: 5px;
-  height: 100%;
 }
-.sheet.actor .ability-list .ability .label {
-  font-weight: bold;
+.sheet.actor .tfm-abilities-list .tfm-ability .tfm-ability-score {
+  font-size: 24px;
+  height: 2em;
 }
-.sheet.actor .ability-list .ability .modifier {
-  font-weight: bold;
-}
-.sheet.actor .ability-list .ability .score {
-  text-align: center;
-  min-width: 0;
-  width: 100%;
-  background: rgba(0, 0, 0, 0.1);
-  border: 0;
-  border-top: 1px solid black;
-}
-.sheet.actor .ability-list :last-child {
-  border: 0;
+.sheet.actor .tfm-abilities-list .tfm-ability .tfm-ability-mod {
+  width: 70%;
+  background-color: red;
+  border-radius: 0 0 5px 5px;
 }
 .sheet.actor .actor-header .profile-img {
   flex: 0 0 100px;

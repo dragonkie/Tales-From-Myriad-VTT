@@ -152,6 +152,8 @@ export class ItemDataModel extends SystemDataModel {
 
         return schema;
     }
+
+    get actor() { return this.parent.actor }
     /*
     ==============================================
     Item specific fields
@@ -178,7 +180,7 @@ export class ItemDataModel extends SystemDataModel {
     static EnchantmentsField() {
         // arrays for magical effects on the item
         return new ArrayField(this.EnchantmentField(), {
-            initial: [], 
+            initial: [],
             label: tfm.config.Generic.enchantment,
         });
     }
@@ -191,7 +193,7 @@ export class ItemDataModel extends SystemDataModel {
             enchantments: this.EnchantmentsField(),
             identified: new BooleanField({ ...this.PrivateConfig, initial: false }),
             broken: new BooleanField({ ...this.RequiredConfig, initial: false, label: tfm.config.Generic.broken }),
-            equipped: new BooleanField({...this.RequiredConfig, initial: false, label: tfm.config.Generic})
+            equipped: new BooleanField({ ...this.RequiredConfig, initial: false, label: tfm.config.Generic })
         };
     }
 

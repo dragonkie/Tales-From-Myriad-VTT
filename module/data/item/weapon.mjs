@@ -32,5 +32,43 @@ export default class WeaponData extends ItemDataModel {
         return schema;
     }
 
-    
+    /**
+     * Calls an items use events
+     * @param {Event} action 
+     * @param {{}} options 
+     */
+    async use(event, options) {
+        if (!options) return this._onUseAttack();
+        if (typeof options == 'string') {
+
+        }
+    }
+
+    async _onUseAttack(event, options) {
+        console.log('working', this.actor)
+        if (!this.actor) return;
+
+        const targets = [];
+        for (const token of game.user.targets.entries()) {
+            let doc = token[0].document;
+            targets.push({
+                token: token[0],
+                doc: doc,
+                sys: doc.actor.system
+            })
+        }
+
+        console.log(targets);
+        console.log(this.getAbility())
+    }
+
+    getAbility() {
+        if (this.actor) {
+            if (this.finesse || this.ranged || this.thrown) return this.actor.system.abilities.fin;
+            else return this.actor.system.abilities.pwr;
+        }
+        return null;
+    }
+
+
 }

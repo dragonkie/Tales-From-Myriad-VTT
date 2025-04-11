@@ -6,9 +6,11 @@ function registerTemplates() {
         `${tfm.filepath.template}/shared/tabs-content.hbs`,
 
         // Actor Partials
-        `${tfm.filepath.template}/sheet/shared/tab-content.hbs`,
-        `${tfm.filepath.template}/sheet/shared/tab-nav.hbs`,
-        `${tfm.filepath.template}/sheet/shared/actor-items-sorted.hbs`,
+        `${tfm.filepath.template}/actor/shared/actor-abilities.hbs`,
+        `${tfm.filepath.template}/actor/shared/actor-defence.hbs`,
+        `${tfm.filepath.template}/actor/shared/actor-health.hbs`,
+        `${tfm.filepath.template}/actor/shared/actor-skills.hbs`,
+        `${tfm.filepath.template}/actor/shared/actor-proficiency.hbs`,
 
         // Dialog partials
         `${tfm.filepath.template}/dialog/parts/roll-options.hbs`

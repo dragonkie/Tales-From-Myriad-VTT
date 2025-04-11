@@ -1,5 +1,3 @@
-.dialog-form {}
-
 .sheet-header {
     flex: 0 auto;
     overflow: hidden;
@@ -34,10 +32,6 @@
 .sheet-tabs {
     flex: 0;
 }
-
-.sheet-body,
-.sheet-body .tab,
-.sheet-body .tab .editor {}
 
 .tab.active .tab-content {
     height: 100%;
@@ -74,5 +68,45 @@
         >.wrapper {
             overflow: hidden;
         }
+    }
+}
+
+/*
+|| Fillable bars
+.bar - main wrapper
+.bar
+.bar.fill
+*/
+
+.tfm-bar {
+    padding: 4px;
+    --tfm-bar-size: 8px;
+    --tfm-bar-colour: green;
+    --tfm-bar-bg: black;
+    --tfm-bar-padding: 2px;
+
+    label {}
+
+    // Configuration classes
+    &.tfm-large {
+        --tfm-bar-size: 12px;
+    }
+
+    &.tfm-small {
+        --tfm-bar-size: 4px;
+    }
+
+    .wrapper {
+        background-color: var(--tfm-bar-bg);
+        height: calc(var(--tfm-bar-size) + var(--tfm-bar-padding));
+        border-radius: calc((var(--tfm-bar-size) + var(--tfm-bar-padding)) / 2);
+
+        .fill {
+            height: calc(var(--tfm-bar-size));
+            border-radius: calc(var(--tfm-bar-size) / 2);
+            background-color: var(--tfm-bar-colour);
+            max-width: 100%;
+        }
+
     }
 }

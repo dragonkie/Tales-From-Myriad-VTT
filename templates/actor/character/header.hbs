@@ -1,0 +1,35 @@
+<div class="sheet-header tfm-actor-header flex-gap-m">
+
+    <img class="profile-img" src="{{document.img}}" data-action="editImage" title="{{name}}" height="100" width="100" />
+    <div class="wrapper flex-gap-m">
+        <input class="tfm-actor-name" type="text" name="name" value="{{name}}" placeholder="{{localize 'TFM.generic.name'}}">
+        <div class="flexrow flex-gap-m">
+            <div>
+                <div class="tfm-bar tfm-health-bar">
+                    <div><b>Health</b></div>
+                    <div class="wrapper">
+                        <div class="fill" style="width: {{multiply (divide system.hp.value system.hp.max) 100}}%;"></div>
+                    </div>
+                </div>
+                <div class="flexrow">
+                    <input type="number" name="system.hp.value" value="{{system.hp.value}}">/
+                    <input type="number" name="system.hp.max" value="{{system.hp.max}}">
+                </div>
+            </div>
+
+            <div>
+                <div class="tfm-bar tfm-corruption-bar">
+                    <label><b>Corruption</b></label>
+                    <div class="wrapper">
+                        <div class="fill" style="width: {{multiply (divide system.corruption.value system.corruption.max) 100}}%;"></div>
+                    </div>
+                </div>
+                <div class="flexrow">
+                    <input type="number" name="system.corruption.value" value="{{system.corruption.value}}">/
+                    <input type="number" name="system.corruption.max" value="{{system.corruption.max}}">
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

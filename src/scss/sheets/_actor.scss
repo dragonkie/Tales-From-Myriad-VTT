@@ -1,42 +1,68 @@
 .sheet.actor {
 
-    //List of ability scores
-    .ability-list {
-        font-size: 14px;
-        height: 60px;
+    //========================================================================================
+    // header
+    //========================================================================================
+    .tfm-actor-header {
+        display: flex;
+        flex-direction: row;
 
-        .ability {
-            align-items: center;
-            text-align: center;
-            border-right: 1px solid black;
-            padding: 5px;
-            height: 100%;
-
-            .label {
-                font-weight: bold;
-            }
-
-            .modifier {
-                font-weight: bold;
-            }
-
-            .score {
-                text-align: center;
-                min-width: 0;
-                width: 100%;
-                background: rgba(0, 0, 0, 0.1);
-                border: 0;
-                border-top: 1px solid black;
-            }
-
+        img {
+            flex: 0
         }
 
-        :last-child {
-            border: 0;
+        >.wrapper {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+
+            .tfm-actor-name {
+                font-size: 36px;
+                height: 1.2em;
+            }
+        }
+
+        
+    }
+
+    //========================================================================================
+    // Abilities
+    //========================================================================================
+    .tfm-abilities-list {
+        font-size: 14px;
+        display: flex;
+        flex: 0;
+        display: flex;
+        flex-direction: column;
+
+        &.tfm-row {
+            flex-direction: row;
+        }
+
+        .tfm-ability {
+            text-align: center;
+            border-radius: 5px;
+            flex: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            .tfm-ability-score {
+                font-size: 24px;
+                height: 2em;
+            }
+
+            .tfm-ability-mod {
+                width: 70%;
+                background-color: red;
+                border-radius: 0 0 5px 5px;
+            }
         }
     }
 
-    // Header field for the character sheet
+    //========================================================================================
+    // Header
+    //========================================================================================
     .actor-header {
         .profile-img {
             flex: 0 0 100px;
@@ -57,8 +83,6 @@
                 border-radius: 0;
                 flex: 2;
             }
-
-            .job {}
         }
 
         .healthbar {
