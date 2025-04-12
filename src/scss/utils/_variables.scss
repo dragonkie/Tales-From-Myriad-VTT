@@ -1,4 +1,4 @@
-.body {
+.tfm {
     --tfm-size-xs: 4px;
     --tfm-size-s: 6px;
     --tfm-size-m: 12px;
@@ -6,11 +6,11 @@
     --tfm-size-xl: 24px;
 
     --tfm-colour-light-1: #f7f3e8;
-    --tfm-colour-light-2: #efe6d8;
-    --tfm-colour-light-3: #e7d1b1;
-    --tfm-colour-light-4: #d0b8a3;
-    --tfm-colour-light-5: #9f8475;
-    --tfm-colour-light-6: #816b66;
+    --tfm-colour-light-2: #f1e8d0;
+    --tfm-colour-light-3: #d6c3a3;
+    --tfm-colour-light-4: #b89873;
+    --tfm-colour-light-5: #a58e74;
+    --tfm-colour-light-6: #836953;
 
     --tfm-colour-dark-1: #111;
     --tfm-colour-dark-2: #222;
@@ -25,13 +25,77 @@
     --tfm-colour-warm-4: #a90b19;
     --tfm-colour-cool-4: #813a5e;
     --tfm-colour-cool-3: #82497a;
-    --tfm-colour-cool-2: #633a5d;
-    --tfm-colour-cool-1: #35202e;
+    --tfm-colour-cool-2: #302831;
+    --tfm-colour-cool-1: #161415;
 
-    --tfm-colour-cool-1-25: rgba(53, 32, 46, 0.25);
-    --tfm-colour-cool-1-50: rgba(53, 32, 46, 0.50);
-    --tfm-colour-cool-1-75: rgba(53, 32, 46, 0.75);
+    --tfm-colour-cool-1-25: rgba(22, 20, 21, 0.25);
+    --tfm-colour-cool-1-50: rgba(22, 20, 21, 0.5);
+    --tfm-colour-cool-1-75: rgba(10, 0, 14, 0.75);
+    --tfm-colour-cool-1-90: rgba(21, 15, 24, 0.9);
 
     --tfm-input-bg: rgba(0, 0, 0, 0);
     --tfm-input-c: rgba(0, 0, 0, 1);
+
+    //=================================================================
+    // Funny styles for funsies
+    //=================================================================
+    --tfm-background-pearlescent:
+        radial-gradient(ellipse at 100% 0%, #80e6ff, transparent),
+        radial-gradient(ellipse at 100% 90%, #ff63d5, transparent),
+        radial-gradient(ellipse at 100% 180%, #f94c4c, transparent),
+        radial-gradient(ellipse at 100% 270%, #5ed000, transparent);
+    --tfm-background-watermelon:
+        radial-gradient(ellipse at top, #ff63d5, transparent),
+        radial-gradient(ellipse at bottom, #5ed000, transparent);
+}
+
+//======================================================================================
+// Light mode setup
+//======================================================================================
+.theme-light .tfm {
+    --tfm-colour-text: var(--tfm-colour-dark-1);
+    --tfm-colour-text-selection: var(--tfm-colour-light-3);
+    --tfm-colour-text-selection-bg: var(--tfm-colour-warm-4);
+
+    --tfm-background: var(--tfm-colour-light-3);
+
+    input {
+        --tfm-input-background-colour: var(--tfm-colour-light-5);
+
+        &:disabled {
+            --tfm-input-background-colour: var(--tfm-colour-light-6);
+        }
+    }
+
+    img {
+        --tfm-background: var(--tfm-colour-light-5);
+    }
+
+    .tfm-bar {
+        --tfm-bar-bg: var(--tfm-colour-cool-1-50);
+    }
+}
+
+//======================================================================================
+// Dark mode setup
+//======================================================================================
+.theme-dark .tfm {
+    --tfm-colour-text: var(--tfm-colour-light-3);
+    --tfm-colour-text-selection: var(--tfm-colour-light-3);
+    --tfm-colour-text-selection-bg: var(--tfm-colour-cool-2);
+
+    --tfm-background: var(--tfm-colour-cool-1-90);
+
+
+    input {
+        --tfm-input-background-colour: var(--tfm-colour-cool-2);
+
+        &:disabled {
+            --tfm-input-background-colour: var(--tfm-colour-cool-1);
+        }
+    }
+
+    .tfm-bar {
+        --tfm-bar-bg: var(--tfm-colour-cool-1)
+    }
 }

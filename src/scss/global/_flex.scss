@@ -1,18 +1,19 @@
+.tfm {
 // Flexbox.
 .flex-group-center,
-.flex-group-left,
-.flex-group-right {
+.flex-group-start,
+.flex-group-end {
   justify-content: center;
   align-items: center;
   text-align: center;
 }
 
-.flex-group-left {
+.flex-group-start {
   justify-content: flex-start;
   text-align: left;
 }
 
-.flex-group-right {
+.flex-group-end {
   justify-content: flex-end;
   text-align: right;
 }
@@ -30,18 +31,18 @@
 }
 
 // Alignment styles.
-.align-left {
-  justify-content: flex-start;
+.flex-align-start {
+  align-items: flex-start;
   text-align: left;
 }
 
-.align-right {
-  justify-content: flex-end;
+.flex-align-end {
+  align-items: flex-end;
   text-align: right;
 }
 
-.align-center {
-  justify-content: center;
+.flex-align-center {
+  align-items: center;
   text-align: center;
 }
 
@@ -55,4 +56,5 @@
 
 .flex-gap-l {
   gap: 12px;
+}
 }

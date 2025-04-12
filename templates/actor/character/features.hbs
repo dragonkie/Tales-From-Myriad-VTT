@@ -1,4 +1,4 @@
-<div class="features flexrow flex-gap-l" style="justify-content: flex-start; align-items: flex-start;">
+<div class="features flexrow flex-gap-l flex-group-left flex-align-start">
 
     <div class="flexrow flex-gap-m" style="align-items: flex-start; flex-wrap: nowrap;">
         <div style="flex: 2;">{{> 'tfm.actor-abilities'}}</div>
@@ -24,8 +24,16 @@
     </div>
     <div>
         <div>
-            <b>Level {{system.level}}</b>
             {{> 'tfm.resource-bar-inline' cssClass='tfm-exp-bar' label='Experience' value=system.xp.value value_name='system.xp.value' max=system.xp.next}}
+            <b>Levels</b>
+            <div class="flexrow">
+                <div>Class</div>
+                {{toFieldInput system.schema 'level_class' value=system.level_class}}
+            </div>
+            <div class="flexrow">
+                <div>Speciality</div>
+                {{toFieldInput system.schema 'level_specialty' value=system.level_specialty}}
+            </div>
         </div>
     </div>
 </div>

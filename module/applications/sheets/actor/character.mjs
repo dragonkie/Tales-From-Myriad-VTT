@@ -23,10 +23,10 @@ export default class CharacterSheet extends TfmActorSheet {
     }
 
     static TABS = {
-        features: { id: "features", group: "primary", label: "TFM.tab.features" },
-        inventory: { id: "inventory", group: "primary", label: "TFM.tab.items" },
-        spells: { id: "spells", group: "primary", label: "TFM.tab.spells" },
-        biography: { id: "biography", group: "primary", label: "TFM.tab.biography" }
+        features: { id: "features", group: "primary", label: "TFM.Tab.Features" },
+        inventory: { id: "inventory", group: "primary", label: "TFM.Tab.Inventory" },
+        spells: { id: "spells", group: "primary", label: "TFM.Tab.Spells" },
+        journal: { id: "journal", group: "primary", label: "TFM.Tab.Journal" }
     }
 
     tabGroups = { primary: "features" };

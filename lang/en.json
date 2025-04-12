@@ -17,40 +17,50 @@
     "Corruption": {
       "long": "Corruption",
       "short": "corrupt",
-
       "None": {
         "label": "Un-tainted",
-        "description": "A pinnacle of health, you have not been tainted by the corruption" },
+        "description": "A pinnacle of health, you have not been tainted by the corruption"
+      },
       "Touched": {
         "label": "Touch of Corruption",
-        "description": "The inklings of corruption gnaws at your mind, no effects - yet" },
+        "description": "The inklings of corruption gnaws at your mind, no effects - yet"
+      },
       "Scrawlings": {
         "label": "Odd Scrawlings",
-        "description": "You wake up to find you’ve been writing in an unknown text throughout the night, and you do not gain the benefits from your Rest. You are inexplicably able to read Fel scrawl - the chaotic written language of intelligent monsters. This can only occur once." },
+        "description": "You wake up to find you’ve been writing in an unknown text throughout the night, and you do not gain the benefits from your Rest. You are inexplicably able to read Fel scrawl - the chaotic written language of intelligent monsters. This can only occur once."
+      },
       "TransientCurse": {
         "label": "Transient Curse",
-        "description": "Your physical strength is sapped from you as you begin to malform, decreasing your PWR and CHM by 1 and receiving a random mutation; (horns, claws, scaly skin, monstrous eyes, sharpened teeth, or grey cracked skin). This curse does not prevent nor be prevented by the Cursed status effect" },
+        "description": "Your physical strength is sapped from you as you begin to malform, decreasing your PWR and CHM by 1 and receiving a random mutation; (horns, claws, scaly skin, monstrous eyes, sharpened teeth, or grey cracked skin). This curse does not prevent nor be prevented by the Cursed status effect"
+      },
       "Abandon": {
         "label": "Abandon",
-        "description": "The corruption continues to creep across your psyche, increasing your PWR by 2 and decreasing your INS by 2" },
+        "description": "The corruption continues to creep across your psyche, increasing your PWR by 2 and decreasing your INS by 2"
+      },
       "DarkInsight": {
         "label": "Dark Insight",
-        "description": "Your body and mind become more comfortable with your seeping corruption. Increase your OCC by 2, decrease CHM by 2, and gain another malformity: (An additional monstrous eye that never closes, vestigial tail, vestigial bat wings, feathered limbs, stony skin, thorn-like growths across the body)" },
+        "description": "Your body and mind become more comfortable with your seeping corruption. Increase your OCC by 2, decrease CHM by 2, and gain another malformity: (An additional monstrous eye that never closes, vestigial tail, vestigial bat wings, feathered limbs, stony skin, thorn-like growths across the body)"
+      },
       "Soulwarp": {
         "label": "SoulWarp",
-        "description": "The infliction of corruption on your soul tears away at your body, revealing the monstrous visage beneath, resulting in a random effect:• Centauroid - Your lower half morphs into that of a beast, doubling movement; • Arms - You grow two additional functional arms, granting you an additional attack • Wings - You grow a set of tattered wings, granting you a fly speed of 30 ft, 3x per day• Eyes - You grow a massive glowing eye in your forehead, and the spell Gaze can be cast at will (The target becomes Frightened, Charmed, Blinded, or Confused)At this point you strike fear in those who see your form, and you will not be permitted within most civilized locations" },
+        "description": "The infliction of corruption on your soul tears away at your body, revealing the monstrous visage beneath, resulting in a random effect:• Centauroid - Your lower half morphs into that of a beast, doubling movement; • Arms - You grow two additional functional arms, granting you an additional attack • Wings - You grow a set of tattered wings, granting you a fly speed of 30 ft, 3x per day• Eyes - You grow a massive glowing eye in your forehead, and the spell Gaze can be cast at will (The target becomes Frightened, Charmed, Blinded, or Confused)At this point you strike fear in those who see your form, and you will not be permitted within most civilized locations"
+      },
       "Felwarp": {
         "label": "Felwarp",
-        "description": "Your mutations continue to advance, granting another random mutation:• Burning Belly - A fire swells in your stomach or throat, and you can launch a gout of burning phlegm as a 60 ft ranged attack that deals 2d8 fire damage, or a 15 ft cone that deals 1d8 fire damage on a FIN save• Screech - You can roar or screech with terrifying ferocity, pushing targets within 15 ft backwards by 15 ft, stunning them on a failed PWR save• Ephemeral - Reduce all incoming weapon damage to 1 until you make the attack action, at which point it resets at the end of your next turn• Liquify - Your skin turns into a translucent gelatinous ooze, and you have resistance to physical damage, and can squeeze through any space larger than your skull" },
+        "description": "Your mutations continue to advance, granting another random mutation:• Burning Belly - A fire swells in your stomach or throat, and you can launch a gout of burning phlegm as a 60 ft ranged attack that deals 2d8 fire damage, or a 15 ft cone that deals 1d8 fire damage on a FIN save• Screech - You can roar or screech with terrifying ferocity, pushing targets within 15 ft backwards by 15 ft, stunning them on a failed PWR save• Ephemeral - Reduce all incoming weapon damage to 1 until you make the attack action, at which point it resets at the end of your next turn• Liquify - Your skin turns into a translucent gelatinous ooze, and you have resistance to physical damage, and can squeeze through any space larger than your skull"
+      },
       "MonsterousMeditation": {
         "label": "Monstrous Mediation",
-        "description": "Most monsters recognize you as a monster yourself, and you gain the ability to use a limited diplomacy with them even if they do not speak in a language you understand. If they do speak in an intelligent language, you become Skilled in diplomacy" },
+        "description": "Most monsters recognize you as a monster yourself, and you gain the ability to use a limited diplomacy with them even if they do not speak in a language you understand. If they do speak in an intelligent language, you become Skilled in diplomacy"
+      },
       "ThrallToChaos": {
         "label": "Thrall to Chaos",
-        "description": "Your body hungers mindlessly for chaos, blood, or destruction, and you reduce your Charm, Insight, and Arcane to half of their roll" },
+        "description": "Your body hungers mindlessly for chaos, blood, or destruction, and you reduce your Charm, Insight, and Arcane to half of their roll"
+      },
       "FinalTransformation": {
         "label": "Final Transformation",
-        "description": "You permanently transform into a monster. Replace all stats and abilities with that of a monster of an appropriate level of the DM’s choosing. You retain all of your memories and your personality, as well as control of your character. Your Corruption level cannot be reduced." }
+        "description": "You permanently transform into a monster. Replace all stats and abilities with that of a monster of an appropriate level of the DM’s choosing. You retain all of your memories and your personality, as well as control of your character. Your Corruption level cannot be reduced."
+      }
     },
     "Generic": {
       "Broken": "Broken",
@@ -144,6 +154,15 @@
       "Weaver": "Weaver",
       "Scholar": "Scholar"
     },
+    "Tab": {
+      "Features": "Features",
+      "Details": "Details",
+      "Spells": "Spells",
+      "Effects": "Effects",
+      "Rules": "Rules",
+      "Journal": "Journal",
+      "Inventory": "Inventory"
+    },
     "Weapon": {
       "Axe": "Axe",
       "Bow": "Bow",
@@ -213,20 +232,6 @@
   "TFM.EffectToggle": "Toggle Effect",
   "TFM.EffectEdit": "Edit Effect",
   "TFM.EffectDelete": "Delete Effect",
-
-  "TFM.tab.items": "Items",
-  "TFM.tab.spells": "Spells",
-  "TFM.tab.description": "Description",
-  "TFM.tab.settings": "Settings",
-  "TFM.tab.rules": "Rules",
-
-  "TFM.confirm.deleteItem": "Are you sure you would like to delete",
-
-  "TFM.dialog.attack.ability": "Ability {label}",
-  "TFM.dialog.attack.penalty": "Penalty",
-  "TFM.dialog.attack.bonus": "Bonus",
-  "TFM.dialog.attack.throw": "Throw",
-  "TFM.dialog.attack.prof": "Proficient",
 
   "TFM.quest.001": "Scare off a group of enemies without engaging in combat",
   "TFM.quest.002": "Execute an ambush",
@@ -304,10 +309,5 @@
   "TFM.prof.abbr": "Prof",
   "TFM.prof.none": "None",
   "TFM.prof.half": "Half",
-  "TFM.prof.full": "Full",
-
-  "TYPES.armour.min": "Minimal",
-  "TYPES.armour.lit": "Light",
-  "TYPES.armour.med": "Medium",
-  "TYPES.armour.hvy": "Heavy"
+  "TFM.prof.full": "Full"
 }

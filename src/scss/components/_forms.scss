@@ -33,8 +33,12 @@
     flex: 0;
 }
 
-.tab.active .tab-content {
-    height: 100%;
+.tfm nav.tabs .item {
+    color: var(--tfm-colour-text);
+    &.active {
+        color: var(--tfm-colour-text);
+        text-shadow: 0 0 8px var(--tfm-colour-text-selection-bg);
+    }
 }
 
 /*
@@ -119,6 +123,7 @@
     --tfm-bar-size: 1.5em;
 
     >.wrapper {
+        overflow: hidden;
         background-color: var(--tfm-bar-bg);
         border-radius: calc((var(--tfm-bar-size) + var(--tfm-bar-padding)) / 2);
         height: auto;

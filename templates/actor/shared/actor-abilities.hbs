@@ -1,8 +1,10 @@
 <div class="tfm-abilities-list flex-gap-m {{choose cssClass ''}}">
 
     {{#each system.abilities as | ability key |}}
-        <div class="tfm-ability">
-            <label><a>{{localize ability.label}}</a></label>
+        <div class="tfm-ability" data-ability="{{key}}" data-ability-score="{{ability.value}}" data-ability-mod="{{ability.mod}}">
+            <label>
+                <a data-action="roll" data-roll="2d6x6kf{{../rollData.karma}} + {{ability.mod}}" data-flavor="{{localize ability.label}}"><b>{{localize ability.label}}</b></a>
+            </label>
             <div class="wrapper">
                 <input class="tfm-ability-score" type="number" name="system.abilities.{{key}}.value" value="{{ability.value}}">
                 <div class="tfm-ability-mod">

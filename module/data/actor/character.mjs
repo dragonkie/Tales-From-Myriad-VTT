@@ -20,6 +20,9 @@ export default class CharacterData extends ActorDataModel {
 
         schema.corruption = this.ResourceField(0, 10);
 
+        schema.level_class = new NumberField({ initial: 1, min: 1, max: 10, ...this.RequiredConfig });
+        schema.level_specialty = new NumberField({ initial: 0, min: 0, max: 9, ...this.RequiredConfig });
+
         schema.proficiency = new SchemaField(profData);
         schema.details = new SchemaField({
             age: new StringField(),
@@ -40,7 +43,5 @@ export default class CharacterData extends ActorDataModel {
 
     prepareDerivedData() {
         super.prepareDerivedData();
-
-        this.level = utils.levelXp(this.xp.value);
     }
 }

@@ -221,18 +221,11 @@ export default class TfmActorSheet extends TfmSheetMixin(foundry.applications.sh
         const rollData = this.document.getRollData();
         const data = target.dataset;
 
-        const dialog = await tfm.application.TfmDialog.roll(`systems/${tfm.id}/templates/dialog/default.hbs`);
-
-        if (dialog.cancled) return;
-        const rollOptions = tfm.utils.getFormData(dialog.html, '[name]');
-
-        LOGGER.debug(rollOptions);
-
-
         let roll = new Roll(data.roll, rollData);
         await roll.evaluate();
         roll.toMessage({
             speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+            flavor: data.flavor,
             rollMode: game.settings.get('core', 'rollMode'),
         });
         return roll;

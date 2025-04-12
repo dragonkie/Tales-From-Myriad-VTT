@@ -1,4 +1,13 @@
 .sheet.actor {
+    background: var(--tfm-background, #ffd8ac);
+    background-size: 100% 100%;
+
+    //========================================================================================
+    // Inputs
+    //========================================================================================
+    input {
+        background-color: var(--tfm-input-background-colour);
+    }
 
     //========================================================================================
     // config classes
@@ -23,7 +32,8 @@
         flex-direction: row;
 
         img {
-            flex: 0
+            flex: 0;
+            background-color: var(--tfm-background, rgba(0, 0, 0, 0));
         }
 
         >.wrapper {
@@ -106,9 +116,9 @@
                 .tfm-ability-mod {
                     flex: 1;
                     height: 2rem;
-                    background-color: red;
+                    background-color: var(--tfm-colour-cool-1);
                     border-radius: 0 5px 5px 0;
-                    
+
                     display: flex;
                     align-items: center;
                     justify-content: center;

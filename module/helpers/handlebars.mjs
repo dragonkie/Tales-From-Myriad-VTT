@@ -91,19 +91,18 @@ function registerHelpers() {
             label, hint, rootId, stacked, widget, localize: true, units,
             classes: typeof classes === "string" ? classes.split(" ") : []
         };
+        console.log(groupConfig)
+        console.log(inputConfig);
         const group = field.toFormGroup(groupConfig, inputConfig);
         return new Handlebars.SafeString(group.outerHTML);
     });
+
     Handlebars.registerHelper('toFieldInput', (schema, path, options) => {
         let field = schema.getField(path);
-        const { classes, label, hint, rootId, stacked, units, widget, ...inputConfig } = options.hash;
-        const groupConfig = {
-            label, hint, rootId, stacked, widget, localize: true, units,
-            classes: typeof classes === "string" ? classes.split(" ") : []
-        };
-        const group = field.toInput(groupConfig, inputConfig);
-        return new Handlebars.SafeString(group.outerHTML);
-    })
+        const inputConfig = options.hash;
+        const element = field.toInput(inputConfig);
+        return new Handlebars.SafeString(element.outerHTML);
+    });
 
     // register the helpers
     for (const helper of helpers) Handlebars.registerHelper(helper.name, helper.fn);

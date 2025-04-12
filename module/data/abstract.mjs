@@ -118,7 +118,7 @@ export class ActorDataModel extends SystemDataModel {
     prepareDerivedData() {
         super.prepareDerivedData();
         for (const ability in this.abilities) this.abilities[ability].mod = tfm.utils.abilityMod(this.abilities[ability].value);
-        
+
     }
 };
 
