@@ -90,24 +90,63 @@
     --tfm-bar-padding: 2px;
 
     // Configuration classes
-    &.tfm-large {
+    &.tfm-l {
         --tfm-bar-size: 12px;
     }
 
-    &.tfm-small {
+    &.tfm-s {
         --tfm-bar-size: 4px;
     }
 
-    .wrapper {
+    >.wrapper {
         background-color: var(--tfm-bar-bg);
-        height: calc(var(--tfm-bar-size) + var(--tfm-bar-padding));
         border-radius: calc((var(--tfm-bar-size) + var(--tfm-bar-padding)) / 2);
+        height: calc(var(--tfm-bar-size) + var(--tfm-bar-padding));
+        padding: var(--tfm-bar-padding);
 
         .fill {
-            height: calc(var(--tfm-bar-size));
-            border-radius: calc(var(--tfm-bar-size) / 2);
             background-color: var(--tfm-bar-colour);
+            border-radius: calc(var(--tfm-bar-size) / 2);
+            height: 100%;
             max-width: 100%;
+            min-width: 0%;
+        }
+    }
+}
+
+// bars with inputs inside the bar itself
+.tfm-inline-bar {
+    --tfm-bar-size: 1.5em;
+
+    >.wrapper {
+        background-color: var(--tfm-bar-bg);
+        border-radius: calc((var(--tfm-bar-size) + var(--tfm-bar-padding)) / 2);
+        height: auto;
+        padding: var(--tfm-bar-padding);
+
+        // forces the child fill element to overlap with any other contents
+        display: grid;
+        grid-template-columns: 1fr;
+
+        >* {
+            grid-row-start: 1;
+            grid-column-start: 1;
+        }
+
+        .fill {
+            background-color: var(--tfm-bar-colour);
+            border-radius: calc(var(--tfm-bar-size) / 2);
+            height: 100%;
+            max-width: 100%;
+            min-width: 0%;
+        }
+
+        input {
+            height: var(--tfm-bar-size);
+            font-size: calc(var(--tfm-bar-size) - 0.2em);
+            border: 0px solid;
+            color: white;
+            background-color: rgba(0, 0, 0, 0);
         }
     }
 }

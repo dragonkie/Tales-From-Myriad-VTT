@@ -105,10 +105,12 @@ export class ActorDataModel extends SystemDataModel {
 
         // adds in resource fields
         schema.hp = this.ResourceField(6, 6);
-        schema.corruption = this.ResourceField(0, 10);
-
+        schema.dr = this.ValueField(0);
+        schema.dodge = this.ValueField(0);
         // tracks player experience points, or a monsters given exp
-        schema.xp = new NumberField({ initial: 0, required: true, nullable: false });
+        schema.xp = new SchemaField({
+            value: new NumberField({ required: true, nullable: false, min: 0, initial: 0 })
+        })
 
         return schema;
     }
@@ -116,7 +118,7 @@ export class ActorDataModel extends SystemDataModel {
     prepareDerivedData() {
         super.prepareDerivedData();
         for (const ability in this.abilities) this.abilities[ability].mod = tfm.utils.abilityMod(this.abilities[ability].value);
-        this.level = tfm.utils.levelXp(this.xp);
+        
     }
 };
 

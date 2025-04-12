@@ -1,0 +1,12 @@
+{{!-- 
+cssClass - classes to apply to the main element
+label - text that appears above the resource bar
+fill - the % filled the bar should be
+--}}
+
+<div class="tfm-bar {{choose cssClass ''}}">
+    {{#if label}}<label>{{toTitleCase (localize label)}}</label>{{/if}}
+    <div class="wrapper">
+        <div class="fill" style="width: {{fill}}%;"></div>
+    </div>
+</div>

@@ -136,6 +136,27 @@ TFM.MagicTypes = {
     per: 'TYPES.magic.per',
 };
 
+//========================================================================================
+// Corruption
+//========================================================================================
+TFM.Corruption = {
+    label: [
+        "TFM.Corruption.None.label",
+        "TFM.Corruption.Touched.label",
+        "TFM.Corruption.Scrawlings.label",
+        "TFM.Corruption.TransientCurse.label",
+        "TFM.Corruption.Abandon.label",
+        "TFM.Corruption.DarkInsight.label",
+        "TFM.Corruption.Soulwarp.label",
+        "TFM.Corruption.Felwarp.label",
+        "TFM.Corruption.MonsterousMeditation.label",
+        "TFM.Corruption.ThrallToChaos.label",
+        "TFM.Corruption.FinalTransformation.label",
+    ],
+    description: [],
+}
+
+for (const a of TFM.Corruption.label) TFM.Corruption.description.push(a.replace('label', 'description'));
 
 //========================================================================================
 // Damage

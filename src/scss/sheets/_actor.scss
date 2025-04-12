@@ -11,6 +11,10 @@
         --tfm-bar-colour: rgb(131, 40, 197);
     }
 
+    .tfm-exp-bar {
+        --tfm-bar-colour: rgb(255, 169, 41);
+    }
+
     //========================================================================================
     // header
     //========================================================================================
@@ -32,43 +36,6 @@
                 height: 1.2em;
             }
         }
-
-
-    }
-
-    //========================================================================================
-    // Abilities
-    //========================================================================================
-    .tfm-abilities-list {
-        font-size: 14px;
-        display: flex;
-        flex: 0;
-        display: flex;
-        flex-direction: column;
-
-        &.tfm-row {
-            flex-direction: row;
-        }
-
-        .tfm-ability {
-            text-align: center;
-            border-radius: 5px;
-            flex: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-
-            .tfm-ability-score {
-                font-size: 24px;
-                height: 2em;
-            }
-
-            .tfm-ability-mod {
-                width: 70%;
-                background-color: red;
-                border-radius: 0 0 5px 5px;
-            }
-        }
     }
 
     .actor-header {
@@ -77,6 +44,93 @@
             min-height: 100px;
             min-width: 100px;
             border-radius: 100%;
+        }
+    }
+
+    //========================================================================================
+    // Abilities
+    //========================================================================================
+    .tfm-abilities-list {
+        font-size: 14px;
+        display: flex;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+
+        box-sizing: border-box;
+        margin: 2px;
+
+        &.tfm-row {
+            flex-direction: row;
+
+            .tfm-ability {
+                >.wrapper {
+                    flex-direction: column;
+                }
+
+                .tfm-ability-mod {
+                    border-radius: 0 0 5px 5px;
+                }
+            }
+
+
+        }
+
+
+        .tfm-ability {
+            display: flex;
+            flex-direction: column;
+
+            label {
+                flex: 0;
+                width: 100%;
+                text-align: center;
+            }
+
+            flex: 0;
+
+            >.wrapper {
+                text-align: center;
+                border-radius: 5px;
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+
+                .tfm-ability-score {
+                    flex: 1;
+                    font-size: 24px;
+                    height: 3rem;
+                    z-index: 1;
+                }
+
+                .tfm-ability-mod {
+                    flex: 1;
+                    height: 2rem;
+                    background-color: red;
+                    border-radius: 0 5px 5px 0;
+                    
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+
+                    z-index: -1;
+                }
+            }
+        }
+    }
+
+
+
+    //========================================================================================
+    // Abilities
+    //========================================================================================
+    .tfm-defences {
+        border: 1px solid;
+        border-radius: 5px;
+        padding: 4px;
+
+        label {
+            font-size: 1.5rem;
         }
     }
 }

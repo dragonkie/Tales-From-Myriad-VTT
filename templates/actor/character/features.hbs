@@ -1,17 +1,31 @@
-<div class="features flexrow" style="justify-content: flex-start; align-items: flex-start;">
+<div class="features flexrow flex-gap-l" style="justify-content: flex-start; align-items: flex-start;">
 
-    <div class="flexrow" style="align-items: flex-start; flex-wrap: nowrap;">
-        {{> 'tfm.actor-abilities'}}
-        <div style="margin-left: 5px;">
+    <div class="flexrow flex-gap-m" style="align-items: flex-start; flex-wrap: nowrap;">
+        <div style="flex: 2;">{{> 'tfm.actor-abilities'}}</div>
+        <div style="flex: 3;">
             {{> 'tfm.actor-proficiency'}}
             {{> 'tfm.actor-skills'}}
         </div>
     </div>
-    <div class="flexrow" style="align-items: flex-start; background-color: blue;">
-        {{> 'tfm.actor-health'}}
-        {{> 'tfm.actor-defence'}}
+    <div>
+        <div class="tfm-defences align-center flex-gap-s">
+            <label>Defence</label>
+            <div class="flexrow flex-gap-m">
+                <div class="dodge">
+                    <div>Dodge</div>
+                    {{toFieldInput system.schema 'dodge.value' value=system.dodge.value}}
+                </div>
+                <div class="tfm-damage-reduction">
+                    <div>Reduction</div>
+                    {{toFieldInput system.schema 'dr.value' value=system.dr.value}}
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="flexrow" style="align-items: flex-start; background-color: green;">
-        test
+    <div>
+        <div>
+            <b>Level {{system.level}}</b>
+            {{> 'tfm.resource-bar-inline' cssClass='tfm-exp-bar' label='Experience' value=system.xp.value value_name='system.xp.value' max=system.xp.next}}
+        </div>
     </div>
 </div>

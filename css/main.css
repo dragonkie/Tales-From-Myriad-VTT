@@ -280,22 +280,54 @@
   --tfm-bar-bg: black;
   --tfm-bar-padding: 2px;
 }
-.tfm-bar.tfm-large {
+.tfm-bar.tfm-l {
   --tfm-bar-size: 12px;
 }
-.tfm-bar.tfm-small {
+.tfm-bar.tfm-s {
   --tfm-bar-size: 4px;
 }
-.tfm-bar .wrapper {
+.tfm-bar > .wrapper {
   background-color: var(--tfm-bar-bg);
-  height: calc(var(--tfm-bar-size) + var(--tfm-bar-padding));
   border-radius: calc((var(--tfm-bar-size) + var(--tfm-bar-padding)) / 2);
+  height: calc(var(--tfm-bar-size) + var(--tfm-bar-padding));
+  padding: var(--tfm-bar-padding);
 }
-.tfm-bar .wrapper .fill {
-  height: calc(var(--tfm-bar-size));
-  border-radius: calc(var(--tfm-bar-size) / 2);
+.tfm-bar > .wrapper .fill {
   background-color: var(--tfm-bar-colour);
+  border-radius: calc(var(--tfm-bar-size) / 2);
+  height: 100%;
   max-width: 100%;
+  min-width: 0%;
+}
+
+.tfm-inline-bar {
+  --tfm-bar-size: 1.5em;
+}
+.tfm-inline-bar > .wrapper {
+  background-color: var(--tfm-bar-bg);
+  border-radius: calc((var(--tfm-bar-size) + var(--tfm-bar-padding)) / 2);
+  height: auto;
+  padding: var(--tfm-bar-padding);
+  display: grid;
+  grid-template-columns: 1fr;
+}
+.tfm-inline-bar > .wrapper > * {
+  grid-row-start: 1;
+  grid-column-start: 1;
+}
+.tfm-inline-bar > .wrapper .fill {
+  background-color: var(--tfm-bar-colour);
+  border-radius: calc(var(--tfm-bar-size) / 2);
+  height: 100%;
+  max-width: 100%;
+  min-width: 0%;
+}
+.tfm-inline-bar > .wrapper input {
+  height: var(--tfm-bar-size);
+  font-size: calc(var(--tfm-bar-size) - 0.2em);
+  border: 0px solid;
+  color: white;
+  background-color: rgba(0, 0, 0, 0);
 }
 
 .tfm-input-bar {
@@ -453,6 +485,9 @@
 .sheet.actor .tfm-corruption-bar {
   --tfm-bar-colour: rgb(131, 40, 197);
 }
+.sheet.actor .tfm-exp-bar {
+  --tfm-bar-colour: rgb(255, 169, 41);
+}
 .sheet.actor .tfm-actor-header {
   display: flex;
   flex-direction: row;
@@ -469,38 +504,70 @@
   font-size: 36px;
   height: 1.2em;
 }
-.sheet.actor .tfm-abilities-list {
-  font-size: 14px;
-  display: flex;
-  flex: 0;
-  display: flex;
-  flex-direction: column;
-}
-.sheet.actor .tfm-abilities-list.tfm-row {
-  flex-direction: row;
-}
-.sheet.actor .tfm-abilities-list .tfm-ability {
-  text-align: center;
-  border-radius: 5px;
-  flex: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-.sheet.actor .tfm-abilities-list .tfm-ability .tfm-ability-score {
-  font-size: 24px;
-  height: 2em;
-}
-.sheet.actor .tfm-abilities-list .tfm-ability .tfm-ability-mod {
-  width: 70%;
-  background-color: red;
-  border-radius: 0 0 5px 5px;
-}
 .sheet.actor .actor-header .profile-img {
   flex: 0 0 100px;
   min-height: 100px;
   min-width: 100px;
   border-radius: 100%;
+}
+.sheet.actor .tfm-abilities-list {
+  font-size: 14px;
+  display: flex;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  margin: 2px;
+}
+.sheet.actor .tfm-abilities-list.tfm-row {
+  flex-direction: row;
+}
+.sheet.actor .tfm-abilities-list.tfm-row .tfm-ability > .wrapper {
+  flex-direction: column;
+}
+.sheet.actor .tfm-abilities-list.tfm-row .tfm-ability .tfm-ability-mod {
+  border-radius: 0 0 5px 5px;
+}
+.sheet.actor .tfm-abilities-list .tfm-ability {
+  display: flex;
+  flex-direction: column;
+  flex: 0;
+}
+.sheet.actor .tfm-abilities-list .tfm-ability label {
+  flex: 0;
+  width: 100%;
+  text-align: center;
+}
+.sheet.actor .tfm-abilities-list .tfm-ability > .wrapper {
+  text-align: center;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.sheet.actor .tfm-abilities-list .tfm-ability > .wrapper .tfm-ability-score {
+  flex: 1;
+  font-size: 24px;
+  height: 3rem;
+  z-index: 1;
+}
+.sheet.actor .tfm-abilities-list .tfm-ability > .wrapper .tfm-ability-mod {
+  flex: 1;
+  height: 2rem;
+  background-color: red;
+  border-radius: 0 5px 5px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: -1;
+}
+.sheet.actor .tfm-defences {
+  border: 1px solid;
+  border-radius: 5px;
+  padding: 4px;
+}
+.sheet.actor .tfm-defences label {
+  font-size: 1.5rem;
 }
 
 .sheet.item .tab[data-tab].active {

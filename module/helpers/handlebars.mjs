@@ -1,6 +1,10 @@
 
 function registerTemplates() {
     const partials = [
+        //components
+        `${tfm.filepath.template}/shared/resource-bar.hbs`,
+        `${tfm.filepath.template}/shared/resource-bar-inline.hbs`,
+
         // Sheet partials
         `${tfm.filepath.template}/shared/tabs-nav.hbs`,
         `${tfm.filepath.template}/shared/tabs-content.hbs`,
@@ -8,7 +12,6 @@ function registerTemplates() {
         // Actor Partials
         `${tfm.filepath.template}/actor/shared/actor-abilities.hbs`,
         `${tfm.filepath.template}/actor/shared/actor-defence.hbs`,
-        `${tfm.filepath.template}/actor/shared/actor-health.hbs`,
         `${tfm.filepath.template}/actor/shared/actor-skills.hbs`,
         `${tfm.filepath.template}/actor/shared/actor-proficiency.hbs`,
 
@@ -27,13 +30,59 @@ function registerTemplates() {
 };
 
 function registerHelpers() {
+    const helpers = [
+        //======================================================================================
+        // Strings
+        //======================================================================================
+        { name: 'toLowerCase', fn: (str) => str.toLowerCase() },
+        { name: 'toTitleCase', fn: (str) => str.replace(/\w\S*/g, text => text.charAt(0).toUpperCase() + text.substring(1).toLowerCase()) },
+
+        //======================================================================================
+        // Logic
+        //======================================================================================
+        { name: 'choose', fn: (a, b) => a ? a : b },
+        { name: 'objectIsEmpty', fn: (obj) => Object.keys(obj).length <= 0 },
+
+        //======================================================================================
+        // User permissions
+        //======================================================================================
+        { name: 'isGM', fn: () => game.user.isGM },
+
+        //======================================================================================
+        // Math helpers
+        //======================================================================================
+        { name: 'addition', fn: (a, b) => a + b },
+        { name: 'ceil', fn: (a) => Math.ceil(a) },
+        { name: 'divide', fn: (a, b) => a / b },
+        { name: 'floor', fn: (a) => Math.floor(a) },
+        { name: 'max', fn: (...num) => Math.max(...num) },
+        { name: 'min', fn: (...num) => Math.min(...num) },
+        { name: 'multiply', fn: (a, b) => a * b },
+        { name: 'percent', fn: (a, b) => a / b * 100 },
+        { name: 'round', fn: (a) => Math.ceil(a) },
+        { name: 'subtraction', fn: (a, b) => a - b },
+        //======================================================================================
+        // Elements
+        //======================================================================================
+        //======================================================================================
+        // Iterators
+        //======================================================================================
+        {
+            name: 'repeat',
+            fn: (context, options) => {
+                for (var i = 0, ret = ''; i < context; i++) ret = ret + options.fn(context[i]);
+                return ret;
+            }
+        }
+    ]
+
     Handlebars.registerHelper('ledger', (target, id, label) => {
         return `<a data-action="editLedger" data-target="${target}" data-id="${id}" data-label="${label}"><i class="fa-solid fa-memo-pad"></i></a>`
     });
-    Handlebars.registerHelper('toLowerCase', (str) => str.toLowerCase());
-    Handlebars.registerHelper('toTitleCase', (str) => str.replace(/\w\S*/g, text => text.charAt(0).toUpperCase() + text.substring(1).toLowerCase()))
-    Handlebars.registerHelper('isGM', () => game.user.isGM);
-    Handlebars.registerHelper('objectIsEmpty', (obj) => Object.keys(obj).length <= 0);
+
+    //======================================================================================
+    // Data field management
+    //======================================================================================
     Handlebars.registerHelper('getField', (schema, path) => schema.getField(path));
     Handlebars.registerHelper('toFieldGroup', (schema, path, options) => {
         let field = schema.getField(path);
@@ -55,35 +104,9 @@ function registerHelpers() {
         const group = field.toInput(groupConfig, inputConfig);
         return new Handlebars.SafeString(group.outerHTML);
     })
-    /* -------------------------------------------- */
-    /*  Math helpers                                */
-    /* -------------------------------------------- */
-    Handlebars.registerHelper('addition', (a, b) => a + b);
-    Handlebars.registerHelper('ceil', (a) => Math.ceil(a));
-    Handlebars.registerHelper('divide', (a, b) => a / b);
-    Handlebars.registerHelper('floor', (a) => Math.floor(a));
-    Handlebars.registerHelper('max', (...num) => Math.max(...num));
-    Handlebars.registerHelper('min', (...num) => Math.min(...num));
-    Handlebars.registerHelper('multiply', (a, b) => a * b);
-    Handlebars.registerHelper('percent', (a, b) => a / b * 100);
-    Handlebars.registerHelper('round', (a) => Math.ceil(a));
-    Handlebars.registerHelper('subtraction', (a, b) => a - b);
 
-    /* -------------------------------------------- */
-    /*  Iterators                                   */
-    /* -------------------------------------------- */
-    Handlebars.registerHelper('repeat', (context, options) => {
-        for (var i = 0, ret = ''; i < context; i++) ret = ret + options.fn(context[i]);
-        return ret;
-    });
-
-    /* -------------------------------------------- */
-    /*  element creators                            */
-    /* -------------------------------------------- */
-    Handlebars.registerHelper('selectDamage', (v, n) => newedo.elements.select.DamageTypes(v, n));
-    Handlebars.registerHelper('selectSkill', (v, n) => newedo.elements.select.Skills(v, n));
-    Handlebars.registerHelper('selectWeaponSkill', (v, n) => newedo.elements.select.WeaponSkills(v, n));
-    Handlebars.registerHelper('selectTrait', (v, n) => newedo.elements.select.Traits(v, n));
+    // register the helpers
+    for (const helper of helpers) Handlebars.registerHelper(helper.name, helper.fn);
 }
 
 /**

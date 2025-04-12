@@ -14,9 +14,48 @@
       "Resist": { "abbr": "Dr", "long": "Damage Reduction" },
       "Karma": { "abbr": "kr", "long": "Karma" }
     },
+    "Corruption": {
+      "long": "Corruption",
+      "short": "corrupt",
+
+      "None": {
+        "label": "Un-tainted",
+        "description": "A pinnacle of health, you have not been tainted by the corruption" },
+      "Touched": {
+        "label": "Touch of Corruption",
+        "description": "The inklings of corruption gnaws at your mind, no effects - yet" },
+      "Scrawlings": {
+        "label": "Odd Scrawlings",
+        "description": "You wake up to find you’ve been writing in an unknown text throughout the night, and you do not gain the benefits from your Rest. You are inexplicably able to read Fel scrawl - the chaotic written language of intelligent monsters. This can only occur once." },
+      "TransientCurse": {
+        "label": "Transient Curse",
+        "description": "Your physical strength is sapped from you as you begin to malform, decreasing your PWR and CHM by 1 and receiving a random mutation; (horns, claws, scaly skin, monstrous eyes, sharpened teeth, or grey cracked skin). This curse does not prevent nor be prevented by the Cursed status effect" },
+      "Abandon": {
+        "label": "Abandon",
+        "description": "The corruption continues to creep across your psyche, increasing your PWR by 2 and decreasing your INS by 2" },
+      "DarkInsight": {
+        "label": "Dark Insight",
+        "description": "Your body and mind become more comfortable with your seeping corruption. Increase your OCC by 2, decrease CHM by 2, and gain another malformity: (An additional monstrous eye that never closes, vestigial tail, vestigial bat wings, feathered limbs, stony skin, thorn-like growths across the body)" },
+      "Soulwarp": {
+        "label": "SoulWarp",
+        "description": "The infliction of corruption on your soul tears away at your body, revealing the monstrous visage beneath, resulting in a random effect:• Centauroid - Your lower half morphs into that of a beast, doubling movement; • Arms - You grow two additional functional arms, granting you an additional attack • Wings - You grow a set of tattered wings, granting you a fly speed of 30 ft, 3x per day• Eyes - You grow a massive glowing eye in your forehead, and the spell Gaze can be cast at will (The target becomes Frightened, Charmed, Blinded, or Confused)At this point you strike fear in those who see your form, and you will not be permitted within most civilized locations" },
+      "Felwarp": {
+        "label": "Felwarp",
+        "description": "Your mutations continue to advance, granting another random mutation:• Burning Belly - A fire swells in your stomach or throat, and you can launch a gout of burning phlegm as a 60 ft ranged attack that deals 2d8 fire damage, or a 15 ft cone that deals 1d8 fire damage on a FIN save• Screech - You can roar or screech with terrifying ferocity, pushing targets within 15 ft backwards by 15 ft, stunning them on a failed PWR save• Ephemeral - Reduce all incoming weapon damage to 1 until you make the attack action, at which point it resets at the end of your next turn• Liquify - Your skin turns into a translucent gelatinous ooze, and you have resistance to physical damage, and can squeeze through any space larger than your skull" },
+      "MonsterousMeditation": {
+        "label": "Monstrous Mediation",
+        "description": "Most monsters recognize you as a monster yourself, and you gain the ability to use a limited diplomacy with them even if they do not speak in a language you understand. If they do speak in an intelligent language, you become Skilled in diplomacy" },
+      "ThrallToChaos": {
+        "label": "Thrall to Chaos",
+        "description": "Your body hungers mindlessly for chaos, blood, or destruction, and you reduce your Charm, Insight, and Arcane to half of their roll" },
+      "FinalTransformation": {
+        "label": "Final Transformation",
+        "description": "You permanently transform into a monster. Replace all stats and abilities with that of a monster of an appropriate level of the DM’s choosing. You retain all of your memories and your personality, as well as control of your character. Your Corruption level cannot be reduced." }
+    },
     "Generic": {
       "Broken": "Broken",
       "ChatDescription": "Chat Description",
+      "Corruption": { "abbr": "corupt", "long": "Coruption" },
       "Curse": { "abbr": "Crs", "long": "Curse", "plrl": "Curses" },
       "Cursed": "Cursed",
       "Description": "Description",
@@ -244,31 +283,6 @@
   "TFM.ContextMenu.Delete": "Delete",
   "TFM.ContextMenu.Gift": "Gift",
 
-  "TFM.corruption.label": "Corruption",
-
-  "TFM.corruption.name.00": "Un-tainted",
-  "TFM.corruption.name.01": "Touch of Corruption",
-  "TFM.corruption.name.02": "Odd Scrawlings",
-  "TFM.corruption.name.03": "Transient Curse",
-  "TFM.corruption.name.04": "Abandon",
-  "TFM.corruption.name.05": "Dark Insight",
-  "TFM.corruption.name.06": "SoulWarp",
-  "TFM.corruption.name.07": "Felwarp",
-  "TFM.corruption.name.08": "Monstrous Mediation",
-  "TFM.corruption.name.09": "Thrall to Chaos",
-  "TFM.corruption.name.10": "Final Transformation",
-
-  "TFM.corruption.desc.00": "A pinnacle of health, you have not been tainted by the corruption",
-  "TFM.corruption.desc.01": "The inklings of corruption gnaws at your mind, no effects - yet",
-  "TFM.corruption.desc.02": "You wake up to find you’ve been writing in an unknown text throughout the night, and you do not gain the benefits from your Rest. You are inexplicably able to read Fel scrawl - the chaotic written language of intelligent monsters. This can only occur once.",
-  "TFM.corruption.desc.03": "Your physical strength is sapped from you as you begin to malform, decreasing your PWR and CHM by 1 and receiving a random mutation; (horns, claws, scaly skin, monstrous eyes, sharpened teeth, or grey cracked skin). This curse does not prevent nor be prevented by the Cursed status effect",
-  "TFM.corruption.desc.04": "The corruption continues to creep across your psyche, increasing your PWR by 2 and decreasing your INS by 2",
-  "TFM.corruption.desc.05": "Your body and mind become more comfortable with your seeping corruption. Increase your OCC by 2, decrease CHM by 2, and gain another malformity: (An additional monstrous eye that never closes, vestigial tail, vestigial bat wings, feathered limbs, stony skin, thorn-like growths across the body)",
-  "TFM.corruption.desc.06": "The infliction of corruption on your soul tears away at your body, revealing the monstrous visage beneath, resulting in a random effect:• Centauroid - Your lower half morphs into that of a beast, doubling movement; • Arms - You grow two additional functional arms, granting you an additional attack • Wings - You grow a set of tattered wings, granting you a fly speed of 30 ft, 3x per day• Eyes - You grow a massive glowing eye in your forehead, and the spell Gaze can be cast at will (The target becomes Frightened, Charmed, Blinded, or Confused)At this point you strike fear in those who see your form, and you will not be permitted within most civilized locations",
-  "TFM.corruption.desc.07": "Your mutations continue to advance, granting another random mutation:• Burning Belly - A fire swells in your stomach or throat, and you can launch a gout of burning phlegm as a 60 ft ranged attack that deals 2d8 fire damage, or a 15 ft cone that deals 1d8 fire damage on a FIN save• Screech - You can roar or screech with terrifying ferocity, pushing targets within 15 ft backwards by 15 ft, stunning them on a failed PWR save• Ephemeral - Reduce all incoming weapon damage to 1 until you make the attack action, at which point it resets at the end of your next turn• Liquify - Your skin turns into a translucent gelatinous ooze, and you have resistance to physical damage, and can squeeze through any space larger than your skull",
-  "TFM.corruption.desc.08": "Most monsters recognize you as a monster yourself, and you gain the ability to use a limited diplomacy with them even if they do not speak in a language you understand. If they do speak in an intelligent language, you become Skilled in diplomacy",
-  "TFM.corruption.desc.09": "Your body hungers mindlessly for chaos, blood, or destruction, and you reduce your Charm, Insight, and Arcane to half of their roll",
-  "TFM.corruption.desc.10": "You permanently transform into a monster. Replace all stats and abilities with that of a monster of an appropriate level of the DM’s choosing. You retain all of your memories and your personality, as well as control of your character. Your Corruption level cannot be reduced.",
 
   "TFM.Add": "Add",
 

@@ -1,15 +1,17 @@
-<div class="tfm-abilities-list flex-gap-m">
+<div class="tfm-abilities-list flex-gap-m {{choose cssClass ''}}">
 
     {{#each system.abilities as | ability key |}}
         <div class="tfm-ability">
-            <a><label>{{localize ability.label}}</label></a>
-            <input class="tfm-ability-score" type="number" name="system.abilities.{{key}}.value" value="{{ability.value}}">
-            <div class="tfm-ability-mod">
-                {{#if (eq ability.mod 0)}}
-                    {{numberFormat ability.mod sign=false}}
-                {{else}}
-                    {{numberFormat ability.mod sign=true}}
-                {{/if}}
+            <label><a>{{localize ability.label}}</a></label>
+            <div class="wrapper">
+                <input class="tfm-ability-score" type="number" name="system.abilities.{{key}}.value" value="{{ability.value}}">
+                <div class="tfm-ability-mod">
+                    {{#if (eq ability.mod 0)}}
+                        {{numberFormat ability.mod sign=false}}
+                    {{else}}
+                        {{numberFormat ability.mod sign=true}}
+                    {{/if}}
+                </div>
             </div>
         </div>
     {{/each}}

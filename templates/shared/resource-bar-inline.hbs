@@ -1,0 +1,19 @@
+{{!-- 
+cssClass - classes to apply to the main element
+label - text that appears above the resource bar
+value - the number for the initial resource
+value_name -
+max - the max capacity of the bar
+max_name - name of the input, if none, field is disabled
+--}}
+
+<div class="tfm-bar tfm-inline-bar {{choose cssClass ''}}">
+    {{#if label}}<label>{{toTitleCase (localize label)}}</label>{{/if}}
+    <div class="wrapper">
+        <div class="fill" style="width: {{multiply (divide value max) 100}}%;"></div>
+        <div class="flexrow">
+            <input type="number" name="{{value_name}}" value="{{value}}">/
+            <input type="number" {{#if max_name}}name="{{max_name}}" {{else}}disabled{{/if}} value="{{numberFormat max}}">
+        </div>
+    </div>
+</div>

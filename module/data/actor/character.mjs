@@ -1,3 +1,4 @@
+import utils from "../../helpers/utils.mjs";
 import { ActorDataModel } from "../abstract.mjs";
 
 const { ArrayField, NumberField, SchemaField, SetField, StringField, HTMLField } = foundry.data.fields;
@@ -7,15 +8,17 @@ export default class CharacterData extends ActorDataModel {
         const schema = super.defineSchema();
 
         schema.skills = new ArrayField(new StringField({ initial: tfm.utils.localize("TFM.ActorSheet.newSkill") }), { initial: [] });
-        
+
         let weaponTypes = tfm.config.WeaponTypes;
         let profData = {};
 
         for (const [key, weapon] of Object.entries(weaponTypes)) {
             profData[key] = new SchemaField({
-                value: new NumberField({initial: 0, min: 0, max: 3}),
+                value: new NumberField({ initial: 0, min: 0, max: 3 }),
             });
         }
+
+        schema.corruption = this.ResourceField(0, 10);
 
         schema.proficiency = new SchemaField(profData);
         schema.details = new SchemaField({
@@ -33,5 +36,11 @@ export default class CharacterData extends ActorDataModel {
         });
 
         return schema;
+    }
+
+    prepareDerivedData() {
+        super.prepareDerivedData();
+
+        this.level = utils.levelXp(this.xp.value);
     }
 }

@@ -1,10 +1,12 @@
+import { TFM } from "../../../config.mjs";
+import utils from "../../../helpers/utils.mjs";
 import TfmActorSheet from "../actor.mjs"
 
 export default class CharacterSheet extends TfmActorSheet {
     static DEFAULT_OPTIONS = {
         classes: ["tfm", "sheet", "actor"],
-        position: { height: 840, width: 600, top: 100, left: 200 },
-        window: { resizable: true }
+        position: { height: 800, width: 800, top: 60, left: 120 },
+        window: { resizable: false }
     }
 
     static get PARTS() {
@@ -36,6 +38,15 @@ export default class CharacterSheet extends TfmActorSheet {
         for (const [key, prof] of Object.entries(context.system.proficiency)) {
             prof.label = tfm.config.WeaponTypes[key];
         }
+
+        context.system.corruption.label = utils.localize(TFM.Corruption.label[context.system.corruption.value]);
+        context.system.corruption.description = utils.localize(TFM.Corruption.description[context.system.corruption.value]);
+
+        let last_level = utils.nextLevel(context.system.level - 1)
+        last_level = context.system.level <= 1 ? 0 : last_level;
+
+        context.system.xp.next = utils.nextLevel(context.system.level);
+        context.system.xp.percent = (context.system.xp.value - last_level) / (context.system.xp.next - last_level) * 100;
 
         console.log('Context', context);
         return context;
