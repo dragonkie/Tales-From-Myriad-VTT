@@ -35,6 +35,7 @@
 
 .tfm nav.tabs .item {
     color: var(--tfm-colour-text);
+
     &.active {
         color: var(--tfm-colour-text);
         text-shadow: 0 0 8px var(--tfm-colour-text-selection-bg);

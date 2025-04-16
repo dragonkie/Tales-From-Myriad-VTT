@@ -495,7 +495,7 @@
 }
 .sheet.actor .tfm-actor-header img {
   flex: 0;
-  background-color: var(--tfm-background, rgba(0, 0, 0, 0));
+  background-color: var(--tfm-background, rgba(0, 0, 0, 0.2));
 }
 .sheet.actor .tfm-actor-header > .wrapper {
   display: flex;
