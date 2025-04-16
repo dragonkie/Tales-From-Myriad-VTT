@@ -13,7 +13,7 @@
     {
       "name": "dragonkie",
       "url": "https://github.com/dragonkie",
-      "flags": {}
+      "flags": { }
     }
   ],
   "esmodules": [
@@ -27,56 +27,56 @@
       "lang": "en",
       "name": "English",
       "path": "lang/en.json",
-      "flags": {}
+      "flags": { }
     }
   ],
   "primaryTokenAttribute": "health",
   "secondaryTokenAttribute": "dodge",
   "url": "https://github.com/dragonkie/Tales-From-Myriad-VTT",
-  "manifest": "https://raw.githubusercontent.com/dragonkie/Tales-From-Myriad-VTT/main/system.json",
-  "download": "https://github.com/dragonkie/Tales-From-Myriad-VTT/releases/latest/download/tfm.zip",
+  "manifest": "https://github.com/dragonkie/Tales-From-Myriad-VTT/releases/latest/download/system.json",
+  "download": "https://github.com/dragonkie/Tales-From-Myriad-VTT/releases/latest/download/tales-from-myriad.zip",
   "background": "systems/tales-from-myriad/assets/images/system-background.webp",
   "license": "LICENSE.txt",
   "changelog": "CHANGELOG.md",
   "documentTypes": {
     "Actor": {
       "character": {
-        "htmlFields": [],
-        "filePathFields": {}
+        "htmlFields": [ ],
+        "filePathFields": { }
       },
       "npc": {
-        "htmlFields": [],
-        "filePathFields": {}
+        "htmlFields": [ ],
+        "filePathFields": { }
       },
       "party": {
-        "htmlFields": [],
-        "filePathFields": {}
+        "htmlFields": [ ],
+        "filePathFields": { }
       },
       "shop": {
-        "htmlFields": [],
-        "filePathFields": {}
+        "htmlFields": [ ],
+        "filePathFields": { }
       }
     },
     "Item": {
       "weapon": {
-        "htmlFields": [],
-        "filePathFields": {}
+        "htmlFields": [ ],
+        "filePathFields": { }
       },
       "spell": {
-        "htmlFields": [],
-        "filePathFields": {}
+        "htmlFields": [ ],
+        "filePathFields": { }
       },
       "armour": {
-        "htmlFields": [],
-        "filePathFields": {}
+        "htmlFields": [ ],
+        "filePathFields": { }
       },
       "job": {
-        "htmlFields": [],
-        "filePathFields": {}
+        "htmlFields": [ ],
+        "filePathFields": { }
       },
       "trinket": {
-        "htmlFields": [],
-        "filePathFields": {}
+        "htmlFields": [ ],
+        "filePathFields": { }
       }
     }
   }
