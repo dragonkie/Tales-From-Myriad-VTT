@@ -8,23 +8,13 @@
         </div>
     </div>
     <div>
-        <div class="tfm-defences align-center flex-gap-s">
-            <label>Defence</label>
-            <div class="flexrow flex-gap-m">
-                <div class="dodge">
-                    <div>Dodge</div>
-                    {{toFieldInput system.schema 'dodge.value' value=system.dodge.value}}
-                </div>
-                <div class="tfm-damage-reduction">
-                    <div>Reduction</div>
-                    {{toFieldInput system.schema 'dr.value' value=system.dr.value}}
-                </div>
-            </div>
-        </div>
+        {{> 'tfm.actor-defence'}}
     </div>
     <div>
         <div>
-            {{> 'tfm.resource-bar-inline' cssClass='tfm-exp-bar' label='Experience' value=system.xp.value value_name='system.xp.value' max=system.xp.next}}
+            {{#with system.xp}}
+                {{> 'tfm.resource-bar-inline' cssClass='tfm-exp-bar' label='Experience' value=value value_name='system.xp.value' max=next}}
+            {{/with}}
             <b>Levels</b>
             <div class="flexrow">
                 <div>Class</div>

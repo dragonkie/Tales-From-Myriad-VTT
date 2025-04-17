@@ -12,8 +12,7 @@
   "authors": [
     {
       "name": "dragonkie",
-      "url": "https://github.com/dragonkie",
-      "flags": { }
+      "url": "https://github.com/dragonkie"
     }
   ],
   "esmodules": [
@@ -32,6 +31,7 @@
   ],
   "primaryTokenAttribute": "health",
   "secondaryTokenAttribute": "dodge",
+  "initiative": "2d6",
   "url": "https://github.com/dragonkie/Tales-From-Myriad-VTT",
   "manifest": "https://github.com/dragonkie/Tales-From-Myriad-VTT/releases/latest/download/system.json",
   "download": "https://github.com/dragonkie/Tales-From-Myriad-VTT/releases/latest/download/tales-from-myriad.zip",

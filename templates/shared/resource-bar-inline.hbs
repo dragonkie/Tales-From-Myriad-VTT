@@ -10,10 +10,14 @@ max_name - name of the input, if none, field is disabled
 <div class="tfm-bar tfm-inline-bar {{choose cssClass ''}}">
     {{#if label}}<label>{{toTitleCase (localize label)}}</label>{{/if}}
     <div class="wrapper">
-        <div class="fill" style="width: {{multiply (divide value max) 100}}%;"></div>
-        <div class="flexrow">
-            <input type="number" name="{{value_name}}" value="{{value}}">/
-            <input type="number" {{#if max_name}}name="{{max_name}}" {{else}}disabled{{/if}} value="{{numberFormat max}}">
+        <div class="fill" style="width: {{choose fill (multiply (divide value max) 100)}}%;"></div>
+        <div class="flexrow bar-inputs">
+            <input class="value-now" type="number" name="{{value_name}}" value="{{value}}">
+            /
+            <input class="value-max" type="number" {{#if max_name}}name="{{max_name}}" {{else}}disabled{{/if}} value="{{numberFormat max}}">
+            {{#if (gt value max)}}
+                <span style="flex: 0; margin-right: 5px;"><i class="fas fa-plus"></i></span>
+            {{/if}}
         </div>
     </div>
 </div>

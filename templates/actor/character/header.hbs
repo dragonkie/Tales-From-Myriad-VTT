@@ -5,19 +5,10 @@
         <input class="tfm-actor-name" type="text" name="name" value="{{name}}" placeholder="{{localize 'TFM.generic.name'}}">
         <div class="flexrow flex-gap-m">
             <div class="tfm-health">
-                {{> 'tfm.resource-bar' label='health' fill=(multiply (divide system.hp.value system.hp.max) 100) cssClass='tfm-health-bar'}}
-                <div class="flexrow">
-                    <input type="number" name="system.hp.value" value="{{system.hp.value}}">/
-                    <input type="number" name="system.hp.max" value="{{system.hp.max}}">
-                </div>
+                {{> 'tfm.resource-bar-inline' cssClass='tfm-health-bar' label='Health' value=system.hp.value value_name='system.hp.value' max=system.hp.max max_name='system.hp.max'}}
             </div>
-
             <div class="tfm-corruption">
-                {{> 'tfm.resource-bar' label=(concat 'corruption: ' system.corruption.label) fill=(multiply (divide system.corruption.value system.corruption.max) 100) cssClass='tfm-corruption-bar'}}
-                <div class="flexrow">
-                    <input type="number" name="system.corruption.value" value="{{system.corruption.value}}">/
-                    <input type="number" name="system.corruption.max" value="{{system.corruption.max}}">
-                </div>
+                {{> 'tfm.resource-bar-inline' cssClass='tfm-corruption-bar' label=(concat 'Corruption: ' system.corruption.label) value=system.corruption.value value_name='system.corruption.value' max=10}}
             </div>
         </div>
     </div>

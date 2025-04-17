@@ -43,8 +43,10 @@ TFM.Generic = {
     curse: 'TFM.Generic.Curse.long',
     cursed: 'TFM.Generic.Cursed',
     description: 'TFM.Generic.Description',
-    enchatment: 'TFM.Generic.Enchantment',
+    enchatment: 'TFM.Generic.Enchantment.long',
     experience: 'TFM.Generic.Experience',
+    equip: "TFM.Generic.Equip",
+    equipped: "TFM.Generic.Equipped",
     health: 'TFM.Generic.Health',
     identified: 'TFM.Generic.Identified',
     label: 'TFM.Generic.Label',
@@ -189,6 +191,16 @@ TFM.ItemSizes = {
     large: 'TFM.ItemSize.Large',// 2 slot
     huge: 'TFM.ItemSize.Huge',//4 slot
     gigantic: 'TFM.ItemSize.Gigantic'// 8 slots
+}
+
+//========================================================================================
+// Helper Functions
+//========================================================================================
+TFM.Effects = {
+    active: 'TFM.Effect.Active',
+    passive: 'TFM.Effect.Passive',
+    suppressed: 'TFM.Effect.Suppressed',
+    disabled: 'TFM.Effect.Disabled',
 }
 
 //========================================================================================

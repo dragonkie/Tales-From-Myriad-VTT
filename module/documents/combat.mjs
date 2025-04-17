@@ -19,4 +19,6 @@ export default class TfmCombat extends Combat {
         await super.endCombat();
         return this;
     }
+
+    
 }

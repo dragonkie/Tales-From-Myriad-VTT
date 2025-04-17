@@ -3,13 +3,21 @@ import TfmActorSheet from "../actor.mjs"
 export default class NpcSheet extends TfmActorSheet {
     static get PARTS() {
         const parts = {
-            body: { template: `${tfm.filepath.template}/actor/character/body.hbs` },
-            identity: { template: `${tfm.filepath.template}/actor/character/identity.hbs` },
-            features: { template: `${tfm.filepath.template}/actor/character/features.hbs` },
-            abilities: { template: `${tfm.filepath.template}/actor/character/abilities.hbs` },
-            inventory: { template: `${tfm.filepath.template}/actor/character/inventory.hbs` },
+            body: { template: `${tfm.filepath.template}/actor/npc/body.hbs` },
+            header: { template: `${tfm.filepath.template}/actor/npc/header.hbs` },
+            features: { template: `${tfm.filepath.template}/actor/npc/features.hbs` },
+            details: { template: `${tfm.filepath.template}/actor/npc/details.hbs` },
+            effects: { template: `${tfm.filepath.template}/actor/shared/actor-effects.hbs` }
         }
 
         return parts;
     }
+
+    static TABS = {
+        features: { id: "features", group: "main", label: "TFM.Tab.Features" },
+        effects: { id: "effects", group: "main", label: "TFM.Tab.Effects" },
+        details: { id: "details", group: "main", label: "TFM.Tab.Details" },
+    }
+
+    tabGroups = { main: "features" }
 }

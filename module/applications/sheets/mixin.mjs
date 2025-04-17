@@ -1,3 +1,4 @@
+import { TFM } from "../../config.mjs";
 import LOGGER from "../../helpers/logger.mjs";
 
 export default function TfmSheetMixin(Base) {
@@ -20,6 +21,8 @@ export default function TfmSheetMixin(Base) {
                 toggleDescription: this._onToggleDescription,
                 collapse: this._onToggleCollapse,
                 toggleMode: this._onToggleMode,
+                edit: this._onEditEmbedded,
+                delete: this._onDeleteEmbedded
             }
         };
 
@@ -30,6 +33,7 @@ export default function TfmSheetMixin(Base) {
         _getTabs() {
             return Object.values(this.constructor.TABS).reduce((acc, v) => {
                 const isActive = this.tabGroups[v.group] === v.id;
+                console.log(`${this.tabGroups[v.group]} == ${v.id}`)
                 acc[v.id] = {
                     ...v,
                     active: isActive,
@@ -59,6 +63,24 @@ export default function TfmSheetMixin(Base) {
                 isPlayMode: this.isPlayMode,
                 isEditable: this.isEditable,
                 isGM: game.user.isGM,
+                effects: {}
+            }
+
+            // add in effect documents to sorted lists
+            for (const [key, value] of Object.entries(TFM.Effects)) {
+                context.effects[key] = {
+                    label: value,
+                    effects: [],
+                }
+            }
+
+            for (const entry of doc.effects.entries()) {
+                const effect = entry[1];
+                if (effect.isSuppressed) context.effects.suppressed.effects.push(effect);
+                else if (effect.disabled) context.effects.disabled.effects.push(effect);
+                else if (effect.isTemporary) context.effects.active.effects.push(effect);
+                else context.effects.passive.effects.push(effect);
+                console.log(effect);
             }
 
             // special method for copying the system, utils.deepClone doesnt decouple its version from the copy
@@ -407,6 +429,37 @@ export default function TfmSheetMixin(Base) {
             let container = target.querySelector('.collapsible') || target.closest('.collapsible');
             container.classList.toggle('collapsed');
             console.log(container)
+        }
+
+        static async _onDeleteEffect(event, target) {
+            const uuid = target.closest('[data-effect-uuid]').dataset.effectUuid;
+            const effect = await fromUuid(uuid);
+            effect.delete();
+        }
+
+        static async _onEditEffect(event, target) {
+            const uuid = target.closest('[data-effect-uuid]').dataset.effectUuid;
+            const effect = await fromUuid(uuid);
+            effect.sheet.render(true);
+        }
+
+        static async _onCreateEffect(event, target) {
+            const type = target.closest('[data-effect-type]').dataset.effectType;
+            const combat = game.combat;
+
+            const effect = await ActiveEffect.create({
+                name: `New ${type} effect`,
+                disabled: type == 'disabled',
+                origin: this.document.name,
+                img: 'icons/svg/aura.svg',
+                duration: {
+                    startTime: game.time.worldTime,
+                    startRound: combat ? combat.round : null,
+                    startTurn: combat ? combat.turn : null
+                }
+            }, { parent: this.document });
+
+            effect.render(true);
         }
     }
 }

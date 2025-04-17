@@ -1,3 +1,5 @@
+import { TFM } from "../config.mjs";
+
 const { ArrayField, NumberField, SchemaField, SetField, StringField, HTMLField, ObjectField, DataField, BooleanField } = foundry.data.fields;
 const fields = foundry.data.fields;
 
@@ -100,13 +102,14 @@ export class ActorDataModel extends SystemDataModel {
 
         // add in actor abilities
         const abilities = {};
-        for (const key of Object.keys(tfm.config.Abilities)) abilities[key] = this.ValueField(6);
+        for (const key of Object.keys(TFM.Abilities)) abilities[key] = this.ValueField(6);
         schema.abilities = new SchemaField(abilities);
 
         // adds in resource fields
         schema.hp = this.ResourceField(6, 6);
         schema.dr = this.ValueField(0);
         schema.dodge = this.ValueField(0);
+        
         // tracks player experience points, or a monsters given exp
         schema.xp = new SchemaField({
             value: new NumberField({ required: true, nullable: false, min: 0, initial: 0 })
@@ -118,7 +121,7 @@ export class ActorDataModel extends SystemDataModel {
     prepareDerivedData() {
         super.prepareDerivedData();
         for (const ability in this.abilities) this.abilities[ability].mod = tfm.utils.abilityMod(this.abilities[ability].value);
-
+        this.dodge.total = Math.max(8 + this.abilities.fin.mod, 1);
     }
 };
 
@@ -193,9 +196,9 @@ export class ItemDataModel extends SystemDataModel {
     static EquipmentFields() {
         return {
             enchantments: this.EnchantmentsField(),
-            identified: new BooleanField({ ...this.PrivateConfig, initial: false }),
-            broken: new BooleanField({ ...this.RequiredConfig, initial: false, label: tfm.config.Generic.broken }),
-            equipped: new BooleanField({ ...this.RequiredConfig, initial: false, label: tfm.config.Generic })
+            identified: new BooleanField({ ...this.PrivateConfig, initial: false, label: TFM.Generic.identified }),
+            broken: new BooleanField({ ...this.RequiredConfig, initial: false, label: TFM.Generic.broken }),
+            equipped: new BooleanField({ ...this.RequiredConfig, initial: false, label: TFM.Generic.equipped })
         };
     }
 

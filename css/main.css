@@ -294,7 +294,13 @@
 }
 
 .tfm-inline-bar {
-  --tfm-bar-size: 1.5em;
+  --tfm-bar-size: 1.4rem;
+}
+.tfm-inline-bar.tfm-s {
+  --tfm-bar-size: 1rem;
+}
+.tfm-inline-bar.tfm-l {
+  --tfm-bar-size: 1.8rem;
 }
 .tfm-inline-bar > .wrapper {
   overflow: hidden;
@@ -316,12 +322,26 @@
   max-width: 100%;
   min-width: 0%;
 }
-.tfm-inline-bar > .wrapper input {
+.tfm-inline-bar > .wrapper .bar-inputs {
+  display: flex;
+  flex-direction: row;
+}
+.tfm-inline-bar > .wrapper .bar-inputs > * {
+  flex: 1;
+}
+.tfm-inline-bar > .wrapper .bar-inputs input {
   height: var(--tfm-bar-size);
   font-size: calc(var(--tfm-bar-size) - 0.2em);
   border: 0px solid;
+  background: rgba(0, 0, 0, 0);
+  text-align: center;
+  border: 0;
+}
+.tfm-inline-bar > .wrapper .bar-inputs input:focus {
+  box-shadow: none;
+  outline-style: none;
+  font-weight: 1.1em;
   color: white;
-  background-color: rgba(0, 0, 0, 0);
 }
 
 .tfm-input-bar {
@@ -487,7 +507,7 @@
   --tfm-bar-colour: rgb(131, 40, 197);
 }
 .sheet.actor .tfm-exp-bar {
-  --tfm-bar-colour: rgb(255, 169, 41);
+  --tfm-bar-colour: rgb(10, 126, 184);
 }
 .sheet.actor .tfm-actor-header {
   display: flex;
@@ -510,7 +530,6 @@
   flex: 0 0 100px;
   min-height: 100px;
   min-width: 100px;
-  border-radius: 100%;
 }
 .sheet.actor .tfm-abilities-list {
   font-size: 14px;
@@ -520,15 +539,6 @@
   flex-direction: column;
   box-sizing: border-box;
   margin: 2px;
-}
-.sheet.actor .tfm-abilities-list.tfm-row {
-  flex-direction: row;
-}
-.sheet.actor .tfm-abilities-list.tfm-row .tfm-ability > .wrapper {
-  flex-direction: column;
-}
-.sheet.actor .tfm-abilities-list.tfm-row .tfm-ability .tfm-ability-mod {
-  border-radius: 0 0 5px 5px;
 }
 .sheet.actor .tfm-abilities-list .tfm-ability {
   display: flex;
@@ -563,6 +573,18 @@
   justify-content: center;
   z-index: -1;
 }
+.sheet.actor .tfm-abilities-list.tfm-row {
+  flex-direction: row;
+}
+.sheet.actor .tfm-abilities-list.tfm-row .tfm-ability > .wrapper {
+  flex-direction: column;
+}
+.sheet.actor .tfm-abilities-list.tfm-row .tfm-ability .tfm-ability-mod {
+  border-radius: 0 0 5px 5px;
+}
+.sheet.actor .tfm-abilities-list.tfm-row .tfm-ability {
+  flex: 1;
+}
 .sheet.actor .tfm-defences {
   border: 1px solid;
   border-radius: 5px;
@@ -572,6 +594,10 @@
   font-size: 1.5rem;
 }
 
+.sheet.item {
+  background: var(--tfm-background, #ffd8ac);
+  background-size: 100% 100%;
+}
 .sheet.item .tab[data-tab].active {
   display: flex;
   flex: 1;
@@ -593,7 +619,7 @@
 }
 .sheet.item .item-descriptions .description {
   padding: 5px;
-  background-color: rgba(255, 255, 255, 0.2);
+  background-color: var(--tfm-input-background-colour);
   border-radius: 10px;
 }
 .sheet.item .item-descriptions .description label {
@@ -612,6 +638,11 @@
   --tfm-size-m: 12px;
   --tfm-size-l: 18px;
   --tfm-size-xl: 24px;
+  --tfm-font-size-xs: 0.6rem;
+  --tfm-font-size-s: 0.8rem;
+  --tfm-font-size-m: 1rem;
+  --tfm-font-size-l: 1.2rem;
+  --tfm-font-size-xl: 2rem;
   --tfm-colour-light-1: #f7f3e8;
   --tfm-colour-light-2: #f1e8d0;
   --tfm-colour-light-3: #d6c3a3;
@@ -652,16 +683,17 @@
   --tfm-colour-text: var(--tfm-colour-dark-1);
   --tfm-colour-text-selection: var(--tfm-colour-light-3);
   --tfm-colour-text-selection-bg: var(--tfm-colour-warm-4);
-  --tfm-background: var(--tfm-colour-light-3);
+  --tfm-background: var(--tfm-colour-light-2);
+  --tfm-input-background-colour: var(--tfm-colour-light-3);
 }
 .theme-light .tfm input {
-  --tfm-input-background-colour: var(--tfm-colour-light-5);
+  --tfm-input-background-colour: var(--tfm-colour-light-3);
 }
 .theme-light .tfm input:disabled {
   --tfm-input-background-colour: var(--tfm-colour-light-6);
 }
 .theme-light .tfm img {
-  --tfm-background: var(--tfm-colour-light-5);
+  --tfm-background: var(--tfm-colour-light-4);
 }
 .theme-light .tfm .tfm-bar {
   --tfm-bar-bg: var(--tfm-colour-cool-1-50);

@@ -1,5 +1,8 @@
 .sheet.item {
 
+    background: var(--tfm-background, #ffd8ac);
+    background-size: 100% 100%;
+
     .tab[data-tab].active {
         display: flex;
         flex: 1;
@@ -25,7 +28,7 @@
 
         .description {
             padding: 5px;
-            background-color: rgba(255, 255, 255, 0.2);
+            background-color: var(--tfm-input-background-colour);
             border-radius: 10px;
 
             label {

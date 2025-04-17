@@ -121,7 +121,15 @@
 
 // bars with inputs inside the bar itself
 .tfm-inline-bar {
-    --tfm-bar-size: 1.5em;
+    --tfm-bar-size: 1.4rem;
+
+    &.tfm-s {
+        --tfm-bar-size: 1rem;
+    }
+
+    &.tfm-l {
+        --tfm-bar-size: 1.8rem;
+    }
 
     >.wrapper {
         overflow: hidden;
@@ -147,12 +155,29 @@
             min-width: 0%;
         }
 
-        input {
-            height: var(--tfm-bar-size);
-            font-size: calc(var(--tfm-bar-size) - 0.2em);
-            border: 0px solid;
-            color: white;
-            background-color: rgba(0, 0, 0, 0);
+        .bar-inputs {
+            display: flex;
+            flex-direction: row;
+
+            >* {
+                flex: 1;
+            }
+
+            input {
+                height: var(--tfm-bar-size);
+                font-size: calc(var(--tfm-bar-size) - 0.2em);
+                border: 0px solid;
+                background: rgba(0, 0, 0, 0);
+                text-align: center;
+                border: 0;
+
+                &:focus {
+                    box-shadow: none;
+                    outline-style: none;
+                    font-weight: 1.1em;
+                    color: white;
+                }
+            }
         }
     }
 }
