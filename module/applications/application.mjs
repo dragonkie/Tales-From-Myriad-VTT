@@ -1,4 +1,6 @@
-let {HandlebarsApplicationMixin, ApplicationV2} = foundry.applications.api
+let { HandlebarsApplicationMixin, ApplicationV2 } = foundry.applications.api
+
+
 
 export default class TfmApplication extends HandlebarsApplicationMixin(ApplicationV2) {
     static DEFAULT_OPTIONS = {

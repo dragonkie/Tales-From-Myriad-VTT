@@ -7,7 +7,7 @@ export default class CharacterData extends ActorDataModel {
     static defineSchema() {
         const schema = super.defineSchema();
 
-        schema.skills = new ArrayField(new StringField({ initial: utils.localize("TFM.ActorSheet.newSkill") }), { initial: [] });
+        schema.skills = new ArrayField(new StringField({ initial: 'new skill' }), { initial: [] });
 
         let weaponTypes = tfm.config.WeaponTypes;
         let profData = {};

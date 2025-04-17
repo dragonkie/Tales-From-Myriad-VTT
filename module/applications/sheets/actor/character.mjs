@@ -1,12 +1,16 @@
 import { TFM } from "../../../config.mjs";
 import utils from "../../../helpers/utils.mjs";
+import TfmDialog from "../../dialog.mjs";
 import TfmActorSheet from "../actor.mjs"
 
 export default class CharacterSheet extends TfmActorSheet {
     static DEFAULT_OPTIONS = {
         classes: ["tfm", "sheet", "actor"],
         position: { height: 800, width: 800, top: 60, left: 120 },
-        window: { resizable: false }
+        window: { resizable: false },
+        actions: {
+            skillConfig: this._onConfigureSkills
+        }
     }
 
     static get PARTS() {
@@ -53,5 +57,77 @@ export default class CharacterSheet extends TfmActorSheet {
 
         console.log('Context', context);
         return context;
+    }
+
+    //===========================================================================================
+    // Sheet actions
+    //===========================================================================================
+
+    /**
+     * 
+     * @param {Event} event 
+     * @param {Element} target 
+     */
+    static async _onConfigureSkills(event, target) {
+        const input_template = `<input style="margin-bottom: 5px" type="text" value="{SKILL}"><a data-action="delete" style="flex: 0;"><i class="fas fa-trash"></a></i>`;
+        const skills_list = utils.duplicate(this.document.system.skills);
+        let content = `
+        <div class="flexrow">
+            <div>${this.document.name}s skills list</div> 
+        </div>`;
+        content += '<div class="dialog-skill-list">'
+        for (const skill of this.document.system.skills) {
+            content += `<div class="flexrow skill-wrapepr flex-gap-s">${input_template.replace('{SKILL}', skill)}</div>`;
+        }
+        content += '</div>';
+        content += `<a data-action="add">add <i class="fas fa-plus"></i></a></div>`;
+
+        // create the config popup
+        const app = await new TfmDialog({
+            window: { title: 'TFM.Dialog.SkillConfig' },
+            buttons: [{
+                action: 'confirm',
+                label: 'Confirm'
+            }, {
+                action: 'cancel',
+                label: 'Cancel'
+            }],
+            submit: result => {
+                if (result == 'confirm') {
+                    let skills = [];
+                    let inputs = app.element.querySelectorAll('.dialog-skill-list input');
+                    for (const i of inputs) skills.push(i.value);
+                    this.document.update({ system: { skills: skills } });
+                }
+            },
+
+            content: content,
+        }).render(true);
+
+        // attach event listeners
+        const list_ele = app.element.querySelector('.dialog-skill-list');
+        app.element.addEventListener('click', (event) => {
+            const target = event.target;
+            const action = target.closest('[data-action]').dataset.action;
+
+            if (action == 'add') {
+                skills_list.push('New Skill');
+                while (list_ele.firstChild) list_ele.removeChild(list_ele.firstChild);
+
+                for (const skill of skills_list) {
+                    let node = document.createElement('DIV');
+                    node.innerHTML = input_template.replace('{SKILL}', skill);
+                    node.classList = 'flexrow flex-gap-s skill-wrapper';
+                    list_ele.appendChild(node);
+                }
+            }
+            else if (action == 'delete') {
+                let t = target.closest('.skill-wrapper');
+                t.parentElement.removeChild(t);
+            }
+
+
+        })
+        console.log(app.element);
     }
 }
