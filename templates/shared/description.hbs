@@ -1,0 +1,29 @@
+{{!--
+label - Title to be displayed as part of the collapsed entry box
+cssClass - classes added to the main wrapper
+enriched - text enriched by static async TextEditor.enrichHTML();
+value - the unenriched entry for the field
+name - if left empty, creates an uneditable field to display the given enriched text
+editable - is this editor actually editable
+toggled - is this editor able to be toggled on and off
+collapsed - wheter or not this should start collapsed
+--}}
+<div class="description collapsible {{cssClass}} {{#if collapsed}}collapsed{{/if}}">
+    <div class="flexrow" data-action="collapse">
+        <a><i class="fas fa-caret-down"></i></a>
+        <label>{{choose label (localize 'TFM.Generic.Description')}}</label>
+    </div>
+    <div class="collapsible-content">
+        <div class="wrapper">
+            {{#if name}}
+                <prose-mirror name="{{name}}" value="{{value}}" editable="{{editable}}" {{#if toggled}}toggled{{/if}}>
+                    {{{enriched}}}
+                </prose-mirror>
+            {{else}}
+                <div>
+                    {{{enriched}}}
+                </div>
+            {{/if}}
+        </div>
+    </div>
+</div>

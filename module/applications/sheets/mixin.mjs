@@ -417,7 +417,6 @@ export default function TfmSheetMixin(Base) {
         static _onToggleCollapse(event, target) {
             let container = target.querySelector('.collapsible') || target.closest('.collapsible');
             container.classList.toggle('collapsed');
-            console.log(container)
         }
 
         static async _onDeleteEffect(event, target) {

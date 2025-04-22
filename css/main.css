@@ -494,6 +494,11 @@
   border: none;
 }
 
+.tfm .effects-list {
+  margin: 0;
+  padding: 0;
+}
+
 .sheet.actor {
   background: var(--tfm-background, #ffd8ac);
   background-size: 100% 100%;

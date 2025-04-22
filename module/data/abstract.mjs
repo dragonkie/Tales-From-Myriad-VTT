@@ -1,4 +1,5 @@
 import { TFM } from "../config.mjs";
+import utils from "../helpers/utils.mjs";
 
 const { ArrayField, NumberField, SchemaField, SetField, StringField, HTMLField, ObjectField, DataField, BooleanField } = foundry.data.fields;
 const fields = foundry.data.fields;
@@ -32,9 +33,9 @@ const fields = foundry.data.fields;
  * @typedef {DataFieldOptions & StringFieldParams} StringFieldOptions 
  */
 
-/* ---------------------------------------------- */
-/* Generic system data model                      */
-/* ---------------------------------------------- */
+//=================================================================================================
+//Generic system data model
+//=================================================================================================
 export class SystemDataModel extends foundry.abstract.TypeDataModel {
     /**
      * @param {Number} value 
@@ -93,9 +94,9 @@ export class SystemDataModel extends foundry.abstract.TypeDataModel {
     }
 };
 
-/* ---------------------------------------------- */
-/* Generic actor data model                       */
-/* ---------------------------------------------- */
+//=================================================================================================
+//Generic Actor data model
+//=================================================================================================
 export class ActorDataModel extends SystemDataModel {
     static defineSchema() {
         const schema = {};
@@ -115,6 +116,53 @@ export class ActorDataModel extends SystemDataModel {
             value: new NumberField({ required: true, nullable: false, min: 0, initial: 0 })
         })
 
+        schema.description = new HTMLField({ initial: "" });
+
+        schema.movement = new SchemaField({
+            walk: this.ValueField(30),
+            swim: this.ValueField(0),
+            burrow: this.ValueField(0),
+            fly: this.ValueField(0)
+        });
+
+        schema.size = new StringField({
+            ...this.RequiredConfig,
+            blank: false,
+            initial: "medium",
+            label: TFM.Generic.size,
+            choices: () => {
+                const options = TFM.Sizes;
+                for (const i of Object.keys(options)) options[i] = utils.localize(options[i]);
+                return options;
+            }
+        });
+
+        // array of resistances this actor has to different damage types
+        schema.resistance = new ArrayField(new SchemaField({
+            type: new StringField({
+                ...this.RequiredConfig,
+                blank: false,
+                initial: 'sharp',
+                label: TFM.Generic.type,
+                choices: () => {
+                    const options = utils.duplicate(TFM.DamageTypes);
+                    for (const i of Object.keys(options)) options[i] = utils.localize(options[i]);
+                    return options;
+                }
+            }),
+            value: new StringField({
+                ...this.RequiredConfig,
+                blank: false,
+                initial: 'normal',
+                label: TFM.Generic.resistance,
+                choices: () => {
+                    const options = utils.duplicate(TFM.DamageResistance);
+                    for (const i of Object.keys(options)) options[i] = utils.localize(options[i]);
+                    return options;
+                }
+            })
+        }), { initial: [] });
+
         return schema;
     }
 
@@ -125,9 +173,9 @@ export class ActorDataModel extends SystemDataModel {
     }
 };
 
-//================================================================
-//Generic item data model                       
-//================================================================
+//=================================================================================================
+//Generic Item data model
+//=================================================================================================
 export class ItemDataModel extends SystemDataModel {
     static defineSchema() {
         const schema = {};
@@ -150,7 +198,9 @@ export class ItemDataModel extends SystemDataModel {
         schema.size = new StringField({// Overide for the number of slots an item takes up
             initial: 'regular',
             choices: () => {
-                return tfm.config.ItemSizes;
+                let options = utils.duplicate(TFM.Sizes);
+                for (const i of Object.keys(options)) options[i] = utils.localize(options[i]);
+                return options;
             }
         });
         schema.price = new NumberField({ initial: 3, label: tfm.config.Generic.price });// price in crowns to purchase

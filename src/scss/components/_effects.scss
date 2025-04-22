@@ -1,4 +1,5 @@
 .effects .item {
+
   .effect-source,
   .effect-duration,
   .effect-controls {
@@ -11,4 +12,9 @@
   .effect-controls {
     border: none;
   }
+}
+
+.tfm .effects-list {
+  margin: 0;
+  padding: 0;
 }

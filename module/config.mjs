@@ -25,17 +25,20 @@ TFM.AbilitiesLong = {
 }
 
 TFM.CreatureTypes = {
-    beast: 'TFM.Creature.Beast',
-    plant: 'TFM.Creature.Plant',
-    monster: 'TFM.Creature.Monster',
-    demon: 'TFM.Creature.Demon',
-    construct: 'TFM.Creature.Construct',
-    abomination: 'TFM.Creature.Abomination',
     aberration: 'TFM.Creature.Aberration',
+    abomination: 'TFM.Creature.Abomination',
+    beast: 'TFM.Creature.Beast',
+    construct: 'TFM.Creature.Construct',
+    demon: 'TFM.Creature.Demon',
     humanoid: 'TFM.Creature.Humanoid',
+    monster: 'TFM.Creature.Monster',
+    plant: 'TFM.Creature.Plant',
     undead: 'TFM.Creature.Undead',
 };
 
+//========================================================================================
+// Generic and Misc
+//========================================================================================
 TFM.Generic = {
     ability: 'TFM.Generic.Ability',
     automatic: 'TFM.Generic.Automatic.long',
@@ -56,7 +59,18 @@ TFM.Generic = {
     level: 'TFM.Generic.Level',
     price: "TFM.Generic.Price",
     ranged: "TFM.Generic.Ranged",
+    resistance: "TFM.Generic.Resistance",
+    size: "TFM.Generic.Size",
+    type: "TFM.Generic.Type"
 };
+
+TFM.Sizes = {
+    tiny: "TFM.Size.Tiny",
+    small: "TFM.Size.Small",
+    medium: "TFM.Size.Medium",
+    large: "TFM.Size.Large",
+    huge: "TFM.Size.Huge"
+}
 
 TFM.Kindred = {
     human: 'TFM.Kindred.Human',
@@ -173,6 +187,8 @@ TFM.DamageClass = {
 }
 
 TFM.DamageTypes = {
+    sharp: 'TFM.Damage.Type.Sharp',
+    blunt: 'TFM.Damage.Type.Blunt',
     cold: 'TFM.Damage.Type.Cold',
     fire: 'TFM.Damage.Type.Fire',
     sonic: 'TFM.Damage.Type.Sonic',
@@ -183,17 +199,12 @@ TFM.DamageTypes = {
     necrotic: 'TFM.Damage.Type.Necrotic',
     force: 'TFM.Damage.Type.Force',
     psychic: 'TFM.Damage.Type.Psychic',
-    sharp: 'TFM.Damage.Type.Sharp',
-    blunt: 'TFM.Damage.Type.Blunt',
 };
 
-TFM.ItemSizes = {
-    tiny: 'TFM.ItemSize.Tiny',// no slots
-    small: 'TFM.ItemSize.Small',// stack to 10 (30 if its an ammo type)
-    regular: 'TFM.ItemSize.Regular',// 1 slot
-    large: 'TFM.ItemSize.Large',// 2 slot
-    huge: 'TFM.ItemSize.Huge',//4 slot
-    gigantic: 'TFM.ItemSize.Gigantic'// 8 slots
+TFM.DamageResistance = {
+    immune: "TFM.Generic.Immune",
+    resist: "TFM.Generic.Resist",
+    vulnerable: "TFM.Generic.Vulnerable"
 }
 
 //========================================================================================

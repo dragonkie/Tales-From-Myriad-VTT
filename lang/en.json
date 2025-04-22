@@ -83,9 +83,13 @@
       "Level": { "abbr": "lvl", "long": "Level" },
       "Miscast": { "long": "Misscast" },
       "Name": { "abbr": "NAME_ABBR", "long": "Name" },
+      "Normal": "Normal",
       "Price": "Price",
+      "Resistance": "Resistance",
       "Ranged": "Ranged",
-      "Unidentified": "Unidentified"
+      "Unidentified": "Unidentified",
+      "Size": "Size",
+      "Type": "Type"
     },
     "Kindred": {
       "Animus": "Animus",
@@ -118,18 +122,19 @@
       "Tiny": "Tiny",
       "Small": "Small",
       "Medium": "Medium",
-      "Large": "Large"
+      "Large": "Large",
+      "Huge": "Huge"
     },
     "Creature": {
       "Aberration": "Aberration",
       "Abomination": "Abomination",
+      "Beast": "Beast",
       "Construct": "Construct",
       "Demon": "Demon",
       "Humanoid": "Humanoid",
       "Monster": "Monstrous",
       "Plant": "Plant",
-      "Undead": "Undead",
-      "Beast": "Beast"
+      "Undead": "Undead"
     },
     "Job": {
       "Arrowmancer": "Arrowmancer",
@@ -237,57 +242,6 @@
   "TFM.EffectEdit": "Edit Effect",
   "TFM.EffectDelete": "Delete Effect",
 
-  "TFM.quest.001": "Scare off a group of enemies without engaging in combat",
-  "TFM.quest.002": "Execute an ambush",
-  "TFM.quest.003": "Obtain shelter for your group while traveling",
-  "TFM.quest.004": "Witness a significant celestial event while exploring, such as a shooting star",
-  "TFM.quest.005": "Defeat a target at full hit points in one attack",
-  "TFM.quest.006": "Decipher a coded, ancient, or hidden message",
-  "TFM.quest.007": "Disarm or escape five traps",
-  "TFM.quest.008": "Distract a crowd for your allies",
-  "TFM.quest.009": "Catapult or launch an ally",
-  "TFM.quest.010": "Trick two groups into fighting, and sneaking past them",
-  "TFM.quest.011": "Heal an ally while they are on their last breath",
-  "TFM.quest.012": "Be affected by a miscast, three times",
-  "TFM.quest.013": "Have a third-party assist in a dungeon",
-  "TFM.quest.014": "Clear a dungeon",
-  "TFM.quest.015": "Travel to a tavern in a separate country than the one you are currently in",
-  "TFM.quest.016": "Craft three separate items, potions, or poisons with recipes",
-  "TFM.quest.017": "Obtain a point of Corruption, and then cure it",
-  "TFM.quest.018": "Survive taking damage while on your last breath",
-  "TFM.quest.019": "Prevent an ally from taking damage with your reaction, three times",
-  "TFM.quest.020": "Disrupt a spellcaster",
-  "TFM.quest.021": "Stop a poison before it runs its course",
-  "TFM.quest.022": "Consume 5 potions",
-  "TFM.quest.023": "Witness a Sunshower",
-  "TFM.quest.024": "Weather a Thunderstorm, Sandstorm, or Blizzard while traveling",
-  "TFM.quest.025": "Discover an ancient ruins or Necropolis",
-  "TFM.quest.026": "Complete a Combat in one round",
-  "TFM.quest.027": "Defeat a target with an improvised weapon",
-  "TFM.quest.028": "Successfully hide from a hostile creature in the same room as you",
-  "TFM.quest.029": "Disguise yourself as an enemy and infiltrate their forces",
-  "TFM.quest.030": "Obtain 50 Crowns (cp) independently",
-  "TFM.quest.031": "Finish a combat on your Last Breath or 1 hit point",
-  "TFM.quest.032": "Encounter or make dealings with a non-hostile monster",
-  "TFM.quest.033": "Explode your dice 20 times",
-  "TFM.quest.034": "Persuade a hostile target into being friendly, or helpful",
-  "TFM.quest.035": "Learn an additional full weapon proficiency",
-  "TFM.quest.036": "Roll double 1’s on an attack, damage, saving throw, or skill check roll",
-  "TFM.quest.037": "Fall 60 ft (can be done in 30 ft increments)",
-  "TFM.quest.038": "Spend 3 consecutive days in the wilderness",
-  "TFM.quest.039": "Spend an entire round of combat undetected, twice",
-  "TFM.quest.040": "Successfully attack a single enemy 3 times while remaining unseen",
-  "TFM.quest.041": "Obtain or equip a cursed item",
-  "TFM.quest.042": "Gain 5 points of corruption",
-  "TFM.quest.043": "Spend 50 cp",
-  "TFM.quest.044": "Increase a Stat Score of 5 or lower up to a Score of 7",
-  "TFM.quest.045": "Escape capture with your allies",
-  "TFM.quest.046": "Defeat a Beast, an Undead, a Monstrous, and a Plant creature",
-  "TFM.quest.047": "Ride a Large creature without being thrown off by your next turn",
-  "TFM.quest.048": "Be fully equipped and have descriptive clothing on your head, torso, legs, feet, and hands",
-  "TFM.quest.049": "Use two consecutive turns to assist an ally in combat without dealing damage",
-  "TFM.quest.050": "Explode your dice while rolling for a Stunt, twice",
-
   "TFM.ContextMenu.Edit": "Edit",
   "TFM.ContextMenu.Delete": "Delete",
   "TFM.ContextMenu.Gift": "Gift",
@@ -307,11 +261,5 @@
       "trinket": "Trinket",
       "job": "Job"
     }
-  },
-
-  "TFM.prof.label": "Proficiency",
-  "TFM.prof.abbr": "Prof",
-  "TFM.prof.none": "None",
-  "TFM.prof.half": "Half",
-  "TFM.prof.full": "Full"
+  }
 }

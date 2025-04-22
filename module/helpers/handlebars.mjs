@@ -4,6 +4,7 @@ function registerTemplates() {
         //components
         `${tfm.filepath.template}/shared/resource-bar.hbs`,
         `${tfm.filepath.template}/shared/resource-bar-inline.hbs`,
+        `${tfm.filepath.template}/shared/description.hbs`,
 
         // Sheet partials
         `${tfm.filepath.template}/shared/tabs-nav.hbs`,
@@ -64,13 +65,52 @@ function registerHelpers() {
         //======================================================================================
         // Elements
         //======================================================================================
+        {// wraps a set of elements in a collapsible wrapper
+            name: 'collapsible',
+            fn: (label, options) => {
+                if (!options) options = label, label = '';
+                return new Handlebars.SafeString(`
+                    <div class="collapsible">
+                        <div class="flexrow">
+                            <a data-action="collapse"><i class="fas fa-caret-down"></i></a>
+                            <label>${label}</label>
+                        </div>
+                        <div class="collapsible-content">
+                            <div class="wrapper">
+                                ${options.fn(this)}
+                            </div>
+                        </div>
+                    </div>`
+                );
+            }
+        },
+        {
+            name: 'collapsed',
+            fn: (label, options) => {
+                if (!options) options = label, label = '';
+                return new Handlebars.SafeString(`
+                    <div class="collapsible collapsed">
+                        <div class="flexrow">
+                            <a data-action="collapse"><i class="fas fa-caret-down"></i></a>
+                            <label>${label}</label>
+                        </div>
+                        <div class="collapsible-content">
+                            <div class="wrapper">
+                                ${options.fn(this)}
+                            </div>
+                        </div>
+                    </div>`
+                );
+            }
+        },
         //======================================================================================
         // Iterators
         //======================================================================================
         {
             name: 'repeat',
-            fn: (context, options) => {
-                for (var i = 0, ret = ''; i < context; i++) ret = ret + options.fn(context[i]);
+            fn: (num, options) => {
+                if (isNaN(num)) return options.fn(this);
+                for (var i = 0, ret = ''; i < num; i++) ret += options.fn(i);
                 return ret;
             }
         }
