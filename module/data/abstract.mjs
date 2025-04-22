@@ -109,7 +109,7 @@ export class ActorDataModel extends SystemDataModel {
         schema.hp = this.ResourceField(6, 6);
         schema.dr = this.ValueField(0);
         schema.dodge = this.ValueField(0);
-        
+
         // tracks player experience points, or a monsters given exp
         schema.xp = new SchemaField({
             value: new NumberField({ required: true, nullable: false, min: 0, initial: 0 })
@@ -125,9 +125,9 @@ export class ActorDataModel extends SystemDataModel {
     }
 };
 
-/* ---------------------------------------------- */
-/* Generic item data model                        */
-/* ---------------------------------------------- */
+//================================================================
+//Generic item data model                       
+//================================================================
 export class ItemDataModel extends SystemDataModel {
     static defineSchema() {
         const schema = {};
@@ -159,11 +159,25 @@ export class ItemDataModel extends SystemDataModel {
     }
 
     get actor() { return this.parent.actor }
-    /*
-    ==============================================
-    Item specific fields
-    ==============================================
-    */
+
+    getRollData() {
+        let data = super.getRollData();
+
+        data.actor = this.actor;
+
+        let actorData = {};
+        if (data.actor) {
+            console.log('adding actor roll data');
+            actorData = data.actor.getRollData();
+            data = { ...data, ...actorData };
+        }
+
+        return data;
+    }
+
+    //==============================================
+    // Item specific fields
+    //==============================================
 
     /**
      * Returns a schema for defining a singular enchantment (also curses)

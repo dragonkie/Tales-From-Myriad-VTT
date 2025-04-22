@@ -62,9 +62,10 @@
     --tfm-colour-text: var(--tfm-colour-dark-1);
     --tfm-colour-text-selection: var(--tfm-colour-light-3);
     --tfm-colour-text-selection-bg: var(--tfm-colour-warm-4);
+    --tfm-colour-text-shadow: var(var(--tfm-colour-cool-1-25));
 
+    --tfm-border-colour: var(--tfm-colour-light-6);
     --tfm-background: var(--tfm-colour-light-2);
-
     --tfm-input-background-colour: var(--tfm-colour-light-3);
 
     input {
@@ -92,8 +93,9 @@
     --tfm-colour-text-selection: var(--tfm-colour-light-3);
     --tfm-colour-text-selection-bg: var(--tfm-colour-cool-2);
 
+    --tfm-border-colour: var(--tfm-colour-light-2);
     --tfm-background: var(--tfm-colour-cool-1-90);
-
+    --tfm-input-background-colour: var(--tfm-colour-cool-2);
 
     input {
         --tfm-input-background-colour: var(--tfm-colour-cool-2);

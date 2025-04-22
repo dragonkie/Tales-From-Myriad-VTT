@@ -33,7 +33,7 @@ $border-groove: 2px groove #eeede0;
 
 /* Styles limited to tales from myriad sheets */
 .tfm {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Roboto', sans-serif !important;
 }
 
 .form-field {
@@ -53,6 +53,4 @@ $border-groove: 2px groove #eeede0;
 
 #context-menu {
     width: auto;
-    min-width: 100px;
-    max-width: 200px;
 }

@@ -1,8 +1,8 @@
-<div class="proficiency">
+<div class="tfm-proficiency">
     <div class="flexcol" style="min-width: 120px">
         <b style="text-align: center;">Weapons</b>
         {{!-- Weapons with proficiency --}}
-        {{#each system.proficiency as | prof key |}}
+        {{#each system.proficiencies as | prof key |}}
             <div style="margin: 2px 0; border-bottom: 1px solid white;" data-prof="{{key}}">
                 <div style="display: inline-block;">{{localize prof.label}}</div>
                 <div style="text-align: right; float: right; display: inline-block;" data-action="levelProf">

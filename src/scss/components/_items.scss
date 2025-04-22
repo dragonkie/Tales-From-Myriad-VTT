@@ -77,8 +77,9 @@
     // Individual Item
     .item {
         align-items: center;
-        padding: 0 2px; // to align with the header border
-        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        padding: 0.1rem 2px; // to align with the header border
+        margin-bottom: 0.2rem;
+        border-bottom: 1px solid var(--tfm-border-colour);
 
         &:last-child {
             border-bottom: none;

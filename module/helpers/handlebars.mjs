@@ -91,8 +91,6 @@ function registerHelpers() {
             label, hint, rootId, stacked, widget, localize: true, units,
             classes: typeof classes === "string" ? classes.split(" ") : []
         };
-        console.log(groupConfig)
-        console.log(inputConfig);
         const group = field.toFormGroup(groupConfig, inputConfig);
         return new Handlebars.SafeString(group.outerHTML);
     });

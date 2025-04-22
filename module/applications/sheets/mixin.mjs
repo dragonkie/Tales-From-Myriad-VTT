@@ -33,7 +33,6 @@ export default function TfmSheetMixin(Base) {
         _getTabs() {
             return Object.values(this.constructor.TABS).reduce((acc, v) => {
                 const isActive = this.tabGroups[v.group] === v.id;
-                console.log(`${this.tabGroups[v.group]} == ${v.id}`)
                 acc[v.id] = {
                     ...v,
                     active: isActive,
@@ -44,11 +43,9 @@ export default function TfmSheetMixin(Base) {
             }, {});
         }
 
-        /*****************************************************************************************/
-        /*                                                                                       */
-        /*                            SHEET CONTEXT AND DATA PREP                                */
-        /*                                                                                       */
-        /*****************************************************************************************/
+        //============================================================================================
+        // Sheet Context
+        //============================================================================================
         async _prepareContext(options) {
             const doc = this.document;
             const context = {
@@ -104,11 +101,9 @@ export default function TfmSheetMixin(Base) {
             return this._sheetMode === this.constructor.SHEET_MODES.EDIT;
         }
 
-        /*****************************************************************************************/
-        /*                                                                                       */
-        /*                                  SHEET RENDERING                                      */
-        /*                                                                                       */
-        /*****************************************************************************************/
+        //============================================================================================
+        // Rendering
+        //============================================================================================
 
         /**
          * Querys the server to render the application
@@ -128,8 +123,6 @@ export default function TfmSheetMixin(Base) {
         _onFirstRender(context, options) {
             super._onFirstRender(context, options);
             this._setupContextMenu();
-
-            console.log('First render');
         }
 
         /**
@@ -322,11 +315,9 @@ export default function TfmSheetMixin(Base) {
             this.document.updateEmbeddedDocuments("Item", updates);
         }
 
-        /***********************************************************************************/
-        /*                                                                                 */
-        /*                              CONTEXT MENU                                       */
-        /*                                                                                 */
-        /***********************************************************************************/
+        //============================================================================================
+        // Context Menu
+        //============================================================================================
         _setupContextMenu() {
             new tfm.application.TfmContextMenu(this.element, "[data-item-uuid]", [], {
                 onOpen: element => {
@@ -369,11 +360,9 @@ export default function TfmSheetMixin(Base) {
 
         }
 
-        /***************************************************************************************/
-        /*                                                                                     */
-        /*                                    SHEET ACTIONS                                    */
-        /*                                                                                     */
-        /***************************************************************************************/
+        //============================================================================================
+        // Sheet Actions
+        //============================================================================================
 
         /**
          * Called whenever an action event is clicked

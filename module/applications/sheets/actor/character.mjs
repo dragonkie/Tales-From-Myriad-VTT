@@ -42,8 +42,8 @@ export default class CharacterSheet extends TfmActorSheet {
         const context = await super._prepareContext();
 
         // get labels for weapon proficiencies
-        for (const [key, prof] of Object.entries(context.system.proficiency)) {
-            prof.label = tfm.config.WeaponTypes[key];
+        for (const [key, prof] of Object.entries(context.system.proficiencies)) {
+            prof.label = TFM.WeaponTypes[key];
         }
 
         context.system.corruption.label = utils.localize(TFM.Corruption.label[context.system.corruption.value]);
@@ -77,14 +77,15 @@ export default class CharacterSheet extends TfmActorSheet {
         </div>`;
         content += '<div class="dialog-skill-list">'
         for (const skill of this.document.system.skills) {
-            content += `<div class="flexrow skill-wrapepr flex-gap-s">${input_template.replace('{SKILL}', skill)}</div>`;
+            content += `<div class="flexrow skill-wrapepr flex-gap-m">${input_template.replace('{SKILL}', skill)}</div>`;
         }
         content += '</div>';
-        content += `<a data-action="add">add <i class="fas fa-plus"></i></a></div>`;
+        content += `<div><a style="float: right;" data-action="add">add <i class="fas fa-plus"></i></a></div>`;
 
         // create the config popup
         const app = await new TfmDialog({
             window: { title: 'TFM.Dialog.SkillConfig' },
+            classes: ['tfm'],
             buttons: [{
                 action: 'confirm',
                 label: 'Confirm'
@@ -108,7 +109,7 @@ export default class CharacterSheet extends TfmActorSheet {
         const list_ele = app.element.querySelector('.dialog-skill-list');
         app.element.addEventListener('click', (event) => {
             const target = event.target;
-            const action = target.closest('[data-action]').dataset.action;
+            const action = target.closest('[data-action]')?.dataset.action;
 
             if (action == 'add') {
                 skills_list.push('New Skill');
@@ -117,12 +118,15 @@ export default class CharacterSheet extends TfmActorSheet {
                 for (const skill of skills_list) {
                     let node = document.createElement('DIV');
                     node.innerHTML = input_template.replace('{SKILL}', skill);
-                    node.classList = 'flexrow flex-gap-s skill-wrapper';
+                    node.classList = 'flexrow flex-gap-m skill-wrapper';
                     list_ele.appendChild(node);
                 }
             }
             else if (action == 'delete') {
                 let t = target.closest('.skill-wrapper');
+                let v = t.value;
+                let i = skills_list.indexOf(v);
+                skills_list.splice(i, 1);
                 t.parentElement.removeChild(t);
             }
 

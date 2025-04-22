@@ -12,7 +12,7 @@ max_name - name of the input, if none, field is disabled
     <div class="wrapper">
         <div class="fill" style="width: {{choose fill (multiply (divide value max) 100)}}%;"></div>
         <div class="flexrow bar-inputs">
-            <input class="value-now" type="number" name="{{value_name}}" value="{{value}}">
+            <input class="value-now" type="number" {{#if value_name}}name="{{value_name}}" {{else}}disabled{{/if}} value="{{value}}">
             /
             <input class="value-max" type="number" {{#if max_name}}name="{{max_name}}" {{else}}disabled{{/if}} value="{{numberFormat max}}">
             {{#if (gt value max)}}

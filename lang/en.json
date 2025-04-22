@@ -63,6 +63,8 @@
       }
     },
     "Generic": {
+      "Ability": "Ability",
+      "Automatic": { "abbr": "auto", "long": "Automatic" },
       "Broken": "Broken",
       "ChatDescription": "Chat Description",
       "Corruption": { "abbr": "corupt", "long": "Coruption" },
@@ -211,8 +213,8 @@
       "Type": {
         "Cold": "Cold",
         "Fire": "Fire",
-        "Thunder": "Thunder",
-        "Lightning": "Lightning",
+        "Sonic": "Sonic",
+        "Electric": "Electric",
         "Poison": "Poison",
         "Acid": "Acid",
         "Radiant": "Radiant",

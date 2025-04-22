@@ -1,17 +1,25 @@
 <div class="tab-content">
 
-    <div><b>Damage Parts:</b></div>
-    {{#each system.damage_parts as |part key|}}
-        <div class="flexrow" style="gap: 10px;">
-            <input type="text" value="{{part.formula}}" style="flex: 2;">
-            <select>
-                <option value="{{part.type}}">{{part.type}}</option>
-            </select>
-        </div>
-    {{/each}}
-    <a><b>Add Damage Part +</b></a>
+    {{toFieldGroup system.schema 'ability' value=system.ability}}
+    {{toFieldGroup system.schema 'proficiency' value=system.proficiency}}
 
-
+    <div class="tfm-weapon-damage">
+        <div><b>Damage Parts:</b></div>
+        <ol class="tfm-damage-list flexcol flex-gap-m">
+            {{#each damage_parts as |part index|}}
+                <div class="flexrow flex-gap-m" data-damage-index="{{index}}">
+                    {{formInput part.formula.field value=part.formula.value name=part.formula.path}}
+                    {{formInput part.type.field value=part.type.value name=part.type.path}}
+                    {{#unless (eq index 0)}}
+                        <a data-action="removeDamage" style="flex: 0;">
+                            <i class="fa-solid fa-trash"></i>
+                        </a>
+                    {{/unless}}
+                </div>
+            {{/each}}
+        </ol>
+        <div class="flex-align-end"><a data-action="addDamage"><b>Add Damage Part +</b></a></div>
+    </div>
 
     {{toFieldGroup system.schema 'penalty' value=system.penalty}}
 

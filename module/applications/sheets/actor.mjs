@@ -50,6 +50,8 @@ export default class TfmActorSheet extends TfmSheetMixin(foundry.applications.sh
         const context = await super._prepareContext();
 
         context.itemTypes = this.document.itemTypes;
+        context.items = this.document.items;
+        context.item_count = this.document.items.contents.length;
 
         // prepare ability localization tags
         for (const [key, ability] of Object.entries(context.system.abilities)) {
@@ -119,15 +121,17 @@ export default class TfmActorSheet extends TfmSheetMixin(foundry.applications.sh
 
         return true;
     }
-    /**********************************************************************************************/
-    /*                                                                                            */
-    /*                                    ACTION TRIGGERS                                         */
-    /*                                                                                            */
-    /**********************************************************************************************/
+    //============================================================================================
+    // Sheet Actions
+    //============================================================================================
     static async _onUseItem(event, target) {
         const uuid = target.closest(".item[data-item-uuid]").dataset.itemUuid;
         const item = await fromUuid(uuid);
-        return item.use(target.dataset.use);
+
+        const action = target.closest("[data-use]")?.dataset.use;// the action the item is performing if applicable
+        const options = target.closest("[data-use-options]")?.dataset.useOptions;// configuration for the item action
+
+        return item.use(event, action, options);
     }
 
     static async _onEditItem(event, target) {
@@ -168,10 +172,9 @@ export default class TfmActorSheet extends TfmSheetMixin(foundry.applications.sh
 
         const doc = this.document;
         const prof = target.closest('[data-prof]').dataset.prof
-        const path = `system.proficiency.${prof}.value`;
-        var value = doc.system.proficiency[prof].value + 1;
+        var value = doc.system.proficiencies[prof].value + 1;
         if (value > 3) value = 0;
-        doc.update({ [path]: value });
+        doc.update({ [`system.proficiencies.${prof}.value`]: value });
     }
 
     static async _onRollAbility(event, target) {
@@ -231,11 +234,9 @@ export default class TfmActorSheet extends TfmSheetMixin(foundry.applications.sh
         return roll;
     }
 
-    /***********************************************************************************/
-    /*                                                                                 */
-    /*                              CONTEXT MENU                                       */
-    /*                                                                                 */
-    /***********************************************************************************/
+    //============================================================================================
+    // Context Menu
+    //============================================================================================
 
     _getItemContextOptions(item) {
         const isOwner = item.isOwner;

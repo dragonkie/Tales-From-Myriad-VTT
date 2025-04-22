@@ -417,8 +417,9 @@
 }
 .items-list .item {
   align-items: center;
-  padding: 0 2px;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 0.1rem 2px;
+  margin-bottom: 0.2rem;
+  border-bottom: 1px solid var(--tfm-border-colour);
 }
 .items-list .item:last-child {
   border-bottom: none;
@@ -593,6 +594,14 @@
 .sheet.actor .tfm-defences label {
   font-size: 1.5rem;
 }
+.sheet.actor .tfm-proficiency {
+  min-width: 120px;
+  margin-bottom: var(--tfm-size-m);
+}
+.sheet.actor .item-name h4 {
+  color: var(--tfm-colour-text);
+  text-shadow: 1px 1px 4px var(--tfm-colour-text-shadow, none);
+}
 
 .sheet.item {
   background: var(--tfm-background, #ffd8ac);
@@ -630,6 +639,13 @@
 }
 .sheet.item .item-descriptions .description a {
   flex: 0;
+}
+.sheet.item .tfm-weapon-damage {
+  margin: 0.5rem 0;
+}
+.sheet.item .tfm-weapon-damage .tfm-damage-list {
+  padding: 0;
+  margin: 0.2rem 0;
 }
 
 .tfm {
@@ -683,6 +699,8 @@
   --tfm-colour-text: var(--tfm-colour-dark-1);
   --tfm-colour-text-selection: var(--tfm-colour-light-3);
   --tfm-colour-text-selection-bg: var(--tfm-colour-warm-4);
+  --tfm-colour-text-shadow: var(var(--tfm-colour-cool-1-25));
+  --tfm-border-colour: var(--tfm-colour-light-6);
   --tfm-background: var(--tfm-colour-light-2);
   --tfm-input-background-colour: var(--tfm-colour-light-3);
 }
@@ -703,7 +721,9 @@
   --tfm-colour-text: var(--tfm-colour-light-3);
   --tfm-colour-text-selection: var(--tfm-colour-light-3);
   --tfm-colour-text-selection-bg: var(--tfm-colour-cool-2);
+  --tfm-border-colour: var(--tfm-colour-light-2);
   --tfm-background: var(--tfm-colour-cool-1-90);
+  --tfm-input-background-colour: var(--tfm-colour-cool-2);
 }
 .theme-dark .tfm input {
   --tfm-input-background-colour: var(--tfm-colour-cool-2);
@@ -717,7 +737,7 @@
 
 /* Styles limited to tales from myriad sheets */
 .tfm {
-  font-family: "Roboto", sans-serif;
+  font-family: "Roboto", sans-serif !important;
 }
 
 .form-field {
@@ -735,8 +755,6 @@
 
 #context-menu {
   width: auto;
-  min-width: 100px;
-  max-width: 200px;
 }
 
 /*# sourceMappingURL=main.css.map */

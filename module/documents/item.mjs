@@ -33,7 +33,7 @@ export default class TfmItem extends Item {
         return super._preDelete(options, user);
     }
 
-    async deleteDialog(options={}) {
+    async deleteDialog(options = {}) {
         const type = tfm.utils.localize(this.constructor.metadata.label);
         let confirm = await foundry.applications.api.DialogV2.confirm({
             title: `${game.i18n.format("DOCUMENT.Delete", { type })}: ${this.name}`,
@@ -57,7 +57,7 @@ export default class TfmItem extends Item {
      * Generic function called by sheets to activate their items
      * should be overiden by their child classes
      */
-    async use() {
-        LOGGER.error("Missing item activation method:", this);
+    async use(event, action, options) {
+        return await this.system.use(event, action, options);
     };
 }

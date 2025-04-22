@@ -37,6 +37,9 @@ TFM.CreatureTypes = {
 };
 
 TFM.Generic = {
+    ability: 'TFM.Generic.Ability',
+    automatic: 'TFM.Generic.Automatic.long',
+    auto: 'TFM.Generic.Automatic.abbr',
     broken: 'TFM.Generic.Broken',
     chatDescription: 'TFM.Generic.ChatDescription',
     corruption: 'TFM.Generic.Corruption',
