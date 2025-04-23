@@ -2,7 +2,6 @@ export const TFM = {};
 //========================================================================================
 // Abilities
 //========================================================================================
-
 TFM.Abilities = {
     pwr: 'TFM.Ability.Pwr.long',
     fin: 'TFM.Ability.Fin.long',
@@ -41,27 +40,31 @@ TFM.CreatureTypes = {
 //========================================================================================
 TFM.Generic = {
     ability: 'TFM.Generic.Ability',
-    automatic: 'TFM.Generic.Automatic.long',
     auto: 'TFM.Generic.Automatic.abbr',
+    automatic: 'TFM.Generic.Automatic.long',
     broken: 'TFM.Generic.Broken',
     chatDescription: 'TFM.Generic.ChatDescription',
     corruption: 'TFM.Generic.Corruption',
     curse: 'TFM.Generic.Curse.long',
     cursed: 'TFM.Generic.Cursed',
+    defence: 'TFM.Generic.Defence',
     description: 'TFM.Generic.Description',
+    dodge: "TFM.Generic.Dodge",
     enchatment: 'TFM.Generic.Enchantment.long',
-    experience: 'TFM.Generic.Experience',
     equip: "TFM.Generic.Equip",
     equipped: "TFM.Generic.Equipped",
+    experience: 'TFM.Generic.Experience',
     health: 'TFM.Generic.Health',
     identified: 'TFM.Generic.Identified',
     label: 'TFM.Generic.Label',
     level: 'TFM.Generic.Level',
+    normal: 'TFM.Generic.Normal',
     price: "TFM.Generic.Price",
     ranged: "TFM.Generic.Ranged",
+    reduction: "TFM.Generic.Reduction",
     resistance: "TFM.Generic.Resistance",
     size: "TFM.Generic.Size",
-    type: "TFM.Generic.Type"
+    type: "TFM.Generic.Type",
 };
 
 TFM.Sizes = {

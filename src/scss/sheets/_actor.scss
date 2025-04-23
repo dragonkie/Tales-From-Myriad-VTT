@@ -1,5 +1,5 @@
 .sheet.actor {
-    background: var(--tfm-background, #ffd8ac);
+    background: var(--tfm-sheet-background, #ffd8ac);
     background-size: 100% 100%;
 
     //========================================================================================
@@ -33,7 +33,7 @@
 
         img {
             flex: 0;
-            background-color: var(--tfm-background, rgba(0, 0, 0, 0.2));
+            background-color: var(--tfm-background-1, rgba(0, 0, 0, 0.2));
         }
 
         >.wrapper {
@@ -99,7 +99,7 @@
                 .tfm-ability-mod {
                     flex: 1;
                     height: 2rem;
-                    background-color: var(--tfm-colour-cool-1);
+                    background-color: var(--tfm-background-2);
                     border-radius: 0 5px 5px 0;
 
                     display: flex;
@@ -130,18 +130,19 @@
         }
     }
 
-
-
     //========================================================================================
     // Defence
     //========================================================================================
     .tfm-defences {
-        border: 1px solid;
-        border-radius: 5px;
         padding: 4px;
+    }
 
+    //========================================================================================
+    // Resistance
+    //========================================================================================
+    .tfm-resistance-group {
         label {
-            font-size: 1.5rem;
+            margin-bottom: 0.2rem;
         }
     }
 

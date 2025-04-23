@@ -13,6 +13,7 @@ function registerTemplates() {
         // Actor Partials
         `${tfm.filepath.template}/actor/shared/actor-abilities.hbs`,
         `${tfm.filepath.template}/actor/shared/actor-defence.hbs`,
+        `${tfm.filepath.template}/actor/shared/actor-resistance.hbs`,
         `${tfm.filepath.template}/actor/shared/actor-skills.hbs`,
         `${tfm.filepath.template}/actor/shared/actor-proficiency.hbs`,
 

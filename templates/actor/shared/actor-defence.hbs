@@ -1,5 +1,8 @@
 <div class="tfm-defences align-center flex-gap-s">
-    <label>Defence</label>
+    <div class="tfm-section-header flex-align-center">
+        {{#if isEditable}}<a data-action="editDefence"><i class="fas fa-cog"></i></a>{{/if}}
+        <b>{{localize config.Generic.defence}}</b>
+    </div>
     <div class="flexrow flex-gap-m">
         <div class="dodge">
             <div><i class="fas fa-boot"></i> Dodge</div>
@@ -7,7 +10,7 @@
         </div>
         <div class="tfm-damage-reduction">
             <div><i class="fas fa-shield"></i> Reduction</div>
-            <input type="number" value="{{system.dr.value}}" name="{{system.dr.value}}">
+            <input type="number" value="{{system.dr.total}}" disabled>
         </div>
     </div>
 </div>

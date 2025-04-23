@@ -186,3 +186,17 @@
 .tfm-input-bar {
     padding: 5px;
 }
+
+.tfm-link-wrapper {
+    border: 1px solid var(--tfm-colour-border);
+    border-radius: 5px;
+    padding: 0 0.5rem;
+    margin: 0;
+}
+
+//========================================================================================
+// Margins and padding
+//========================================================================================
+.tfm-margin-bottom {
+    margin-bottom: var(--tfm-margin);
+}

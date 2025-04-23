@@ -87,11 +87,12 @@ export default class CharacterSheet extends TfmActorSheet {
             window: { title: 'TFM.Dialog.SkillConfig' },
             classes: ['tfm'],
             buttons: [{
+                action: 'cancel',
+                label: 'Cancel',
+                default: true
+            }, {
                 action: 'confirm',
                 label: 'Confirm'
-            }, {
-                action: 'cancel',
-                label: 'Cancel'
             }],
             submit: result => {
                 if (result == 'confirm') {

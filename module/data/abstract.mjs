@@ -108,8 +108,14 @@ export class ActorDataModel extends SystemDataModel {
 
         // adds in resource fields
         schema.hp = this.ResourceField(6, 6);
-        schema.dr = this.ValueField(0);
-        schema.dodge = this.ValueField(0);
+        schema.dr = new SchemaField({
+            base: new NumberField({ initial: 0 }),
+            bonus: new NumberField({ initial: 0 }),
+        })
+        schema.dodge = new SchemaField({
+            base: new NumberField({ initial: 8 }),
+            bonus: new NumberField({ initial: 0 }),
+        })
 
         // tracks player experience points, or a monsters given exp
         schema.xp = new SchemaField({
@@ -138,7 +144,7 @@ export class ActorDataModel extends SystemDataModel {
         });
 
         // array of resistances this actor has to different damage types
-        schema.resistance = new ArrayField(new SchemaField({
+        schema.resistances = new ArrayField(new SchemaField({
             type: new StringField({
                 ...this.RequiredConfig,
                 blank: false,
@@ -169,7 +175,8 @@ export class ActorDataModel extends SystemDataModel {
     prepareDerivedData() {
         super.prepareDerivedData();
         for (const ability in this.abilities) this.abilities[ability].mod = tfm.utils.abilityMod(this.abilities[ability].value);
-        this.dodge.total = Math.max(8 + this.abilities.fin.mod, 1);
+        this.dodge.total = Math.max(this.dodge.base + this.abilities.fin.mod + this.dodge.bonus, 1);
+        this.dr.total = this.dr.base + this.dr.bonus;
     }
 };
 
@@ -196,7 +203,8 @@ export class ItemDataModel extends SystemDataModel {
         */
         schema.quantity = new NumberField({ initial: 1 }); // used only on stacking tiny items
         schema.size = new StringField({// Overide for the number of slots an item takes up
-            initial: 'regular',
+            blank: false,
+            initial: 'medium',
             choices: () => {
                 let options = utils.duplicate(TFM.Sizes);
                 for (const i of Object.keys(options)) options[i] = utils.localize(options[i]);

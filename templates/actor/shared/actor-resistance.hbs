@@ -1,0 +1,41 @@
+<div class="tfm-resistance flex-align-center">
+    <div class="tfm-section-header">
+        {{#if isEditable}}<a data-action="editResistance"><i class="fas fa-cog"></i></a>{{/if}}
+        <b>{{localize config.Generic.resistance}}</b>
+    </div>
+    <div class="flex-align-start flexcol flex-gap-l">
+        <div class="tfm-resistance-group tfm-immune">
+            <div class="tfm-margin-bottom tfm-s"><i class="fas fa-shield"></i> <b>Immune</b></div>
+            <div class="flex-overflow flexrow flex-gap-s tfm-immune-list">
+                {{#each system.resistances as | resist index |}}
+                    {{#if (eq resist.value 'immune')}}
+                        <div class="tfm-link-wrapper">{{localize (lookup ../config.DamageTypes resist.type)}}</div>
+                    {{/if}}
+                {{/each}}
+            </div>
+        </div>
+
+        <div class="tfm-resistance-group tfm-resist">
+            <div class="tfm-margin-bottom tfm-s"><i class="fas fa-shield-halved"></i> <b>Resistant</b></div>
+            <div class="flex-overflow flexrow flex-gap-s tfm-resist-list">
+                {{#each system.resistances as | resist index |}}
+                    {{#if (eq resist.value 'resist')}}
+                        <div class="tfm-link-wrapper">{{localize (lookup ../config.DamageTypes resist.type)}}</div>
+                    {{/if}}
+                {{/each}}
+            </div>
+        </div>
+
+        <div class="tfm-resistance-group tfm-vulnerable">
+            <div class="tfm-margin-bottom tfm-s"><i class="far fa-shield-slash"></i> <b>Vulnerable</b></div>
+            <div class="flex-overflow flexrow flex-gap-s tfm-vulnerable-list">
+                {{#each system.resistances as | resist index |}}
+                    {{#if (eq resist.value 'vulnerable')}}
+                        <div class="tfm-link-wrapper">{{localize (lookup ../config.DamageTypes resist.type)}}</div>
+                    {{/if}}
+                {{/each}}
+            </div>
+        </div>
+    </div>
+
+</div>

@@ -1,5 +1,8 @@
 import LOGGER from "../../helpers/logger.mjs";
+import TfmDialog from "../dialog.mjs";
 import TfmSheetMixin from "./mixin.mjs";
+import utils from "../../helpers/utils.mjs"
+import { TFM } from "../../config.mjs";
 /**
  * Extend the basic ActorSheet with some very simple modifications
  * @extends {ActorSheet}
@@ -19,7 +22,8 @@ export default class TfmActorSheet extends TfmSheetMixin(foundry.applications.sh
             giveItem: this._onGiveItem,
             levelProf: this._onLevelProficiency,
             roll: this._onRoll,
-            rollAbility: this._onRollAbility
+            editResistance: this._onEditResistance,
+            editDefence: this._onEditDefence,
         }
     }
 
@@ -124,6 +128,11 @@ export default class TfmActorSheet extends TfmSheetMixin(foundry.applications.sh
     //============================================================================================
     // Sheet Actions
     //============================================================================================
+
+    /**
+     * @param {Event} event
+     * @param {Element} target
+     */
     static async _onUseItem(event, target) {
         const uuid = target.closest(".item[data-item-uuid]").dataset.itemUuid;
         const item = await fromUuid(uuid);
@@ -134,6 +143,10 @@ export default class TfmActorSheet extends TfmSheetMixin(foundry.applications.sh
         return item.use(event, action, options);
     }
 
+    /**
+     * @param {Event} event
+     * @param {Element} target
+     */
     static async _onEditItem(event, target) {
         const uuid = target.closest(".item[data-item-uuid]").dataset.itemUuid;
         const item = await fromUuid(uuid);
@@ -142,11 +155,15 @@ export default class TfmActorSheet extends TfmSheetMixin(foundry.applications.sh
         else item.sheet.bringToFront();
     }
 
+    /**
+     * @param {Event} event
+     * @param {Element} target
+     */
     static async _onDeleteItem(event, target) {
         const uuid = target.closest(".item[data-item-uuid]").dataset.itemUuid;
         const item = await fromUuid(uuid);
-        const confirm = await foundry.applications.api.DialogV2.confirm({
-            content: `${tfm.utils.localize('TFM.confirm.deleteItem')}: ${item.name}`,
+        const confirm = await TfmDialog.confirm({
+            content: `${utils.localize('TFM.confirm.deleteItem')}: ${item.name}`,
             rejectClose: false,
             modal: true
         });
@@ -154,6 +171,10 @@ export default class TfmActorSheet extends TfmSheetMixin(foundry.applications.sh
         return undefined;
     }
 
+    /**
+     * @param {Event} event
+     * @param {Element} target
+     */
     static async _onEquipItem(event, target) {
         const uuid = target.closest(".item[data-item-uuid]").dataset.itemUuid;
         const item = await fromUuid(uuid);
@@ -161,12 +182,19 @@ export default class TfmActorSheet extends TfmSheetMixin(foundry.applications.sh
         return item.update({ 'system.equipped': !item.system.equipped })
     }
 
+    /**
+     * @param {Event} event
+     * @param {Element} target
+     */
     static async _onGiveItem(event, target) {
         const uuid = target.closest(".item[data-item-uuid]").dataset.itemUuid;
         tfm.socket.sendItem(uuid);
     }
 
-    // This is only relevant on player characters and can be ignore otherwise
+    /**
+     * @param {Event} event
+     * @param {Element} target
+     */
     static async _onLevelProficiency(event, target) {
         if (this.document.type != `character`) return;
 
@@ -177,47 +205,10 @@ export default class TfmActorSheet extends TfmSheetMixin(foundry.applications.sh
         doc.update({ [`system.proficiencies.${prof}.value`]: value });
     }
 
-    static async _onRollAbility(event, target) {
-        const template = `systems/${tfm.id}/templates/dialog/roll/ability.hbs`;
-        const rollData = this.document.getRollData();
-        const data = {
-            ability: rollData[target.dataset.ability],
-            label: `TFM.ability.${target.dataset.ability}`
-        };
-
-        const dialog = await tfm.application.TfmDialog.roll(template, data);
-
-        if (dialog.cancled) return;
-        const options = tfm.utils.getFormData(dialog.html, '[name]');
-
-        // Create the roll formula from input
-        let formula = '2d6x6kf@karma+@ability';
-        if (dialog.button.dataset.action == 'advantage') formula = `3d6dl1x6kf@karma+@ability`;
-        else if (dialog.button.dataset.action == 'disadvantage') formula = `3d6dh1x6kf@karma+@ability`;
-        if (!options.explode) formula = formula.replace(/x6/, '');
-
-        if (options.situation != '') {
-            if (Array.from(options.situation)[0] != '-') formula += `+${options.situation}`;
-            else formula += ` ${options.situation}`;
-        }
-
-        LOGGER.debug(formula);
-
-        // Assembles the final roll
-        let label = `TFM.generic.ability: <b>${data.label}</b>`;
-        let roll = new Roll(formula, { ability: rollData[target.dataset.ability], karma: rollData.karma });
-        await roll.evaluate();
-        roll.toMessage({
-            speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-            flavor: label,
-            rollMode: game.settings.get('core', 'rollMode'),
-        });
-        return roll;
-    }
-
     /**
      * Handle clickable rolls.
-     * @param {Event} event   The originating click event
+     * @param {Event} event - The originating click event
+     * @param {Element} target
      * @private
      */
     static async _onRoll(event, target) {
@@ -232,6 +223,104 @@ export default class TfmActorSheet extends TfmSheetMixin(foundry.applications.sh
             rollMode: game.settings.get('core', 'rollMode'),
         });
         return roll;
+    }
+
+    /**
+     * @param {Event} event
+     * @param {Element} target
+     */
+    static async _onEditResistance(event, target) {
+        let content = ``;
+
+        let resists = this.document.system.resistances;
+
+        // create the inputs for the different groups
+        for (const type of Object.keys(TFM.DamageTypes)) {
+            let label = utils.localize(TFM.DamageTypes[type]);
+            let value = "normal";
+            for (const resist of resists) if (resist.type == type) value = resist.value
+
+            /**@type {Element} */
+            let ele = new foundry.data.fields.StringField({
+                name: type,
+                label: label,
+                initial: value,
+                required: true,
+                nullable: false,
+                blank: false,
+                choices: () => {
+                    let options = { normal: TFM.Generic.normal, ...utils.duplicate(TFM.DamageResistance) };
+                    for (const i of Object.keys(options)) options[i] = utils.localize(options[i]);
+                    return options;
+                }
+            }).toFormGroup();
+
+            ele.setAttribute('data-type', type);
+
+            content += ele.outerHTML;
+        }
+
+        let app = await new TfmDialog({
+            window: { title: 'RESISTANCE_CONFIG' },
+            content: content,
+            classes: ['tfm'],
+            buttons: [{
+                action: 'cancel',
+                label: 'Cancel'
+            }, {
+                action: 'confirm',
+                label: 'Confirm'
+            }],
+            submit: result => {
+                if (result != 'confirm') return;
+                const list = [];
+                let inputs = app.element.querySelectorAll('[data-type]');
+
+                for (const input of inputs) {
+                    let t = input.dataset.type;
+                    let v = input.querySelector('select').value;
+                    if (v == 'normal') continue;
+                    list.push({ type: t, value: v });
+                }
+
+                this.document.update({ system: { resistances: list } });
+            }
+        }).render(true);
+    }
+
+    /**
+     * 
+     * @param {Event} event 
+     * @param {Element} target 
+     */
+    static async _onEditDefence(event, target) {
+        let content = '';
+        content += this.document.system.schema.getField('dodge.bonus').toFormGroup({
+            label: utils.localize(TFM.Generic.dodge),
+        }, { value: this.document.system.dodge.bonus }).outerHTML;
+        content += this.document.system.schema.getField('dr.bonus').toFormGroup({
+            label: utils.localize(TFM.Generic.reduction),
+        }, { value: this.document.system.dr.bonus }).outerHTML;
+
+        let app = await new TfmDialog({
+            window: { title: 'DEFENCE_CONFIG' },
+            content: content,
+            classes: ['tfm'],
+            buttons: [{
+                action: 'cancel',
+                label: 'Cancel'
+            }, {
+                action: 'confirm',
+                label: 'Confirm'
+            }],
+            submit: result => {
+                if (result != 'confirm') return;
+                let inputs = app.element.querySelectorAll('input[name]');
+                let data = {};
+                for (const i of inputs) data[i.name] = i.value;
+                this.document.update(data);
+            }
+        }).render(true);
     }
 
     //============================================================================================

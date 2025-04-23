@@ -5,11 +5,12 @@
     --tfm-size-l: 18px;
     --tfm-size-xl: 24px;
 
-    --tfm-font-size-xs: 0.6rem;
-    --tfm-font-size-s: 0.8rem;
-    --tfm-font-size-m: 1rem;
-    --tfm-font-size-l: 1.2rem;
-    --tfm-font-size-xl: 2rem;
+    --tfm-font-size-xs: 0.6em;
+    --tfm-font-size-s: 0.8em;
+    --tfm-font-size-m: 1em;
+    --tfm-font-size-l: 1.2em;
+    --tfm-font-size-xl: 2em;
+    --tfm-font-size-header: 4em;
 
     --tfm-colour-light-1: #f7f3e8;
     --tfm-colour-light-2: #f1e8d0;
@@ -29,18 +30,22 @@
     --tfm-colour-warm-2: #ee9b3a;
     --tfm-colour-warm-3: #ec682f;
     --tfm-colour-warm-4: #a90b19;
-    --tfm-colour-cool-4: #813a5e;
-    --tfm-colour-cool-3: #82497a;
-    --tfm-colour-cool-2: #302831;
-    --tfm-colour-cool-1: #161415;
+    --tfm-colour-cool-5: #813a5e;
+    --tfm-colour-cool-4: #82497a;
+    --tfm-colour-cool-3: #362733;
+    --tfm-colour-cool-2: #272128;
+    --tfm-colour-cool-1: rgb(21, 15 24);
 
-    --tfm-colour-cool-1-25: rgba(22, 20, 21, 0.25);
-    --tfm-colour-cool-1-50: rgba(22, 20, 21, 0.5);
-    --tfm-colour-cool-1-75: rgba(10, 0, 14, 0.75);
+    --tfm-colour-cool-1-25: rgba(21, 15, 24, 0.25);
+    --tfm-colour-cool-1-50: rgba(21, 15, 24, 0.5);
+    --tfm-colour-cool-1-75: rgba(21, 15, 24, 0.75);
     --tfm-colour-cool-1-90: rgba(21, 15, 24, 0.9);
 
     --tfm-input-bg: rgba(0, 0, 0, 0);
     --tfm-input-c: rgba(0, 0, 0, 1);
+
+    --tfm-margin: var(--tfm-size-m);
+    --tfm-padding: var(--tfm-size-m);
 
     //=================================================================
     // Funny styles for funsies
@@ -58,15 +63,22 @@
 //======================================================================================
 // Light mode setup
 //======================================================================================
-.theme-light .tfm {
-    --tfm-colour-text: var(--tfm-colour-dark-1);
-    --tfm-colour-text-selection: var(--tfm-colour-light-3);
-    --tfm-colour-text-selection-bg: var(--tfm-colour-warm-4);
-    --tfm-colour-text-shadow: var(var(--tfm-colour-cool-1-25));
+.tfm {
+    --tfm-colour-1: var(--tfm-colour-light-2);
+    --tfm-colour-2: var(--tfm-colour-light-4);
+    --tfm-colour-3: var(--tfm-colour-light-6);
 
-    --tfm-border-colour: var(--tfm-colour-light-6);
-    --tfm-background: var(--tfm-colour-light-2);
-    --tfm-input-background-colour: var(--tfm-colour-light-3);
+    --tfm-colour-border: var(--tfm-colour-light-6);
+    --tfm-colour-text-selection-bg: var(--tfm-colour-warm-4);
+    --tfm-colour-text-selection: var(--tfm-colour-light-3);
+    --tfm-colour-text-shadow: var(--tfm-colour-cool-1-25);
+    --tfm-colour-text: var(--tfm-colour-dark-1);
+
+    --tfm-sheet-background: var(--tfm-colour-light-2);
+
+    --tfm-background-1: var(--tfm-colour-light-2);
+    --tfm-background-2: var(--tfm-colour-light-4);
+    --tfm-background-3: var(--tfm-colour-light-6);
 
     input {
         --tfm-input-background-colour: var(--tfm-colour-light-3);
@@ -77,7 +89,7 @@
     }
 
     img {
-        --tfm-background: var(--tfm-colour-light-4);
+        --tfm-background-1: var(--tfm-colour-light-4);
     }
 
     .tfm-bar {
@@ -89,23 +101,60 @@
 // Dark mode setup
 //======================================================================================
 .theme-dark .tfm {
+    --tfm-colour-1: var(--tfm-colour-cool-1);
+    --tfm-colour-2: var(--tfm-colour-cool-2);
+    --tfm-colour-3: var(--tfm-colour-cool-3);
+
     --tfm-colour-text: var(--tfm-colour-light-3);
     --tfm-colour-text-selection: var(--tfm-colour-light-3);
     --tfm-colour-text-selection-bg: var(--tfm-colour-cool-2);
+    --tfm-colour-border: var(--tfm-colour-light-2);
 
-    --tfm-border-colour: var(--tfm-colour-light-2);
-    --tfm-background: var(--tfm-colour-cool-1-90);
-    --tfm-input-background-colour: var(--tfm-colour-cool-2);
+    --tfm-sheet-background: var(--tfm-colour-cool-1-90);
+
+    --tfm-background-1: var(--tfm-colour-cool-1-90);
+    --tfm-background-2: var(--tfm-colour-cool-2);
+    --tfm-background-3: var(--tfm-colour-cool-1);
 
     input {
-        --tfm-input-background-colour: var(--tfm-colour-cool-2);
+        --tfm-input-background-colour: var(--tfm-colour-cool-3);
 
         &:disabled {
-            --tfm-input-background-colour: var(--tfm-colour-cool-1);
+            --tfm-input-background-colour: var(--tfm-colour-cool-2);
         }
     }
 
     .tfm-bar {
         --tfm-bar-bg: var(--tfm-colour-cool-1)
     }
+}
+
+.tfm-xs {
+    --tfm-margin: var(--tfm-size-xs);
+    --tfm-padding: var(--tfm-size-xs);
+    --tfm-font-size: var(--tfm-font-size-xs);
+}
+
+.tfm-s {
+    --tfm-margin: var(--tfm-size-s);
+    --tfm-padding: var(--tfm-size-s);
+    --tfm-font-size: var(--tfm-font-size-s);
+}
+
+.tfm-m {
+    --tfm-margin: var(--tfm-size-m);
+    --tfm-padding: var(--tfm-size-m);
+    --tfm-font-size: var(--tfm-font-size-m);
+}
+
+.tfm-l {
+    --tfm-margin: var(--tfm-size-l);
+    --tfm-padding: var(--tfm-size-l);
+    --tfm-font-size: var(--tfm-font-size-l);
+}
+
+.tfm-xl {
+    --tfm-margin: var(--tfm-size-xl);
+    --tfm-padding: var(--tfm-size-xl);
+    --tfm-font-size: var(--tfm-font-size-xl);
 }

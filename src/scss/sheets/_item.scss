@@ -1,6 +1,6 @@
 .sheet.item {
 
-    background: var(--tfm-background, #ffd8ac);
+    background: var(--tfm-sheet-background, #ffd8ac);
     background-size: 100% 100%;
 
     .tab[data-tab].active {
@@ -49,6 +49,7 @@
     //============================================================================================
     .tfm-weapon-damage {
         margin: 0.5rem 0;
+
         .tfm-damage-list {
             padding: 0;
             margin: 0.2rem 0;
