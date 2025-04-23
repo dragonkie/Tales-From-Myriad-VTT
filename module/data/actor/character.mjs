@@ -37,13 +37,9 @@ export default class CharacterData extends ActorDataModel {
             })
         });
 
-        schema.dice = new SchemaField({
-            casting_arcane: new NumberField({ ...this.RequiredConfig, initial: 6 }),
-            casting_occult: new NumberField({ ...this.RequiredConfig, initial: 6 }),
-            casting_insight: new NumberField({ ...this.RequiredConfig, initial: 6 }),
-            attack_melee: new NumberField({ ...this.RequiredConfig, initial: 6 }),
-            attack_ranged: new NumberField({ ...this.RequiredConfig, initial: 6 }),
-        })
+        // array to track users quests
+        schema.quests = new ArrayField(new StringField({ initial: '' }), { initial: [] });
+        schema.quest_points = new NumberField({ initial: 0, ...this.RequiredConfig, min: 0 });
 
         return schema;
     }

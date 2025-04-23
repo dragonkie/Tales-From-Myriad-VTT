@@ -42,6 +42,8 @@ TFM.Generic = {
     ability: 'TFM.Generic.Ability',
     auto: 'TFM.Generic.Automatic.abbr',
     automatic: 'TFM.Generic.Automatic.long',
+    base: 'TFM.Generic.Base',
+    bonus: 'TFM.Generic.Bonus',
     broken: 'TFM.Generic.Broken',
     chatDescription: 'TFM.Generic.ChatDescription',
     corruption: 'TFM.Generic.Corruption',

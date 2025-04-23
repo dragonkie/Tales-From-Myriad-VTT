@@ -125,10 +125,18 @@ export class ActorDataModel extends SystemDataModel {
         schema.description = new HTMLField({ initial: "" });
 
         schema.movement = new SchemaField({
-            walk: this.ValueField(30),
-            swim: this.ValueField(0),
-            burrow: this.ValueField(0),
-            fly: this.ValueField(0)
+            walk: new SchemaField({
+                base: new NumberField({ initial: 30 }),
+                bonus: new NumberField({ initial: 0 }),
+            }),
+            swim: new SchemaField({
+                base: new NumberField({ initial: 0 }),
+                bonus: new NumberField({ initial: 0 }),
+            }),
+            fly: new SchemaField({
+                base: new NumberField({ initial: 0 }),
+                bonus: new NumberField({ initial: 0 }),
+            })
         });
 
         schema.size = new StringField({
@@ -237,28 +245,23 @@ export class ItemDataModel extends SystemDataModel {
     // Item specific fields
     //==============================================
 
-    /**
-     * Returns a schema for defining a singular enchantment (also curses)
-     */
-    static EnchantmentField() {
-        return new SchemaField({
-            label: new StringField({ ...this.PrivateConfig, initial: '', label: tfm.config.Generic.label }), // localizable curse name
-            description: new HTMLField({ ...this.PrivateConfig, initial: '', label: tfm.config.Generic.description }), // description of enchantment, supports enriched HTML
-            chat: new HTMLField({ ...this.PrivateConfig, initial: '', label: tfm.config.Generic.chatDescription }), // Chat card to output for enchantment, supports enriched html
-            curse: new BooleanField({ ...this.PrivateConfig, initial: false, label: tfm.config.Generic.curse }), // does this enchantment qualify as a curse
-            identified: new BooleanField({ ...this.PrivateConfig, initial: false, label: tfm.config.Generic.identified }), // is this effect visible to players
-        });
-    }
+
 
     /**
      * Returns the list for holding enchantments, curses and blessings
      * @returns {ArrayField}
      */
-    static EnchantmentsField() {
+    static EnchantmentField() {
         // arrays for magical effects on the item
-        return new ArrayField(this.EnchantmentField(), {
+        return new ArrayField(new SchemaField({
+            label: new StringField({ ...this.PrivateConfig, initial: '', label: tfm.config.Generic.label }), // localizable curse name
+            description: new HTMLField({ ...this.PrivateConfig, initial: '', label: tfm.config.Generic.description }), // description of enchantment, supports enriched HTML
+            chat: new HTMLField({ ...this.PrivateConfig, initial: '', label: tfm.config.Generic.chatDescription }), // Chat card to output for enchantment, supports enriched html
+            curse: new BooleanField({ ...this.PrivateConfig, initial: false, label: tfm.config.Generic.curse }), // does this enchantment qualify as a curse
+            identified: new BooleanField({ ...this.PrivateConfig, initial: false, label: tfm.config.Generic.identified }), // is this effect visible to players
+        }), {
             initial: [],
-            label: tfm.config.Generic.enchantment,
+            label: TFM.Generic.enchantments,
         });
     }
 
@@ -267,7 +270,7 @@ export class ItemDataModel extends SystemDataModel {
      */
     static EquipmentFields() {
         return {
-            enchantments: this.EnchantmentsField(),
+            enchantments: this.EnchantmentField(),
             identified: new BooleanField({ ...this.PrivateConfig, initial: false, label: TFM.Generic.identified }),
             broken: new BooleanField({ ...this.RequiredConfig, initial: false, label: TFM.Generic.broken }),
             equipped: new BooleanField({ ...this.RequiredConfig, initial: false, label: TFM.Generic.equipped })

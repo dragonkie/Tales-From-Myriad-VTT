@@ -2,6 +2,7 @@
 
     {{toFieldGroup system.schema 'ability' value=system.ability}}
     {{toFieldGroup system.schema 'proficiency' value=system.proficiency}}
+    {{toFieldGroup system.schema 'equipped' value=system.equipped}}
 
     <div class="tfm-weapon-damage">
         <div><b>Damage Parts:</b></div>
@@ -22,9 +23,9 @@
     </div>
 
     {{toFieldGroup system.schema 'penalty' value=system.penalty}}
+    {{toFieldGroup system.schema 'broken' value=system.broken}}
 
     {{toFieldGroup system.schema 'ranged' value=system.ranged}}
-    {{toFieldGroup system.schema 'identified' value=system.identified}}
 
     {{#if system.ranged}}
         <b>Ranged Weapon Options:</b>
@@ -39,4 +40,6 @@
     {{toFieldGroup system.schema 'quantity' value=system.quantity}}
     {{toFieldGroup system.schema 'price' value=system.price}}
     {{toFieldGroup system.schema 'size' value=system.size}}
+
+    {{#if isGm}}{{toFieldGroup system.schema 'identified' value=system.identified}}{{/if}}
 </div>

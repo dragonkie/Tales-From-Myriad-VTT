@@ -1,14 +1,8 @@
-<div class="resource flexrow">
-    <label class="resource-label">Armour Weight</label>
-    {{{ selectors.weightClass }}}
-</div>
-
-<div class="resource flexrow">
-    <label class="resource-label">Armour Slot</label>
-    {{{ selectors.itemSlot }}}
-</div>
-
-<div class="resource flexrow">
-    <label class="resource-label">Damage Reduction</label>
-    <input type="number" name="system.dr" value="{{system.dr}}" data-dtype="Number" />
+<div class="tab-content">
+    {{toFieldGroup system.schema 'weight' value=system.weight}}
+    {{toFieldGroup system.schema 'damage_reduction.base' value=system.damage_reduction.base disabled=true}}
+    {{toFieldGroup system.schema 'damage_reduction.bonus' value=system.damage_reduction.bonus}}
+    {{toFieldGroup system.schema 'broken' value=system.broken}}
+    {{toFieldGroup system.schema 'equipped' value=system.equipped}}
+    {{#if isGm}}{{toFieldGroup system.schema 'identified' value=system.identified}}{{/if}}
 </div>

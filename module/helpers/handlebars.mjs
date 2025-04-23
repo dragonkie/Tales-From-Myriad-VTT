@@ -16,6 +16,7 @@ function registerTemplates() {
         `${tfm.filepath.template}/actor/shared/actor-resistance.hbs`,
         `${tfm.filepath.template}/actor/shared/actor-skills.hbs`,
         `${tfm.filepath.template}/actor/shared/actor-proficiency.hbs`,
+        `${tfm.filepath.template}/actor/shared/actor-movement.hbs`,
 
         // Dialog partials
         `${tfm.filepath.template}/dialog/parts/roll-options.hbs`
