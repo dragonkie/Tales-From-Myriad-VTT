@@ -1,8 +1,7 @@
-<div class="tab-content actor-details">
-    {{toFieldGroup system.schema 'type' value=system.type}}
-    {{toFieldGroup system.schema 'size' value=system.size}}
-    <div class="tfm-resist-list">
-
+<div class="tfm-tab-content actor-details flexcol flex-gap-l">
+    <div class="flexrow flex-gap-m">
+        {{toFieldGroup system.schema 'type' value=system.type}}
+        {{toFieldGroup system.schema 'size' value=system.size}}
     </div>
     {{!-- Actor description --}}
     {{> 'tfm.description' newContext enriched=enriched.description value=system.description editable=false toggled=true name='system.description'}}

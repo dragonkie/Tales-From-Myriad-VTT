@@ -38,6 +38,9 @@ export default class TfmItemSheet extends TfmSheetMixin(foundry.applications.she
         primary: 'description'
     }
 
+    //==============================================================================================================
+    //> Sheet Context
+    //==============================================================================================================
     /**
      * @override 
      * Passes the context data used to render the HTML template
@@ -54,26 +57,28 @@ export default class TfmItemSheet extends TfmSheetMixin(foundry.applications.she
                 label: tfm.utils.localize('TFM.Generic.Description'),
                 field: this.document.system.schema.getField('description.value'),
                 value: this.document.system.description.value,
-                enriched: await TextEditor.enrichHTML(context.system.description.value, enrichmentOptions),
+                enriched: await foundry.applications.ux.TextEditor.enrichHTML(context.system.description.value, enrichmentOptions),
             },
             unidentified: {
                 label: `${tfm.utils.localize('TFM.Generic.Unidentified')} ${tfm.utils.localize('TFM.Generic.Description')}`,
                 field: this.document.system.schema.getField('description.unidentified'),
                 value: this.document.system.description.unidentified,
-                enriched: await TextEditor.enrichHTML(context.system.description.unidentified, enrichmentOptions),
+                enriched: await foundry.applications.ux.TextEditor.enrichHTML(context.system.description.unidentified, enrichmentOptions),
             },
             chat: {
                 label: `${tfm.utils.localize('CHAT.Chat')} ${tfm.utils.localize('TFM.Generic.Description')}`,
                 field: this.document.system.schema.getField('description.chat'),
                 value: this.document.system.description.chat,
-                enriched: await TextEditor.enrichHTML(context.system.description.chat, enrichmentOptions),
+                enriched: await foundry.applications.ux.TextEditor.enrichHTML(context.system.description.chat, enrichmentOptions),
             },
         }
 
         return context;
     }
 
-    /* ----------------------------- ACTION EVENTS ---------------------------------- */
+    //==============================================================================================================
+    //> Sheet Actions
+    //==============================================================================================================
     static async _onEditItem(event, target) {
         const uuid = target.closest(".item[data-item-uuid]").dataset.itemUuid;
         const item = await fromUuid(uuid);

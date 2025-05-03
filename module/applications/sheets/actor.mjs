@@ -49,7 +49,9 @@ export default class TfmActorSheet extends TfmSheetMixin(foundry.applications.sh
         primary: "features",
     }
 
-    /* ------------------------- RENDER CONTEXT DATA PREP ----------------------------------*/
+    //=================================================================================================================
+    //> Sheet Context
+    //=================================================================================================================
     async _prepareContext(options) {
         const context = await super._prepareContext();
 
@@ -66,7 +68,9 @@ export default class TfmActorSheet extends TfmSheetMixin(foundry.applications.sh
         return context;
     }
 
-    /* ----------- DRAG AND DROP OVERIDES ------------- */
+    //=================================================================================================================
+    //> Drag & Drop
+    //=================================================================================================================
 
     /**
      * Built in drop event handeler, will automatically parse and get data from the event
@@ -126,7 +130,7 @@ export default class TfmActorSheet extends TfmSheetMixin(foundry.applications.sh
         return true;
     }
     //============================================================================================
-    // Sheet Actions
+    //> Sheet Actions
     //============================================================================================
 
     /**

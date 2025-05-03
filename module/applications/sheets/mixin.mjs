@@ -1,5 +1,6 @@
 import { TFM } from "../../config.mjs";
 import LOGGER from "../../helpers/logger.mjs";
+import TfmContextMenu from "../context-menu.mjs";
 
 export default function TfmSheetMixin(Base) {
     const mixin = foundry.applications.api.HandlebarsApplicationMixin;
@@ -37,7 +38,7 @@ export default function TfmSheetMixin(Base) {
                     ...v,
                     active: isActive,
                     cssClass: isActive ? "item active" : "item",
-                    tabCssClass: isActive ? "tab scrollable active" : "tab scrollable"
+                    tabCssClass: isActive ? "tab active" : "tab"
                 };
                 return acc;
             }, {});
@@ -112,6 +113,7 @@ export default function TfmSheetMixin(Base) {
          * @returns 
          */
         async render(options, _options) {
+            console.trace('render');
             return super.render(options, _options);
         }
 
@@ -121,6 +123,7 @@ export default function TfmSheetMixin(Base) {
          * @param {*} options 
          */
         _onFirstRender(context, options) {
+            console.trace('_onFirstRender')
             super._onFirstRender(context, options);
             this._setupContextMenu();
         }
@@ -131,6 +134,7 @@ export default function TfmSheetMixin(Base) {
          * @param {*} options 
          */
         _onRender(context, options) {
+            console.trace('_onRender')
             super._onRender(context, options);
 
             // disables all input elements if this isnt editable for the user
@@ -156,10 +160,12 @@ export default function TfmSheetMixin(Base) {
         }
 
         async _renderHTML(context, options) {
+            console.trace('_renderHTML')
             return super._renderHTML(context, options);
         }
 
         async _renderFrame(options) {
+            console.trace('_renderFrame')
             const frame = super._renderFrame(options);
 
             // Insert additional buttons into the window header
@@ -167,7 +173,7 @@ export default function TfmSheetMixin(Base) {
             if (this.isEditable && !this.document.getFlag("core", "sheetLock")) {
                 const label = game.i18n.localize("SHEETS.toggleLock");
                 let icon = this.isEditMode ? 'fa-lock-open' : 'fa-lock';
-                const sheetConfig = `<button type="button" class="header-control fa-solid ${icon}" data-action="toggleMode" data-tooltip="${label}" aria-label="${label}"></button>`;
+                const sheetConfig = `<button type="button" class="header-control fa-solid ${icon} icon" data-action="toggleMode" data-tooltip="${label}" aria-label="${label}"></button>`;
                 this.window.close.insertAdjacentHTML("beforebegin", sheetConfig);
             }
 
@@ -198,13 +204,11 @@ export default function TfmSheetMixin(Base) {
             return super._syncPartState(partId, newElement, priorElement, state);
         }
 
-        /* ------------------------------------------------------------------------------------------------- */
-        /*                                                                                                   */
-        /*                                        DRAG AND DROP                                              */
-        /*                                                                                                   */
-        /* ------------------------------------------------------------------------------------------------- */
+        //==============================================================================================================
+        //> Drag & Drop
+        //==============================================================================================================
         _setupDragAndDrop() {
-            const dd = new DragDrop({
+            const dd = new foundry.applications.ux.DragDrop.implementation({
                 dragSelector: "[data-item-uuid]",
                 dropSelector: ".application",
                 permissions: {
@@ -238,7 +242,7 @@ export default function TfmSheetMixin(Base) {
             event.preventDefault();
 
             const target = event.target;
-            const { type, uuid } = TextEditor.getDragEventData(event);
+            const { type, uuid } = foundry.applications.ux.TextEditor.getDragEventData(event);
 
             if (!this.isEditable) return;
 
@@ -316,10 +320,11 @@ export default function TfmSheetMixin(Base) {
         }
 
         //============================================================================================
-        // Context Menu
+        //> Setup Context Menu
         //============================================================================================
         _setupContextMenu() {
-            new tfm.application.TfmContextMenu(this.element, "[data-item-uuid]", [], {
+            new TfmContextMenu(this.element, "[data-item-uuid]", [], {
+                jQuery: false,
                 onOpen: element => {
                     const item = fromUuidSync(element.dataset.itemUuid);
                     if (!item) return;
@@ -445,9 +450,7 @@ export default function TfmSheetMixin(Base) {
                     startRound: combat ? combat.round : null,
                     startTurn: combat ? combat.turn : null
                 }
-            }, { parent: this.document });
-
-            effect.render(true);
+            }, { parent: this.document, renderSheet: true });
         }
     }
 }

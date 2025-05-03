@@ -58,7 +58,7 @@ export default class TfmSocketManager {
                             } else {
                                 // we confirmed we want the item and have a controlled actor, so create the item and respond 
                                 // saying that we accepted the item
-                                let newItem = Item.create(data.item, { parent: actor });
+                                let newItem = Item.create(data.item, { parent: actor, renderSheet: true });
                             }
                         }
                         // send back our response

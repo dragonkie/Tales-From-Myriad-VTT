@@ -12,7 +12,7 @@ export default class NpcData extends ActorDataModel {
             ...this.RequiredConfig,
             label: TFM.Generic.type,
             blank: false,
-            initial: TFM.CreatureTypes.humanoid,
+            initial: 'humanoid',
             choices: () => {
                 let options = utils.duplicate(TFM.CreatureTypes);
                 for (const key of Object.keys(options)) options[key] = utils.localize(options[key]);

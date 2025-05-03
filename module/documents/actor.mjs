@@ -20,6 +20,8 @@ export default class TfmActor extends Actor {
     prepareBaseData() {
         // Data modifications in this step occur before processing embedded
         // documents or derived data.
+
+        super.prepareBaseData();
     }
 
     /**
@@ -36,7 +38,7 @@ export default class TfmActor extends Actor {
         const systemData = actorData.system;
         const flags = actorData.flags.tfm || {};
 
-
+        super.prepareDerivedData();
     }
 
 
@@ -72,6 +74,21 @@ export default class TfmActor extends Actor {
         data.karma = Math.max(3, 3 + data.lck);
 
         return data;
+    }
+
+    async _preUpdate(changed, options, user) {
+        console.trace('_preUpdate');
+        return super._preUpdate(changed, options, user);
+    }
+
+    async update(data, operation) {
+        console.trace('update');
+        return super.update(data, operation);
+    }
+
+    _onUpdate(changed, options, userId) {
+        console.trace('_onUpdate');
+        return super._onUpdate(changed, options, userId);
     }
 
 }

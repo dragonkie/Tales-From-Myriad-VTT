@@ -1,20 +1,20 @@
 <div class="tfm-movement flex-align-center">
     <div class="tfm-section-header">
-        {{#if isEditable}}<a data-action="editResistance"><i class="fas fa-cog"></i></a>{{/if}}
+        {{#if isEditMode}}<a data-action="editResistance"><i class="fas fa-cog"></i></a>{{/if}}
         <b>{{localize (choose config.Generic.movement 'TFM.Generic.Movement')}}</b>
     </div>
     <div class="flexrow flex-gap-m">
-        <div class="flexcol tfm-walk">
+        <div class="flexcol tfm-walk text-center">
             <div>Walk</div>
             {{toFieldInput system.schema 'movement.walk.bonus' value=system.movement.walk.bonus}}
         </div>
-        <div class="flexcol tfm-walk">
+        <div class="flexcol tfm-walk text-center">
             <div>Swim</div>
-            {{toFieldInput system.schema 'movement.walk.bonus' value=system.movement.walk.bonus}}
+            {{toFieldInput system.schema 'movement.swim.bonus' value=system.movement.swim.bonus}}
         </div>
-        <div class="flexcol tfm-walk">
+        <div class="flexcol tfm-walk text-center">
             <div>Fly</div>
-            {{toFieldInput system.schema 'movement.walk.bonus' value=system.movement.walk.bonus}}
+            {{toFieldInput system.schema 'movement.fly.bonus' value=system.movement.fly.bonus}}
         </div>
     </div>
 </div>

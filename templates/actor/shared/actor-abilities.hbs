@@ -6,7 +6,7 @@
                 <a data-action="roll" data-roll="2d6x6kf{{../rollData.karma}} + {{ability.mod}}" data-flavor="{{localize ability.label}}"><b>{{localize ability.label}}</b></a>
             </label>
             <div class="wrapper">
-                <input class="tfm-ability-score" type="number" name="system.abilities.{{key}}.value" value="{{ability.value}}">
+                <input class="tfm-ability-score text-center" type="number" name="system.abilities.{{key}}.value" value="{{ability.value}}">
                 <div class="tfm-ability-mod">
                     {{#if (eq ability.mod 0)}}
                         {{numberFormat ability.mod sign=false}}

@@ -1,8 +1,19 @@
-<div class="tab-content">
+<div class="tfm-tab-content flexcol flex-gap-s">
 
-    {{toFieldGroup system.schema 'ability' value=system.ability}}
-    {{toFieldGroup system.schema 'proficiency' value=system.proficiency}}
-    {{toFieldGroup system.schema 'equipped' value=system.equipped}}
+
+    <div class="flexrow flex-gap-m">
+        {{toFieldGroup system.schema 'proficiency' value=system.proficiency}}
+        {{toFieldGroup system.schema 'ability' value=system.ability}}
+    </div>
+    <div class="flexrow flex-gap-m">
+        {{toFieldGroup system.schema 'penalty' value=system.penalty}}
+        {{toFieldGroup system.schema 'broken' value=system.broken}}
+    </div>
+    <div class="flexrow flex-gap-m">
+        {{toFieldGroup system.schema 'equipped' value=system.equipped}}
+        {{toFieldGroup system.schema 'ranged' value=system.ranged}}
+    </div>
+
 
     <div class="tfm-weapon-damage">
         <div><b>Damage Parts:</b></div>
@@ -21,11 +32,6 @@
         </ol>
         <div class="flex-align-end"><a data-action="addDamage"><b>Add Damage Part +</b></a></div>
     </div>
-
-    {{toFieldGroup system.schema 'penalty' value=system.penalty}}
-    {{toFieldGroup system.schema 'broken' value=system.broken}}
-
-    {{toFieldGroup system.schema 'ranged' value=system.ranged}}
 
     {{#if system.ranged}}
         <b>Ranged Weapon Options:</b>

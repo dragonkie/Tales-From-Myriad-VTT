@@ -29,7 +29,7 @@ function registerTemplates() {
         paths[`tfm.${path.split("/").pop().replace(".hbs", "")}`] = path;
     }
 
-    return loadTemplates(paths);
+    return foundry.applications.handlebars.loadTemplates(paths);
 };
 
 function registerHelpers() {
@@ -115,6 +115,37 @@ function registerHelpers() {
                 for (var i = 0, ret = ''; i < num; i++) ret += options.fn(i);
                 return ret;
             }
+        },
+        //======================================================================================
+        // Data Fields
+        //======================================================================================
+        {
+            name: 'getField',
+            fn: (schema, path) => schema.getField(path)
+        }, {
+            name: 'toFieldGroup',
+            fn: (schema, path, options) => {
+                let field = schema.getField(path);
+                const { classes, label, hint, rootId, stacked, units, widget, ...inputConfig } = options.hash;
+                const groupConfig = {
+                    label, hint, rootId, stacked, widget, localize: true, units,
+                    classes: typeof classes === "string" ? classes.split(" ") : []
+                };
+                const group = field.toFormGroup(groupConfig, inputConfig);
+                return new Handlebars.SafeString(group.outerHTML);
+            }
+        }, {
+            name: 'toFieldInput',
+            fn: (schema, path, options) => {
+                let field = schema.getField(path);
+                const { classes, label, hint, rootId, stacked, units, widget, ...inputConfig } = options.hash;
+                const groupConfig = {
+                    label, hint, rootId, stacked, widget, localize: true, units,
+                    classes: typeof classes === "string" ? classes.split(" ") : []
+                };
+                const group = field.toInput(groupConfig, inputConfig);
+                return new Handlebars.SafeString(group.outerHTML);
+            }
         }
     ]
 
@@ -125,24 +156,6 @@ function registerHelpers() {
     //======================================================================================
     // Data field management
     //======================================================================================
-    Handlebars.registerHelper('getField', (schema, path) => schema.getField(path));
-    Handlebars.registerHelper('toFieldGroup', (schema, path, options) => {
-        let field = schema.getField(path);
-        const { classes, label, hint, rootId, stacked, units, widget, ...inputConfig } = options.hash;
-        const groupConfig = {
-            label, hint, rootId, stacked, widget, localize: true, units,
-            classes: typeof classes === "string" ? classes.split(" ") : []
-        };
-        const group = field.toFormGroup(groupConfig, inputConfig);
-        return new Handlebars.SafeString(group.outerHTML);
-    });
-
-    Handlebars.registerHelper('toFieldInput', (schema, path, options) => {
-        let field = schema.getField(path);
-        const inputConfig = options.hash;
-        const element = field.toInput(inputConfig);
-        return new Handlebars.SafeString(element.outerHTML);
-    });
 
     // register the helpers
     for (const helper of helpers) Handlebars.registerHelper(helper.name, helper.fn);

@@ -31,6 +31,11 @@
 
 .sheet-tabs {
     flex: 0;
+    margin-bottom: 10px;
+}
+
+.tfm-tab-content {
+    height: 100%;
 }
 
 .tfm nav.tabs .item {
@@ -46,7 +51,6 @@
 
 /*
 || Collapsible items
-
 .collapsible - Repersents a container with collapsible elements inside of it
 .collapsible-content - a container to be shrunk down when the container is collapsed
 .wrapper - the actual content being shrunk down
@@ -78,10 +82,6 @@
     }
 }
 
-
-//========================================================================================
-// Fillable bars
-//========================================================================================
 /*
 || Fillable bars
 .bar - main wrapper
@@ -190,6 +190,7 @@
 }
 
 .tfm-link-wrapper {
+    flex: 0;
     border: 1px solid var(--tfm-colour-border);
     border-radius: 5px;
     padding: 0 0.5rem;
@@ -197,8 +198,50 @@
 }
 
 //========================================================================================
-// Margins and padding
+//> Margins and padding
 //========================================================================================
 .tfm-margin-bottom {
     margin-bottom: var(--tfm-margin);
+}
+
+//========================================================================================
+//> Text Alignment
+//========================================================================================
+.text-left {
+    text-align: left;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.text-right {
+    text-align: right;
+}
+
+//========================================================================================
+//> Form Groups & Fields
+//========================================================================================
+.form-group {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    label {
+        flex: 1;
+        text-align: left;
+    }
+
+    .form-fields {
+        display: flex;
+        flex-direction: row;
+        flex: 2;
+    }
+}
+
+//========================================================================================
+//> Tabs
+//========================================================================================
+.tfm-tab-content {
+    padding: 10px;
 }

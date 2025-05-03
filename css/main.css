@@ -228,6 +228,11 @@
 
 .sheet-tabs {
   flex: 0;
+  margin-bottom: 10px;
+}
+
+.tfm-tab-content {
+  height: 100%;
 }
 
 .tfm nav.tabs .item {
@@ -240,7 +245,6 @@
 
 /*
 || Collapsible items
-
 .collapsible - Repersents a container with collapsible elements inside of it
 .collapsible-content - a container to be shrunk down when the container is collapsed
 .wrapper - the actual content being shrunk down
@@ -352,6 +356,7 @@
 }
 
 .tfm-link-wrapper {
+  flex: 0;
   border: 1px solid var(--tfm-colour-border);
   border-radius: 5px;
   padding: 0 0.5rem;
@@ -360,6 +365,37 @@
 
 .tfm-margin-bottom {
   margin-bottom: var(--tfm-margin);
+}
+
+.text-left {
+  text-align: left;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.form-group label {
+  flex: 1;
+  text-align: left;
+}
+.form-group .form-fields {
+  display: flex;
+  flex-direction: row;
+  flex: 2;
+}
+
+.tfm-tab-content {
+  padding: 10px;
 }
 
 .resource-label {
@@ -697,7 +733,7 @@
   --tfm-colour-cool-4: #82497a;
   --tfm-colour-cool-3: #362733;
   --tfm-colour-cool-2: #272128;
-  --tfm-colour-cool-1: rgb(21, 15 24);
+  --tfm-colour-cool-1: #150f18;
   --tfm-colour-cool-1-25: rgba(21, 15, 24, 0.25);
   --tfm-colour-cool-1-50: rgba(21, 15, 24, 0.5);
   --tfm-colour-cool-1-75: rgba(21, 15, 24, 0.75);
@@ -749,7 +785,7 @@
   --tfm-colour-3: var(--tfm-colour-cool-3);
   --tfm-colour-text: var(--tfm-colour-light-3);
   --tfm-colour-text-selection: var(--tfm-colour-light-3);
-  --tfm-colour-text-selection-bg: var(--tfm-colour-cool-2);
+  --tfm-colour-text-selection-bg: var(--tfm-colour-light-5);
   --tfm-colour-border: var(--tfm-colour-light-2);
   --tfm-sheet-background: var(--tfm-colour-cool-1-90);
   --tfm-background-1: var(--tfm-colour-cool-1-90);
@@ -799,19 +835,6 @@
 /* Styles limited to tales from myriad sheets */
 .tfm {
   font-family: "Roboto", sans-serif !important;
-}
-
-.form-field {
-  display: flex;
-  flex-direction: row;
-  flex: 1;
-}
-.form-field :first-child {
-  flex: 2;
-}
-.form-field > * {
-  align-items: center;
-  flex: 1;
 }
 
 #context-menu {

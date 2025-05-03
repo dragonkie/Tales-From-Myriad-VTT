@@ -24,7 +24,7 @@ export default class NpcSheet extends TfmActorSheet {
     async _prepareContext() {
         const context = await super._prepareContext();
         context.enriched = {
-            description: await TextEditor.enrichHTML(context.system.description)
+            description: await foundry.applications.ux.TextEditor.enrichHTML(context.system.description)
         }
         return context;
     }

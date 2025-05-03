@@ -28,9 +28,9 @@ tfm.utils = Object.assign(utils, foundry.utils);
 tfm.config = TFM;
 tfm.data = dataModels;
 
-/* -------------------------------------------- */
-/*  Init Hook                                   */
-/* -------------------------------------------- */
+//=================================================================================================
+//> System Init hook
+//=================================================================================================
 Hooks.once('init', async function () {
     LOGGER.log('Now arriving in Myriad!');
     // Add custom constants for configuration.
@@ -57,17 +57,15 @@ Hooks.once('init', async function () {
 
     // Remove the default sheets
     LOGGER.log('Registering sheets');
-    Actors.unregisterSheet("core", ActorSheet);
-    Items.unregisterSheet("core", ItemSheet);
 
     // register actor sheets
     for (const sheet of applications.sheet.actor.config) {
-        Actors.registerSheet(tfm.id, sheet.application, sheet.options);
+        foundry.documents.collections.Actors.registerSheet(tfm.id, sheet.application, sheet.options);
     }
 
     // register item sheets
     for (const sheet of applications.sheet.item.config) {
-        Items.registerSheet(tfm.id, sheet.application, sheet.options);
+        foundry.documents.collections.Items.registerSheet(tfm.id, sheet.application, sheet.options);
     }
 
     LOGGER.log('Registering socket');

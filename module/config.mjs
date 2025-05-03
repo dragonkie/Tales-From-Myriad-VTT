@@ -212,6 +212,14 @@ TFM.DamageResistance = {
     vulnerable: "TFM.Generic.Vulnerable"
 }
 
+TFM.TargetTypes = {
+    any: 'TFM.Generic.Any',
+    ally: 'TFM.Generic.Ally',
+    enemy: 'TFM.Generic.Enemy',
+    creature: 'TFM.Generic.Creature',
+    object: 'TFM.Generic.Object',
+}
+
 //========================================================================================
 // Helper Functions
 //========================================================================================

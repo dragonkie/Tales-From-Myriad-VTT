@@ -1,16 +1,16 @@
 <div class="tfm-defences align-center flex-gap-s">
     <div class="tfm-section-header flex-align-center">
-        {{#if isEditable}}<a data-action="editDefence"><i class="fas fa-cog"></i></a>{{/if}}
+        {{#if isEditMode}}<a data-action="editDefence"><i class="fas fa-cog"></i></a>{{/if}}
         <b>{{localize config.Generic.defence}}</b>
     </div>
     <div class="flexrow flex-gap-m">
-        <div class="dodge">
-            <div><i class="fas fa-boot"></i> Dodge</div>
-            <input type="number" value="{{system.dodge.total}}" disabled>
+        <div class="tfm-dodge">
+            <div><i class="fas fa-boot"></i> {{localize 'TFM.Generic.Dodge'}}</div>
+            <input class="text-center" type="number" value="{{system.dodge.total}}" disabled>
         </div>
         <div class="tfm-damage-reduction">
-            <div><i class="fas fa-shield"></i> Reduction</div>
-            <input type="number" value="{{system.dr.total}}" disabled>
+            <div><i class="fas fa-shield"></i> {{localize 'TFM.Generic.Reduction'}}</div>
+            <input class="text-center" type="number" value="{{system.dr.total}}" disabled>
         </div>
     </div>
 </div>

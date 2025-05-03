@@ -47,7 +47,9 @@ export default class TfmItem extends Item {
         } else return false;
     }
 
-    /* ------------------------- ACTION EVENTS ------------------------------- */
+    //==============================================================================================================
+    //> Action Handlers
+    //==============================================================================================================
     async _onDeleteItem(event, target) {
         // Output to let us know we call for a custom delete handler but one is not defined
         LOGGER.debug("Unhandled _onDelteItem in ", this);
