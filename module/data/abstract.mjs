@@ -71,7 +71,6 @@ export class SystemDataModel extends foundry.abstract.TypeDataModel {
 
 
     /**
-     * @returns {DataFieldOptions}
      */
     static get RequiredConfig() {
         return { required: true, nullable: false };
@@ -95,7 +94,7 @@ export class SystemDataModel extends foundry.abstract.TypeDataModel {
 };
 
 //=================================================================================================
-//Generic Actor data model
+//> Actor data model
 //=================================================================================================
 export class ActorDataModel extends SystemDataModel {
     static defineSchema() {
@@ -110,11 +109,9 @@ export class ActorDataModel extends SystemDataModel {
         schema.hp = this.ResourceField(6, 6);
         schema.dr = new SchemaField({
             base: new NumberField({ initial: 0 }),
-            bonus: new NumberField({ initial: 0 }),
         })
         schema.dodge = new SchemaField({
             base: new NumberField({ initial: 8 }),
-            bonus: new NumberField({ initial: 0 }),
         })
 
         // tracks player experience points, or a monsters given exp
@@ -127,15 +124,12 @@ export class ActorDataModel extends SystemDataModel {
         schema.movement = new SchemaField({
             walk: new SchemaField({
                 base: new NumberField({ initial: 30 }),
-                bonus: new NumberField({ initial: 0 }),
             }),
             swim: new SchemaField({
                 base: new NumberField({ initial: 0 }),
-                bonus: new NumberField({ initial: 0 }),
             }),
             fly: new SchemaField({
                 base: new NumberField({ initial: 0 }),
-                bonus: new NumberField({ initial: 0 }),
             })
         });
 
@@ -177,19 +171,103 @@ export class ActorDataModel extends SystemDataModel {
             })
         }), { initial: [] });
 
+        schema.dual_wielder = new BooleanField({ initial: false, ...this.RequiredConfig });
+
+        const casting_options = {};
+        for (const key of Object.keys(TFM.Abilities)) casting_options[key] = new SchemaField({
+            dice: new StringField({
+                initial: 'd6', ...this.RequiredConfig, blank: false, choices: () => {
+                    let options = { ...TFM.Dice };
+                    for (const dice of Object.keys(options)) options[dice] = utils.localize(options[dice]);
+                    return options;
+                }
+            }),
+            casting: new NumberField({ initial: 0 }),
+            success: new NumberField({ initial: 0 })
+        })
+
+        schema.casting = new SchemaField(casting_options);
+
+        schema.bonuses = new SchemaField({
+            dodge: new NumberField({ initial: 0 }),
+            dr: new NumberField({ initial: 0 }),
+            walk: new NumberField({ initial: 0 }),
+            swim: new NumberField({ initial: 0 }),
+            fly: new NumberField({ initial: 0 }),
+            pwr: new NumberField({ initial: 0 }),
+            fin: new NumberField({ initial: 0 }),
+            ins: new NumberField({ initial: 0 }),
+            chm: new NumberField({ initial: 0 }),
+            arc: new NumberField({ initial: 0 }),
+            occ: new NumberField({ initial: 0 }),
+            lck: new NumberField({ initial: 0 }),
+            pwr_mod: new NumberField({ initial: 0 }),
+            fin_mod: new NumberField({ initial: 0 }),
+            ins_mod: new NumberField({ initial: 0 }),
+            chm_mod: new NumberField({ initial: 0 }),
+            arc_mod: new NumberField({ initial: 0 }),
+            occ_mod: new NumberField({ initial: 0 }),
+            lck_mod: new NumberField({ initial: 0 }),
+        });
+
         return schema;
     }
 
+    //=============================================================================================
+    //> Prepare Derived Data
+    //=============================================================================================
     prepareDerivedData() {
         super.prepareDerivedData();
-        for (const ability in this.abilities) this.abilities[ability].mod = tfm.utils.abilityMod(this.abilities[ability].value);
-        this.dodge.total = Math.max(this.dodge.base + this.abilities.fin.mod + this.dodge.bonus, 1);
-        this.dr.total = this.dr.base + this.dr.bonus;
+
+        //=========================================================================================
+        //> Prepare Abilities
+        //=========================================================================================
+        for (const ability in this.abilities) {
+            this.abilities[ability].total = this.abilities[ability].value + this.bonuses[ability];
+            this.abilities[ability].mod = utils.abilityMod(this.abilities[ability].total) + this.bonuses[ability + '_mod'];
+        }
+        this.dodge.total = Math.max(this.dodge.base + this.abilities.fin.mod + this.bonuses.dodge, 1);
+        this.dr.total = this.dr.base + this.bonuses.dr;
+
+        //=========================================================================================
+        //> Prepare Movement
+        //=========================================================================================
+        this.movement.walk.total = this.movement.walk.base + this.bonuses.walk;
+        this.movement.swim.total = this.movement.swim.base + this.bonuses.swim;
+        this.movement.fly.total = this.movement.fly.base + this.bonuses.fly;
+
+        //=========================================================================================
+        //> Prepared data from items
+        //=========================================================================================
+        const document = this.parent;
+        let held_weapons = 0;
+
+        console.log('Preparing data based on items', document.items);
+        for (const item of document.items.contents) {
+            // Equipped armours
+            if (item.type == 'armour' && item.system.equipped) {
+                this.dr.total = this.dr.base + this.dr.bonus + item.system.damage_reduction.base + item.system.damage_reduction.bonus;
+                if (item.system.weight == 'heavy') this.dodge.total = Math.min(this.dodge.total, 8);
+            }
+
+            // Equipped Weapons
+
+            if (item.type == 'weapon' && item.system.equipped) {
+                held_weapons += 1;
+
+
+            }
+        }
+
+        if (held_weapons >= 2 && !this.dual_wielder) {
+            // Dual wielding can reduce dodge unless an override is toggled
+            this.dodge.total = Math.min(this.dodge.total, 8)
+        }
     }
 };
 
 //=================================================================================================
-//Generic Item data model
+//> Item Data Model
 //=================================================================================================
 export class ItemDataModel extends SystemDataModel {
     static defineSchema() {
@@ -201,25 +279,6 @@ export class ItemDataModel extends SystemDataModel {
             chat: new HTMLField({ initial: "" }),
             unidentified: new HTMLField({ initial: "" }),
         })
-
-        /*
-        Large items take 2 slots - heavy weapons, spare heavy armour, etc
-        Regular items take one slot - Swords, shields, bows
-        Small items stack up to 10 - candles, rations, caltrops
-        Ammo stacks up to 30 - arrows, bullets
-        Tiny items do not take up a slot
-        */
-        schema.quantity = new NumberField({ initial: 1 }); // used only on stacking tiny items
-        schema.size = new StringField({// Overide for the number of slots an item takes up
-            blank: false,
-            initial: 'medium',
-            choices: () => {
-                let options = utils.duplicate(TFM.Sizes);
-                for (const i of Object.keys(options)) options[i] = utils.localize(options[i]);
-                return options;
-            }
-        });
-        schema.price = new NumberField({ initial: 3, label: tfm.config.Generic.price });// price in crowns to purchase
 
         return schema;
     }
@@ -242,10 +301,30 @@ export class ItemDataModel extends SystemDataModel {
     }
 
     //==============================================
-    // Item specific fields
+    //> Item field mixins
     //==============================================
-
-
+    static StackingFields() {
+        return new SchemaField({
+            /*
+            Large items take 2 slots - heavy weapons, spare heavy armour, etc
+            Regular items take one slot - Swords, shields, bows
+            Small items stack up to 10 - candles, rations, caltrops
+            Ammo stacks up to 30 - arrows, bullets
+            Tiny items do not take up a slot
+            */
+            quantity: new NumberField({ initial: 1 }), // used only on stacking tiny items
+            size: new StringField({// Overide for the number of slots an item takes up
+                blank: false,
+                initial: 'medium',
+                choices: () => {
+                    let options = utils.duplicate(TFM.Sizes);
+                    for (const i of Object.keys(options)) options[i] = utils.localize(options[i]);
+                    return options;
+                }
+            }),
+            price: new NumberField({ initial: 3, label: tfm.config.Generic.price })// price in crowns to purchase
+        });
+    }
 
     /**
      * Returns the list for holding enchantments, curses and blessings

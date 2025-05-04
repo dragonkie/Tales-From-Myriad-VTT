@@ -113,7 +113,6 @@ export default function TfmSheetMixin(Base) {
          * @returns 
          */
         async render(options, _options) {
-            console.trace('render');
             return super.render(options, _options);
         }
 
@@ -123,7 +122,6 @@ export default function TfmSheetMixin(Base) {
          * @param {*} options 
          */
         _onFirstRender(context, options) {
-            console.trace('_onFirstRender')
             super._onFirstRender(context, options);
             this._setupContextMenu();
         }
@@ -134,7 +132,6 @@ export default function TfmSheetMixin(Base) {
          * @param {*} options 
          */
         _onRender(context, options) {
-            console.trace('_onRender')
             super._onRender(context, options);
 
             // disables all input elements if this isnt editable for the user
@@ -160,12 +157,10 @@ export default function TfmSheetMixin(Base) {
         }
 
         async _renderHTML(context, options) {
-            console.trace('_renderHTML')
             return super._renderHTML(context, options);
         }
 
         async _renderFrame(options) {
-            console.trace('_renderFrame')
             const frame = super._renderFrame(options);
 
             // Insert additional buttons into the window header
@@ -240,55 +235,22 @@ export default function TfmSheetMixin(Base) {
 
         async _onDrop(event) {
             event.preventDefault();
-
+            if (!this.isEditable) return;
             const target = event.target;
             const { type, uuid } = foundry.applications.ux.TextEditor.getDragEventData(event);
-
-            if (!this.isEditable) return;
-
             const item = await fromUuid(uuid);
-            const itemData = item.toObject();
 
-            // Disallow dropping invalid document types.
-            if (!Object.keys(this.document.constructor.metadata.embedded).includes(type)) return;
-
-            // If dropped onto self, perform sorting.
             if (item.parent === this.document) return this._onSortItem(item, target);
 
-            const modification = {
-                "-=_id": null,
-                "-=ownership": null,
-                "-=folder": null,
-                "-=sort": null
-            };
-
             switch (type) {
-                case "ActiveEffect": {
-                    foundry.utils.mergeObject(modification, {
-                        "duration.-=combat": null,
-                        "duration.-=startRound": null,
-                        "duration.-=startTime": null,
-                        "duration.-=startTurn": null,
-                        "system.source": null
-                    });
-                    break;
-                }
-                case "Item": {
-                    // Allows users to overide and dodge the base item creation
-                    if (await this._onDropItem(event, item) != true) {
-                        LOGGER.debug(`Item create overiden`);
-                        return;
-                    }
-                    break;
-                }
+                case "ActiveEffect": return this._onDropActiveEffect(event, item);
+                case "Item": return this._onDropItem(event, item);
+                case "Actor": return this._onDropActor(event, item);
                 default: return;
             }
-
-            foundry.utils.mergeObject(itemData, modification, { performDeletions: true });
-            getDocumentClass(type).create(itemData, { parent: this.document });
         }
 
-        async _onDropItem(event, data) {
+        async _onDropItem(event, item) {
             LOGGER.debug('Recieved standard item drop');
             // Item dorps can be intercepted by overiding this function and returning a non true value
             // if returning !true, this will make _onDrop() skip default
@@ -296,8 +258,12 @@ export default function TfmSheetMixin(Base) {
             return true;
         }
 
-        async _onDropActor() {
+        async _onDropActor(event, actor) {
             LOGGER.error(`Unhandled actor drop`, this);
+        }
+
+        async _onDropActiveEffect(event, effect) {
+
         }
 
         async _onSortItem(item, target) {

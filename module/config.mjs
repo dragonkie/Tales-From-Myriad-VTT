@@ -1,6 +1,6 @@
 export const TFM = {};
 //========================================================================================
-// Abilities
+//> Abilities
 //========================================================================================
 TFM.Abilities = {
     pwr: 'TFM.Ability.Pwr.long',
@@ -36,7 +36,7 @@ TFM.CreatureTypes = {
 };
 
 //========================================================================================
-// Generic and Misc
+//> Generic
 //========================================================================================
 TFM.Generic = {
     ability: 'TFM.Generic.Ability',
@@ -69,6 +69,16 @@ TFM.Generic = {
     type: "TFM.Generic.Type",
 };
 
+TFM.Dice = {
+    d4: 'd4',
+    d6: 'd6',
+    d8: 'd8',
+    d10: 'd10',
+    d12: 'd12',
+    d20: 'd20',
+    d100: 'd100',
+}
+
 TFM.Sizes = {
     tiny: "TFM.Size.Tiny",
     small: "TFM.Size.Small",
@@ -100,7 +110,7 @@ TFM.Homeland = {
 };
 
 //========================================================================================
-// Armour
+//> Armour Types
 //========================================================================================
 TFM.ArmourTypes = {
     head: 'TYPES.Armour.Head',
@@ -120,7 +130,7 @@ TFM.ArmourClass = {
 }
 
 //========================================================================================
-// Weapons
+//> Weapons Types
 //========================================================================================
 TFM.WeaponTypes = {
     axe: 'TFM.Weapon.Axe',
@@ -152,6 +162,12 @@ TFM.WeaponTags = {
     ranged: 'TFM.Generic.Ranged',
 };
 
+TFM.TrinketTypes = {
+    arc: 'TYPES.magic.arc',
+    div: 'TYPES.magic.div',
+    occ: 'TYPES.magic.occ',
+};
+
 TFM.MagicTypes = {
     arc: 'TYPES.magic.arc',
     div: 'TYPES.magic.div',
@@ -161,7 +177,7 @@ TFM.MagicTypes = {
 };
 
 //========================================================================================
-// Corruption
+//> Corruption
 //========================================================================================
 TFM.Corruption = {
     label: [
@@ -183,7 +199,7 @@ TFM.Corruption = {
 for (const a of TFM.Corruption.label) TFM.Corruption.description.push(a.replace('label', 'description'));
 
 //========================================================================================
-// Damage
+//> Damage types
 //========================================================================================
 TFM.DamageClass = {
     phy: 'TFM.Damage.Class.Physical',

@@ -10,7 +10,7 @@ export default class TfmItemSheet extends TfmSheetMixin(foundry.applications.she
     /** @override */
     static DEFAULT_OPTIONS = {
         classes: ["tfm", "sheet", "item"],
-        position: { height: 400, width: 700, top: 100, left: 200 },
+        position: { height: 500, width: 500, top: 60, left: 120 },
         window: { resizable: true },
         actions: {
             editItem: this._onEditItem,// For opening links to other items
@@ -98,24 +98,5 @@ export default class TfmItemSheet extends TfmSheetMixin(foundry.applications.she
 
         // Checks for and calls an item managed delete function
         document._onDeleteItem(event, target);
-    }
-
-    /**
-     * Called when foundry registers a drop of any kind on this item sheet
-     * if the item defines its own drop handler, it is called
-     * otherwise we output a console error for uncaught drop
-     */
-    async _onDrop(event) {
-        LOGGER.debug("ITEM | DROP");
-        var dragData = tfm.utils.getDragData(event);
-        var item = this.item;
-
-        // If the item has a relevant handler, delegate the work to it instead
-        if (typeof item._onDrop === `function`) item._onDrop(dragData);
-        else {
-            LOGGER.error(`No drop function defined for item of type ${item.type}`);
-            LOGGER.error(`Event Data:`, dragData);
-            super._onDrop(event);
-        }
     }
 }

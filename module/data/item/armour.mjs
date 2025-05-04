@@ -31,11 +31,14 @@ export default class ArmourData extends ItemDataModel {
         return schema;
     }
 
+    prepareBaseData() {
+        this.damage_reduction.base = 0;
+    }
+
     prepareDerivedData() {
         super.prepareDerivedData();
 
         // damage reduction is calculated based on your item with the best value up until it gets destroyed
-        this.damage_reduction.base = 0;
         if (this.weight == 'light') this.damage_reduction.base = 2;
         if (this.weight == 'medium') this.damage_reduction.base = 3;
         if (this.weight == 'heavy') this.damage_reduction.base = 4; // also caps doge to 8

@@ -28,7 +28,9 @@ export default class SpelLData extends ItemDataModel {
         schema.channeled = new BooleanField({ initial: false, nullable: false });
         schema.ritual = new BooleanField({ initial: false, nullable: false });
 
-        // fields for specifying if this spell makes an attack roll
+        // Uuid of a linked trinket responsible for making this item
+        // only applicable when owned by an actor, otherwise should stay blank
+        schema.trinket = new StringField({ ...this.RequiredConfig, initial: '', blank: true });
 
         return schema;
     }

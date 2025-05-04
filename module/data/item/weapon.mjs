@@ -35,10 +35,11 @@ export default class WeaponData extends ItemDataModel {
                 return options;
             }
         })
+
         schema.proficiency = new StringField({
             ...this.RequiredConfig,
             initial: 'sword',
-            label: 'WEAPON TYPE',
+            label: TFM.Generic.type,
             choices: () => {
                 let options = {};
                 for (const key of Object.keys(TFM.WeaponTypes)) options[key] = utils.localize(TFM.WeaponTypes[key]);
@@ -47,9 +48,20 @@ export default class WeaponData extends ItemDataModel {
         })
 
         schema.penalty = new NumberField({ initial: 0, max: 0, min: -3, requried: true, nullable: false, label: 'TFM.Generic.Penalty' });
-        schema.critical = new NumberField({ initial: 0, min: 0, ...this.RequiredConfig });
-        schema.critical_attack = new NumberField({ initial: 0, min: 0, ...this.RequiredConfig });
-        schema.critical_damage = new NumberField({ initial: 0, min: 0, ...this.RequiredConfig });
+
+        // the critical range of dice rolled by this weapon for all / attack / damage dice
+        schema.critical = new SchemaField({
+            value: new NumberField({ initial: 0, min: 0, ...this.RequiredConfig }),
+            attack: new NumberField({ initial: 0, min: 0, ...this.RequiredConfig }),
+            damage: new NumberField({ initial: 0, min: 0, ...this.RequiredConfig }),
+        })
+
+        // Flat modifiers added to damage of the main weapon damage part, always treated as [auto] tagged damage
+        // Usually adding an additional damage part for tis is more than sufficient
+        schema.bonuses = new SchemaField({
+            attack_bonus: new StringField({ initial: '', ...this.RequiredConfig, blank: true }),
+            damage_bonus: new StringField({ initial: '', ...this.RequiredConfig, blank: true })
+        })
 
         // Weapon tags
         for (const [key, value] of Object.entries(tfm.config.WeaponTags)) {
@@ -139,57 +151,63 @@ export default class WeaponData extends ItemDataModel {
         let inputs = [{
             label: 'Ability',
             value: rollData.ability.mod
-        }, {
-
         }];
 
-        let roll_type = await new Promise(async (resolve, reject) => {
-            let app = await new TfmDialog({
-                window: { title: 'Attack Roll' },
-                buttons: [{
-                    label: 'Disadvantage',
-                    action: 'disadvantage'
-                }, {
-                    label: "Normal",
-                    action: "normal",
-                    default: true
-                }, {
-                    label: 'Advantage',
-                    action: 'advantage',
-                }],
-                submit: result => {
-                    console.log('result:', result);
-                    resolve(result);
+        if (this.bonuses.attack != '') inputs.push({ label: 'Weapon Bonus', value: this.bonuses.attack });
+
+        let content = ``;
+        for (const input of inputs) content += new StringField().toFormGroup({ label: utils.localize(input.label) }, { value: input.value, disabled: true }).outerHTML;
+
+        let app = await new TfmDialog({
+            window: { title: 'TFM.Dialog.Attack' },
+            content: content,
+            buttons: [{
+                label: 'Disadvantage',
+                action: 'disadvantage'
+            }, {
+                label: "Normal",
+                action: "normal",
+                default: true
+            }, {
+                label: 'Advantage',
+                action: 'advantage',
+            }],
+            submit: async (result) => {
+                let dice = '2d6';
+                let explode = 'x>=' + Math.max(2, 6 - this.critical.value - this.critical.attack);
+                let limit = 'kf' + rollData.karma;
+
+                if (rollData.proficiency == 0) {
+                    if (result == 'advantage') {
+                        result = 'normal'
+                        limit = 'kf3';
+                    } else {
+                        result = 'disadvantage';
+                        explode = '';
+                        limit = '';
+                    }
                 }
-            }).render(true);
-        })
 
-        let dice = '2d6';
-        let explode = 'x>=' + Math.max(2, 6 - this.critical - this.critical_attack);
-        let limit = 'kf' + rollData.karma;
+                if (result == 'advantage') dice = '3d6dl1';
+                if (result == 'disadvantage') dice = '3d6dh1';
 
-        if (rollData.proficiency == 0) {
-            if (roll_type == 'advantage') {
-                roll_type = 'normal'
-                limit = 'kf3';
-            } else {
-                roll_type = 'disadvantage';
-                explode = '';
-                limit = '';
+                let formula = dice + explode + limit + `+ ${rollData.ability.mod}`;
+
+                let attack = new Roll(formula, rollData);
+                await attack.evaluate();
+
+                let msg_flavour = `Attack with ${this.parent.name}[${utils.localize(TFM.Abilities[rollData.ability.key])}]<br>`
+                if (rollData.proficiency == 0) msg_flavour += `Not Proficient`;
+                else if (rollData.proficiency >= 3) msg_flavour += `Fully Proficient`;
+                else msg_flavour += `Half Proficient`;
+
+                let msg = await attack.toMessage({
+                    flavor: msg_flavour,
+                    speaker: ChatMessage.getSpeaker({ actor: this.actor })
+                });
             }
-        }
+        }).render(true);
 
-        if (roll_type == 'advantage') dice = '3d6dl1';
-        if (roll_type == 'disadvantage') dice = '3d6dh1';
-
-        let formula = dice + explode + limit + `+ ${rollData.ability.mod}`;
-
-        let attack = new Roll(formula, rollData);
-        await attack.evaluate();
-        let msg = await attack.toMessage({
-            flavor: `Attack with ${this.parent.name}[${rollData.ability.key}]`,
-            speaker: ChatMessage.getSpeaker({ actor: this.actor })
-        });
     }
 
     async _onUseDamage(event, options) {

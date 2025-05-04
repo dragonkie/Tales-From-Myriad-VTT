@@ -1,8 +1,14 @@
 <div class="tfm-tab-content flexcol flex-gap-s">
     {{toFieldGroup system.schema 'weight' value=system.weight}}
-    {{toFieldGroup system.schema 'damage_reduction.base' value=system.damage_reduction.base disabled=true}}
-    {{toFieldGroup system.schema 'damage_reduction.bonus' value=system.damage_reduction.bonus}}
-    {{toFieldGroup system.schema 'broken' value=system.broken}}
-    {{toFieldGroup system.schema 'equipped' value=system.equipped}}
-    {{#if isGm}}{{toFieldGroup system.schema 'identified' value=system.identified}}{{/if}}
+    <div class="flexrow flex-gap-m">
+        {{toFieldGroup system.schema 'damage_reduction.base' value=system.damage_reduction.base disabled=true}}
+        {{toFieldGroup system.schema 'damage_reduction.bonus' value=system.damage_reduction.bonus}}
+    </div>
+    <div class="flexrow flex-gap-m">
+        {{toFieldGroup system.schema 'broken' value=system.broken}}
+        {{toFieldGroup system.schema 'equipped' value=system.equipped}}
+    </div>
+    {{#if isGm}}
+        {{toFieldGroup system.schema 'identified' value=system.identified}}
+    {{/if}}
 </div>

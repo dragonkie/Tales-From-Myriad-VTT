@@ -48,5 +48,7 @@ export default class CharacterData extends ActorDataModel {
         super.prepareDerivedData();
         this.level = this.level_class + this.level_specialty;
         this.carry_capacity = Math.max(10 + this.abilities.pwr.mod, 1);
+
+        
     }
 }

@@ -77,17 +77,14 @@ export default class TfmActor extends Actor {
     }
 
     async _preUpdate(changed, options, user) {
-        console.trace('_preUpdate');
         return super._preUpdate(changed, options, user);
     }
 
     async update(data, operation) {
-        console.trace('update');
         return super.update(data, operation);
     }
 
     _onUpdate(changed, options, userId) {
-        console.trace('_onUpdate');
         return super._onUpdate(changed, options, userId);
     }
 

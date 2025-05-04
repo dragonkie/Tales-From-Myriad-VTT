@@ -1,0 +1,16 @@
+<div class="tfm-tab-content flexcol flex-gap-s">
+
+    <div class="tfm-abilities-list flex-gap-m flexrow tfm-row">
+        {{#each system.abilities as | ability key |}}
+            <div class="tfm-ability">
+                <label class="text-center">
+                    <b class="text-center">{{localize (concat 'TFM.Ability.' (toTitleCase key) '.long')}}</b>
+                </label>
+                <div class="wrapper">
+                    <input class="tfm-ability-score text-center" type="number" name="system.abilities.{{key}}" value="{{ability}}">
+                </div>
+            </div>
+        {{/each}}
+    </div>
+
+</div>
