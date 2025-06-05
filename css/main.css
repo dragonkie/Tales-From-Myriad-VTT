@@ -393,6 +393,9 @@
   flex-direction: row;
   flex: 2;
 }
+.form-group.stacked {
+  flex-direction: column;
+}
 
 .tfm-tab-content {
   padding: 10px;
@@ -700,7 +703,44 @@
   padding: 0;
   margin: 0.2rem 0;
 }
-
+.sheet.item .tfm-job-features {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+.sheet.item .tfm-job-features > * {
+  width: 100%;
+}
+.sheet.item .tfm-job-features .tfm-job-paths {
+  width: 100%;
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+}
+.sheet.item .tfm-job-features .tfm-job-paths .tfm-path {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  height: 100%;
+}
+.sheet.item .tfm-job-features .tfm-job-paths .tfm-path > .tfm-feature {
+  border: 1px solid white;
+  flex: 1;
+}
+.sheet.item .tfm-job-features .tfm-feature-implicit, .sheet.item .tfm-job-features .tfm-feature-generic {
+  display: flex;
+  flex-direction: row;
+  flex: 0;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+.sheet.item .tfm-job-features .tfm-feature-implicit .tfm-feature, .sheet.item .tfm-job-features .tfm-feature-generic .tfm-feature {
+  border: 1px solid white;
+  border-radius: 5px;
+  padding: 2px 5px;
+  flex: 0 0;
+  white-space: nowrap;
+}
 .tfm {
   --tfm-size-xs: 4px;
   --tfm-size-s: 6px;

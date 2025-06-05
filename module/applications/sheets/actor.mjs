@@ -290,8 +290,7 @@ export default class TfmActorSheet extends TfmSheetMixin(foundry.applications.sh
      * @param {Element} target
      */
     static async _onEditResistance(event, target) {
-        let content = ``;
-
+        let content = `<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px">`;
         let resists = this.document.system.resistances;
 
         // create the inputs for the different groups
@@ -319,6 +318,8 @@ export default class TfmActorSheet extends TfmSheetMixin(foundry.applications.sh
 
             content += ele.outerHTML;
         }
+
+        content += `</div>`;
 
         let app = await new TfmDialog({
             window: { title: 'RESISTANCE_CONFIG' },
@@ -354,13 +355,16 @@ export default class TfmActorSheet extends TfmSheetMixin(foundry.applications.sh
      * @param {Element} target 
      */
     static async _onEditDefence(event, target) {
+        const field_dodge = this.document.system.schema.getField('dodge.base');
+        const field_dr = this.document.system.schema.getField('dr.base');
+
         let content = '';
-        content += this.document.system.schema.getField('dodge.bonus').toFormGroup({
+        content += field_dodge.toFormGroup({
             label: utils.localize(TFM.Generic.dodge),
-        }, { value: this.document.system.dodge.bonus }).outerHTML;
-        content += this.document.system.schema.getField('dr.bonus').toFormGroup({
+        }, { value: this.document.system.dodge.base }).outerHTML;
+        content += field_dr.toFormGroup({
             label: utils.localize(TFM.Generic.reduction),
-        }, { value: this.document.system.dr.bonus }).outerHTML;
+        }, { value: this.document.system.dr.base }).outerHTML;
 
         let app = await new TfmDialog({
             window: { title: 'DEFENCE_CONFIG' },
@@ -384,7 +388,7 @@ export default class TfmActorSheet extends TfmSheetMixin(foundry.applications.sh
     }
 
     //============================================================================================
-    // Context Menu
+    //> Context Menu
     //============================================================================================
 
     _getItemContextOptions(item) {

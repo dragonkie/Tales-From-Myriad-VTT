@@ -35,24 +35,24 @@ function registerTemplates() {
 function registerHelpers() {
     const helpers = [
         //======================================================================================
-        // Strings
+        //> Strings
         //======================================================================================
         { name: 'toLowerCase', fn: (str) => str.toLowerCase() },
         { name: 'toTitleCase', fn: (str) => str.replace(/\w\S*/g, text => text.charAt(0).toUpperCase() + text.substring(1).toLowerCase()) },
 
         //======================================================================================
-        // Logic
+        //> Logic
         //======================================================================================
         { name: 'choose', fn: (a, b) => a ? a : b },
         { name: 'objectIsEmpty', fn: (obj) => Object.keys(obj).length <= 0 },
 
         //======================================================================================
-        // User permissions
+        //> User permissions
         //======================================================================================
         { name: 'isGM', fn: () => game.user.isGM },
 
         //======================================================================================
-        // Math helpers
+        //> Math helpers
         //======================================================================================
         { name: 'addition', fn: (a, b) => a + b },
         { name: 'ceil', fn: (a) => Math.ceil(a) },
@@ -65,7 +65,7 @@ function registerHelpers() {
         { name: 'round', fn: (a) => Math.ceil(a) },
         { name: 'subtraction', fn: (a, b) => a - b },
         //======================================================================================
-        // Elements
+        //> Elements
         //======================================================================================
         {// wraps a set of elements in a collapsible wrapper
             name: 'collapsible',
@@ -106,7 +106,7 @@ function registerHelpers() {
             }
         },
         //======================================================================================
-        // Iterators
+        //> Iterators
         //======================================================================================
         {
             name: 'repeat',
@@ -117,7 +117,7 @@ function registerHelpers() {
             }
         },
         //======================================================================================
-        // Data Fields
+        //> Data Fields
         //======================================================================================
         {
             name: 'getField',
@@ -125,37 +125,45 @@ function registerHelpers() {
         }, {
             name: 'toFieldGroup',
             fn: (schema, path, options) => {
-                let field = schema.getField(path);
+                const field = schema.getField(path);
+                if (!field) throw new Error(`Couldnt find field from [${path}] in schema:`, schema);
+                
                 const { classes, label, hint, rootId, stacked, units, widget, ...inputConfig } = options.hash;
                 const groupConfig = {
                     label, hint, rootId, stacked, widget, localize: true, units,
                     classes: typeof classes === "string" ? classes.split(" ") : []
                 };
+
+                console.log(path, field);
+
                 const group = field.toFormGroup(groupConfig, inputConfig);
                 return new Handlebars.SafeString(group.outerHTML);
             }
         }, {
             name: 'toFieldInput',
             fn: (schema, path, options) => {
-                let field = schema.getField(path);
+                const field = schema.getField(path);
+                if (!field) throw new Error(`Couldnt find field from [${path}] in schema:`, schema);
+
+
                 const { classes, label, hint, rootId, stacked, units, widget, ...inputConfig } = options.hash;
                 const groupConfig = {
                     label, hint, rootId, stacked, widget, localize: true, units,
                     classes: typeof classes === "string" ? classes.split(" ") : []
                 };
+
+                console.log(path, field);
+
                 const group = field.toInput(groupConfig, inputConfig);
                 return new Handlebars.SafeString(group.outerHTML);
             }
+        }, {
+            name: 'ledger',
+            fn: (target, id, label) => {
+                return `<a data-action="editLedger" data-target="${target}" data-id="${id}" data-label="${label}"><i class="fa-solid fa-memo-pad"></i></a>`
+            }
         }
     ]
-
-    Handlebars.registerHelper('ledger', (target, id, label) => {
-        return `<a data-action="editLedger" data-target="${target}" data-id="${id}" data-label="${label}"><i class="fa-solid fa-memo-pad"></i></a>`
-    });
-
-    //======================================================================================
-    // Data field management
-    //======================================================================================
 
     // register the helpers
     for (const helper of helpers) Handlebars.registerHelper(helper.name, helper.fn);

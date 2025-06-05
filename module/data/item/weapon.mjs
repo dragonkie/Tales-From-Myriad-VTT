@@ -68,6 +68,8 @@ export default class WeaponData extends ItemDataModel {
             schema[key] = new BooleanField({ initial: false, label: value });
         }
 
+        schema.price = new NumberField({ initial: 3, label: TFM.Generic.price });
+
         // adds equipment fields
         Object.assign(schema, this.EquipmentFields());
 

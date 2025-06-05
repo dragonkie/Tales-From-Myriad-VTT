@@ -21,6 +21,13 @@ export default class JobData extends ItemDataModel {
             initial: []
         })
 
+        // Armour proficiencies given by this job
+        schema.armour = new SchemaField({
+            light: new BooleanField({ initial: false, label: TFM.ArmourClass.light }),
+            medium: new BooleanField({ initial: false, label: TFM.ArmourClass.medium }),
+            heavy: new BooleanField({ initial: false, label: TFM.ArmourClass.heavy }),
+        })
+
         return schema;
     }
 }

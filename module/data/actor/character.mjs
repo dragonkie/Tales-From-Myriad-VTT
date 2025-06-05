@@ -18,11 +18,16 @@ export default class CharacterData extends ActorDataModel {
         }
         schema.proficiencies = new SchemaField(profData);
 
+        // Armour proficiency
+        schema.armour = new SchemaField({
+            light: new BooleanField({ initial: false, label: TFM.ArmourClass.light }),
+            medium: new BooleanField({ initial: false, label: TFM.ArmourClass.medium }),
+            heavy: new BooleanField({ initial: false, label: TFM.ArmourClass.heavy }),
+        })
+
         schema.corruption = this.ResourceField(0, 10);
 
-        schema.level_class = new NumberField({ initial: 1, min: 1, max: 10, ...this.RequiredConfig });
-        schema.level_specialty = new NumberField({ initial: 0, min: 0, max: 9, ...this.RequiredConfig });
-
+        // Character description
         schema.details = new SchemaField({
             age: new StringField(),
             eyes: new StringField(),
@@ -32,9 +37,6 @@ export default class CharacterData extends ActorDataModel {
             kindred: new StringField(),
             homeland: new StringField(),
             weight: new StringField(),
-            quests: new ArrayField(new StringField({ initial: "" }), {
-                initial: ["", "", ""]
-            })
         });
 
         // array to track users quests
@@ -49,6 +51,6 @@ export default class CharacterData extends ActorDataModel {
         this.level = this.level_class + this.level_specialty;
         this.carry_capacity = Math.max(10 + this.abilities.pwr.mod, 1);
 
-        
+
     }
 }

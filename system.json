@@ -5,9 +5,9 @@
   "version": "1.3.0",
   "socket": true,
   "compatibility": {
-    "minimum": "13.341",
-    "verified": "13.341",
-    "maximum": "13.341"
+    "minimum": "13",
+    "verified": "13.344",
+    "maximum": "14"
   },
   "authors": [
     {

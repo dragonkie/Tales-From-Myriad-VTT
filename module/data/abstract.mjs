@@ -214,13 +214,13 @@ export class ActorDataModel extends SystemDataModel {
     }
 
     //=============================================================================================
-    //> Prepare Derived Data
+    //>- Prepare Derived Data
     //=============================================================================================
     prepareDerivedData() {
         super.prepareDerivedData();
 
         //=========================================================================================
-        //> Prepare Abilities
+        //>-- Prepare Abilities
         //=========================================================================================
         for (const ability in this.abilities) {
             this.abilities[ability].total = this.abilities[ability].value + this.bonuses[ability];
@@ -230,19 +230,18 @@ export class ActorDataModel extends SystemDataModel {
         this.dr.total = this.dr.base + this.bonuses.dr;
 
         //=========================================================================================
-        //> Prepare Movement
+        //>-- Prepare Movement
         //=========================================================================================
         this.movement.walk.total = this.movement.walk.base + this.bonuses.walk;
         this.movement.swim.total = this.movement.swim.base + this.bonuses.swim;
         this.movement.fly.total = this.movement.fly.base + this.bonuses.fly;
 
         //=========================================================================================
-        //> Prepared data from items
+        //>-- Prepared data from items
         //=========================================================================================
         const document = this.parent;
         let held_weapons = 0;
 
-        console.log('Preparing data based on items', document.items);
         for (const item of document.items.contents) {
             // Equipped armours
             if (item.type == 'armour' && item.system.equipped) {
@@ -301,7 +300,7 @@ export class ItemDataModel extends SystemDataModel {
     }
 
     //==============================================
-    //> Item field mixins
+    //>- Item field mixins
     //==============================================
     static StackingFields() {
         return new SchemaField({
@@ -322,7 +321,7 @@ export class ItemDataModel extends SystemDataModel {
                     return options;
                 }
             }),
-            price: new NumberField({ initial: 3, label: tfm.config.Generic.price })// price in crowns to purchase
+            price: new NumberField({ initial: 3, label: TFM.Generic.price })// price in crowns to purchase
         });
     }
 
@@ -333,11 +332,11 @@ export class ItemDataModel extends SystemDataModel {
     static EnchantmentField() {
         // arrays for magical effects on the item
         return new ArrayField(new SchemaField({
-            label: new StringField({ ...this.PrivateConfig, initial: '', label: tfm.config.Generic.label }), // localizable curse name
-            description: new HTMLField({ ...this.PrivateConfig, initial: '', label: tfm.config.Generic.description }), // description of enchantment, supports enriched HTML
-            chat: new HTMLField({ ...this.PrivateConfig, initial: '', label: tfm.config.Generic.chatDescription }), // Chat card to output for enchantment, supports enriched html
-            curse: new BooleanField({ ...this.PrivateConfig, initial: false, label: tfm.config.Generic.curse }), // does this enchantment qualify as a curse
-            identified: new BooleanField({ ...this.PrivateConfig, initial: false, label: tfm.config.Generic.identified }), // is this effect visible to players
+            label: new StringField({ ...this.PrivateConfig, initial: '', label: TFM.Generic.label }), // localizable curse name
+            description: new HTMLField({ ...this.PrivateConfig, initial: '', label: TFM.Generic.description }), // description of enchantment, supports enriched HTML
+            chat: new HTMLField({ ...this.PrivateConfig, initial: '', label: TFM.Generic.chatDescription }), // Chat card to output for enchantment, supports enriched html
+            curse: new BooleanField({ ...this.PrivateConfig, initial: false, label: TFM.Generic.curse }), // does this enchantment qualify as a curse
+            identified: new BooleanField({ ...this.PrivateConfig, initial: false, label: TFM.Generic.identified }), // is this effect visible to players
         }), {
             initial: [],
             label: TFM.Generic.enchantments,

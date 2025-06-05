@@ -1,16 +1,85 @@
 <div class="tfm-tab-content flexcol flex-gap-s">
 
+    {{!-- Ability score modifiers --}}
     <div class="tfm-abilities-list flex-gap-m flexrow tfm-row">
         {{#each system.abilities as | ability key |}}
-            <div class="tfm-ability">
+            <div class="tfm-ability form-group stacked">
                 <label class="text-center">
                     <b class="text-center">{{localize (concat 'TFM.Ability.' (toTitleCase key) '.long')}}</b>
                 </label>
-                <div class="wrapper">
+                <div class="wrapper form-fields">
                     <input class="tfm-ability-score text-center" type="number" name="system.abilities.{{key}}" value="{{ability}}">
                 </div>
             </div>
         {{/each}}
+    </div>
+
+    {{!-- Skill tree for class features --}}
+    <div class="flexrow tfm-job-features flex-gap-m">
+        {{!-- Features that are implicit, given to characters by default --}}
+        <div class="flex0">
+            <b style="padding-bottom: 10px;">Implicit Features:</b>
+            <div class="tfm-feature-implicit flex-gap-m">
+                <div class="tfm-feature">Powerful Build</div>
+                <div class="tfm-feature">Overwhelm</div>
+            </div>
+        </div>
+        {{!-- Features that can be taken at any time, and sometimes multiple --}}
+        <div class="flex0">
+            <b style="padding-bottom: 10px;">Universal Features:</b>
+            <div class="tfm-feature-generic flex-gap-m">
+                <div class="tfm-feature">Corruption</div>
+                <div class="tfm-feature">Cardio beats Chaos</div>
+            </div>
+        </div>
+        {{!-- Feature skill tree, must be taken in order, and meet level requirements to unlock --}}
+        <div class="tfm-job-paths flexrow flex-gap-m">
+            <div class="flexcol tfm-path flex-gap-m">
+                <b>Feature Path 1</b>
+                <div class="tfm-feature">
+                    <b class="tfm-title">Feature</b>
+                    <div class="tfm-description">Description for the feature goes here, and takes up any remaining space needed</div>
+                </div>
+                <div class="tfm-feature">
+                    <b class="tfm-title">Feature</b>
+                    <div class="tfm-description">Description for the feature goes here, and takes up any remaining space needed</div>
+                </div>
+                <div class="tfm-feature">
+                    <b class="tfm-title">Feature</b>
+                    <div class="tfm-description">Description for the feature goes here, and takes up any remaining space needed</div>
+                </div>
+            </div>
+            <div class="flexcol tfm-path flex-gap-m">
+                <b>Feature Path 2</b>
+                <div class="tfm-feature">
+                    <b class="tfm-title">Feature</b>
+                    <div class="tfm-description">Description for the feature goes here, and takes up any remaining space needed</div>
+                </div>
+                <div class="tfm-feature">
+                    <b class="tfm-title">Feature</b>
+                    <div class="tfm-description">Description for the feature goes here, and takes up any remaining space needed</div>
+                </div>
+                <div class="tfm-feature">
+                    <b class="tfm-title">Feature</b>
+                    <div class="tfm-description">Description for the feature goes here, and takes up any remaining space needed</div>
+                </div>
+            </div>
+            <div class="flexcol tfm-path flex-gap-m">
+                <b>Feature Path 3</b>
+                <div class="tfm-feature">
+                    <b class="tfm-title">Feature</b>
+                    <div class="tfm-description">Description for the feature goes here, and takes up any remaining space needed</div>
+                </div>
+                <div class="tfm-feature">
+                    <b class="tfm-title">Feature</b>
+                    <div class="tfm-description">Description for the feature goes here, and takes up any remaining space needed</div>
+                </div>
+                <div class="tfm-feature">
+                    <b class="tfm-title">Feature</b>
+                    <div class="tfm-description">Description for the feature goes here, and takes up any remaining space needed</div>
+                </div>
+            </div>
+        </div>
     </div>
 
 </div>

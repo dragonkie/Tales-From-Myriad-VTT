@@ -1,5 +1,5 @@
 <div class="tfm-tab-content flexcol flex-gap-s">
-
+    {{log this}}
 
     <div class="flexrow flex-gap-m">
         {{toFieldGroup system.schema 'proficiency' value=system.proficiency}}
@@ -43,7 +43,6 @@
         {{toFieldGroup system.schema 'reach' value=system.reach}}
     {{/if}}
     <b>Market Details</b>
-    {{toFieldGroup system.schema 'quantity' value=system.quantity}}
     {{toFieldGroup system.schema 'price' value=system.price}}
     {{toFieldGroup system.schema 'size' value=system.size}}
 
