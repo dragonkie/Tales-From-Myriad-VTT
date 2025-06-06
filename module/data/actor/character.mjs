@@ -2,7 +2,7 @@ import { TFM } from "../../config.mjs";
 import utils from "../../helpers/utils.mjs";
 import { ActorDataModel } from "../abstract.mjs";
 
-const { ArrayField, NumberField, SchemaField, SetField, StringField, HTMLField } = foundry.data.fields;
+const { ArrayField, BooleanField, NumberField, SchemaField, SetField, StringField, HTMLField } = foundry.data.fields;
 
 export default class CharacterData extends ActorDataModel {
     static defineSchema() {
@@ -25,18 +25,21 @@ export default class CharacterData extends ActorDataModel {
             heavy: new BooleanField({ initial: false, label: TFM.ArmourClass.heavy }),
         })
 
+        // tracks player experience points
+        schema.xp = new SchemaField({
+            value: new NumberField({ required: true, nullable: false, min: 0, initial: 0 })
+        })
+
         schema.corruption = this.ResourceField(0, 10);
 
         // Character description
         schema.details = new SchemaField({
-            age: new StringField(),
-            eyes: new StringField(),
-            gender: new StringField(),
-            hair: new StringField(),
-            height: new StringField(),
-            kindred: new StringField(),
-            homeland: new StringField(),
-            weight: new StringField(),
+            age: new StringField({ label: TFM.Generic.age }),
+            gender: new StringField({ label: TFM.Generic.gender }),
+            height: new StringField({ label: TFM.Generic.height }),
+            homeland: new StringField({ label: TFM.Generic.homeland }),
+            kindred: new StringField({ label: TFM.Generic.kindred }),
+            weight: new StringField({ label: TFM.Generic.weight }),
         });
 
         // array to track users quests
@@ -48,7 +51,7 @@ export default class CharacterData extends ActorDataModel {
 
     prepareDerivedData() {
         super.prepareDerivedData();
-        this.level = this.level_class + this.level_specialty;
+        this.level = utils.levelXp(this.xp.value);
         this.carry_capacity = Math.max(10 + this.abilities.pwr.mod, 1);
 
 

@@ -22,7 +22,8 @@ export default class CharacterSheet extends TfmActorSheet {
             // tabs
             features: { template: `${tfm.filepath.template}/actor/character/features.hbs` },
             inventory: { template: `${tfm.filepath.template}/actor/character/inventory.hbs` },
-            effects: { template: `${tfm.filepath.template}/actor/shared/actor-effects.hbs` }
+            effects: { template: `${tfm.filepath.template}/actor/shared/actor-effects.hbs` },
+            details: {template: `${tfm.filepath.template}/actor/character/details.hbs`}
         }
 
         return parts;
@@ -33,7 +34,7 @@ export default class CharacterSheet extends TfmActorSheet {
         inventory: { id: "inventory", group: "primary", label: "TFM.Tab.Inventory" },
         spells: { id: "spells", group: "primary", label: "TFM.Tab.Spells" },
         effects: { id: "effects", group: "primary", label: "TFM.Tab.Effects" },
-        details: { id: "journal", group: "primary", label: "TFM.Tab.Details" }
+        details: { id: "details", group: "primary", label: "TFM.Tab.Details" }
     }
 
     tabGroups = { primary: "features" };

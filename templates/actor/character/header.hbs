@@ -2,13 +2,22 @@
 
     <img class="profile-img" src="{{document.img}}" data-action="editImage" title="{{name}}" height="100" width="100" />
     <div class="wrapper flex-gap-m">
-        <input class="tfm-actor-name" type="text" name="name" value="{{name}}" placeholder="{{localize 'TFM.generic.name'}}">
-        <div class="flexrow flex-gap-m">
-            <div class="tfm-health">
-                {{> 'tfm.resource-bar-inline' cssClass='tfm-health-bar' label='Health' value=system.hp.value value_name='system.hp.value' max=system.hp.max max_name='system.hp.max'}}
+        <div class="flexrow">
+            <div>
+                <input class="tfm-actor-name" type="text" name="name" value="{{name}}" placeholder="{{localize 'TFM.generic.name'}}">
+                <div class="flexrow flex-gap-m">
+                    <div class="tfm-health">
+                        {{> 'tfm.resource-bar-inline' cssClass='tfm-health-bar bold' label='HP:' value=system.hp.value value_name='system.hp.value' max=system.hp.max max_name='system.hp.max'}}
+                    </div>
+                </div>
             </div>
-            <div class="tfm-corruption">
-                {{> 'tfm.resource-bar-inline' cssClass='tfm-corruption-bar' label=(concat 'Corruption: ' system.corruption.label) value=system.corruption.value value_name='system.corruption.value' max=10}}
+            <div>
+                <div>
+                    <b>Level: {{system.level}}</b>
+                    {{#with system.xp}}
+                        {{> 'tfm.resource-bar-inline' cssClass='tfm-exp-bar tfm-s' label='EXP' value=value value_name='system.xp.value' max=next}}
+                    {{/with}}
+                </div>
             </div>
         </div>
     </div>

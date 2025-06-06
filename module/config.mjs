@@ -40,6 +40,7 @@ TFM.CreatureTypes = {
 //========================================================================================
 TFM.Generic = {
     ability: 'TFM.Generic.Ability',
+    age: 'TFM.Generic.Age',
     auto: 'TFM.Generic.Automatic.abbr',
     automatic: 'TFM.Generic.Automatic.long',
     base: 'TFM.Generic.Base',
@@ -56,8 +57,12 @@ TFM.Generic = {
     equip: "TFM.Generic.Equip",
     equipped: "TFM.Generic.Equipped",
     experience: 'TFM.Generic.Experience',
+    gender: 'TFM.Generic.Gender',
     health: 'TFM.Generic.Health',
+    height: 'TFM.Generic.Height',
+    homeland: "TFM.Generic.Homeland.long",
     identified: 'TFM.Generic.Identified',
+    kindred: "TFM.Generic.Kindred.long",
     label: 'TFM.Generic.Label',
     level: 'TFM.Generic.Level',
     normal: 'TFM.Generic.Normal',
@@ -67,6 +72,7 @@ TFM.Generic = {
     resistance: "TFM.Generic.Resistance",
     size: "TFM.Generic.Size",
     type: "TFM.Generic.Type",
+    weight: 'TFM.Generic.Weight',
 };
 
 TFM.Dice = {

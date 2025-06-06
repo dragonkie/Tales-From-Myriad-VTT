@@ -1,31 +1,37 @@
-<div class="features flexrow flex-gap-l flex-group-left flex-align-start">
+<div class="tfm-tab-content tfm-tab-features flexrow flex-gap-l flex-group-left flex-align-start">
 
     <div class="flexrow flex-gap-m" style="align-items: flex-start; flex-wrap: nowrap;">
         <div style="flex: 2;">{{> 'tfm.actor-abilities'}}</div>
         <div style="flex: 3;">
             {{> 'tfm.actor-proficiency'}}
+            <div class="flexcol tfm-armour-prof">
+                <div class="tfm-prof flexrow">
+                    <b>Light</b>
+                    <a class="fa-regular fa-diamond" style="float: right;"></a>
+                </div>
+                <div class="tfm-prof flexrow">
+                    <b>Medium</b>
+                    <a class="fa-regular fa-diamond" style="float: right;"></a>
+                </div>
+                <div class="tfm-prof flexrow">
+                    <b>Heavy</b>
+                    <a class="fa-regular fa-diamond" style="float: right;"></a>
+                </div>
+            </div>
             {{> 'tfm.actor-skills'}}
         </div>
     </div>
     <div class="flexcol flex-gap-m">
+        <div class="tfm-corruption">
+            {{> 'tfm.resource-bar-inline' cssClass='tfm-corruption-bar tfm-s stacked bold' label=(concat 'Corruption: ' system.corruption.label) value=system.corruption.value value_name='system.corruption.value' max=10}}
+        </div>
         {{> 'tfm.actor-movement'}}
         {{> 'tfm.actor-defence'}}
         {{> 'tfm.actor-resistance'}}
     </div>
     <div>
         <div>
-            {{#with system.xp}}
-                {{> 'tfm.resource-bar-inline' cssClass='tfm-exp-bar tfm-s' label='Experience' value=value value_name='system.xp.value' max=next}}
-            {{/with}}
-            <b>Levels</b>
-            <div class="flexrow">
-                <div>Class</div>
-                {{toFieldInput system.schema 'level_class' value=system.level_class}}
-            </div>
-            <div class="flexrow">
-                <div>Speciality</div>
-                {{toFieldInput system.schema 'level_specialty' value=system.level_specialty}}
-            </div>
+            <b>Level: {{system.level}}</b>
         </div>
     </div>
 </div>

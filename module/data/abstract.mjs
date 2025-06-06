@@ -114,11 +114,6 @@ export class ActorDataModel extends SystemDataModel {
             base: new NumberField({ initial: 8 }),
         })
 
-        // tracks player experience points, or a monsters given exp
-        schema.xp = new SchemaField({
-            value: new NumberField({ required: true, nullable: false, min: 0, initial: 0 })
-        })
-
         schema.description = new HTMLField({ initial: "" });
 
         schema.movement = new SchemaField({

@@ -1,0 +1,16 @@
+<div class="tfm-tab-content tfm-tab-details flex-gap-m">
+    <div class="flexrow flex-gap-m">
+        <div class="flexcol flex-gap-m">
+            {{toFieldGroup system.schema 'details.kindred' value=system.details.kindred}}
+            {{toFieldGroup system.schema 'details.homeland' value=system.details.homeland}}
+            {{toFieldGroup system.schema 'details.gender' value=system.details.gender}}
+        </div>
+        <div class="flexcol flex-gap-m">
+            {{toFieldGroup system.schema 'details.age' value=system.details.age}}
+            {{toFieldGroup system.schema 'details.height' value=system.details.height}}
+            {{toFieldGroup system.schema 'details.weight' value=system.details.weight}}
+        </div>
+    </div>
+    {{toFieldInput system.schema 'description' value=system.description}}
+
+</div>

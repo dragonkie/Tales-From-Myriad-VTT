@@ -203,29 +203,6 @@
   flex-wrap: wrap;
 }
 
-.sheet-header {
-  flex: 0 auto;
-  overflow: hidden;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-  margin-bottom: 10px;
-}
-.sheet-header .profile-img {
-  flex: 0 0 100px;
-  height: 100px;
-}
-.sheet-header .header-fields {
-  flex: 1;
-}
-.sheet-header h1.charname input {
-  font-size: 28px;
-}
-.sheet-header h1.item-name input {
-  font-size: 36px;
-}
-
 .sheet-tabs {
   flex: 0;
   margin-bottom: 10px;
@@ -279,6 +256,19 @@
   --tfm-bar-colour: green;
   --tfm-bar-bg: black;
   --tfm-bar-padding: 2px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.tfm-bar label {
+  margin-right: 1em;
+  flex: 0;
+}
+.tfm-bar.bold label {
+  font-weight: bold;
+}
+.tfm-bar.stacked {
+  display: block;
 }
 .tfm-bar.tfm-l {
   --tfm-bar-size: 12px;
@@ -287,6 +277,7 @@
   --tfm-bar-size: 4px;
 }
 .tfm-bar > .wrapper {
+  flex: 1;
   background-color: var(--tfm-bar-bg);
   border-radius: calc((var(--tfm-bar-size) + var(--tfm-bar-padding)) / 2);
   height: calc(var(--tfm-bar-size) + var(--tfm-bar-padding));
@@ -382,11 +373,26 @@
 .form-group {
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
   align-items: center;
+  margin: 0;
+  gap: 0.5rem;
 }
-.form-group label {
+.form-group > * {
+  flex: 2;
+}
+.form-group > input[type=checkbox] {
+  flex: none;
+}
+.form-group > label, .form-group > span.label {
   flex: 1;
-  text-align: left;
+  color: var(--color-form-label);
+  font-weight: bold;
+  line-height: var(--input-height);
+  cursor: var(--cursor-default);
+}
+.form-group > label > i, .form-group > span.label > i {
+  margin-right: 0.25rem;
 }
 .form-group .form-fields {
   display: flex;
@@ -846,30 +852,135 @@
   --tfm-margin: var(--tfm-size-xs);
   --tfm-padding: var(--tfm-size-xs);
   --tfm-font-size: var(--tfm-font-size-xs);
+  --tfm-input-font-size: var(--tfm-font-size-xs);
 }
 
 .tfm-s {
   --tfm-margin: var(--tfm-size-s);
   --tfm-padding: var(--tfm-size-s);
   --tfm-font-size: var(--tfm-font-size-s);
+  --tfm-input-font-size: var(--tfm-font-size-s);
 }
 
 .tfm-m {
   --tfm-margin: var(--tfm-size-m);
   --tfm-padding: var(--tfm-size-m);
   --tfm-font-size: var(--tfm-font-size-m);
+  --tfm-input-font-size: var(--tfm-font-size-m);
 }
 
 .tfm-l {
   --tfm-margin: var(--tfm-size-l);
   --tfm-padding: var(--tfm-size-l);
   --tfm-font-size: var(--tfm-font-size-l);
+  --tfm-input-font-size: var(--tfm-font-size-l);
 }
 
 .tfm-xl {
   --tfm-margin: var(--tfm-size-xl);
   --tfm-padding: var(--tfm-size-xl);
   --tfm-font-size: var(--tfm-font-size-xl);
+  --tfm-input-font-size: var(--tfm-font-size-xl);
+}
+
+.tfm-font-xs {
+  --tfm-font-size: var(--tfm-font-size-xs);
+}
+
+.tfm-font-s {
+  --tfm-font-size: var(--tfm-font-size-s);
+}
+
+.tfm-font-m {
+  --tfm-font-size: var(--tfm-font-size-m);
+}
+
+.tfm-font-l {
+  --tfm-font-size: var(--tfm-font-size-l);
+}
+
+.tfm-font-xl {
+  --tfm-font-size: var(--tfm-font-size-xl);
+}
+
+.tfm-pad-xs {
+  --tfm-padding: var(--tfm-size-xs);
+}
+
+.tfm-pad-s {
+  --tfm-padding: var(--tfm-size-s);
+}
+
+.tfm-pad-m {
+  --tfm-padding: var(--tfm-size-m);
+}
+
+.tfm-pad-l {
+  --tfm-padding: var(--tfm-size-l);
+}
+
+.tfm-pad-xl {
+  --tfm-padding: var(--tfm-size-xl);
+}
+
+.tfm-padding {
+  padding: var(--tfm-padding, --tfm-size-m);
+}
+
+.tfm-padding-right {
+  padding-right: var(--tfm-padding, --tfm-size-m);
+}
+
+.tfm-padding-left {
+  padding-left: var(--tfm-padding, --tfm-size-m);
+}
+
+.tfm-padding-top {
+  padding-top: var(--tfm-padding, --tfm-size-m);
+}
+
+.tfm-padding-bottom {
+  padding-bottom: var(--tfm-padding, --tfm-size-m);
+}
+
+.tfm-marg-xs {
+  --tfm-margin: var(--tfm-size-xs);
+}
+
+.tfm-marg-s {
+  --tfm-margin: var(--tfm-size-s);
+}
+
+.tfm-marg-m {
+  --tfm-margin: var(--tfm-size-m);
+}
+
+.tfm-marg-l {
+  --tfm-margin: var(--tfm-size-l);
+}
+
+.tfm-marg-xl {
+  --tfm-margin: var(--tfm-size-xl);
+}
+
+.tfm-margin {
+  margin: var(--tfm-margin, --tfm-size-m);
+}
+
+.tfm-margin-right {
+  margin-right: var(--tfm-margin, --tfm-size-m);
+}
+
+.tfm-margin-left {
+  margin-left: var(--tfm-margin, --tfm-size-m);
+}
+
+.tfm-margin-top {
+  margin-top: var(--tfm-margin, --tfm-size-m);
+}
+
+.tfm-margin-bottom {
+  margin-bottom: var(--tfm-margin, --tfm-size-m);
 }
 
 /* Styles limited to tales from myriad sheets */

@@ -48,7 +48,7 @@
     --tfm-padding: var(--tfm-size-m);
 
     //=================================================================
-    // Funny styles for funsies
+    //> Funny styles for funsies
     //=================================================================
     --tfm-background-pearlescent:
         radial-gradient(ellipse at 100% 0%, #80e6ff, transparent),
@@ -61,7 +61,7 @@
 }
 
 //======================================================================================
-// Light mode setup
+//> Light mode setup
 //======================================================================================
 .tfm {
     --tfm-colour-1: var(--tfm-colour-light-2);
@@ -98,7 +98,7 @@
 }
 
 //======================================================================================
-// Dark mode setup
+//> Dark mode setup
 //======================================================================================
 .theme-dark .tfm {
     --tfm-colour-1: var(--tfm-colour-cool-1);
@@ -129,32 +129,149 @@
     }
 }
 
+//======================================================================================
+//> Global sizing controls
+//======================================================================================
 .tfm-xs {
     --tfm-margin: var(--tfm-size-xs);
     --tfm-padding: var(--tfm-size-xs);
     --tfm-font-size: var(--tfm-font-size-xs);
+    --tfm-input-font-size: var(--tfm-font-size-xs);
 }
 
 .tfm-s {
     --tfm-margin: var(--tfm-size-s);
     --tfm-padding: var(--tfm-size-s);
     --tfm-font-size: var(--tfm-font-size-s);
+    --tfm-input-font-size: var(--tfm-font-size-s);
 }
 
 .tfm-m {
     --tfm-margin: var(--tfm-size-m);
     --tfm-padding: var(--tfm-size-m);
     --tfm-font-size: var(--tfm-font-size-m);
+    --tfm-input-font-size: var(--tfm-font-size-m);
 }
 
 .tfm-l {
     --tfm-margin: var(--tfm-size-l);
     --tfm-padding: var(--tfm-size-l);
     --tfm-font-size: var(--tfm-font-size-l);
+    --tfm-input-font-size: var(--tfm-font-size-l);
 }
 
 .tfm-xl {
     --tfm-margin: var(--tfm-size-xl);
     --tfm-padding: var(--tfm-size-xl);
     --tfm-font-size: var(--tfm-font-size-xl);
+    --tfm-input-font-size: var(--tfm-font-size-xl);
+}
+
+//======================================================================================
+//> Font sizing
+//======================================================================================
+.tfm-font-xs {
+    --tfm-font-size: var(--tfm-font-size-xs);
+}
+
+.tfm-font-s {
+    --tfm-font-size: var(--tfm-font-size-s);
+}
+
+.tfm-font-m {
+    --tfm-font-size: var(--tfm-font-size-m);
+}
+
+.tfm-font-l {
+    --tfm-font-size: var(--tfm-font-size-l);
+}
+
+.tfm-font-xl {
+    --tfm-font-size: var(--tfm-font-size-xl);
+}
+
+//======================================================================================
+//> Padding
+//======================================================================================
+.tfm-pad-xs {
+    --tfm-padding: var(--tfm-size-xs);
+}
+
+.tfm-pad-s {
+    --tfm-padding: var(--tfm-size-s);
+}
+
+.tfm-pad-m {
+    --tfm-padding: var(--tfm-size-m);
+}
+
+.tfm-pad-l {
+    --tfm-padding: var(--tfm-size-l);
+}
+
+.tfm-pad-xl {
+    --tfm-padding: var(--tfm-size-xl);
+}
+
+.tfm-padding {
+    padding: var(--tfm-padding, --tfm-size-m);
+}
+
+.tfm-padding-right {
+    padding-right: var(--tfm-padding, --tfm-size-m);
+}
+
+.tfm-padding-left {
+    padding-left: var(--tfm-padding, --tfm-size-m);
+}
+
+.tfm-padding-top {
+    padding-top: var(--tfm-padding, --tfm-size-m);
+}
+
+.tfm-padding-bottom {
+    padding-bottom: var(--tfm-padding, --tfm-size-m);
+}
+
+//======================================================================================
+//> margins
+//======================================================================================
+.tfm-marg-xs {
+    --tfm-margin: var(--tfm-size-xs);
+}
+
+.tfm-marg-s {
+    --tfm-margin: var(--tfm-size-s);
+}
+
+.tfm-marg-m {
+    --tfm-margin: var(--tfm-size-m);
+}
+
+.tfm-marg-l {
+    --tfm-margin: var(--tfm-size-l);
+}
+
+.tfm-marg-xl {
+    --tfm-margin: var(--tfm-size-xl);
+}
+
+.tfm-margin {
+    margin: var(--tfm-margin, --tfm-size-m);
+}
+
+.tfm-margin-right {
+    margin-right: var(--tfm-margin, --tfm-size-m);
+}
+
+.tfm-margin-left {
+    margin-left: var(--tfm-margin, --tfm-size-m);
+}
+
+.tfm-margin-top {
+    margin-top: var(--tfm-margin, --tfm-size-m);
+}
+
+.tfm-margin-bottom {
+    margin-bottom: var(--tfm-margin, --tfm-size-m);
 }
