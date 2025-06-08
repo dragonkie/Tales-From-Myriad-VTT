@@ -79,7 +79,7 @@ export default class TfmActorSheet extends TfmSheetMixin(foundry.applications.sh
         // Handle special management of specific item types
         // Usually means making additional items, or applying effects or stat changes
         if (item.type == 'trinket') return this._onDropTrinket(event, item);
-        if (item.type == 'job') return;// The character sheets handle this one, so we ignore this here
+        if (item.type == 'job' && this.document.type != 'character') return;// Exclusive to characters only
 
         const modification = {
             "-=_id": null,
@@ -89,7 +89,7 @@ export default class TfmActorSheet extends TfmSheetMixin(foundry.applications.sh
         };
 
         foundry.utils.mergeObject(itemData, modification, { performDeletions: true });
-        getDocumentClass(type).create(itemData, { parent: this.document });
+        foundry.utils.getDocumentClass(type).create(itemData, { parent: this.document });
     }
 
     //===============================================================================================
@@ -218,13 +218,8 @@ export default class TfmActorSheet extends TfmSheetMixin(foundry.applications.sh
     static async _onDeleteItem(event, target) {
         const uuid = target.closest(".item[data-item-uuid]").dataset.itemUuid;
         const item = await fromUuid(uuid);
-        const confirm = await TfmDialog.confirm({
-            content: `${utils.localize('TFM.confirm.deleteItem')}: ${item.name}`,
-            rejectClose: false,
-            modal: true
-        });
-        if (confirm) return item.delete();
-        return undefined;
+        if (event.shiftKey) void item.delete();
+        else void item.deleteDialog();
     }
 
     /**

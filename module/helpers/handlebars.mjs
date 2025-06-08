@@ -134,8 +134,6 @@ function registerHelpers() {
                     classes: typeof classes === "string" ? classes.split(" ") : []
                 };
 
-                console.log(path, field);
-
                 const group = field.toFormGroup(groupConfig, inputConfig);
                 return new Handlebars.SafeString(group.outerHTML);
             }
@@ -151,8 +149,6 @@ function registerHelpers() {
                     label, hint, rootId, stacked, widget, localize: true, units,
                     classes: typeof classes === "string" ? classes.split(" ") : []
                 };
-
-                console.log(path, field);
 
                 const group = field.toInput(groupConfig, inputConfig);
                 return new Handlebars.SafeString(group.outerHTML);

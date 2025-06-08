@@ -23,7 +23,7 @@ export default class CharacterSheet extends TfmActorSheet {
             features: { template: `${tfm.filepath.template}/actor/character/features.hbs` },
             inventory: { template: `${tfm.filepath.template}/actor/character/inventory.hbs` },
             effects: { template: `${tfm.filepath.template}/actor/shared/actor-effects.hbs` },
-            details: {template: `${tfm.filepath.template}/actor/character/details.hbs`}
+            details: { template: `${tfm.filepath.template}/actor/character/details.hbs` }
         }
 
         return parts;
@@ -56,12 +56,11 @@ export default class CharacterSheet extends TfmActorSheet {
         context.system.xp.next = utils.nextLevel(context.system.level);
         context.system.xp.fill = Math.max((context.system.xp.value - last_level) / (context.system.xp.next - last_level) * 100, 0);
 
-        console.log('Context', context);
         return context;
     }
 
     //===========================================================================================
-    // Sheet actions
+    //> Sheet actions
     //===========================================================================================
 
     /**
@@ -138,8 +137,6 @@ export default class CharacterSheet extends TfmActorSheet {
     }
 
     async _onDropItem(event, item) {
-        if (item.type == 'job') return this._onDropJob(event, item);
-
         return super._onDropItem(event, item);
     }
 
@@ -147,20 +144,4 @@ export default class CharacterSheet extends TfmActorSheet {
     //> Drag & Drop
     //===============================================================================================
 
-    //===============================================================================================
-    //>- Drop Job
-    //===============================================================================================
-    async _onDropJob(event, item) {
-        const actor = this.document;
-        const update_data = {};
-
-        let confirm_stats = await TfmDialog.confirm({ content: `Would you like to apply Job stat modifiers?`, modal: true });
-        if (confirm_stats) {
-            for (const key of Object.keys(item.system.abilities)) {
-                update_data[`system.abilities.${key}.value`] = item.system.abilities[key] + actor.system.abilities[key].value;
-            }
-        }
-
-        await actor.update(update_data);
-    }
 }

@@ -8,6 +8,9 @@ export default class WeaponSheet extends TfmItemSheet {
         actions: {
             removeDamage: this._onRemoveDamage,
             addDamage: this._onAddDamage
+        },
+        window: {
+            resizeable: false,
         }
     }
 

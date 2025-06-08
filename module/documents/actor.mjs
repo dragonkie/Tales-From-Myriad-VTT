@@ -76,14 +76,31 @@ export default class TfmActor extends Actor {
         return data;
     }
 
+    //=================================================================================
+    //> _preData options
+    //=================================================================================
+    async _preCreate(data, options, user) {
+        LOGGER.debug('Actor _preCreate Options', { data: data, options: options, user: user });
+        return super._preCreate(data, options, user);
+    }
+
     async _preUpdate(changed, options, user) {
+        LOGGER.debug('Actor _preUpdate Options', { changed: changed, options: options, user: user });
         return super._preUpdate(changed, options, user);
+    }
+
+    async _preDelete(options, user) {
+        LOGGER.debug('Actor _preDelete Options', { options: options, user: user });
+        return super._preDelete(options, user);
     }
 
     async update(data, operation) {
         return super.update(data, operation);
     }
 
+    //=================================================================================
+    //> _onData options
+    //=================================================================================
     _onUpdate(changed, options, userId) {
         return super._onUpdate(changed, options, userId);
     }

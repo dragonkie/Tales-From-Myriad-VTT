@@ -1,5 +1,8 @@
 import { TFM } from "../../config.mjs";
 import { ItemDataModel } from "../abstract.mjs";
+import LOGGER from "../../helpers/logger.mjs";
+import utils from "../../helpers/utils.mjs";
+import TfmDialog from "../../applications/dialog.mjs";
 
 const { ArrayField, NumberField, SchemaField, SetField, StringField, HTMLField, ObjectField, DataField, BooleanField } = foundry.data.fields;
 const fields = foundry.data.fields;
@@ -29,5 +32,32 @@ export default class JobData extends ItemDataModel {
         })
 
         return schema;
+    }
+
+    async _preCreate(data, options, user) {
+        LOGGER.debug('JobData _preCreate Options', { data: data, options: options, user: user });
+
+        // If this document is being created for an actor
+        if (this.document.actor) {
+            const actor = this.document.actor;
+            // Actors are capped at having 2 jobs, one base and one speciality
+            if (actor.itemTypes.job.length < 2) {
+                const update_data = {};
+                // Add job stats to the actor
+                let confirm_stats = await TfmDialog.confirm({ content: `Would you like to apply Job stat modifiers?`, modal: true });
+                if (confirm_stats) {
+                    for (const key of Object.keys(this.abilities)) {
+                        update_data[`system.abilities.${key}.value`] = this.abilities[key] + actor.system.abilities[key].value;
+                    }
+                }
+
+                actor.update(update_data);
+            } else {
+                utils.warn('TFM.Warn.ToManyJobs');
+                return false;
+            }
+        }
+
+        return super._preCreate(data, options, user);
     }
 }

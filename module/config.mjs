@@ -41,6 +41,7 @@ TFM.CreatureTypes = {
 TFM.Generic = {
     ability: 'TFM.Generic.Ability',
     age: 'TFM.Generic.Age',
+    armour: 'TFM.Generic.Armour',
     auto: 'TFM.Generic.Automatic.abbr',
     automatic: 'TFM.Generic.Automatic.long',
     base: 'TFM.Generic.Base',
@@ -66,6 +67,7 @@ TFM.Generic = {
     label: 'TFM.Generic.Label',
     level: 'TFM.Generic.Level',
     normal: 'TFM.Generic.Normal',
+    proficiency: 'TFM.Generic.Proficiency.long',
     price: "TFM.Generic.Price",
     ranged: "TFM.Generic.Ranged",
     reduction: "TFM.Generic.Reduction",
@@ -161,11 +163,13 @@ TFM.WeaponTags = {
     thrown: 'TFM.Generic.Thrown',
     reach: 'TFM.Generic.Reach',
     finesse: 'TFM.Generic.Finesse',
-    great: 'TFM.Generic.Great',
+    great: 'TFM.Generic.Great',// Ranged weapon using power instead of fin
     light: 'TFM.Generic.Light',
     medium: 'TFM.Generic.Medium',
     heavy: 'TFM.Generic.Heavy',
     ranged: 'TFM.Generic.Ranged',
+    lucky: 'TFM.Generic.Lucky',
+    oversized: 'TFM.Generic.Oversized',
 };
 
 TFM.TrinketTypes = {
@@ -243,7 +247,7 @@ TFM.TargetTypes = {
 }
 
 //========================================================================================
-// Helper Functions
+//> Effects
 //========================================================================================
 TFM.Effects = {
     active: 'TFM.Effect.Active',
@@ -253,7 +257,7 @@ TFM.Effects = {
 }
 
 //========================================================================================
-// Helper Functions
+//> Helper Functions
 //========================================================================================
 
 /**

@@ -1,6 +1,6 @@
 <div class="tfm-tab-content flexcol flex-gap-s">
-    {{log this}}
 
+    {{!-- Standard weapon fields --}}
     <div class="flexrow flex-gap-m">
         {{toFieldGroup system.schema 'proficiency' value=system.proficiency}}
         {{toFieldGroup system.schema 'ability' value=system.ability}}
@@ -14,7 +14,7 @@
         {{toFieldGroup system.schema 'ranged' value=system.ranged}}
     </div>
 
-
+    {{!-- Weapon damage pieces --}}
     <div class="tfm-weapon-damage">
         <div><b>Damage Parts:</b></div>
         <ol class="tfm-damage-list flexcol flex-gap-m">
@@ -33,6 +33,7 @@
         <div class="flex-align-end"><a data-action="addDamage"><b>Add Damage Part +</b></a></div>
     </div>
 
+    {{!-- Weapon special tags --}}
     {{#if system.ranged}}
         <b>Ranged Weapon Options:</b>
         {{toFieldGroup system.schema 'great' value=system.great}}
@@ -42,9 +43,11 @@
         {{toFieldGroup system.schema 'thrown' value=system.thrown}}
         {{toFieldGroup system.schema 'reach' value=system.reach}}
     {{/if}}
+    {{toFieldGroup system.schema 'lucky' value=system.lucky}}
+    {{toFieldGroup system.schema 'oversized' value=system.oversized}}
+
     <b>Market Details</b>
     {{toFieldGroup system.schema 'price' value=system.price}}
-    {{toFieldGroup system.schema 'size' value=system.size}}
 
     {{#if isGm}}{{toFieldGroup system.schema 'identified' value=system.identified}}{{/if}}
 </div>

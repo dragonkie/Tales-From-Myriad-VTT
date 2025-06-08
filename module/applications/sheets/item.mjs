@@ -10,8 +10,8 @@ export default class TfmItemSheet extends TfmSheetMixin(foundry.applications.she
     /** @override */
     static DEFAULT_OPTIONS = {
         classes: ["tfm", "sheet", "item"],
-        position: { height: 500, width: 500, top: 60, left: 120 },
-        window: { resizable: true },
+        position: { height: 'auto', width: 500, top: 60, left: 120 },
+        window: { resizable: false },
         actions: {
             editItem: this._onEditItem,// For opening links to other items
             deleteItem: this._onDeleteItem,// For deleting item links

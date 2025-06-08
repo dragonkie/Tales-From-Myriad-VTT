@@ -45,6 +45,22 @@
     }
 
     //============================================================================================
+    //> Headers
+    //============================================================================================
+    .sheet-header {
+        img {
+            flex: 0;
+        }
+
+        .item-name {
+            font-size: 36px;
+            height: 1.2em;
+        }
+    }
+
+
+
+    //============================================================================================
     //> Weapon sheets
     //============================================================================================
     .tfm-weapon-damage {
@@ -63,6 +79,7 @@
         display: flex;
         flex: 1;
         flex-direction: column;
+
         >* {
             width: 100%;
         }
@@ -87,7 +104,8 @@
 
         }
 
-        .tfm-feature-implicit, .tfm-feature-generic {
+        .tfm-feature-implicit,
+        .tfm-feature-generic {
             display: flex;
             flex-direction: row;
 
@@ -103,7 +121,5 @@
                 white-space: nowrap;
             }
         }
-
-        .tfm-feature {}
     }
 }

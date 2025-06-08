@@ -1,4 +1,4 @@
-<div class="tfm-tab-content flexcol flex-gap-s">
+<div class="tfm-tab-content flexcol flex-gap-l">
 
     {{!-- Ability score modifiers --}}
     <div class="tfm-abilities-list flex-gap-m flexrow tfm-row">
@@ -12,6 +12,16 @@
                 </div>
             </div>
         {{/each}}
+    </div>
+
+    {{!-- Armour proficiencies --}}
+    <div class="tfm-armour-proficiency">
+        <b>{{localize config.Generic.armour}} {{localize config.Generic.proficiency}}</b>
+        <div class="flexrow">
+            {{toFieldGroup system.schema 'armour.light' value=system.armour.light}}
+            {{toFieldGroup system.schema 'armour.medium' value=system.armour.medium}}
+            {{toFieldGroup system.schema 'armour.heavy' value=system.armour.heavy}}
+        </div>
     </div>
 
     {{!-- Skill tree for class features --}}

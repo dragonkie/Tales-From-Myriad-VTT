@@ -34,7 +34,7 @@ export default class WeaponData extends ItemDataModel {
                 for (const a of Object.keys(options)) options[a] = utils.localize(options[a]);
                 return options;
             }
-        })
+        });
 
         schema.proficiency = new StringField({
             ...this.RequiredConfig,
@@ -45,7 +45,7 @@ export default class WeaponData extends ItemDataModel {
                 for (const key of Object.keys(TFM.WeaponTypes)) options[key] = utils.localize(TFM.WeaponTypes[key]);
                 return options;
             }
-        })
+        });
 
         schema.penalty = new NumberField({ initial: 0, max: 0, min: -3, requried: true, nullable: false, label: 'TFM.Generic.Penalty' });
 
@@ -54,17 +54,17 @@ export default class WeaponData extends ItemDataModel {
             value: new NumberField({ initial: 0, min: 0, ...this.RequiredConfig }),
             attack: new NumberField({ initial: 0, min: 0, ...this.RequiredConfig }),
             damage: new NumberField({ initial: 0, min: 0, ...this.RequiredConfig }),
-        })
+        });
 
         // Flat modifiers added to damage of the main weapon damage part, always treated as [auto] tagged damage
         // Usually adding an additional damage part for tis is more than sufficient
         schema.bonuses = new SchemaField({
             attack_bonus: new StringField({ initial: '', ...this.RequiredConfig, blank: true }),
             damage_bonus: new StringField({ initial: '', ...this.RequiredConfig, blank: true })
-        })
+        });
 
         // Weapon tags
-        for (const [key, value] of Object.entries(tfm.config.WeaponTags)) {
+        for (const [key, value] of Object.entries(TFM.WeaponTags)) {
             schema[key] = new BooleanField({ initial: false, label: value });
         }
 

@@ -54,6 +54,14 @@ export default class CharacterData extends ActorDataModel {
         this.level = utils.levelXp(this.xp.value);
         this.carry_capacity = Math.max(10 + this.abilities.pwr.mod, 1);
 
+        for (const job of this.document.itemTypes.job) {
+            if (job.system.armour.light) this.armour.light = true;
+            if (job.system.armour.medium) this.armour.medium = true;
+            if (job.system.armour.heavy) this.armour.heavy = true;
+        }
+    }
 
+    async _preUpdate(...data) {
+        return super._preUpdate(...data);
     }
 }

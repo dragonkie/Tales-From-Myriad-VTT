@@ -65,6 +65,7 @@
     "Generic": {
       "Ability": "Ability",
       "Age": "Age",
+      "Armour": "Armour",
       "Automatic": { "abbr": "auto", "long": "Automatic" },
       "Broken": "Broken",
       "ChatDescription": "Chat Description",
@@ -93,6 +94,7 @@
       "Normal": "Normal",
       "Penalty": "Penalty",
       "Price": "Price",
+      "Proficiency": { "abbr": "prof", "long": "Proficiency" },
       "Ranged": "Ranged",
       "Reduction": "Reduction",
       "Resist": "Resist",

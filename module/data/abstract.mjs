@@ -1,5 +1,6 @@
 import { TFM } from "../config.mjs";
 import utils from "../helpers/utils.mjs";
+import LOGGER from "../helpers/logger.mjs";
 
 const { ArrayField, NumberField, SchemaField, SetField, StringField, HTMLField, ObjectField, DataField, BooleanField } = foundry.data.fields;
 const fields = foundry.data.fields;
@@ -34,7 +35,7 @@ const fields = foundry.data.fields;
  */
 
 //=================================================================================================
-//Generic system data model
+//> SystemDataModel
 //=================================================================================================
 export class SystemDataModel extends foundry.abstract.TypeDataModel {
     /**
@@ -90,6 +91,24 @@ export class SystemDataModel extends foundry.abstract.TypeDataModel {
 
     get document() {
         return this.parent;
+    }
+
+    //=================================================================================
+    //> _preData options
+    //=================================================================================
+    async _preCreate(data, options, user) {
+        LOGGER.debug('SystemData _preCreate Options', { data: data, options: options, user: user });
+        return super._preCreate(data, options, user);
+    }
+
+    async _preUpdate(changed, options, user) {
+        LOGGER.debug('SystemData _preUpdate Options', { changed: changed, options: options, user: user });
+        return super._preUpdate(changed, options, user);
+    }
+
+    async _preDelete(options, user) {
+        LOGGER.debug('SystemData _preDelete Options', { options: options, user: user });
+        return super._preDelete(options, user);
     }
 };
 
@@ -258,6 +277,24 @@ export class ActorDataModel extends SystemDataModel {
             this.dodge.total = Math.min(this.dodge.total, 8)
         }
     }
+
+    //=================================================================================
+    //> _preData options
+    //=================================================================================
+    async _preCreate(data, options, user) {
+        LOGGER.debug('ActorData _preCreate Options', { data: data, options: options, user: user });
+        return super._preCreate(data, options, user);
+    }
+
+    async _preUpdate(changed, options, user) {
+        LOGGER.debug('ActorData _preUpdate Options', { changed: changed, options: options, user: user });
+        return super._preUpdate(changed, options, user);
+    }
+
+    async _preDelete(options, user) {
+        LOGGER.debug('ActorData _preDelete Options', { options: options, user: user });
+        return super._preDelete(options, user);
+    }
 };
 
 //=================================================================================================
@@ -352,5 +389,23 @@ export class ItemDataModel extends SystemDataModel {
 
     async use(event, options) {
         if (game.settings.get(game.system.id, 'debug')) console.log(`Item type[${this.parent.type}] system.use() called but with no handler`, this.parent);
+    }
+
+    //=================================================================================
+    //> _preData options
+    //=================================================================================
+    async _preCreate(data, options, user) {
+        LOGGER.debug('ItemData _preCreate Options', { data: data, options: options, user: user });
+        return super._preCreate(data, options, user);
+    }
+
+    async _preUpdate(changed, options, user) {
+        LOGGER.debug('ItemData _preUpdate Options', { changed: changed, options: options, user: user });
+        return super._preUpdate(changed, options, user);
+    }
+
+    async _preDelete(options, user) {
+        LOGGER.debug('ItemData _preDelete Options', { options: options, user: user });
+        return super._preDelete(options, user);
     }
 };

@@ -239,7 +239,8 @@ export default function TfmSheetMixin(Base) {
             const target = event.target;
             const { type, uuid } = foundry.applications.ux.TextEditor.getDragEventData(event);
             const item = await fromUuid(uuid);
-
+            
+            if (!item) return;
             if (item.parent === this.document) return this._onSortItem(item, target);
 
             switch (type) {
