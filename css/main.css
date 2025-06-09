@@ -403,6 +403,9 @@
   flex-direction: column;
   gap: 0.2rem;
 }
+.form-group:hover > label, .form-group:hover > span.label {
+  color: var(--color-form-label-hover);
+}
 
 .tfm-tab-content {
   padding: 10px;

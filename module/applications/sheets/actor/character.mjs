@@ -6,7 +6,7 @@ import TfmActorSheet from "../actor.mjs"
 export default class CharacterSheet extends TfmActorSheet {
     static DEFAULT_OPTIONS = {
         classes: ["tfm", "sheet", "actor"],
-        position: { height: 800, width: 800, top: 60, left: 120 },
+        position: { height: 'auto', width: 800, top: 60, left: 120 },
         window: { resizable: false },
         actions: {
             skillConfig: this._onConfigureSkills
@@ -43,7 +43,7 @@ export default class CharacterSheet extends TfmActorSheet {
         const context = await super._prepareContext();
 
         // get labels for weapon proficiencies
-        for (const [key, prof] of Object.entries(context.system.proficiency.weapon.type)) {
+        for (const [key, prof] of Object.entries(context.system.proficiency.weaponType)) {
             prof.label = TFM.WeaponTypes[key];
         }
 
@@ -86,6 +86,7 @@ export default class CharacterSheet extends TfmActorSheet {
         const app = await new TfmDialog({
             window: { title: 'TFM.Dialog.SkillConfig' },
             classes: ['tfm'],
+            content: content,
             buttons: [{
                 action: 'cancel',
                 label: 'Cancel',
@@ -95,15 +96,12 @@ export default class CharacterSheet extends TfmActorSheet {
                 label: 'Confirm'
             }],
             submit: result => {
-                if (result == 'confirm') {
-                    let skills = [];
-                    let inputs = app.element.querySelectorAll('.dialog-skill-list input');
-                    for (const i of inputs) skills.push(i.value);
-                    this.document.update({ system: { skills: skills } });
-                }
+                if (result != 'confirm') return false
+                let skills = [];
+                let inputs = app.element.querySelectorAll('.dialog-skill-list input');
+                for (const i of inputs) skills.push(i.value);
+                this.document.update({ system: { skills: skills } });
             },
-
-            content: content,
         }).render(true);
 
         // attach event listeners

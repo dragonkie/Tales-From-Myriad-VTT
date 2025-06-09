@@ -2,25 +2,40 @@
 
     <div class="flexrow flex-gap-m" style="align-items: flex-start; flex-wrap: nowrap;">
         <div style="flex: 2;">{{> 'tfm.actor-abilities'}}</div>
-        <div style="flex: 3;">
+        <div class="flexcol flex-gap-m" style="flex: 3;">
             {{!-- Weapon proficiencies --}}
             {{> 'tfm.actor-proficiency'}}
-            {{!-- Armour proficiency set by characters base Job --}}
+
+            {{!-- Weapon class proficiency, set by characters Job --}}
             <div class="flexcol tfm-armour-prof">
-                <b>Armour</b>
-                <div class="tfm-prof flexrow">
-                    <b>Light</b>
-                    <div style="float: right;"><a class="{{#if system.armour.light}}fa-solid{{else}}fa-regular{{/if}} fa-diamond" style="float: right;"></a></div>
-                </div>
-                <div class="tfm-prof flexrow">
-                    <b>Medium</b>
-                    <div style="float: right;"><a class="{{#if system.armour.medium}}fa-solid{{else}}fa-regular{{/if}} fa-diamond" style="float: right;"></a></div>
-                </div>
-                <div class="tfm-prof flexrow">
-                    <b>Heavy</b>
-                    <div style="float: right;"><a class="{{#if system.armour.heavy}}fa-solid{{else}}fa-regular{{/if}} fa-diamond" style="float: right;"></a></div>
+                <b class="text-center">Weapon</b>
+                <div class="flexcol flex-gap-s">
+                    {{#each system.proficiency.weapon as | weapon key |}}
+                        
+                            <div class="flexrow">
+                                <div>{{toTitleCase key}}</div>
+                                <i class="{{#if weapon}}fa-solid{{else}}fa-regular{{/if}} fa-diamond text-right"></i>
+                            </div>
+                        
+                    {{/each}}
                 </div>
             </div>
+
+            {{!-- Armour proficiency, set by characters Job --}}
+            <div class="flexcol tfm-armour-prof">
+                <b class="text-center">Armour</b>
+                <div class="flexcol flex-gap-s">
+                    {{#each system.proficiency.armour as | armour key |}}
+                        
+                            <div class="flexrow">
+                                <div>{{toTitleCase key}}</div>
+                                <i class="{{#if armour}}fa-solid{{else}}fa-regular{{/if}} fa-diamond text-right"></i>
+                            </div>
+                        
+                    {{/each}}
+                </div>
+            </div>
+
             {{> 'tfm.actor-skills'}}
         </div>
     </div>
@@ -31,6 +46,8 @@
         {{> 'tfm.actor-movement'}}
         {{> 'tfm.actor-defence'}}
         {{> 'tfm.actor-resistance'}}
+
+
     </div>
     <div>
         <div>

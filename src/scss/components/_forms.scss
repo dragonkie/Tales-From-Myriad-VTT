@@ -249,6 +249,12 @@
         flex-direction: column;
         gap: 0.2rem;
     }
+
+    &:hover {
+        >label, >span.label {
+            color: var(--color-form-label-hover);
+        }
+    }
 }
 
 //========================================================================================

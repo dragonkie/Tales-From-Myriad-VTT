@@ -12,7 +12,7 @@ export default class TfmActorSheet extends TfmSheetMixin(foundry.applications.sh
     /** @override */
     static DEFAULT_OPTIONS = {
         classes: ["tfm", "sheet", "actor"],
-        position: { height: 600, width: 600, top: 100, left: 200 },
+        position: { height: 'auto', width: 'auto', top: 100, left: 200 },
         window: { resizable: true },
         actions: {
             useItem: this._onUseItem,
@@ -248,12 +248,14 @@ export default class TfmActorSheet extends TfmSheetMixin(foundry.applications.sh
      */
     static async _onLevelProficiency(event, target) {
         if (this.document.type != `character`) return;
+        if (!this.isEditMode) return;
 
         const doc = this.document;
         const prof = target.closest('[data-prof]').dataset.prof
-        var value = doc.system.proficiency.weapon.type[prof].value + 1;
+        var value = doc.system.proficiency.weaponType[prof].value + (event.shiftKey ? -1 : 1);
         if (value > 3) value = 0;
-        doc.update({ [`system.proficiency.weapon.type.${prof}.value`]: value });
+        if (value < 0) value = 3;
+        doc.update({ [`system.proficiency.weaponType.${prof}.value`]: value });
     }
 
     /**

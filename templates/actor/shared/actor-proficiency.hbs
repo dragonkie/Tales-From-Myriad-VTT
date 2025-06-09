@@ -1,16 +1,18 @@
 <div class="tfm-proficiency">
     <div class="flexcol" style="min-width: 120px">
-        <b style="text-align: center;">Weapons</b>
+        <b style="text-align: center;">{{#if isEditMode}}<a data-action="profConfig"><i class="fas fa-cog"></i></a>{{/if}} Weapons</b>
         {{!-- Weapons with proficiency --}}
-        {{#each system.proficiency.weapon.type as | prof key |}}
-            <div style="margin: 2px 0; border-bottom: 1px solid white;" data-prof="{{key}}">
-                <div style="display: inline-block;">{{localize prof.label}}</div>
-                <div style="text-align: right; float: right; display: inline-block;" data-action="levelProf">
-                    <a class="fa-{{#if (gte prof.value 1)}}solid{{else}}regular{{/if}} fa-diamond"></a>
-                    <a class="fa-{{#if (gte prof.value 2)}}solid{{else}}regular{{/if}} fa-diamond"></a>
-                    <a class="fa-{{#if (gte prof.value 3)}}solid{{else}}regular{{/if}} fa-diamond"></a>
+        {{#each system.proficiency.weaponType as | prof key |}}
+            {{#if (or @root.isEditMode (gt prof.value 0))}}
+                <div style="margin: 2px 0; border-bottom: 1px solid white;" data-prof="{{key}}">
+                    <div style="display: inline-block;">{{localize prof.label}}</div>
+                    <div style="text-align: right; float: right; display: inline-block;" data-action="levelProf">
+                        <a class="fa-{{#if (gte prof.value 1)}}solid{{else}}regular{{/if}} fa-diamond"></a>
+                        <a class="fa-{{#if (gte prof.value 2)}}solid{{else}}regular{{/if}} fa-diamond"></a>
+                        <a class="fa-{{#if (gte prof.value 3)}}solid{{else}}regular{{/if}} fa-diamond"></a>
+                    </div>
                 </div>
-            </div>
+            {{/if}}
         {{/each}}
     </div>
 </div>

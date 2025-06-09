@@ -18,14 +18,12 @@ export default class CharacterData extends ActorDataModel {
 
         // Proficiency modifiers for the character
         schema.proficiency = new SchemaField({
+            weaponType: new SchemaField({ ...WeaponTypeSchema }),
             weapon: new SchemaField({
-                type: new SchemaField({ ...WeaponTypeSchema }),
-                class: new SchemaField({
-                    light: new BooleanField({ initial: false, label: TFM.WeaponClass.light }),
-                    medium: new BooleanField({ initial: false, label: TFM.WeaponClass.medium }),
-                    heavy: new BooleanField({ initial: false, label: TFM.WeaponClass.heavy }),
-                    ranged: new BooleanField({ initial: false, label: TFM.WeaponClass.ranged }),
-                })
+                light: new BooleanField({ initial: false, label: TFM.WeaponClass.light }),
+                medium: new BooleanField({ initial: false, label: TFM.WeaponClass.medium }),
+                heavy: new BooleanField({ initial: false, label: TFM.WeaponClass.heavy }),
+                ranged: new BooleanField({ initial: false, label: TFM.WeaponClass.ranged }),
             }),
             armour: new SchemaField({
                 light: new BooleanField({ initial: false, label: TFM.ArmourClass.light }),
@@ -64,9 +62,17 @@ export default class CharacterData extends ActorDataModel {
         this.carry_capacity = Math.max(10 + this.abilities.pwr.mod, 1);
 
         for (const job of this.document.itemTypes.job) {
-            if (job.system.proficiency.armour.light) this.armour.light = true;
-            if (job.system.proficiency.armour.medium) this.armour.medium = true;
-            if (job.system.proficiency.armour.heavy) this.armour.heavy = true;
+            if (job.system.proficiency.armour.light) this.proficiency.armour.light = true;
+            if (job.system.proficiency.armour.medium) this.proficiency.armour.medium = true;
+            if (job.system.proficiency.armour.heavy) this.proficiency.armour.heavy = true;
+
+            for (const [key, value] of Object.entries(this.proficiency.weapon)) {
+                this.proficiency.weapon[key] = job.system.proficiency.weapon[key];
+            }
+
+            for (const [key, value] of Object.entries(this.proficiency.weaponType)) {
+                this.proficiency.weaponType[key].value = job.system.proficiency.weaponType[key] ? 3 : this.proficiency.weaponType[key].value;
+            }
         }
     }
 

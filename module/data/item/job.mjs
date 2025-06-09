@@ -24,6 +24,12 @@ export default class JobData extends ItemDataModel {
             initial: []
         })
 
+        // Weapon proficiencies
+        const weaponData = {};
+        for (const [key, value] of Object.entries(TFM.WeaponTypes)) {
+            weaponData[key] = new BooleanField({ initial: false, label: value });
+        }
+
         // Actor proficiency fields
         schema.proficiency = new SchemaField({
             armour: new SchemaField({
@@ -36,16 +42,9 @@ export default class JobData extends ItemDataModel {
                 medium: new BooleanField({ initial: false, label: TFM.WeaponClass.medium }),
                 heavy: new BooleanField({ initial: false, label: TFM.WeaponClass.heavy }),
                 ranged: new BooleanField({ initial: false, label: TFM.WeaponClass.ranged }),
-            })
+            }),
+            weaponType: new SchemaField(weaponData)
         })
-
-        // Weapon proficiencies
-        const weaponData = {};
-        for (const [key, value] of Object.entries(TFM.WeaponTypes)) {
-            weaponData[key] = new BooleanField({ initial: false, label: value });
-        }
-
-        schema.weapon = new SchemaField(weaponData);
 
         return schema;
     }

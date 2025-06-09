@@ -17,22 +17,30 @@
         </div>
     </div>
 
-    {{!-- Weapon size proficiencies --}}
+    
     <div class="tfm-armour-proficiency">
-        <b>{{localize config.Generic.weapon}} #Size# {{localize config.Generic.proficiency}}</b>
+        <b>
+            {{#if isEditMode}}<a data-action="configWeaponProf" class="fas fa-cog"></a>{{/if}}
+            {{localize config.Generic.weapon}} {{localize config.Generic.proficiency}}
+        </b>
+
+        {{!-- Weapon size proficiencies --}}
         <div class="flexrow">
             {{toFieldGroup system.schema 'proficiency.weapon.light' value=system.proficiency.weapon.light}}
             {{toFieldGroup system.schema 'proficiency.weapon.medium' value=system.proficiency.weapon.medium}}
             {{toFieldGroup system.schema 'proficiency.weapon.heavy' value=system.proficiency.weapon.heavy}}
-            {{toFieldGroup system.schema 'proficiency.weapon.ranged' value=system.proficiency.weapon.heavy}}
+            {{toFieldGroup system.schema 'proficiency.weapon.ranged' value=system.proficiency.weapon.ranged}}
         </div>
-    </div>
 
-    {{!-- Weapon type proficiencies --}}
-    <div class="tfm-armour-proficiency">
-        <b>{{localize config.Generic.weapon}} #Type# {{localize config.Generic.proficiency}}</b>
-        <div class="flexrow">
-
+        {{!-- Weapon type proficiencies --}}
+        <div class="flexrow flex-gap-m">
+            {{#each system.proficiency.weaponType as |weapon key|}}
+                {{#if weapon}}
+                    <div class="tfm-link-wrapper" data-weapon-type="{{key}}">
+                        {{toTitleCase (localize key)}}
+                    </div>
+                {{/if}}
+            {{/each}}
         </div>
     </div>
 
