@@ -43,7 +43,7 @@ export default class CharacterSheet extends TfmActorSheet {
         const context = await super._prepareContext();
 
         // get labels for weapon proficiencies
-        for (const [key, prof] of Object.entries(context.system.proficiencies)) {
+        for (const [key, prof] of Object.entries(context.system.proficiency.weapon.type)) {
             prof.label = TFM.WeaponTypes[key];
         }
 

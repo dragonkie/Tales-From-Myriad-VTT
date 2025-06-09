@@ -74,6 +74,7 @@ TFM.Generic = {
     resistance: "TFM.Generic.Resistance",
     size: "TFM.Generic.Size",
     type: "TFM.Generic.Type",
+    weapon: 'TFM.Generic.Weapon',
     weight: 'TFM.Generic.Weight',
 };
 
@@ -140,6 +141,13 @@ TFM.ArmourClass = {
 //========================================================================================
 //> Weapons Types
 //========================================================================================
+TFM.WeaponClass = {
+    light: 'TFM.Weight.Light',
+    medium: 'TFM.Weight.Medium',
+    heavy: 'TFM.Weight.Heavy',
+    ranged: 'TFM.Weapon.Ranged',
+}
+
 TFM.WeaponTypes = {
     axe: 'TFM.Weapon.Axe',
     bow: 'TFM.Weapon.Bow',
@@ -164,13 +172,14 @@ TFM.WeaponTags = {
     reach: 'TFM.Generic.Reach',
     finesse: 'TFM.Generic.Finesse',
     great: 'TFM.Generic.Great',// Ranged weapon using power instead of fin
-    light: 'TFM.Generic.Light',
-    medium: 'TFM.Generic.Medium',
-    heavy: 'TFM.Generic.Heavy',
-    ranged: 'TFM.Generic.Ranged',
     lucky: 'TFM.Generic.Lucky',
     oversized: 'TFM.Generic.Oversized',
+    ...TFM.WeaponClass
 };
+
+//========================================================================================
+//> Magic
+//========================================================================================
 
 TFM.TrinketTypes = {
     arc: 'TYPES.magic.arc',

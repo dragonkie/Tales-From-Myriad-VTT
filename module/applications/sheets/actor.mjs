@@ -251,9 +251,9 @@ export default class TfmActorSheet extends TfmSheetMixin(foundry.applications.sh
 
         const doc = this.document;
         const prof = target.closest('[data-prof]').dataset.prof
-        var value = doc.system.proficiencies[prof].value + 1;
+        var value = doc.system.proficiency.weapon.type[prof].value + 1;
         if (value > 3) value = 0;
-        doc.update({ [`system.proficiencies.${prof}.value`]: value });
+        doc.update({ [`system.proficiency.weapon.type.${prof}.value`]: value });
     }
 
     /**

@@ -1,26 +1,49 @@
 <div class="tfm-tab-content flexcol flex-gap-l">
 
     {{!-- Ability score modifiers --}}
-    <div class="tfm-abilities-list flex-gap-m flexrow tfm-row">
-        {{#each system.abilities as | ability key |}}
-            <div class="tfm-ability form-group stacked">
-                <label class="text-center">
-                    <b class="text-center">{{localize (concat 'TFM.Ability.' (toTitleCase key) '.long')}}</b>
-                </label>
-                <div class="wrapper form-fields">
-                    <input class="tfm-ability-score text-center" type="number" name="system.abilities.{{key}}" value="{{ability}}">
+    <div class="tfm-ability-wrapper">
+        <b>{{localize config.Generic.ability}}</b>
+        <div class="tfm-abilities-list flex-gap-m flexrow tfm-row">
+            {{#each system.abilities as | ability key |}}
+                <div class="tfm-ability form-group stacked">
+                    <label class="text-center">
+                        <b class="text-center">{{localize (concat 'TFM.Ability.' (toTitleCase key) '.long')}}</b>
+                    </label>
+                    <div class="wrapper form-fields">
+                        <input class="tfm-ability-score text-center" type="number" name="system.abilities.{{key}}" value="{{ability}}">
+                    </div>
                 </div>
-            </div>
-        {{/each}}
+            {{/each}}
+        </div>
+    </div>
+
+    {{!-- Weapon size proficiencies --}}
+    <div class="tfm-armour-proficiency">
+        <b>{{localize config.Generic.weapon}} #Size# {{localize config.Generic.proficiency}}</b>
+        <div class="flexrow">
+            {{toFieldGroup system.schema 'proficiency.weapon.light' value=system.proficiency.weapon.light}}
+            {{toFieldGroup system.schema 'proficiency.weapon.medium' value=system.proficiency.weapon.medium}}
+            {{toFieldGroup system.schema 'proficiency.weapon.heavy' value=system.proficiency.weapon.heavy}}
+            {{toFieldGroup system.schema 'proficiency.weapon.ranged' value=system.proficiency.weapon.heavy}}
+        </div>
+    </div>
+
+    {{!-- Weapon type proficiencies --}}
+    <div class="tfm-armour-proficiency">
+        <b>{{localize config.Generic.weapon}} #Type# {{localize config.Generic.proficiency}}</b>
+        <div class="flexrow">
+
+        </div>
     </div>
 
     {{!-- Armour proficiencies --}}
     <div class="tfm-armour-proficiency">
         <b>{{localize config.Generic.armour}} {{localize config.Generic.proficiency}}</b>
         <div class="flexrow">
-            {{toFieldGroup system.schema 'armour.light' value=system.armour.light}}
-            {{toFieldGroup system.schema 'armour.medium' value=system.armour.medium}}
-            {{toFieldGroup system.schema 'armour.heavy' value=system.armour.heavy}}
+            {{toFieldGroup system.schema 'proficiency.armour.light' value=system.proficiency.armour.light}}
+            {{toFieldGroup system.schema 'proficiency.armour.medium' value=system.proficiency.armour.medium}}
+            {{toFieldGroup system.schema 'proficiency.armour.heavy' value=system.proficiency.armour.heavy}}
+            <div></div>
         </div>
     </div>
 

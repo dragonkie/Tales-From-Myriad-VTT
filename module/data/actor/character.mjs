@@ -10,19 +10,28 @@ export default class CharacterData extends ActorDataModel {
 
         schema.skills = new ArrayField(new StringField({ initial: 'new skill' }), { initial: [] });
 
-        let weaponTypes = TFM.WeaponTypes;
-        let profData = {};
+        const WeaponTypeSchema = {};
 
-        for (const [key, weapon] of Object.entries(weaponTypes)) {
-            profData[key] = new SchemaField({ value: new NumberField({ initial: 0, min: 0, max: 3 }) });
+        for (const [key, weapon] of Object.entries(TFM.WeaponTypes)) {
+            WeaponTypeSchema[key] = new SchemaField({ value: new NumberField({ initial: 0, min: 0, max: 3, label: weapon }) });
         }
-        schema.proficiencies = new SchemaField(profData);
 
-        // Armour proficiency
-        schema.armour = new SchemaField({
-            light: new BooleanField({ initial: false, label: TFM.ArmourClass.light }),
-            medium: new BooleanField({ initial: false, label: TFM.ArmourClass.medium }),
-            heavy: new BooleanField({ initial: false, label: TFM.ArmourClass.heavy }),
+        // Proficiency modifiers for the character
+        schema.proficiency = new SchemaField({
+            weapon: new SchemaField({
+                type: new SchemaField({ ...WeaponTypeSchema }),
+                class: new SchemaField({
+                    light: new BooleanField({ initial: false, label: TFM.WeaponClass.light }),
+                    medium: new BooleanField({ initial: false, label: TFM.WeaponClass.medium }),
+                    heavy: new BooleanField({ initial: false, label: TFM.WeaponClass.heavy }),
+                    ranged: new BooleanField({ initial: false, label: TFM.WeaponClass.ranged }),
+                })
+            }),
+            armour: new SchemaField({
+                light: new BooleanField({ initial: false, label: TFM.ArmourClass.light }),
+                medium: new BooleanField({ initial: false, label: TFM.ArmourClass.medium }),
+                heavy: new BooleanField({ initial: false, label: TFM.ArmourClass.heavy }),
+            })
         })
 
         // tracks player experience points
@@ -55,13 +64,13 @@ export default class CharacterData extends ActorDataModel {
         this.carry_capacity = Math.max(10 + this.abilities.pwr.mod, 1);
 
         for (const job of this.document.itemTypes.job) {
-            if (job.system.armour.light) this.armour.light = true;
-            if (job.system.armour.medium) this.armour.medium = true;
-            if (job.system.armour.heavy) this.armour.heavy = true;
+            if (job.system.proficiency.armour.light) this.armour.light = true;
+            if (job.system.proficiency.armour.medium) this.armour.medium = true;
+            if (job.system.proficiency.armour.heavy) this.armour.heavy = true;
         }
     }
 
-    async _preUpdate(...data) {
-        return super._preUpdate(...data);
+    async _preUpdate(changed, options, user) {
+        return super._preUpdate(changed, options, user);
     }
 }

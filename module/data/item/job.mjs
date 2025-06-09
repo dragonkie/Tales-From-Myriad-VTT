@@ -24,12 +24,28 @@ export default class JobData extends ItemDataModel {
             initial: []
         })
 
-        // Armour proficiencies given by this job
-        schema.armour = new SchemaField({
-            light: new BooleanField({ initial: false, label: TFM.ArmourClass.light }),
-            medium: new BooleanField({ initial: false, label: TFM.ArmourClass.medium }),
-            heavy: new BooleanField({ initial: false, label: TFM.ArmourClass.heavy }),
+        // Actor proficiency fields
+        schema.proficiency = new SchemaField({
+            armour: new SchemaField({
+                light: new BooleanField({ initial: false, label: TFM.ArmourClass.light }),
+                medium: new BooleanField({ initial: false, label: TFM.ArmourClass.medium }),
+                heavy: new BooleanField({ initial: false, label: TFM.ArmourClass.heavy }),
+            }),
+            weapon: new SchemaField({
+                light: new BooleanField({ initial: false, label: TFM.WeaponClass.light }),
+                medium: new BooleanField({ initial: false, label: TFM.WeaponClass.medium }),
+                heavy: new BooleanField({ initial: false, label: TFM.WeaponClass.heavy }),
+                ranged: new BooleanField({ initial: false, label: TFM.WeaponClass.ranged }),
+            })
         })
+
+        // Weapon proficiencies
+        const weaponData = {};
+        for (const [key, value] of Object.entries(TFM.WeaponTypes)) {
+            weaponData[key] = new BooleanField({ initial: false, label: value });
+        }
+
+        schema.weapon = new SchemaField(weaponData);
 
         return schema;
     }
@@ -59,5 +75,28 @@ export default class JobData extends ItemDataModel {
         }
 
         return super._preCreate(data, options, user);
+    }
+
+    async _preDelete() {
+        const confirm = super._preDelete();
+        if (!confirm) return false;
+
+        // if this is owned by an actor, clean up the modified data
+        if (this.document.actor) {
+            // actor modifications to undo
+            const update_data = {};
+            const actor = this.document.actor;
+
+            // confirm to remove stats
+            let confirm_stats = await TfmDialog.confirm({ content: `Would you like to remove Job stat modifiers?`, modal: true });
+            if (confirm_stats) {
+                for (const key of Object.keys(this.abilities)) {
+                    update_data[`system.abilities.${key}.value`] = actor.system.abilities[key].value - this.abilities[key];
+                }
+            }
+
+            // Apply the new update
+            await actor.update(update_data);
+        }
     }
 }

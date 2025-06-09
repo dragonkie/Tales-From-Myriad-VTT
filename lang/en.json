@@ -103,6 +103,7 @@
       "Type": "Type",
       "Unidentified": "Unidentified",
       "Vulnerable": "Vulnerable",
+      "Weapon": "Weapon",
       "Weight": "Weight"
     },
     "Kindred": {
@@ -138,6 +139,11 @@
       "Medium": "Medium",
       "Large": "Large",
       "Huge": "Huge"
+    },
+    "Weight": {
+      "Light": "Light",
+      "Medium": "Medium",
+      "Heavy": "Heavy"
     },
     "Creature": {
       "Aberration": "Aberration",
@@ -202,7 +208,8 @@
       "Sword": "Sword",
       "Thrown": "Thrown",
       "Unarmed": "Unarmed",
-      "Whip": "Whip"
+      "Whip": "Whip",
+      "Ranged": "Ranged"
     },
     "Armour": {
       "Head": "Head",
