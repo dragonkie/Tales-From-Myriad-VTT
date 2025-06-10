@@ -1,6 +1,6 @@
 <div class="tfm-proficiency">
     <div class="flexcol" style="min-width: 120px">
-        <b style="text-align: center;">{{#if isEditMode}}<a data-action="profConfig"><i class="fas fa-cog"></i></a>{{/if}} Weapons</b>
+        {{!-- <b style="text-align: center;">{{#if isEditMode}}<a data-action="profConfig"><i class="fas fa-cog"></i></a>{{/if}} Weapons</b> --}}
         {{!-- Weapons with proficiency --}}
         {{#each system.proficiency.weaponType as | prof key |}}
             {{#if (or @root.isEditMode (gt prof.value 0))}}

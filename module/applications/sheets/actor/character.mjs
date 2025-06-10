@@ -56,6 +56,17 @@ export default class CharacterSheet extends TfmActorSheet {
         context.system.xp.next = utils.nextLevel(context.system.level);
         context.system.xp.fill = Math.max((context.system.xp.value - last_level) / (context.system.xp.next - last_level) * 100, 0);
 
+        context.inventory = {
+            contents: [],
+            get size() { return context.inventory.contents.length }
+        };
+        this.document.items.contents.forEach(item => {
+            const whitelist = ['weapon', 'trinket', 'armour'];
+            if (whitelist.includes(item.type)) {
+                context.inventory.contents.push(item);
+            }
+        });
+
         return context;
     }
 

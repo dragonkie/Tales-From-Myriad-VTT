@@ -1,26 +1,22 @@
-<div class="tfm-tab-content tfm-tab-features flexrow flex-gap-l flex-group-left flex-align-start">
+<div class="tfm-tab-content tfm-pad-none fm-tab-features flexrow flex-gap-l flex-group-left flex-align-start">
 
     <div class="flexrow flex-gap-m" style="align-items: flex-start; flex-wrap: nowrap;">
         <div style="flex: 2;">{{> 'tfm.actor-abilities'}}</div>
         <div class="flexcol flex-gap-m" style="flex: 3;">
-            {{!-- Weapon proficiencies --}}
-            {{> 'tfm.actor-proficiency'}}
-
             {{!-- Weapon class proficiency, set by characters Job --}}
             <div class="flexcol tfm-armour-prof">
-                <b class="text-center">Weapon</b>
-                <div class="flexcol flex-gap-s">
+                <b class="text-center text-wrap-none"><i class="fas fa-sword"></i> Weapon Prof.</b>
+                <div class="flexrow flex-gap-m">
                     {{#each system.proficiency.weapon as | weapon key |}}
-
-                        <div class="flexrow">
-                            <div>{{toTitleCase key}}</div>
-                            <i class="{{#if weapon}}fa-solid{{else}}fa-regular{{/if}} fa-diamond text-right"></i>
-                        </div>
-
+                        {{#if weapon}}
+                            <div class="tfm-link-wrapper">{{toTitleCase key}}</div>
+                        {{/if}}
                     {{/each}}
                 </div>
             </div>
 
+            {{!-- Weapon proficiencies --}}
+            {{> 'tfm.actor-proficiency'}}
             {{> 'tfm.actor-skills'}}
         </div>
     </div>

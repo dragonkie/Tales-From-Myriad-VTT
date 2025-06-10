@@ -3,10 +3,6 @@
     margin-bottom: 10px;
 }
 
-.tfm-tab-content {
-    height: 100%;
-}
-
 .tfm nav.tabs .item {
     color: var(--tfm-colour-text);
 
@@ -261,5 +257,6 @@
 //> Tabs
 //========================================================================================
 .tfm-tab-content {
-    padding: 10px;
+    padding: 10px 0;
+    height: 100%;
 }

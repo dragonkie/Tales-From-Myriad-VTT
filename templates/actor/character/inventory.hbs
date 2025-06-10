@@ -1,6 +1,6 @@
 <div class="tfm-tab-content tfm-tab-inventory">
     <div class="tfm-carry-capacity">
-        {{> 'tfm.resource-bar-inline' label='CARRY CAPACITY' value=items.size max=system.carry_capacity cssClass='tfm-s'}}
+        {{> 'tfm.resource-bar-inline' label='CARRY CAPACITY' value=inventory.size max=system.carry_capacity cssClass='tfm-s'}}
     </div>
     <ol class="items-list" style="margin: 0; padding: 0;">
         <li class="item flexrow items-header">
@@ -10,7 +10,7 @@
                 <a class="item-control item-create" title="Create item" data-type="item"><i class="fas fa-plus"></i> Add item</a>
             </div>
         </li>
-        {{#each items as |item id|}}
+        {{#each inventory.contents as |item|}}
             {{#unless (eq item.type 'spell')}}
                 <li class="item flexrow" data-item-uuid="{{item.uuid}}">
                     <div class="item-name">

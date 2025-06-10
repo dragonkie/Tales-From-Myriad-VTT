@@ -193,6 +193,10 @@
 //======================================================================================
 //> Padding
 //======================================================================================
+.tfm-pad-none {
+    --tfm-padding: 0;
+}
+
 .tfm-pad-xs {
     --tfm-padding: var(--tfm-size-xs);
 }
@@ -217,20 +221,28 @@
     padding: var(--tfm-padding, --tfm-size-m);
 }
 
-.tfm-padding-right {
+.tfm-pad-right {
     padding-right: var(--tfm-padding, --tfm-size-m);
 }
 
-.tfm-padding-left {
+.tfm-pad-left {
     padding-left: var(--tfm-padding, --tfm-size-m);
 }
 
-.tfm-padding-top {
+.tfm-pad-top {
     padding-top: var(--tfm-padding, --tfm-size-m);
 }
 
-.tfm-padding-bottom {
+.tfm-pad-bottom {
     padding-bottom: var(--tfm-padding, --tfm-size-m);
+}
+
+.tfm-pad-left-right {
+    padding: 0 var(--tfm-padding, --tfm-size-m);
+}
+
+.tfm-pad-top-bottom {
+    padding: var(--tfm-padding, --tfm-size-m) 0;
 }
 
 //======================================================================================
