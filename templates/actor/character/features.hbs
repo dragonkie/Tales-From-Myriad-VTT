@@ -11,27 +11,12 @@
                 <b class="text-center">Weapon</b>
                 <div class="flexcol flex-gap-s">
                     {{#each system.proficiency.weapon as | weapon key |}}
-                        
-                            <div class="flexrow">
-                                <div>{{toTitleCase key}}</div>
-                                <i class="{{#if weapon}}fa-solid{{else}}fa-regular{{/if}} fa-diamond text-right"></i>
-                            </div>
-                        
-                    {{/each}}
-                </div>
-            </div>
 
-            {{!-- Armour proficiency, set by characters Job --}}
-            <div class="flexcol tfm-armour-prof">
-                <b class="text-center">Armour</b>
-                <div class="flexcol flex-gap-s">
-                    {{#each system.proficiency.armour as | armour key |}}
-                        
-                            <div class="flexrow">
-                                <div>{{toTitleCase key}}</div>
-                                <i class="{{#if armour}}fa-solid{{else}}fa-regular{{/if}} fa-diamond text-right"></i>
-                            </div>
-                        
+                        <div class="flexrow">
+                            <div>{{toTitleCase key}}</div>
+                            <i class="{{#if weapon}}fa-solid{{else}}fa-regular{{/if}} fa-diamond text-right"></i>
+                        </div>
+
                     {{/each}}
                 </div>
             </div>
@@ -45,9 +30,18 @@
         </div>
         {{> 'tfm.actor-movement'}}
         {{> 'tfm.actor-defence'}}
+
+        {{!-- Armour proficiency, set by characters Job --}}
+        <div class="flexcol tfm-armour-prof">
+            <b class="text-left"><i class="fas fa-helmet-battle"></i> Armour Proficiencies</b>
+            <div class="flexrow flex-gap-m">
+                {{#each system.proficiency.armour as | armour key |}}
+                    <div class="tfm-link-wrapper">{{toTitleCase key}}</div>
+                {{/each}}
+            </div>
+        </div>
+
         {{> 'tfm.actor-resistance'}}
-
-
     </div>
     <div>
         <div>

@@ -118,7 +118,7 @@ export default class WeaponData extends ItemDataModel {
     getProficiencyLevel() {
         const actor = this.actor;
         if (!actor) return null;
-        return actor.system.proficiency.weapon.type[this.proficiency].value;
+        return actor.system.proficiency.weaponType[this.proficiency].value;
     }
 
     //============================================================================================
