@@ -8,7 +8,7 @@
         </li>
 
         {{#each itemTypes.spell as |spell key|}}
-        <li class="item flexrow spell" data-item-uuid="{{spell.uuid}}">
+        <li class="item flexrow spell" data-uuid="{{spell.uuid}}">
             <div class="item-name" style="overflow: hidden;">
                 <div class="item-image">
                     <a data-action="useItem" data-use="spell"><img src="{{spell.img}}" title="{{spell.name}}" width="30" height="30" /></a>
@@ -22,7 +22,7 @@
             </div>
 
             <div class="item-controls" style="whitespace: nowrap; flex: 0 1;">
-                <a class="item-control item-edit" data-action="editItem" title="Edit Item">
+                <a class="item-control item-edit" data-action="edit" title="Edit Item">
                     <i class="fas fa-edit"></i>
                 </a>
                 <a class="item-control item-delete" data-action="deleteItem" title="Delete Item">

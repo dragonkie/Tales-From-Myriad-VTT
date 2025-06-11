@@ -223,14 +223,15 @@
         flex: none;
     }
 
-    >label, >span.label {
+    >label,
+    >span.label {
         flex: 1;
         color: var(--color-form-label);
         font-weight: bold;
         line-height: var(--input-height);
         cursor: var(--cursor-default);
 
-        > i {
+        >i {
             margin-right: 0.25rem;
         }
     }
@@ -247,7 +248,9 @@
     }
 
     &:hover {
-        >label, >span.label {
+
+        >label,
+        >span.label {
             color: var(--color-form-label-hover);
         }
     }
@@ -259,4 +262,20 @@
 .tfm-tab-content {
     padding: 10px 0;
     height: 100%;
+}
+
+//======================================================================================
+//> Borders
+//======================================================================================
+
+.tfm-border {
+    border: 1px solid var(--tfm-colour-border, black);
+
+    &.rounded, .round {
+        border-radius: var(--tfm-border-radius, --tfm-size-m);
+    }
+}
+
+.rounded, .round {
+    border-radius: var(--tfm-border-radius, --tfm-size-m);
 }

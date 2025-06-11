@@ -2,42 +2,45 @@
 
     <div class="flexrow flex-gap-m" style="align-items: flex-start; flex-wrap: nowrap;">
         <div style="flex: 2;">{{> 'tfm.actor-abilities'}}</div>
-        <div class="flexcol flex-gap-m" style="flex: 3;">
-            {{!-- Weapon class proficiency, set by characters Job --}}
+        <div class="flexcol flex-gap-m">
+            <div class="flexcol flex-gap-m tfm-bg-group tfm-pad tfm-pad-s rounded" style="flex: 3;">
+                {{!-- Weapon class proficiency, set by characters Job --}}
+                <div class="flexcol tfm-armour-prof">
+                    <b class="text-center text-wrap-none"><i class="fas fa-sword"></i> Weapon Prof.</b>
+                    <div class="flexrow flex-gap-s">
+                        {{#each system.proficiency.weapon as | weapon key |}}
+                            {{#if weapon}}
+                                <div class="tfm-border rounded text-center tfm-pad-vertical tfm-pad-xs">{{toTitleCase key}}</div>
+                            {{/if}}
+                        {{/each}}
+                    </div>
+                </div>
+                {{!-- Weapon proficiencies --}}
+                {{> 'tfm.actor-proficiency'}}
+            </div>
+            <div class="tfm-bg-group tfm-pad tfm-pad-s rounded">{{> 'tfm.actor-skills'}}</div>
+        </div>
+    </div>
+    <div class="flexcol flex-gap-m">
+
+        <div class="tfm-bg-group rounded tfm-pad tfm-pad-s">{{> 'tfm.actor-movement'}}</div>
+
+        <div class="flexcol flex-gap-m rounded tfm-pad-s tfm-pad tfm-bg-group">
+            {{> 'tfm.actor-defence'}}
+            {{!-- Armour proficiency, set by characters Job --}}
             <div class="flexcol tfm-armour-prof">
-                <b class="text-center text-wrap-none"><i class="fas fa-sword"></i> Weapon Prof.</b>
+                <b class="text-left"><i class="fas fa-helmet-battle"></i> Armour Proficiencies</b>
                 <div class="flexrow flex-gap-m">
-                    {{#each system.proficiency.weapon as | weapon key |}}
-                        {{#if weapon}}
-                            <div class="tfm-link-wrapper">{{toTitleCase key}}</div>
+                    {{#each system.proficiency.armour as | armour key |}}
+                        {{#if armour}}
+                            <div class="tfm-border rounded text-center tfm-pad-font">{{toTitleCase key}}</div>
                         {{/if}}
                     {{/each}}
                 </div>
             </div>
-
-            {{!-- Weapon proficiencies --}}
-            {{> 'tfm.actor-proficiency'}}
-            {{> 'tfm.actor-skills'}}
         </div>
-    </div>
-    <div class="flexcol flex-gap-m">
-        <div class="tfm-corruption">
-            {{> 'tfm.resource-bar-inline' cssClass='tfm-corruption-bar tfm-s stacked bold' label=(concat 'Corruption: ' system.corruption.label) value=system.corruption.value value_name='system.corruption.value' max=10}}
-        </div>
-        {{> 'tfm.actor-movement'}}
-        {{> 'tfm.actor-defence'}}
+        <div class="tfm-bg-group rounded tfm-pad tfm-pad-s">{{> 'tfm.actor-resistance'}}</div>
 
-        {{!-- Armour proficiency, set by characters Job --}}
-        <div class="flexcol tfm-armour-prof">
-            <b class="text-left"><i class="fas fa-helmet-battle"></i> Armour Proficiencies</b>
-            <div class="flexrow flex-gap-m">
-                {{#each system.proficiency.armour as | armour key |}}
-                    <div class="tfm-link-wrapper">{{toTitleCase key}}</div>
-                {{/each}}
-            </div>
-        </div>
-
-        {{> 'tfm.actor-resistance'}}
     </div>
     <div>
         <div>

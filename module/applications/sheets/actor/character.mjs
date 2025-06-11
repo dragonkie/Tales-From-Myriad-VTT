@@ -60,11 +60,15 @@ export default class CharacterSheet extends TfmActorSheet {
             contents: [],
             get size() { return context.inventory.contents.length }
         };
+
         this.document.items.contents.forEach(item => {
+            // fill inventory with applicable items
             const whitelist = ['weapon', 'trinket', 'armour'];
             if (whitelist.includes(item.type)) {
                 context.inventory.contents.push(item);
             }
+
+            
         });
 
         return context;

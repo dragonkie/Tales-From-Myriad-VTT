@@ -36,7 +36,7 @@
         <div class="flexrow flex-gap-m">
             {{#each system.proficiency.weaponType as |weapon key|}}
                 {{#if weapon}}
-                    <div class="tfm-link-wrapper" data-weapon-type="{{key}}">
+                    <div class="tfm-border rounded tfm-pad-font flexshrink" data-weapon-type="{{key}}">
                         {{toTitleCase (localize key)}}
                     </div>
                 {{/if}}

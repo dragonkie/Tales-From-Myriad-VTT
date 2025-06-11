@@ -165,15 +165,15 @@ export default class TfmActorSheet extends TfmSheetMixin(foundry.applications.sh
     async _onSortItem(item, target) {
         if (item.documentName !== "Item") return;
         LOGGER.debug('Sorting item');
-        const self = target.closest("[data-tab]")?.querySelector(`[data-item-uuid="${item.uuid}"]`);
-        if (!self || !target.closest("[data-item-uuid]")) return;
+        const self = target.closest("[data-tab]")?.querySelector(`[data-uuid="${item.uuid}"]`);
+        if (!self || !target.closest("[data-uuid]")) return;
 
-        let sibling = target.closest("[data-item-uuid]") ?? null;
-        if (sibling?.dataset.itemUuid === item.uuid) return;
-        if (sibling) sibling = await fromUuid(sibling.dataset.itemUuid);
+        let sibling = target.closest("[data-uuid]") ?? null;
+        if (sibling?.dataset.uuid === item.uuid) return;
+        if (sibling) sibling = await fromUuid(sibling.dataset.uuid);
 
-        let siblings = target.closest("[data-tab]").querySelectorAll("[data-item-uuid]");
-        siblings = await Promise.all(Array.from(siblings).map(s => fromUuid(s.dataset.itemUuid)));
+        let siblings = target.closest("[data-tab]").querySelectorAll("[data-uuid]");
+        siblings = await Promise.all(Array.from(siblings).map(s => fromUuid(s.dataset.uuid)));
         siblings.findSplice(i => i === item);
 
         let updates = SortingHelpers.performIntegerSort(item, { target: sibling, siblings: siblings, sortKey: "sort" });
@@ -190,7 +190,7 @@ export default class TfmActorSheet extends TfmSheetMixin(foundry.applications.sh
      * @param {Element} target
      */
     static async _onUseItem(event, target) {
-        const uuid = target.closest(".item[data-item-uuid]").dataset.itemUuid;
+        const uuid = target.closest("[data-uuid]").dataset.uuid;
         const item = await fromUuid(uuid);
 
         const action = target.closest("[data-use]")?.dataset.use;// the action the item is performing if applicable
@@ -204,7 +204,7 @@ export default class TfmActorSheet extends TfmSheetMixin(foundry.applications.sh
      * @param {Element} target
      */
     static async _onEditItem(event, target) {
-        const uuid = target.closest(".item[data-item-uuid]").dataset.itemUuid;
+        const uuid = target.closest(".item[data-uuid]").dataset.uuid;
         const item = await fromUuid(uuid);
 
         if (!item.sheet.rendered) item.sheet.render(true);
@@ -216,7 +216,7 @@ export default class TfmActorSheet extends TfmSheetMixin(foundry.applications.sh
      * @param {Element} target
      */
     static async _onDeleteItem(event, target) {
-        const uuid = target.closest(".item[data-item-uuid]").dataset.itemUuid;
+        const uuid = target.closest(".item[data-uuid]").dataset.uuid;
         const item = await fromUuid(uuid);
         if (event.shiftKey) void item.delete();
         else void item.deleteDialog();
@@ -227,7 +227,7 @@ export default class TfmActorSheet extends TfmSheetMixin(foundry.applications.sh
      * @param {Element} target
      */
     static async _onEquipItem(event, target) {
-        const uuid = target.closest(".item[data-item-uuid]").dataset.itemUuid;
+        const uuid = target.closest(".item[data-uuid]").dataset.uuid;
         const item = await fromUuid(uuid);
 
         return item.update({ 'system.equipped': !item.system.equipped })
@@ -238,7 +238,7 @@ export default class TfmActorSheet extends TfmSheetMixin(foundry.applications.sh
      * @param {Element} target
      */
     static async _onGiveItem(event, target) {
-        const uuid = target.closest(".item[data-item-uuid]").dataset.itemUuid;
+        const uuid = target.closest(".item[data-uuid]").dataset.uuid;
         tfm.socket.sendItem(uuid);
     }
 

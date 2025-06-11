@@ -62,9 +62,9 @@ export default class CharacterData extends ActorDataModel {
         this.carry_capacity = Math.max(10 + this.abilities.pwr.mod, 1);
 
         for (const job of this.document.itemTypes.job) {
-            if (job.system.proficiency.armour.light) this.proficiency.armour.light = true;
-            if (job.system.proficiency.armour.medium) this.proficiency.armour.medium = true;
-            if (job.system.proficiency.armour.heavy) this.proficiency.armour.heavy = true;
+            this.proficiency.armour.light = job.system.proficiency.armour.light;
+            this.proficiency.armour.medium = job.system.proficiency.armour.medium;
+            this.proficiency.armour.heavy = job.system.proficiency.armour.heavy;
 
             for (const [key, value] of Object.entries(this.proficiency.weapon)) {
                 this.proficiency.weapon[key] = job.system.proficiency.weapon[key];

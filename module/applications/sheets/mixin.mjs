@@ -15,14 +15,17 @@ export default function TfmSheetMixin(Base) {
                 editImage: this._onEditImage,
                 toggleSheet: this._onToggleSheet,
                 toggleOpacity: this._ontoggleOpacity,
+
+                // Active effects
                 effectToggle: this._onToggleEffect,
                 effectEdit: this._onEditEffect,
                 effectDelete: this._onDeleteEffect,
                 effectCreate: this._onCreateEffect,
+
                 toggleDescription: this._onToggleDescription,
                 collapse: this._onToggleCollapse,
                 toggleMode: this._onToggleMode,
-                edit: this._onEditEmbedded,
+                edit: this._onEditUuid,
                 delete: this._onDeleteEmbedded
             }
         };
@@ -45,7 +48,7 @@ export default function TfmSheetMixin(Base) {
         }
 
         //============================================================================================
-        // Sheet Context
+        //> Sheet Context
         //============================================================================================
         async _prepareContext(options) {
             const doc = this.document;
@@ -103,7 +106,7 @@ export default function TfmSheetMixin(Base) {
         }
 
         //============================================================================================
-        // Rendering
+        //> Rendering
         //============================================================================================
 
         /**
@@ -204,7 +207,7 @@ export default function TfmSheetMixin(Base) {
         //==============================================================================================================
         _setupDragAndDrop() {
             const dd = new foundry.applications.ux.DragDrop.implementation({
-                dragSelector: "[data-item-uuid]",
+                dragSelector: "[data-uuid]",
                 dropSelector: ".application",
                 permissions: {
                     dragstart: this._canDragStart.bind(this),
@@ -227,7 +230,7 @@ export default function TfmSheetMixin(Base) {
         }
 
         async _onDragStart(event) {
-            const uuid = event.currentTarget.closest("[data-item-uuid]").dataset.itemUuid;
+            const uuid = event.currentTarget.closest("[data-uuid]").dataset.uuid;
             const item = await fromUuid(uuid);
             const data = item.toDragData();
             event.dataTransfer.setData("text/plain", JSON.stringify(data));
@@ -239,7 +242,7 @@ export default function TfmSheetMixin(Base) {
             const target = event.target;
             const { type, uuid } = foundry.applications.ux.TextEditor.getDragEventData(event);
             const item = await fromUuid(uuid);
-            
+
             if (!item) return;
             if (item.parent === this.document) return this._onSortItem(item, target);
 
@@ -270,15 +273,15 @@ export default function TfmSheetMixin(Base) {
         async _onSortItem(item, target) {
             if (item.documentName !== "Item") return;
             LOGGER.debug('Sorting item');
-            const self = target.closest("[data-tab]")?.querySelector(`[data-item-uuid="${item.uuid}"]`);
-            if (!self || !target.closest("[data-item-uuid]")) return;
+            const self = target.closest("[data-tab]")?.querySelector(`[data-uuid="${item.uuid}"]`);
+            if (!self || !target.closest("[data-uuid]")) return;
 
-            let sibling = target.closest("[data-item-uuid]") ?? null;
-            if (sibling?.dataset.itemUuid === item.uuid) return;
-            if (sibling) sibling = await fromUuid(sibling.dataset.itemUuid);
+            let sibling = target.closest("[data-uuid]") ?? null;
+            if (sibling?.dataset.uuid === item.uuid) return;
+            if (sibling) sibling = await fromUuid(sibling.dataset.uuid);
 
-            let siblings = target.closest("[data-tab]").querySelectorAll("[data-item-uuid]");
-            siblings = await Promise.all(Array.from(siblings).map(s => fromUuid(s.dataset.itemUuid)));
+            let siblings = target.closest("[data-tab]").querySelectorAll("[data-uuid]");
+            siblings = await Promise.all(Array.from(siblings).map(s => fromUuid(s.dataset.uuid)));
             siblings.findSplice(i => i === item);
 
             let updates = SortingHelpers.performIntegerSort(item, { target: sibling, siblings: siblings, sortKey: "sort" });
@@ -290,38 +293,46 @@ export default function TfmSheetMixin(Base) {
         //> Setup Context Menu
         //============================================================================================
         _setupContextMenu() {
-            new TfmContextMenu(this.element, "[data-item-uuid]", [], {
-                jQuery: false,
-                onOpen: element => {
-                    const item = fromUuidSync(element.dataset.itemUuid);
-                    if (!item) return;
-                    ui.context.menuItems = this._getItemContextOptions(item);
-                }
-            })
+            console.log('creating context menu')
+            new TfmContextMenu(
+                this.element,
+                "[data-uuid]",
+                [],
+                {
+                    fixed: false,
+                    jQuery: false,
+                    onClose: () => { },
+                    onOpen: element => {
+                        console.log('open context menu on element: ',element);
+                        const item = fromUuidSync(element.dataset.uuid);
+                        if (!item) return;
+                        ui.context.menuItems = this._getItemContextOptions(item);
+                    }
+                })
         }
 
-        _getItemContextOptions(item) {
-            const isOwner = item.isOwner;
-            const isCharacter = item.actor.type === "character";
-            const isNpc = item.actor.type === "npc";
-            const isEquipped = item.isEquipped;
+        _getItemContextOptions(document) {
+            const isOwner = document.isOwner;
+            const isCharacter = document.actor.type === "character";
+            const isNpc = document.actor.type === "npc";
+            const isEquipped = document.isEquipped;
             const options = [{
                 name: "TFM.ContextMenu.Edit",
                 icon: "<i class='fa-solid fa-fw fa-edit'></i>",
                 condition: () => isOwner,
-                callback: () => item.sheet.render(true),
+                callback: () => document.sheet.render(true),
                 group: "manage"
             }, {
                 name: "TFM.ContextMenu.Delete",
                 icon: "<i class='fa-solid fa-fw fa-trash'></i>",
                 condition: () => isOwner,
-                callback: () => item.delete(),
+                callback: () => document.delete(),
                 group: "manage"
             }, {
                 name: "TFM.ContextMenu.Gift",
                 icon: "<i class='fa-solid fa-fw fa-gift'></i>",
                 condition: () => isOwner,
-                callback: () => item.delete(),
+                callback: () => { },
                 group: "manage"
             }];
 
@@ -342,6 +353,13 @@ export default function TfmSheetMixin(Base) {
          * @param {Element} target 
          */
         _onClickAction(event, target) { }
+
+        static async _onEditUuid(event, target) {
+            console.log(event);
+            const uuid = event.target.closest('[data-uuid]')?.dataset.uuid;
+            const doc = await fromUuid(uuid);
+            if (doc) doc.sheet.render(true);
+        }
 
         /**
          * 

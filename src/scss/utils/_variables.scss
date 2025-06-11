@@ -64,17 +64,25 @@
 //> Light mode setup
 //======================================================================================
 .tfm {
+    // Default classes
     --tfm-colour-1: var(--tfm-colour-light-2);
     --tfm-colour-2: var(--tfm-colour-light-4);
     --tfm-colour-3: var(--tfm-colour-light-6);
 
+    // Borders
     --tfm-colour-border: var(--tfm-colour-light-6);
+    --tfm-border-radius: var(--tfm-size-s);
+
+    // Text
     --tfm-colour-text-selection-bg: var(--tfm-colour-warm-4);
     --tfm-colour-text-selection: var(--tfm-colour-light-3);
     --tfm-colour-text-shadow: var(--tfm-colour-cool-1-25);
     --tfm-colour-text: var(--tfm-colour-dark-1);
 
     --tfm-sheet-background: var(--tfm-colour-light-2);
+
+    --tfm-input-background: var();
+    --tfm-input-background-disabled: var();
 
     --tfm-background-1: var(--tfm-colour-light-2);
     --tfm-background-2: var(--tfm-colour-light-4);
@@ -113,20 +121,35 @@
     --tfm-sheet-background: var(--tfm-colour-cool-1-90);
 
     --tfm-background-1: var(--tfm-colour-cool-1-90);
-    --tfm-background-2: var(--tfm-colour-cool-2);
+    --tfm-background-2: var(--tfm-colour-cool-3);
     --tfm-background-3: var(--tfm-colour-cool-1);
 
     input {
         --tfm-input-background-colour: var(--tfm-colour-cool-3);
 
         &:disabled {
-            --tfm-input-background-colour: var(--tfm-colour-cool-2);
+            --tfm-input-background-colour: var(--tfm-colour-cool-1);
         }
     }
 
     .tfm-bar {
         --tfm-bar-bg: var(--tfm-colour-cool-1)
     }
+}
+
+//======================================================================================
+//> colours
+//======================================================================================
+.tfm-bg-main {
+    background-color: var(--tfm-background-1);
+}
+
+.tfm-bg-group {
+    background-color: var(--tfm-background-2);
+}
+
+.tfm-bg-disabled {
+    background-color: var(--tfm-background-3);
 }
 
 //======================================================================================
@@ -137,6 +160,7 @@
     --tfm-padding: var(--tfm-size-xs);
     --tfm-font-size: var(--tfm-font-size-xs);
     --tfm-input-font-size: var(--tfm-font-size-xs);
+    --tfm-border-radius: var(--tfm-size-xs);
 }
 
 .tfm-s {
@@ -144,6 +168,7 @@
     --tfm-padding: var(--tfm-size-s);
     --tfm-font-size: var(--tfm-font-size-s);
     --tfm-input-font-size: var(--tfm-font-size-s);
+    --tfm-border-radius: var(--tfm-size-s);
 }
 
 .tfm-m {
@@ -151,6 +176,7 @@
     --tfm-padding: var(--tfm-size-m);
     --tfm-font-size: var(--tfm-font-size-m);
     --tfm-input-font-size: var(--tfm-font-size-m);
+    --tfm-border-radius: var(--tfm-size-m);
 }
 
 .tfm-l {
@@ -158,6 +184,7 @@
     --tfm-padding: var(--tfm-size-l);
     --tfm-font-size: var(--tfm-font-size-l);
     --tfm-input-font-size: var(--tfm-font-size-l);
+    --tfm-border-radius: var(--tfm-size-l);
 }
 
 .tfm-xl {
@@ -165,11 +192,22 @@
     --tfm-padding: var(--tfm-size-xl);
     --tfm-font-size: var(--tfm-font-size-xl);
     --tfm-input-font-size: var(--tfm-font-size-xl);
+    --tfm-border-radius: var(--tfm-size-xl);
 }
 
 //======================================================================================
 //> Font sizing
 //======================================================================================
+.tfm {
+    --tfm-font-size: var(--tfm-font-size-m);
+
+    label,
+    b,
+    a {
+        font-size: var(--tfm-font-size);
+    }
+}
+
 .tfm-font-xs {
     --tfm-font-size: var(--tfm-font-size-xs);
 }
@@ -217,7 +255,8 @@
     --tfm-padding: var(--tfm-size-xl);
 }
 
-.tfm-padding {
+.tfm-padding,
+.tfm-pad {
     padding: var(--tfm-padding, --tfm-size-m);
 }
 
@@ -237,12 +276,16 @@
     padding-bottom: var(--tfm-padding, --tfm-size-m);
 }
 
-.tfm-pad-left-right {
+.tfm-pad-left-right, .tfm-pad-horizontal {
     padding: 0 var(--tfm-padding, --tfm-size-m);
 }
 
-.tfm-pad-top-bottom {
+.tfm-pad-top-bottom, .tfm-pad-vertical {
     padding: var(--tfm-padding, --tfm-size-m) 0;
+}
+
+.tfm-pad-font {
+    padding: 0.2em 0.5em;
 }
 
 //======================================================================================

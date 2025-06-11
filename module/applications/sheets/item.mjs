@@ -80,7 +80,7 @@ export default class TfmItemSheet extends TfmSheetMixin(foundry.applications.she
     //> Sheet Actions
     //==============================================================================================================
     static async _onEditItem(event, target) {
-        const uuid = target.closest(".item[data-item-uuid]").dataset.itemUuid;
+        const uuid = target.closest(".item[data-uuid]").dataset.uuid;
         const item = await fromUuid(uuid);
 
         if (!item.sheet.rendered) item.sheet.render(true);
