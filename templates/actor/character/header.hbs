@@ -19,10 +19,10 @@
                         {{/each}}
                     </div>
                     {{#with system.xp}}
-                        {{> 'tfm.resource-bar-inline' cssClass='tfm-exp-bar tfm-s tfm-font-m' label='EXP' value=value value_name='system.xp.value' max=next}}
+                        {{> 'tfm.resource-bar-inline' cssClass='tfm-exp-bar tfm-s tfm-font-m' label=(concat 'Level: ' @root.system.level) value=value value_name='system.xp.value' max=next}}
                     {{/with}}
                     <div class="tfm-corruption">
-                        {{> 'tfm.resource-bar-inline' cssClass='tfm-corruption-bar tfm-s tfm-font-m bold' label=(concat 'Corruption' ) value=system.corruption.value value_name='system.corruption.value' max=10}}
+                        {{> 'tfm.resource-bar-inline' cssClass='tfm-corruption-bar tfm-s tfm-font-m' label=(concat 'Corruption' ) value=system.corruption.value value_name='system.corruption.value' max=10}}
                     </div>
                 </div>
             </div>
