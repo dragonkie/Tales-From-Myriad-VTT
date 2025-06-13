@@ -1,16 +1,15 @@
 {{!-- Sheet Header --}}
-<header class="actor-header flexcol">
-    <div class="flexrow">
+<header class="tfm-actor-header flexcol">
+    <div class="flexrow flex-gap-m">
         <img class="profile-img" src="{{document.img}}" data-action="editImage" title="{{document.name}}" height="100" width="100" />
         <div class="header-fields">
-            <input name="name" type="text" value="{{document.name}}" placeholder="Name" />
+            <input class="tfm-actor-name" name="name" type="text" value="{{document.name}}" placeholder="Name" />
             <div class="flexrow">
                 <div class="tfm-health">
                     {{> 'tfm.resource-bar-inline' cssClass='tfm-health-bar' label='Health' value=system.hp.value value_name='system.hp.value' max=system.hp.max max_name='system.hp.max'}}
                 </div>
-                {{> 'tfm.actor-defence'}}
             </div>
         </div>
     </div>
-    {{> "tfm.actor-abilities" cssClass='tfm-row' system=system}}
+    
 </header>

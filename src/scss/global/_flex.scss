@@ -27,7 +27,7 @@
     justify-content: space-between;
   }
 
-  .flexlarge {
+  .flexlarge, .flex2 {
     flex: 2;
   }
 
@@ -60,6 +60,14 @@
   }
 
   .flex-overflow {
+    flex-wrap: wrap;
+  }
+
+  .flex-nowrap {
+    flex-wrap: nowrap;
+  }
+
+  .flexwrap {
     flex-wrap: wrap;
   }
 }

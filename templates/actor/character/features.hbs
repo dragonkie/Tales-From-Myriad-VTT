@@ -1,9 +1,9 @@
 <div class="tfm-tab-content tfm-pad-none fm-tab-features flexrow flex-gap-l flex-group-left flex-align-start">
 
     <div class="flexrow flex-gap-m" style="align-items: flex-start; flex-wrap: nowrap;">
-        <div style="flex: 2;">{{> 'tfm.actor-abilities'}}</div>
+        {{> 'tfm.actor-abilities'}}
         <div class="flexcol flex-gap-m">
-            <div class="flexcol flex-gap-m tfm-bg-group tfm-pad tfm-pad-s rounded" style="flex: 3;">
+            <div class="flexcol flex-gap-m tfm-group-primary tfm-pad tfm-pad-s rounded" style="flex: 3;">
                 {{!-- Weapon class proficiency, set by characters Job --}}
                 <div class="flexcol tfm-armour-prof">
                     <b class="text-center text-wrap-none"><i class="fas fa-sword"></i> Weapon Prof.</b>
@@ -18,14 +18,14 @@
                 {{!-- Weapon proficiencies --}}
                 {{> 'tfm.actor-proficiency'}}
             </div>
-            <div class="tfm-bg-group tfm-pad tfm-pad-s rounded">{{> 'tfm.actor-skills'}}</div>
+            <div class="tfm-group-primary tfm-pad tfm-pad-s rounded">{{> 'tfm.actor-skills'}}</div>
         </div>
     </div>
     <div class="flexcol flex-gap-m">
 
-        <div class="tfm-bg-group rounded tfm-pad tfm-pad-s">{{> 'tfm.actor-movement'}}</div>
+        <div class="tfm-group-primary rounded tfm-pad tfm-pad-s">{{> 'tfm.actor-movement'}}</div>
 
-        <div class="flexcol flex-gap-m rounded tfm-pad-s tfm-pad tfm-bg-group">
+        <div class="flexcol flex-gap-m rounded tfm-pad-s tfm-pad tfm-group-primary">
             {{> 'tfm.actor-defence'}}
             {{!-- Armour proficiency, set by characters Job --}}
             <div class="flexcol tfm-armour-prof">
@@ -39,7 +39,7 @@
                 </div>
             </div>
         </div>
-        <div class="tfm-bg-group rounded tfm-pad tfm-pad-s">{{> 'tfm.actor-resistance'}}</div>
+        <div class="tfm-group-primary rounded tfm-pad tfm-pad-s">{{> 'tfm.actor-resistance'}}</div>
 
     </div>
     <div>

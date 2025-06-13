@@ -12,7 +12,7 @@ export default class TfmActorSheet extends TfmSheetMixin(foundry.applications.sh
     /** @override */
     static DEFAULT_OPTIONS = {
         classes: ["tfm", "sheet", "actor"],
-        position: { height: 'auto', width: 'auto', top: 100, left: 200 },
+        position: { height: 'auto', width: 800, top: 100, left: 200 },
         window: { resizable: true },
         actions: {
             useItem: this._onUseItem,

@@ -1,16 +1,16 @@
 .sheet.actor {
-    background: var(--tfm-sheet-background, #ffd8ac);
+    background: var(--tfm-colour-background, #ffd8ac);
     background-size: 100% 100%;
 
     //========================================================================================
-    // Inputs
+    //> Inputs
     //========================================================================================
     input {
         background-color: var(--tfm-input-background-colour);
     }
 
     //========================================================================================
-    // config classes
+    //> config classes
     //========================================================================================
     .tfm-health-bar {
         --tfm-bar-colour: rgb(64, 142, 64);
@@ -25,7 +25,7 @@
     }
 
     //========================================================================================
-    // header
+    //> header
     //========================================================================================
     .tfm-actor-header {
         display: flex;
@@ -33,18 +33,18 @@
 
         img {
             flex: 0;
-            background-color: var(--tfm-background-1, rgba(0, 0, 0, 0.2));
+            background-color: var(--tfm-colour-primary, rgba(0, 0, 0, 0.2));
         }
 
         >.wrapper {
             display: flex;
             flex-direction: column;
             flex: 1;
+        }
 
-            .tfm-actor-name {
-                font-size: 36px;
-                height: 1.2em;
-            }
+        .tfm-actor-name {
+            font-size: 36px;
+            height: 1.2em;
         }
     }
 
@@ -57,13 +57,12 @@
     }
 
     //========================================================================================
-    // Abilities
+    //> Abilities
     //========================================================================================
     .tfm-abilities-list {
         font-size: 14px;
         display: flex;
-        flex: 1;
-        display: flex;
+        flex: 0 0;
         flex-direction: column;
 
         box-sizing: border-box;
@@ -81,29 +80,30 @@
             }
 
             >.wrapper {
-                text-align: center;
+                align-items: center;
                 border-radius: 5px;
                 display: flex;
                 flex-direction: row;
-                align-items: center;
+                text-align: center;
 
                 .tfm-ability-score {
+                    background-color: var(--tfm-colour-primary);
                     flex: 1;
                     font-size: 24px;
                     height: 3rem;
+                    width: 3rem;
                     z-index: 1;
                 }
 
                 .tfm-ability-mod {
+                    align-items: center;
+                    background-color: var(--tfm-colour-secondary);
+                    border-radius: 0 5px 5px 0;
+                    display: flex;
                     flex: 1;
                     height: 2rem;
-                    background-color: var(--tfm-background-2);
-                    border-radius: 0 5px 5px 0;
-
-                    display: flex;
-                    align-items: center;
                     justify-content: center;
-
+                    width: 3rem;
                     z-index: -1;
                 }
             }
@@ -119,6 +119,7 @@
 
                 .tfm-ability-mod {
                     border-radius: 0 0 5px 5px;
+                    width: 60%;
                 }
             }
 
@@ -129,14 +130,14 @@
     }
 
     //========================================================================================
-    // Defence
+    //> Defence
     //========================================================================================
     .tfm-defences {
         padding: 4px;
     }
 
     //========================================================================================
-    // Resistance
+    //> Resistance
     //========================================================================================
     .tfm-resistance-group {
         label {
@@ -153,11 +154,11 @@
     }
 
     //========================================================================================
-    // Skills list
+    //> Skills list
     //========================================================================================
 
     //========================================================================================
-    // Item lists
+    //> Item lists
     //========================================================================================
     .item-name {
         h4 {

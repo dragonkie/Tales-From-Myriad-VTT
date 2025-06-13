@@ -11,19 +11,21 @@
                     </div>
                 </div>
             </div>
-            <div>
-                <div>
-                    <div class="flexrow">
+            <div class="flexcol flex-align-start">
+                <div class="flexrow">
+                    {{#if (gt itemTypes.job.length 0)}}
                         {{#each itemTypes.job as | job |}}
                             <a data-uuid="{{job.uuid}}" data-action="edit"><b class="tfm-font-l">{{toTitleCase job.name}}</b></a>
                         {{/each}}
-                    </div>
-                    {{#with system.xp}}
-                        {{> 'tfm.resource-bar-inline' cssClass='tfm-exp-bar tfm-s tfm-font-m' label=(concat 'Level: ' @root.system.level) value=value value_name='system.xp.value' max=next}}
-                    {{/with}}
-                    <div class="tfm-corruption">
-                        {{> 'tfm.resource-bar-inline' cssClass='tfm-corruption-bar tfm-s tfm-font-m' label=(concat 'Corruption' ) value=system.corruption.value value_name='system.corruption.value' max=10}}
-                    </div>
+                    {{else}}
+                        <input style="width: 100%;" type="text" value="Job / Specialities" disabled>
+                    {{/if}}
+                </div>
+                {{#with system.xp}}
+                    {{> 'tfm.resource-bar-inline' cssClass='tfm-exp-bar tfm-s tfm-font-m' label=(concat 'Level: ' @root.system.level) value=value value_name='system.xp.value' max=next}}
+                {{/with}}
+                <div class="tfm-corruption">
+                    {{> 'tfm.resource-bar-inline' cssClass='tfm-corruption-bar tfm-s tfm-font-m' label=(concat 'Corruption' ) value=system.corruption.value value_name='system.corruption.value' max=10}}
                 </div>
             </div>
         </div>
