@@ -3,14 +3,9 @@
   "version": "1.0.0",
   "description": "CSS compiler for the Tales From Myriad system",
   "scripts": {
-    "build": "gulp build",
-    "compile": "gulp css",
-    "watch": "gulp",
-    "gulp": "gulp",
     "prepack": "del \"../_packages/tales-from-myriad.zip\"",
-    "pack": "\"E:/Software/7-Zip/7z.exe\" a -tzip ../_packages/tales-from-myriad.zip -x!src/ -x!*.md -x!*.git* -x!*.lock",
-    "sass-watch": "sass --watch src/scss/tales-from-myriad.scss css/main.css",
-    "sass-build": "sass src/scss/tales-from-myriad.scss css/main.css"
+    "pack": "sass src/scss/tales-from-myriad.scss css/main.css && \"E:/Software/7-Zip/7z.exe\" a -tzip ../_packages/tales-from-myriad.zip -x!src/ -x!*.md -x!*.git* -x!*.lock",
+    "sass": "sass --watch src/scss/tales-from-myriad.scss css/main.css"
   },
   "browserslist": [
     "last 3 versions"

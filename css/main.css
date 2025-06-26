@@ -815,14 +815,14 @@
   --tfm-colour-warm-3: #ec682f;
   --tfm-colour-warm-4: #a90b19;
   --tfm-colour-cool-5: #361d2a;
-  --tfm-colour-cool-4: hsl(306, 15%, 30%);
-  --tfm-colour-cool-3: hsl(277, 33%, 19%);
-  --tfm-colour-cool-2: hsl(279, 37%, 12%);
-  --tfm-colour-cool-1: hsl(279, 25%, 14%);
-  --tfm-colour-cool-1-25: hsla(279, 25%, 14%, 25%);
-  --tfm-colour-cool-1-50: hsla(279, 25%, 14%, 50%);
-  --tfm-colour-cool-1-75: hsla(279, 25%, 14%, 75%);
-  --tfm-colour-cool-1-90: hsla(279, 25%, 14%, 90%);
+  --tfm-colour-cool-4: hsl(306, 23%, 30%);
+  --tfm-colour-cool-3: hsl(277, 20%, 19%);
+  --tfm-colour-cool-2: hsl(279, 17%, 12%);
+  --tfm-colour-cool-1: hsl(279, 15%, 14%);
+  --tfm-colour-cool-1-25: hsla(279, 15%, 14%, 25%);
+  --tfm-colour-cool-1-50: hsla(279, 15%, 14%, 50%);
+  --tfm-colour-cool-1-75: hsla(279, 15%, 14%, 75%);
+  --tfm-colour-cool-1-90: hsla(279, 15%, 14%, 90%);
   --tfm-input-bg: rgba(0, 0, 0, 0);
   --tfm-input-c: rgba(0, 0, 0, 1);
   --tfm-margin: var(--tfm-size-m);
@@ -841,12 +841,14 @@
   --tfm-colour-background: var(--tfm-colour-light-2);
   --tfm-colour-primary: var(--tfm-colour-light-3);
   --tfm-colour-secondary: var(--tfm-colour-light-4);
+  --tfm-colour-accent: var(--idkyet, #af69cd);
   --tfm-colour-border: var(--tfm-colour-light-6);
   --tfm-colour-text-selection-bg: var(--tfm-colour-warm-4);
   --tfm-colour-text-selection: var(--tfm-colour-light-3);
   --tfm-colour-text-shadow: var(--tfm-colour-cool-1-25);
   --tfm-colour-text: var(--tfm-colour-dark-1);
   --tfm-border-radius: var(--tfm-size-s);
+  --tfm-font-size: var(--tfm-font-size-m);
 }
 .tfm input {
   --tfm-input-background-colour: var(--tfm-colour-primary);
@@ -860,11 +862,18 @@
 .tfm .tfm-bar {
   --tfm-bar-bg: var(--tfm-colour-secondary);
 }
+.tfm input,
+.tfm label,
+.tfm b,
+.tfm a {
+  font-size: var(--tfm-font-size, 1em);
+}
 
 .theme-dark .tfm {
   --tfm-colour-background: var(--tfm-colour-cool-1-90);
   --tfm-colour-primary: var(--tfm-colour-cool-3);
   --tfm-colour-secondary: var(--tfm-colour-cool-2);
+  --tfm-colour-accent: var(--idkyet, #af69cd)
   --tfm-colour-border: var(--tfm-colour-text);
   --tfm-colour-border: var(--tfm-colour-light-2);
   --tfm-colour-text-selection-bg: var(--tfm-colour-light-5);
@@ -924,16 +933,6 @@
   --tfm-font-size: var(--tfm-font-size-xl);
   --tfm-input-font-size: var(--tfm-font-size-xl);
   --tfm-border-radius: var(--tfm-size-xl);
-}
-
-.tfm {
-  --tfm-font-size: var(--tfm-font-size-m);
-}
-.tfm input,
-.tfm label,
-.tfm b,
-.tfm a {
-  font-size: var(--tfm-font-size, 1em);
 }
 
 .tfm-font-xs {
