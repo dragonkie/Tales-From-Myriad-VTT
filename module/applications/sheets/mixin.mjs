@@ -1,6 +1,8 @@
 import { TFM } from "../../config.mjs";
 import LOGGER from "../../helpers/logger.mjs";
+import utils from "../../helpers/utils.mjs";
 import TfmContextMenu from "../context-menu.mjs";
+import TfmDialog from "../dialog.mjs";
 
 export default function TfmSheetMixin(Base) {
     const mixin = foundry.applications.api.HandlebarsApplicationMixin;
@@ -26,7 +28,10 @@ export default function TfmSheetMixin(Base) {
                 collapse: this._onToggleCollapse,
                 toggleMode: this._onToggleMode,
                 edit: this._onEditUuid,
-                delete: this._onDeleteEmbedded
+                delete: this._onDeleteEmbedded,
+
+                // Useful and common things
+                configField: this._onConfigureField,
             }
         };
 
@@ -45,6 +50,41 @@ export default function TfmSheetMixin(Base) {
                 };
                 return acc;
             }, {});
+        }
+
+        //======================================================================================================
+        //> Sheet user focus control
+        //======================================================================================================
+        _lastFocusElement = null;
+
+        _setFocusElement() {
+            if (this.rendered && this.element.contains(document.activeElement)) {
+                const ele = document.activeElement;
+
+                var cList = '';
+                ele.classList.forEach(c => cList += `.${c}`);
+
+                this._lastFocusElement = {
+                    name: ele.name || '',
+                    value: ele.value || '',
+                    class: cList,
+                    tag: ele.tagName.toLowerCase()
+                }
+            }
+        }
+
+        _getFocusElement() {
+            if (this._lastFocusElement !== null) {
+                let selector = this._lastFocusElement.tag + this._lastFocusElement.class;
+                if (this._lastFocusElement.name) selector += `[name="${this._lastFocusElement.name}"]`;
+
+                /** @type {HTMLElement|undefined}*/
+                const targetElement = this.element.querySelector(selector);
+                if (targetElement) {
+                    targetElement.focus();
+                    if (targetElement.tagName == 'INPUT') targetElement.select();
+                }
+            }
         }
 
         //============================================================================================
@@ -119,6 +159,11 @@ export default function TfmSheetMixin(Base) {
             return super.render(options, _options);
         }
 
+        async _preRender(context, options) {
+            this._setFocusElement();
+            return super._preRender(context, options);
+        }
+
         /**
          * Called once when the sheet is initially opened
          * @param {*} context 
@@ -145,18 +190,7 @@ export default function TfmSheetMixin(Base) {
             }
             this._setupDragAndDrop();
 
-            // manipulate editor toggle buttons to be better
-            /**@type {Array<Element>} */
-            let editors = this.element.querySelectorAll('.description prose-mirror');
-            for (const editor of editors) {
-
-                const btn = editor.querySelector('button.toggle');
-                const icon = btn.querySelector('i');
-                const header = editor.parentElement.querySelector('.header');
-
-                icon.classList.toggle('fa-edit');
-                icon.classList.toggle('fa-feather-pointed');
-            }
+            this._getFocusElement();
         }
 
         async _renderHTML(context, options) {
@@ -303,7 +337,7 @@ export default function TfmSheetMixin(Base) {
                     jQuery: false,
                     onClose: () => { },
                     onOpen: element => {
-                        console.log('open context menu on element: ',element);
+                        console.log('open context menu on element: ', element);
                         const item = fromUuidSync(element.dataset.uuid);
                         if (!item) return;
                         ui.context.menuItems = this._getItemContextOptions(item);

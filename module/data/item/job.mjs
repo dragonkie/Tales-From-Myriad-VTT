@@ -46,6 +46,21 @@ export default class JobData extends ItemDataModel {
             weaponType: new SchemaField(weaponData)
         })
 
+        // list of skills provided by the jobs
+        schema.skills = new ArrayField(new StringField({ initial: '' }), { initial: [] });
+
+        // the paths the features can go in
+        schema.paths = new ArrayField(new StringField({ initial: 'New Path' }), { initial: [] });
+
+        schema.features = new ArrayField(new SchemaField({
+            level: new NumberField({ initial: 1 }), // level the actor needs to be to unlock this feature
+            path: new StringField({ initial: '' }), // which skill path does this qualify as
+            general: new BooleanField({ initial: false }),// features that can be learned at any point
+            implicit: new BooleanField({ initial: false }),// features that you recieve when the job is given to an actor
+            name: new StringField(),
+            uuid: new StringField(),
+        }), { initial: [] })
+
         return schema;
     }
 

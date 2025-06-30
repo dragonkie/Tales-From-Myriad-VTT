@@ -76,6 +76,7 @@ TFM.Generic = {
     type: "TFM.Generic.Type",
     weapon: 'TFM.Generic.Weapon',
     weight: 'TFM.Generic.Weight',
+    skill: 'TFM.Generic.Skill'
 };
 
 TFM.Dice = {

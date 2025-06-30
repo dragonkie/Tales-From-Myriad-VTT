@@ -44,7 +44,12 @@ function registerHelpers() {
         //> Logic
         //======================================================================================
         { name: 'choose', fn: (a, b) => a ? a : b },
-        { name: 'objectIsEmpty', fn: (obj) => Object.keys(obj).length <= 0 },
+        {
+            name: 'isEmpty', fn: (obj) => {
+                if (Array.isArray(obj)) return obj.length == 0;
+                if (typeof obj == 'object') return Object.keys(obj).length == 0;
+            }
+        },
 
         //======================================================================================
         //> User permissions
@@ -127,7 +132,7 @@ function registerHelpers() {
             fn: (schema, path, options) => {
                 const field = schema.getField(path);
                 if (!field) throw new Error(`Couldnt find field from [${path}] in schema:`, schema);
-                
+
                 const { classes, label, hint, rootId, stacked, units, widget, ...inputConfig } = options.hash;
                 const groupConfig = {
                     label, hint, rootId, stacked, widget, localize: true, units,

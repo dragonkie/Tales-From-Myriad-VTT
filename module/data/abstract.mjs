@@ -70,6 +70,14 @@ export class SystemDataModel extends foundry.abstract.TypeDataModel {
         });
     }
 
+    static UuidField() {
+        return class UuidField extends StringField {
+            async isActive() {
+
+            }
+        }
+    }
+
 
     /**
      */
@@ -87,6 +95,27 @@ export class SystemDataModel extends foundry.abstract.TypeDataModel {
     getRollData() {
         const data = { ...this };
         return data;
+    }
+
+    /**
+     * Gets a value from this data model based off a property path
+     * @param {String} path 
+     */
+    getFieldValue(path) {
+        // removes system. from the begining of the path if its there
+        // this lets us use the path from a field directly to request a path
+        path = path.replace(/^system\./, '');
+
+        // Validates the property path
+        if (/[\s\*\+\-\=]/.test(path)) throw new Error('Invalid data path, path must be a a valid dot notation js property path');
+        if (!this.schema.getField(path)) throw new Error(`Path isn't found in this data scema`);
+
+        const list = path.split('.');
+        let value = this;
+        list.forEach((key) => {
+            value = value[key]
+        })
+        return value;
     }
 
     get document() {

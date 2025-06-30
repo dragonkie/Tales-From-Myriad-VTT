@@ -1,12 +1,21 @@
 <div class="tfm-skills">
 
     <div class="flexcol" style="min-width: 120px">
-        <b style="text-align: center;">{{#if isEditMode}}<i class="fas fa-gear"><a data-action="skillConfig"></a></i>{{/if}} Skills</b>
+        <b style="text-align: center;">{{#if isEditMode}}<a class="fas fa-gear" data-action="skillConfig"></a>{{/if}} Skills</b>
         {{#each system.skills as | skill key |}}
             <div style="margin: 2px 0; border-bottom: 1px solid white;">
                 <div>{{skill}}</div>
             </div>
         {{/each}}
+        {{#if @root.job}}
+            {{#each job.system.skills as |skill key|}}
+                <div style="margin: 2px 0; border-bottom: 1px solid white;">
+                    <div>{{skill}}</div>
+                </div>
+            {{/each}}
+        {{/if}}
     </div>
+
+
 
 </div>

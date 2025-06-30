@@ -79,5 +79,47 @@
         "filePathFields": { }
       }
     }
-  }
+  },
+  "packFolders": {
+
+  },
+  "packs": [
+    {
+      "label": "Core: Jobs",
+      "name": "core-jobs",
+      "path": "packs/core/job",
+      "system": "",
+      "type": "Item",
+      "ownership": {
+        "ASSISTANT": "OBSERVER",
+        "GAMEMASTER": "OWNER",
+        "PLAYER": "OBSERVER",
+        "TRUSTED": "OBSERVER"
+      }
+    }, {
+      "label": "Core: Weapons",
+      "name": "core-weapon",
+      "path": "packs/core/weapon",
+      "system": "",
+      "type": "Item",
+      "ownership": {
+        "ASSISTANT": "OBSERVER",
+        "GAMEMASTER": "OWNER",
+        "PLAYER": "OBSERVER",
+        "TRUSTED": "OBSERVER"
+      }
+    }, {
+      "label": "Core: Spells",
+      "name": "core-spell",
+      "path": "packs/core/spell",
+      "system": "",
+      "type": "Item",
+      "ownership": {
+        "ASSISTANT": "OBSERVER",
+        "GAMEMASTER": "OWNER",
+        "PLAYER": "OBSERVER",
+        "TRUSTED": "OBSERVER"
+      }
+    }
+  ]
 }

@@ -376,6 +376,11 @@
   white-space: nowrap;
 }
 
+.nowrap {
+  white-space: nowrap;
+  flex-wrap: nowrap;
+}
+
 .form-group {
   display: flex;
   flex-direction: row;
@@ -586,9 +591,6 @@
 .sheet.actor {
   background: var(--tfm-colour-background, #ffd8ac);
   background-size: 100% 100%;
-}
-.sheet.actor input {
-  background-color: var(--tfm-input-background-colour);
 }
 .sheet.actor .tfm-health-bar {
   --tfm-bar-colour: rgb(64, 142, 64);
@@ -814,15 +816,15 @@
   --tfm-colour-warm-2: #ee9b3a;
   --tfm-colour-warm-3: #ec682f;
   --tfm-colour-warm-4: #a90b19;
-  --tfm-colour-cool-5: #361d2a;
-  --tfm-colour-cool-4: hsl(306, 23%, 30%);
-  --tfm-colour-cool-3: hsl(277, 20%, 19%);
-  --tfm-colour-cool-2: hsl(279, 17%, 12%);
-  --tfm-colour-cool-1: hsl(279, 15%, 14%);
-  --tfm-colour-cool-1-25: hsla(279, 15%, 14%, 25%);
-  --tfm-colour-cool-1-50: hsla(279, 15%, 14%, 50%);
-  --tfm-colour-cool-1-75: hsla(279, 15%, 14%, 75%);
-  --tfm-colour-cool-1-90: hsla(279, 15%, 14%, 90%);
+  --tfm-colour-cool-5: #0b0a13;
+  --tfm-colour-cool-4: hsl(247, 10%, 25%);
+  --tfm-colour-cool-3: #45323f;
+  --tfm-colour-cool-2: #302831;
+  --tfm-colour-cool-1: #0b0a13;
+  --tfm-colour-cool-1-25: rgba(11, 10, 19, 0.25);
+  --tfm-colour-cool-1-50: rgba(11, 10, 19, 0.5);
+  --tfm-colour-cool-1-75: rgba(11, 10, 19, 0.75);
+  --tfm-colour-cool-1-90: rgba(11, 10, 19, 0.9);
   --tfm-input-bg: rgba(0, 0, 0, 0);
   --tfm-input-c: rgba(0, 0, 0, 1);
   --tfm-margin: var(--tfm-size-m);
@@ -848,13 +850,19 @@
   --tfm-colour-text-shadow: var(--tfm-colour-cool-1-25);
   --tfm-colour-text: var(--tfm-colour-dark-1);
   --tfm-border-radius: var(--tfm-size-s);
+  --tfm-colour-input-background: var(--tfm-colour-light-3);
+  --tfm-colour-input-background-disabled: var(--tfm-colour-light-4);
   --tfm-font-size: var(--tfm-font-size-m);
 }
-.tfm input {
-  --tfm-input-background-colour: var(--tfm-colour-primary);
+.tfm input,
+.tfm textarea,
+.tfm button {
+  --tfm-input-background: var(--tfm-colour-input-background);
 }
-.tfm input:disabled {
-  --tfm-input-background-colour: var(--tfm-colour-secondary);
+.tfm input:disabled,
+.tfm textarea:disabled,
+.tfm button:disabled {
+  --tfm-input-background: var(--tfm-colour-input-background-disabled);
 }
 .tfm img {
   --tfm-background: var(--tfm-colour-secondary);
@@ -862,23 +870,44 @@
 .tfm .tfm-bar {
   --tfm-bar-bg: var(--tfm-colour-secondary);
 }
-.tfm input,
-.tfm label,
-.tfm b,
-.tfm a {
-  font-size: var(--tfm-font-size, 1em);
-}
 
 .theme-dark .tfm {
   --tfm-colour-background: var(--tfm-colour-cool-1-90);
   --tfm-colour-primary: var(--tfm-colour-cool-3);
   --tfm-colour-secondary: var(--tfm-colour-cool-2);
-  --tfm-colour-accent: var(--idkyet, #af69cd)
+  --tfm-colour-accent: var(--idkyet, #af69cd);
   --tfm-colour-border: var(--tfm-colour-text);
   --tfm-colour-border: var(--tfm-colour-light-2);
   --tfm-colour-text-selection-bg: var(--tfm-colour-light-5);
   --tfm-colour-text-selection: var(--tfm-colour-light-3);
   --tfm-colour-text: var(--tfm-colour-light-3);
+  --tfm-colour-input-background: var(--tfm-colour-cool-3);
+  --tfm-colour-input-background-disabled: var(--tfm-colour-cool-4);
+}
+.theme-dark .tfm input,
+.theme-dark .tfm textarea,
+.theme-dark .tfm button {
+  --tfm-input-background: var(--tfm-colour-input-background);
+}
+.theme-dark .tfm input:disabled,
+.theme-dark .tfm textarea:disabled,
+.theme-dark .tfm button:disabled {
+  --tfm-input-background: var(--tfm-colour-input-background-disabled);
+}
+
+.tfm .window-content input,
+.tfm .window-content label,
+.tfm .window-content b,
+.tfm .window-content a {
+  font-size: var(--tfm-font-size, 1em);
+}
+.tfm .window-content input,
+.tfm .window-content button,
+.tfm .window-content textarea {
+  background: var(--tfm-input-background);
+}
+.tfm .window-content input[type=checkbox] {
+  background: none;
 }
 
 .tfm-bg {
@@ -1052,6 +1081,13 @@
 
 .tfm-margin-bottom {
   margin-bottom: var(--tfm-margin, --tfm-size-m);
+}
+
+.tfm-border {
+  border: 1px solid var(--tfm-colour-text);
+}
+.tfm-border.rounded {
+  border-radius: 5px;
 }
 
 /* Styles limited to tales from myriad sheets */

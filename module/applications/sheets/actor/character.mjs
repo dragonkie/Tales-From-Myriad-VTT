@@ -67,9 +67,10 @@ export default class CharacterSheet extends TfmActorSheet {
             if (whitelist.includes(item.type)) {
                 context.inventory.contents.push(item);
             }
-
-            
         });
+        
+        context.job = null;
+        if (this.document.itemTypes.job.length > 0) context.job = this.document.itemTypes.job[0];
 
         return context;
     }
@@ -84,7 +85,7 @@ export default class CharacterSheet extends TfmActorSheet {
      * @param {Element} target 
      */
     static async _onConfigureSkills(event, target) {
-        const input_template = `<input style="margin-bottom: 5px" type="text" value="{SKILL}"><a data-action="delete" style="flex: 0;"><i class="fas fa-trash"></a></i>`;
+        const input_template = `<input style="margin-bottom: 5px" type="text" value="{SKILL}"><a class="fas fa-trash flexshrink" data-action="delete"></a>`;
         const skills_list = utils.duplicate(this.document.system.skills);
         let content = `
         <div class="flexrow">
@@ -92,10 +93,10 @@ export default class CharacterSheet extends TfmActorSheet {
         </div>`;
         content += '<div class="dialog-skill-list">'
         for (const skill of this.document.system.skills) {
-            content += `<div class="flexrow skill-wrapepr flex-gap-m">${input_template.replace('{SKILL}', skill)}</div>`;
+            content += `<div class="flexrow skill-wrapper flex-gap-m">${input_template.replace('{SKILL}', skill)}</div>`;
         }
         content += '</div>';
-        content += `<div><a style="float: right;" data-action="add">add <i class="fas fa-plus"></i></a></div>`;
+        content += `<div class="flexcol flex-align-end"><a data-action="add"><i class="fas fa-plus"></i> add</a></div>`;
 
         // create the config popup
         const app = await new TfmDialog({
