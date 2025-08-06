@@ -230,6 +230,7 @@ TFM.DamageClass = {
 TFM.DamageTypes = {
     sharp: 'TFM.Damage.Type.Sharp',
     blunt: 'TFM.Damage.Type.Blunt',
+    corruption: 'TFM.Damage.Type.Corruption',
     cold: 'TFM.Damage.Type.Cold',
     fire: 'TFM.Damage.Type.Fire',
     sonic: 'TFM.Damage.Type.Sonic',

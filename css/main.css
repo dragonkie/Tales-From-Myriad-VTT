@@ -756,6 +756,9 @@
 .sheet.item .item-descriptions .description a {
   flex: 0;
 }
+.sheet.item .sheet-header {
+  margin-bottom: 0.5rem;
+}
 .sheet.item .sheet-header img {
   flex: 0;
 }
