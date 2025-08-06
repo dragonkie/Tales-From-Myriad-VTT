@@ -33,6 +33,9 @@
         </div>
 
         {{!-- Weapon type proficiencies --}}
+        {{#if (isEmpty system.proficiency.weaponType)}}
+            <div>No Weapon Type proficiencies, use edit mode to add some!</div>
+        {{else}}
         <div class="flexrow flex-gap-m">
             {{#each system.proficiency.weaponType as |weapon key|}}
                 {{#if weapon}}
@@ -42,6 +45,7 @@
                 {{/if}}
             {{/each}}
         </div>
+        {{/if}}
     </div>
 
     {{!-- Armour proficiencies --}}

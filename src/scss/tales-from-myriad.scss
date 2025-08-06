@@ -39,3 +39,21 @@ $border-groove: 2px groove #eeede0;
 #context-menu {
     width: auto;
 }
+
+prose-mirror.active {
+    display: flex;
+    flex-direction: column;
+    .editor-menu {
+        flex: 0;
+    }
+
+    .editor-container {
+        flex: 1;
+        border-radius: 0.3rem;
+        .editor-content {
+            padding: 0.5rem;
+            background-color: var(--tfm-colour-primary);
+        }
+
+    }
+}

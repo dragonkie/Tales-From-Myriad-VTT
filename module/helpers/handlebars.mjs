@@ -46,6 +46,7 @@ function registerHelpers() {
         { name: 'choose', fn: (a, b) => a ? a : b },
         {
             name: 'isEmpty', fn: (obj) => {
+                console.log(obj)
                 if (Array.isArray(obj)) return obj.length == 0;
                 if (typeof obj == 'object') return Object.keys(obj).length == 0;
             }

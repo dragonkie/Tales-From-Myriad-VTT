@@ -178,6 +178,9 @@
 .tfm .flexlarge, .tfm .flex2 {
   flex: 2;
 }
+.tfm .flex {
+  flex: 1;
+}
 .tfm .flex-align-start {
   align-items: flex-start;
   text-align: left;
@@ -424,6 +427,7 @@
 .tfm-tab-content {
   padding: 10px 0;
   height: 100%;
+  flex: 1;
 }
 
 .tfm-border {
@@ -623,6 +627,24 @@
   min-height: 100px;
   min-width: 100px;
 }
+.sheet.actor .tfm-actor-sheet-body {
+  display: flex;
+  flex-direction: column;
+  min-height: 500px;
+}
+.sheet.actor .tfm-tab-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.sheet.actor .tfm-tab-container .tab.active {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+.sheet.actor prose-mirror {
+  flex: 1;
+}
 .sheet.actor .tfm-abilities-list {
   font-size: 14px;
   display: flex;
@@ -708,7 +730,7 @@
   display: flex;
   flex-direction: column;
 }
-.sheet.item .sheet-body {
+.sheet.item .tfm-item-sheet-body {
   display: flex;
   flex: 1;
 }
@@ -1097,6 +1119,22 @@
 
 #context-menu {
   width: auto;
+}
+
+prose-mirror.active {
+  display: flex;
+  flex-direction: column;
+}
+prose-mirror.active .editor-menu {
+  flex: 0;
+}
+prose-mirror.active .editor-container {
+  flex: 1;
+  border-radius: 0.3rem;
+}
+prose-mirror.active .editor-container .editor-content {
+  padding: 0.5rem;
+  background-color: var(--tfm-colour-primary);
 }
 
 /*# sourceMappingURL=main.css.map */
