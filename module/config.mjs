@@ -119,6 +119,12 @@ TFM.Homeland = {
     kingdom: 'TFM.Homeland.Kingdom'
 };
 
+TFM.Movement = {
+    walk: 'TFM.Movement.Walk',
+    swim: 'TFM.Movement.Swim',
+    fly: 'TFM.Movement.Fly'
+}
+
 //========================================================================================
 //> Armour Types
 //========================================================================================

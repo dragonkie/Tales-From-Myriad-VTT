@@ -23,6 +23,7 @@ export default class TfmActorSheet extends TfmSheetMixin(foundry.applications.sh
             levelProf: this._onLevelProficiency,
             roll: this._onRoll,
             editResistance: this._onEditResistance,
+            editMovement: this._onEditMovement,
             editDefence: this._onEditDefence,
         }
     }
@@ -342,6 +343,36 @@ export default class TfmActorSheet extends TfmSheetMixin(foundry.applications.sh
                 }
 
                 this.document.update({ system: { resistances: list } });
+            }
+        }).render(true);
+    }
+
+    static async _onEditMovement(event, target) {
+        const walk_field = this.document.system.schema.getField('movement.walk.base');
+        const swim_field = this.document.system.schema.getField('movement.swim.base');
+        const fly_field = this.document.system.schema.getField('movement.fly.base');
+        let content = '';
+        content += walk_field.toFormGroup({ label: utils.localize(TFM.Movement.walk) }, { value: this.document.system.movement.walk.base }).outerHTML;
+        content += walk_field.toFormGroup({ label: utils.localize(TFM.Movement.swim) }, { value: this.document.system.movement.swim.base }).outerHTML;
+        content += walk_field.toFormGroup({ label: utils.localize(TFM.Movement.fly) }, { value: this.document.system.movement.fly.base }).outerHTML;
+
+        let app = await new TfmDialog({
+            window: { title: 'MOVEMENT_CONFIG' },
+            content: content,
+            classes: ['tfm'],
+            buttons: [{
+                action: 'cancel',
+                label: 'Cancel'
+            }, {
+                action: 'confirm',
+                label: 'Confirm'
+            }],
+            submit: result => {
+                if (result != 'confirm') return;
+                let inputs = app.element.querySelectorAll('input[name]');
+                let data = {};
+                for (const i of inputs) data[i.name] = i.value;
+                this.document.update(data);
             }
         }).render(true);
     }
