@@ -4,7 +4,7 @@
   "description": "CSS compiler for the Tales From Myriad system",
   "scripts": {
     "prepack": "del \"../_packages/tales-from-myriad.zip\"",
-    "pack": "sass src/scss/tales-from-myriad.scss css/main.css && \"E:/Software/7-Zip/7z.exe\" a -tzip ../_packages/tales-from-myriad.zip -x!src/ -x!*.md -x!*.git* -x!*.lock",
+    "pack": "sass src/scss/tales-from-myriad.scss css/main.css && \"E:/Software/7-Zip/7z.exe\" a -tzip ../_packages/tfm.zip -x!src/ -x!*.md -x!*.git* -x!*.lock",
     "sass": "sass --watch src/scss/tales-from-myriad.scss css/main.css"
   },
   "browserslist": [

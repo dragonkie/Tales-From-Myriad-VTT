@@ -1140,7 +1140,7 @@ prose-mirror.active {
   flex-direction: column;
 }
 prose-mirror .editor-menu {
-  flex: 0;
+  /* flex: 0; */
 }
 prose-mirror .editor-container {
   flex: 1;

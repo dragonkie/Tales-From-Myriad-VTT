@@ -34,7 +34,7 @@
   "initiative": "2d6",
   "url": "https://github.com/dragonkie/Tales-From-Myriad-VTT",
   "manifest": "https://github.com/dragonkie/Tales-From-Myriad-VTT/releases/latest/download/system.json",
-  "download": "https://github.com/dragonkie/Tales-From-Myriad-VTT/releases/latest/download/tales-from-myriad.zip",
+  "download": "https://github.com/dragonkie/Tales-From-Myriad-VTT/releases/latest/download/tfm.zip",
   "background": "systems/tfm/assets/images/system-background.webp",
   "license": "LICENSE.txt",
   "changelog": "CHANGELOG.md",
