@@ -1,5 +1,5 @@
 {
-  "id": "tales-from-myriad",
+  "id": "tfm",
   "title": "Tales From Myriad",
   "description": "The Tales From Myriad system for FoundryVTT",
   "version": "0.9.1",
@@ -35,7 +35,7 @@
   "url": "https://github.com/dragonkie/Tales-From-Myriad-VTT",
   "manifest": "https://github.com/dragonkie/Tales-From-Myriad-VTT/releases/latest/download/system.json",
   "download": "https://github.com/dragonkie/Tales-From-Myriad-VTT/releases/latest/download/tales-from-myriad.zip",
-  "background": "systems/tales-from-myriad/assets/images/system-background.webp",
+  "background": "systems/tfm/assets/images/system-background.webp",
   "license": "LICENSE.txt",
   "changelog": "CHANGELOG.md",
   "documentTypes": {

@@ -1,4 +1,4 @@
-globalThis.tfm = { id: "tales-from-myriad" }
+globalThis.tfm = { id: "tfm" }
 tfm.filepath = {
     template: `systems/${tfm.id}/templates`,
     module: `systems/${tfm.id}/module`

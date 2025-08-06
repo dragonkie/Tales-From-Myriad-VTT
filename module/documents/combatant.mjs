@@ -1,3 +1,3 @@
-export default class TfmCombatant extends Combatant {
+export default class TfmCombatant extends foundry.documents.Combatant {
 
 }

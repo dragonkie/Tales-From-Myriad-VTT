@@ -4,7 +4,7 @@ import LOGGER from "../helpers/logger.mjs";
  * Extend the basic Item with some very simple modifications.
  * @extends {Item}
  */
-export default class TfmItem extends Item {
+export default class TfmItem extends foundry.documents.Item {
     /**
      * Augment the basic Item data model with additional dynamic data.
      */

@@ -2,7 +2,7 @@
 export default class TfmSocketManager {
 
     constructor() {
-        this.identifier = 'system.tales-from-myriad';
+        this.identifier = 'system.tfm';
         this.callbacks = new Map();
         this.#initalize();
     }

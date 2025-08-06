@@ -1,5 +1,5 @@
 // Extends the default combat to let us add events to certain combat actions
-export default class TfmCombat extends Combat {
+export default class TfmCombat extends foundry.documents.Combat {
     async startCombat() {
         await super.startCombat();
         return this;
