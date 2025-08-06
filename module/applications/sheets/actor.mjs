@@ -353,8 +353,8 @@ export default class TfmActorSheet extends TfmSheetMixin(foundry.applications.sh
         const fly_field = this.document.system.schema.getField('movement.fly.base');
         let content = '';
         content += walk_field.toFormGroup({ label: utils.localize(TFM.Movement.walk) }, { value: this.document.system.movement.walk.base }).outerHTML;
-        content += walk_field.toFormGroup({ label: utils.localize(TFM.Movement.swim) }, { value: this.document.system.movement.swim.base }).outerHTML;
-        content += walk_field.toFormGroup({ label: utils.localize(TFM.Movement.fly) }, { value: this.document.system.movement.fly.base }).outerHTML;
+        content += swim_field.toFormGroup({ label: utils.localize(TFM.Movement.swim) }, { value: this.document.system.movement.swim.base }).outerHTML;
+        content += fly_field.toFormGroup({ label: utils.localize(TFM.Movement.fly) }, { value: this.document.system.movement.fly.base }).outerHTML;
 
         let app = await new TfmDialog({
             window: { title: 'MOVEMENT_CONFIG' },
