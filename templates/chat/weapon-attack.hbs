@@ -1,0 +1,29 @@
+<div class="tfm tfm-message-content">
+    <div class="flexcol flex-gap-s tfm-pad tfm-pad-s">
+        <div>Attacked with @UUID[{{weapon.uuid}}]</div>
+        {{{roll}}}
+        {{#if has_hits}}
+            <b>Targets Hit:</b>
+            <div class="flexrow flex-gap-s">
+                {{#each targets as |target key|}}
+                    {{#if target.hit}}
+                        <div class="flexshrink">@UUID[{{target.uuid}}]</div>
+                    {{/if}}
+                {{/each}}
+            </div>
+        {{/if}}
+        {{#if has_misses}}
+            <b>Missed:</b>
+            <div class="flexrow flex-gap-s">
+                {{#each targets as |target key|}}
+                    {{#if (not target.hit)}}
+                        <div class="flexshrink">@UUID[{{target.uuid}}]</div>
+                    {{/if}}
+                {{/each}}
+            </div>
+        {{/if}}
+        {{#if has_hits}}
+            <button><i class="fas fa-dice-d6"></i>Damage</button>
+        {{/if}}
+    </div>
+</div>

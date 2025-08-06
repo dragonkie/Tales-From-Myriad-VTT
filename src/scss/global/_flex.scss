@@ -27,7 +27,8 @@
     justify-content: space-between;
   }
 
-  .flexlarge, .flex2 {
+  .flexlarge,
+  .flex2 {
     flex: 2;
   }
 
@@ -50,28 +51,28 @@
     align-items: center;
     text-align: center;
   }
+}
 
-  .flex-gap-s {
-    gap: 4px;
-  }
+.flex-gap-s {
+  gap: 4px;
+}
 
-  .flex-gap-m {
-    gap: 8px;
-  }
+.flex-gap-m {
+  gap: 8px;
+}
 
-  .flex-gap-l {
-    gap: 12px;
-  }
+.flex-gap-l {
+  gap: 12px;
+}
 
-  .flex-overflow {
-    flex-wrap: wrap;
-  }
+.flex-overflow {
+  flex-wrap: wrap;
+}
 
-  .flex-nowrap {
-    flex-wrap: nowrap;
-  }
+.flex-nowrap {
+  flex-wrap: nowrap;
+}
 
-  .flexwrap {
-    flex-wrap: wrap;
-  }
+.flexwrap {
+  flex-wrap: wrap;
 }

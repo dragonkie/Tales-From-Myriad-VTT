@@ -38,8 +38,12 @@
                                 <a data-action="useItem" data-use="damage" title="Roll Damage"><i class="item-action fa-lg fa-solid fa-droplet"></i></a>
                             {{/if}}
                             {{#if (eq item.type 'spell')}} <a data-action="useItem" title="Cast Spell"><i class="fas fa-lg fa-book"></i></a> {{/if}}
-                            {{#if item.system.equipped}}<a class="item-control item-equip" data-action="equipItem" title="Unequip Item"><i class="fa-solid fa-hand"></i></a>{{/if}}
-                            {{#unless item.system.equipped}}<a class="item-control item-equip" data-action="equipItem" title="Equip Item"><i class="fa-solid fa-briefcase-blank"></i></a>{{/unless}}
+
+                            {{#if item.system.isEquipment}}
+                                {{#if item.system.equipped}}<a class="item-control item-equip" data-action="equipItem" title="Unequip Item"><i class="fa-solid fa-hand"></i></a>{{/if}}
+                                {{#unless item.system.equipped}}<a class="item-control item-equip" data-action="equipItem" title="Equip Item"><i class="fa-solid fa-briefcase-blank"></i></a>{{/unless}}
+                            {{/if}}
+
                             {{#if ../isEditMode}}
                                 <a class="item-control item-edit" data-action="edit" title="Edit Item"><i class="fas fa-edit"></i></a>
                                 <a class="item-control item-delete" data-action="deleteItem" title="Delete Item"><i class="fas fa-trash"></i></a>

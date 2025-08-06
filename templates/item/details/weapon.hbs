@@ -1,19 +1,19 @@
 <div class="tfm-tab-content flexcol flex-gap-s">
 
     {{!-- Standard weapon fields --}}
-    <div class="flexrow flex-gap-m">
-        {{toFieldGroup system.schema 'proficiency' value=system.proficiency}}
-        {{toFieldGroup system.schema 'ability' value=system.ability}}
+    <div class="flexrow flex-gap-m flex-align-start">
+        <div class="flexcol flex-gap-s">
+            {{toFieldGroup system.schema 'proficiency' value=system.proficiency}}
+            {{toFieldGroup system.schema 'ability' value=system.ability}}
+            {{toFieldGroup system.schema 'penalty' value=system.penalty}}
+            {{toFieldGroup system.schema 'price' value=system.price}}
+        </div>
+        <div class="flexcol flex-gap-s">
+            {{toFieldGroup system.schema 'equipped' value=system.equipped}}
+            {{toFieldGroup system.schema 'ranged' value=system.ranged}}
+            {{toFieldGroup system.schema 'broken' value=system.broken}}
+        </div>
     </div>
-    <div class="flexrow flex-gap-m">
-        {{toFieldGroup system.schema 'penalty' value=system.penalty}}
-        {{toFieldGroup system.schema 'broken' value=system.broken}}
-    </div>
-    <div class="flexrow flex-gap-m">
-        {{toFieldGroup system.schema 'equipped' value=system.equipped}}
-        {{toFieldGroup system.schema 'ranged' value=system.ranged}}
-    </div>
-    {{toFieldGroup system.schema 'price' value=system.price}}
 
     {{!-- Weapon damage pieces --}}
     <div class="tfm-weapon-damage">

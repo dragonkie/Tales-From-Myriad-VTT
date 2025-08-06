@@ -288,17 +288,13 @@ export class ActorDataModel extends SystemDataModel {
         for (const item of document.items.contents) {
             // Equipped armours
             if (item.type == 'armour' && item.system.equipped) {
-                this.dr.total = this.dr.base + this.dr.bonus + item.system.damage_reduction.base + item.system.damage_reduction.bonus;
+                this.dr.total = this.dr.base + this.bonuses.dr + item.system.damage_reduction.base + item.system.damage_reduction.bonus;
                 if (item.system.weight == 'heavy') this.dodge.total = Math.min(this.dodge.total, 8);
             }
 
             // Equipped Weapons
 
-            if (item.type == 'weapon' && item.system.equipped) {
-                held_weapons += 1;
-
-
-            }
+            if (item.type == 'weapon' && item.system.equipped) held_weapons += 1;
         }
 
         if (held_weapons >= 2 && !this.dual_wielder) {
@@ -418,6 +414,10 @@ export class ItemDataModel extends SystemDataModel {
 
     async use(event, options) {
         if (game.settings.get(game.system.id, 'debug')) console.log(`Item type[${this.parent.type}] system.use() called but with no handler`, this.parent);
+    }
+
+    get isEquipment() {
+        return Object.keys(this).includes('equipped');
     }
 
     //=================================================================================

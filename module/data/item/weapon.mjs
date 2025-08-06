@@ -26,7 +26,7 @@ export default class WeaponData extends ItemDataModel {
 
         schema.ability = new StringField({
             ...this.RequiredConfig,
-            initial: "pwr",
+            initial: "auto",
             label: TFM.Generic.ability,
             blank: false,
             choices: () => {
@@ -105,19 +105,20 @@ export default class WeaponData extends ItemDataModel {
     // Data getters
     //============================================================================================
     getAbility() {
-
         const actor = this.actor;
         if (!actor) return null;
-
+        // If the weapon assigns which ability to use manually
         if (this.ability != 'auto') return { ...actor.system.abilities[this.ability], key: this.ability };
-
-        if (this.finesse || this.ranged || this.thrown) return { ...actor.system.abilities.fin, key: 'fin' };
-        else return { ...actor.system.abilities.pwr, key: 'pwr' }
+        console.log('deducing ability');
+        // Determin the ability to use from context clues
+        if (this.finesse || this.thrown || (this.ranged && !this.great)) return { ...actor.system.abilities.fin, key: 'fin' };
+        return { ...actor.system.abilities.pwr, key: 'pwr' }
     }
 
     getProficiencyLevel() {
         const actor = this.actor;
         if (!actor) return null;
+        if (actor.type != 'character') return 3;
         return actor.system.proficiency.weaponType[this.proficiency].value;
     }
 
@@ -162,6 +163,7 @@ export default class WeaponData extends ItemDataModel {
 
         let app = await new TfmDialog({
             window: { title: 'TFM.Dialog.Attack' },
+            position: { width: 300, height: 'auto' },
             content: content,
             buttons: [{
                 label: 'Disadvantage',
@@ -203,9 +205,44 @@ export default class WeaponData extends ItemDataModel {
                 else if (rollData.proficiency >= 3) msg_flavour += `Fully Proficient`;
                 else msg_flavour += `Half Proficient`;
 
-                let msg = await attack.toMessage({
-                    flavor: msg_flavour,
-                    speaker: ChatMessage.getSpeaker({ actor: this.actor })
+                // Add role to the content body
+                const msg_data = {
+                    targets: [],
+                    weapon: this.document,
+                    user: this.actor,
+                    has_hits: false,
+                    has_misses: false,
+                    roll: await attack.render()
+                };
+                console.log(targets);
+                for (const t of targets) {
+                    const d = {
+                        uuid: t.doc.actor.uuid,
+                        name: t.doc.actor.name,
+                        hit: false
+                    };
+                    if (attack.total >= t.sys.dodge.total) {
+                        d.hit = true;
+                        msg_data.has_hits = true;
+                    } else msg_data.has_misses = true;
+                    msg_data.targets.push(d);
+                }
+
+                // Enrich the content for enhanced html
+                const template = await foundry.applications.handlebars.renderTemplate(`${tfm.filepath.template}/chat/weapon-attack.hbs`, msg_data);
+                const enriched = await foundry.applications.ux.TextEditor.enrichHTML(template);
+
+                // Push out the message
+                const msg = await attack.toMessage({
+                    speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+                    content: enriched
+                });
+
+                // Add attack details to the message for parsing
+                msg.setFlag(game.system.id, {
+                    targets: msg_data.targets,
+                    user: this.actor.uuid,
+                    weapon: this.document.uuid,
                 });
             }
         }).render(true);
@@ -231,9 +268,21 @@ export default class WeaponData extends ItemDataModel {
 
         let damage = new Roll(formula, rollData);
         await damage.evaluate();
+        let msg_content = await damage.render();
+        msg_content += `<div class="flexcol flex-gap-s">`
+        for (const t of game.user.targets.entries()) {
+            msg_content += `
+            <div class="flexrow">
+                <div>@UUID[${t[0].actor.uuid}]{${t[0].actor.name}}</div>
+                <div>${damage.total - t[0].actor.system.dr.total}</div>
+            </div>
+            `;
+        }
+        msg_content += `</div>`
         let msg = await damage.toMessage({
             flavor: `Damage dealt by ${this.parent.name}`,
-            speaker: ChatMessage.getSpeaker({ actor: this.actor })
+            speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+            content: msg_content
         });
         console.log(damage)
     }

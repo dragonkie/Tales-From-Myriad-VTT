@@ -43,6 +43,7 @@
 
     .actor-header {
         .profile-img {
+            object-fit: fill;
             flex: 0 0 100px;
             min-height: 100px;
             min-width: 100px;

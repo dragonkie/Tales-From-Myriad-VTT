@@ -22,8 +22,8 @@ export default class ArmourData extends ItemDataModel {
         });
 
         schema.damage_reduction = new SchemaField({
-            base: new NumberField({ initial: 0, label: utils.localize(TFM.Generic.base) + ' ' + utils.localize(TFM.Generic.reduction) }),
-            bonus: new NumberField({ initial: 0, label: utils.localize(TFM.Generic.bonus) + ' ' + utils.localize(TFM.Generic.reduction) })
+            base: new NumberField({ initial: 0, label: utils.localize(TFM.Generic.reduction) }),
+            bonus: new NumberField({ initial: 0, label: utils.localize(TFM.Generic.bonus) })
         })
 
 

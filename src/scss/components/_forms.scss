@@ -65,6 +65,7 @@
     display: flex;
     flex-direction: row;
     align-items: center;
+    font-size: var(--tfm-font-size);
 
     label {
         margin-right: 1em;
@@ -108,6 +109,7 @@
 // bars with inputs inside the bar itself
 .tfm-inline-bar {
     --tfm-bar-size: 1.4rem;
+    font-size: calc(var(--tfm-bar-size) - 0.2em);
 
     &.tfm-s {
         --tfm-bar-size: 1rem;
@@ -151,7 +153,6 @@
 
             input {
                 height: var(--tfm-bar-size);
-                font-size: calc(var(--tfm-bar-size) - 0.2em);
                 border: 0px solid;
                 background: rgba(0, 0, 0, 0);
                 text-align: center;

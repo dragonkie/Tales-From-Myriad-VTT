@@ -175,7 +175,8 @@
 .tfm .flex-between {
   justify-content: space-between;
 }
-.tfm .flexlarge, .tfm .flex2 {
+.tfm .flexlarge,
+.tfm .flex2 {
   flex: 2;
 }
 .tfm .flex {
@@ -193,22 +194,28 @@
   align-items: center;
   text-align: center;
 }
-.tfm .flex-gap-s {
+
+.flex-gap-s {
   gap: 4px;
 }
-.tfm .flex-gap-m {
+
+.flex-gap-m {
   gap: 8px;
 }
-.tfm .flex-gap-l {
+
+.flex-gap-l {
   gap: 12px;
 }
-.tfm .flex-overflow {
+
+.flex-overflow {
   flex-wrap: wrap;
 }
-.tfm .flex-nowrap {
+
+.flex-nowrap {
   flex-wrap: nowrap;
 }
-.tfm .flexwrap {
+
+.flexwrap {
   flex-wrap: wrap;
 }
 
@@ -264,6 +271,7 @@
   display: flex;
   flex-direction: row;
   align-items: center;
+  font-size: var(--tfm-font-size);
 }
 .tfm-bar label {
   margin-right: 1em;
@@ -298,6 +306,7 @@
 
 .tfm-inline-bar {
   --tfm-bar-size: 1.4rem;
+  font-size: calc(var(--tfm-bar-size) - 0.2em);
 }
 .tfm-inline-bar.tfm-s {
   --tfm-bar-size: 1rem;
@@ -334,7 +343,6 @@
 }
 .tfm-inline-bar > .wrapper .bar-inputs input {
   height: var(--tfm-bar-size);
-  font-size: calc(var(--tfm-bar-size) - 0.2em);
   border: 0px solid;
   background: rgba(0, 0, 0, 0);
   text-align: center;
@@ -625,6 +633,7 @@
   height: 1.2em;
 }
 .sheet.actor .actor-header .profile-img {
+  object-fit: fill;
   flex: 0 0 100px;
   min-height: 100px;
   min-width: 100px;
