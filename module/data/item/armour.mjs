@@ -26,6 +26,33 @@ export default class ArmourData extends ItemDataModel {
             bonus: new NumberField({ initial: 0, label: utils.localize(TFM.Generic.bonus) + ' ' + utils.localize(TFM.Generic.reduction) })
         })
 
+
+        // array of resistances this actor has to different damage types
+        schema.resistances = new ArrayField(new SchemaField({
+            type: new StringField({
+                ...this.RequiredConfig,
+                blank: false,
+                initial: 'sharp',
+                label: TFM.Generic.type,
+                choices: () => {
+                    const options = utils.duplicate(TFM.DamageTypes);
+                    for (const i of Object.keys(options)) options[i] = utils.localize(options[i]);
+                    return options;
+                }
+            }),
+            value: new StringField({
+                ...this.RequiredConfig,
+                blank: false,
+                initial: 'normal',
+                label: TFM.Generic.resistance,
+                choices: () => {
+                    const options = utils.duplicate(TFM.DamageResistance);
+                    for (const i of Object.keys(options)) options[i] = utils.localize(options[i]);
+                    return options;
+                }
+            })
+        }), { initial: [] });
+
         Object.assign(schema, this.EquipmentFields());
 
         return schema;

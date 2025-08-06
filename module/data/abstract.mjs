@@ -335,8 +335,8 @@ export class ItemDataModel extends SystemDataModel {
 
         // Item descriptions
         schema.description = new SchemaField({
-            value: new HTMLField({ initial: "" }),
             chat: new HTMLField({ initial: "" }),
+            identified: new HTMLField({ initial: "" }),
             unidentified: new HTMLField({ initial: "" }),
         })
 

@@ -191,7 +191,7 @@
 //========================================================================================
 //> Text Alignment
 //========================================================================================
-.text-left {
+.text-left, .text-start {
     text-align: left;
 }
 
@@ -199,7 +199,7 @@
     text-align: center;
 }
 
-.text-right {
+.text-right, .text-end {
     text-align: right;
 }
 
@@ -216,7 +216,7 @@
 //> Form Groups & Fields
 //========================================================================================
 
-.form-group {
+.sheet .form-group {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -281,11 +281,13 @@
 .tfm-border {
     border: 1px solid var(--tfm-colour-border, black);
 
-    &.rounded, .round {
+    &.rounded,
+    .round {
         border-radius: var(--tfm-border-radius, --tfm-size-m);
     }
 }
 
-.rounded, .round {
+.rounded,
+.round {
     border-radius: var(--tfm-border-radius, --tfm-size-m);
 }

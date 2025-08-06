@@ -169,12 +169,12 @@ TFM.WeaponTypes = {
 }
 
 TFM.WeaponTags = {
-    thrown: 'TFM.Generic.Thrown',
-    reach: 'TFM.Generic.Reach',
-    finesse: 'TFM.Generic.Finesse',
-    great: 'TFM.Generic.Great',// Ranged weapon using power instead of fin
-    lucky: 'TFM.Generic.Lucky',
-    oversized: 'TFM.Generic.Oversized',
+    thrown: 'TFM.Tags.Thrown',// Can be thrown
+    reach: 'TFM.Tags.Reach',// Bonus attack range
+    finesse: 'TFM.Tags.Finesse',// Can use fin instead of pow
+    great: 'TFM.Tags.Great',// Ranged weapon using power instead of fin
+    lucky: 'TFM.Tags.Lucky',// Bonus crit range
+    oversized: 'TFM.Tags.Oversized',// Bigger damage die
     ...TFM.WeaponClass
 };
 
@@ -183,17 +183,17 @@ TFM.WeaponTags = {
 //========================================================================================
 
 TFM.TrinketTypes = {
-    arc: 'TYPES.magic.arc',
-    div: 'TYPES.magic.div',
-    occ: 'TYPES.magic.occ',
+    arc: 'TFM.Magic.Arc',
+    div: 'TFM.Magic.Div',
+    occ: 'TFM.Magic.Occ',
 };
 
 TFM.MagicTypes = {
-    arc: 'TYPES.magic.arc',
-    div: 'TYPES.magic.div',
-    nat: 'TYPES.magic.nat',
-    occ: 'TYPES.magic.occ',
-    per: 'TYPES.magic.per',
+    arc: 'TFM.Magic.Arc',
+    div: 'TFM.Magic.Div',
+    nat: 'TFM.Magic.Nat',
+    occ: 'TFM.Magic.Occ',
+    per: 'TFM.Magic.Per',
 };
 
 //========================================================================================
@@ -249,11 +249,11 @@ TFM.DamageResistance = {
 }
 
 TFM.TargetTypes = {
-    any: 'TFM.Generic.Any',
-    ally: 'TFM.Generic.Ally',
-    enemy: 'TFM.Generic.Enemy',
-    creature: 'TFM.Generic.Creature',
-    object: 'TFM.Generic.Object',
+    any: 'TFM.Target.Any',
+    ally: 'TFM.Target.Ally',
+    enemy: 'TFM.Target.Enemy',
+    creature: 'TFM.Target.Creature',
+    object: 'TFM.Target.Object',
 }
 
 //========================================================================================

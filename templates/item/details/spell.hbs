@@ -1,8 +1,5 @@
 <div class="tfm-tab-content flexcol flex-gap-s">
-    <div class="form-group flexrow">
-        <label class="resource-label">Spell School</label>
-        {{{selectors.spellSchool}}}
-    </div>
+    {{toFieldGroup system.schema 'school' value=system.school label="Spell School"}}
 
     {{log this}}
     <div class="flexrow flex-gap-m">

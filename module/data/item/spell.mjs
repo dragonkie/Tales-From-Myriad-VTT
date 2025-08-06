@@ -25,6 +25,17 @@ export default class SpelLData extends ItemDataModel {
             }
         })
 
+        schema.school = new StringField({
+            label: "TFM.Generic.SpellSchool",
+            initial: 'arc',
+            blank: false,
+            ...this.RequiredConfig,
+            choices: () => {
+                let options = {...TFM.MagicTypes};
+                for (const key of Object.keys(options)) options[key] = utils.localize(options[key]);
+                return options;
+            }
+        })
         schema.channeled = new BooleanField({ initial: false, nullable: false });
         schema.ritual = new BooleanField({ initial: false, nullable: false });
 

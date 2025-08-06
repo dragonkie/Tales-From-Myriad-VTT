@@ -68,6 +68,8 @@
       "Armour": "Armour",
       "Automatic": { "abbr": "auto", "long": "Automatic" },
       "Broken": "Broken",
+      "Base": "Base",
+      "Bonus": "Bonus",
       "ChatDescription": "Chat Description",
       "Corruption": { "abbr": "corupt", "long": "Coruption" },
       "Curse": { "abbr": "Crs", "long": "Curse", "plrl": "Curses" },
@@ -117,11 +119,11 @@
       "Human": "Manling"
     },
     "Magic": {
-      "Arcane": "Arcane",
-      "Divine": "Divine",
-      "Natural": "Natural",
-      "Occult": "Occult",
-      "Performance": "Performance"
+      "Arc": "Arcane",
+      "Div": "Divine",
+      "Nat": "Natural",
+      "Occ": "Occult",
+      "Per": "Performance"
     },
     "Homeland": {
       "Forcosia": "Forcosia",
@@ -186,6 +188,7 @@
     "Tab": {
       "Features": "Features",
       "Details": "Details",
+      "Description": "Description",
       "Spells": "Spells",
       "Effects": "Effects",
       "Rules": "Rules",
@@ -233,7 +236,16 @@
       "Medium": "Medium",
       "Heavy": "Heavy",
       "Ranged": "Ranged",
-      "Melee": "Melee"
+      "Melee": "Melee",
+      "Lucky": "Lucky",
+      "Oversized": "Oversized"
+    },
+    "Target": {
+      "Any": "Any",
+      "Ally": "Ally",
+      "Enemy": "Enemy",
+      "Creature": "Creature",
+      "Object": "Object"
     },
     "Damage": {
       "Type": {

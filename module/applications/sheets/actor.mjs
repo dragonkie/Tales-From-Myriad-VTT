@@ -39,10 +39,10 @@ export default class TfmActorSheet extends TfmSheetMixin(foundry.applications.sh
     }
 
     static TABS = {
-        features: { id: "features", group: "primary", label: "TFM.tab.features" },
-        items: { id: "items", group: "primary", label: "TFM.tab.items" },
-        spells: { id: "spells", group: "primary", label: "TFM.tab.spells" },
-        biography: { id: "biography", group: "primary", label: "TFM.tab.biography" }
+        features: { id: "features", group: "primary", label: "TFM.Tab.Features" },
+        items: { id: "items", group: "primary", label: "TFM.Tab.Items" },
+        spells: { id: "spells", group: "primary", label: "TFM.Tab.Spells" },
+        biography: { id: "biography", group: "primary", label: "TFM.Tab.Biography" }
     }
 
     tabGroups = {

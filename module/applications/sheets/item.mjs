@@ -10,7 +10,7 @@ export default class TfmItemSheet extends TfmSheetMixin(foundry.applications.she
     /** @override */
     static DEFAULT_OPTIONS = {
         classes: ["tfm", "sheet", "item"],
-        position: { height: 'auto', width: 500, top: 60, left: 120 },
+        position: { height: 'auto', width: 600, top: 60, left: 120 },
         window: { resizable: false },
         actions: {
             editItem: this._onEditItem,// For opening links to other items
@@ -29,9 +29,9 @@ export default class TfmItemSheet extends TfmSheetMixin(foundry.applications.she
     }
 
     static TABS = {
-        description: { id: 'description', group: 'primary', label: 'TFM.tab.description' },
-        details: { id: 'details', group: 'primary', label: 'TFM.tab.details' },
-        rules: { id: 'rules', group: 'primary', label: 'TFM.tab.rules' }
+        description: { id: 'description', group: 'primary', label: 'TFM.Tab.Description' },
+        details: { id: 'details', group: 'primary', label: 'TFM.Tab.Details' },
+        rules: { id: 'rules', group: 'primary', label: 'TFM.Tab.Rules' }
     }
 
     tabGroups = {
@@ -53,11 +53,11 @@ export default class TfmItemSheet extends TfmSheetMixin(foundry.applications.she
         };
 
         context.descriptions = {
-            value: {
+            identified: {
                 label: tfm.utils.localize('TFM.Generic.Description'),
-                field: this.document.system.schema.getField('description.value'),
-                value: this.document.system.description.value,
-                enriched: await foundry.applications.ux.TextEditor.enrichHTML(context.system.description.value, enrichmentOptions),
+                field: this.document.system.schema.getField('description.identified'),
+                value: this.document.system.description.identified,
+                enriched: await foundry.applications.ux.TextEditor.enrichHTML(context.system.description.identified, enrichmentOptions),
             },
             unidentified: {
                 label: `${tfm.utils.localize('TFM.Generic.Unidentified')} ${tfm.utils.localize('TFM.Generic.Description')}`,

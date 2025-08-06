@@ -363,7 +363,7 @@
   margin-bottom: var(--tfm-margin);
 }
 
-.text-left {
+.text-left, .text-start {
   text-align: left;
 }
 
@@ -371,7 +371,7 @@
   text-align: center;
 }
 
-.text-right {
+.text-right, .text-end {
   text-align: right;
 }
 
@@ -384,7 +384,7 @@
   flex-wrap: nowrap;
 }
 
-.form-group {
+.sheet .form-group {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -392,35 +392,35 @@
   margin: 0;
   gap: 0.5rem;
 }
-.form-group > * {
+.sheet .form-group > * {
   flex: 2;
 }
-.form-group > input[type=checkbox] {
+.sheet .form-group > input[type=checkbox] {
   flex: none;
 }
-.form-group > label,
-.form-group > span.label {
+.sheet .form-group > label,
+.sheet .form-group > span.label {
   flex: 1;
   color: var(--color-form-label);
   font-weight: bold;
   line-height: var(--input-height);
   cursor: var(--cursor-default);
 }
-.form-group > label > i,
-.form-group > span.label > i {
+.sheet .form-group > label > i,
+.sheet .form-group > span.label > i {
   margin-right: 0.25rem;
 }
-.form-group .form-fields {
+.sheet .form-group .form-fields {
   display: flex;
   flex-direction: row;
   flex: 2;
 }
-.form-group.stacked {
+.sheet .form-group.stacked {
   flex-direction: column;
   gap: 0.2rem;
 }
-.form-group:hover > label,
-.form-group:hover > span.label {
+.sheet .form-group:hover > label,
+.sheet .form-group:hover > span.label {
   color: var(--color-form-label-hover);
 }
 
@@ -433,11 +433,13 @@
 .tfm-border {
   border: 1px solid var(--tfm-colour-border, black);
 }
-.tfm-border.rounded, .tfm-border .round {
+.tfm-border.rounded,
+.tfm-border .round {
   border-radius: var(--tfm-border-radius, --tfm-size-m);
 }
 
-.rounded, .round {
+.rounded,
+.round {
   border-radius: var(--tfm-border-radius, --tfm-size-m);
 }
 

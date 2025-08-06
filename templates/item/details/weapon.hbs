@@ -13,6 +13,7 @@
         {{toFieldGroup system.schema 'equipped' value=system.equipped}}
         {{toFieldGroup system.schema 'ranged' value=system.ranged}}
     </div>
+    {{toFieldGroup system.schema 'price' value=system.price}}
 
     {{!-- Weapon damage pieces --}}
     <div class="tfm-weapon-damage">
@@ -35,19 +36,30 @@
 
     {{!-- Weapon special tags --}}
     {{#if system.ranged}}
-        <b>Ranged Weapon Options:</b>
-        {{toFieldGroup system.schema 'great' value=system.great}}
-    {{else}}
-        <b>Melee Weapon Options:</b>
-        {{toFieldGroup system.schema 'finesse' value=system.finesse}}
-        {{toFieldGroup system.schema 'thrown' value=system.thrown}}
-        {{toFieldGroup system.schema 'reach' value=system.reach}}
-    {{/if}}
-    {{toFieldGroup system.schema 'lucky' value=system.lucky}}
-    {{toFieldGroup system.schema 'oversized' value=system.oversized}}
+        <div>
+            <b>Ranged Weapon Options:</b>
+            <div class="flexrow flex-gap-m">
+                {{toFieldGroup system.schema 'great' value=system.great}}
+                <div></div>
+                <div></div>
+            </div>
 
-    <b>Market Details</b>
-    {{toFieldGroup system.schema 'price' value=system.price}}
+        </div>
+    {{else}}
+        <div>
+            <b>Melee Weapon Options:</b>
+            <div class="flexrow flex-gap-m">
+                {{toFieldGroup system.schema 'finesse' value=system.finesse}}
+                {{toFieldGroup system.schema 'thrown' value=system.thrown}}
+                {{toFieldGroup system.schema 'reach' value=system.reach}}
+            </div>
+        </div>
+    {{/if}}
+    <div class="flexrow flex-gap-m">
+        {{toFieldGroup system.schema 'lucky' value=system.lucky}}
+        {{toFieldGroup system.schema 'oversized' value=system.oversized}}
+        <div></div>
+    </div>
 
     {{#if isGm}}{{toFieldGroup system.schema 'identified' value=system.identified}}{{/if}}
 </div>
