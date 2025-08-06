@@ -1139,8 +1139,11 @@ prose-mirror.active {
   display: flex;
   flex-direction: column;
 }
+prose-mirror button.toggle {
+  transform: translate(-20%, 20%);
+}
 prose-mirror .editor-menu {
-  /* flex: 0; */
+  flex: 0;
 }
 prose-mirror .editor-container {
   flex: 1;
@@ -1150,9 +1153,6 @@ prose-mirror .editor-content {
   padding: 0.5rem;
   border-radius: 0.3rem;
   background-color: var(--tfm-colour-primary);
-}
-prose-mirror button {
-  transform: translate(-20%, 20%);
 }
 
 /*# sourceMappingURL=main.css.map */

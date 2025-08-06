@@ -47,6 +47,10 @@ prose-mirror {
 
     }
 
+    button.toggle {
+        transform: translate(-20%, 20%);
+    }
+
     .editor-menu {
         flex: 0;
     }
@@ -62,7 +66,5 @@ prose-mirror {
         background-color: var(--tfm-colour-primary);
     }
 
-    button {
-        transform: translate(-20%, 20%);
-    }
+
 }
