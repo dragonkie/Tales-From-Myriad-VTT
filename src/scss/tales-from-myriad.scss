@@ -40,9 +40,13 @@ $border-groove: 2px groove #eeede0;
     width: auto;
 }
 
-prose-mirror.active {
-    display: flex;
-    flex-direction: column;
+prose-mirror {
+    &.active {
+        display: flex;
+        flex-direction: column;
+
+    }
+
     .editor-menu {
         flex: 0;
     }
@@ -50,10 +54,15 @@ prose-mirror.active {
     .editor-container {
         flex: 1;
         border-radius: 0.3rem;
-        .editor-content {
-            padding: 0.5rem;
-            background-color: var(--tfm-colour-primary);
-        }
+    }
 
+    .editor-content {
+        padding: 0.5rem;
+        border-radius: 0.3rem;
+        background-color: var(--tfm-colour-primary);
+    }
+
+    button {
+        transform: translate(-20%, 20%);
     }
 }

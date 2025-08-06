@@ -8,19 +8,19 @@ editable - is this editor actually editable
 toggled - is this editor able to be toggled on and off
 collapsed - wheter or not this should start collapsed
 --}}
-<div class="description collapsible {{cssClass}} {{#if collapsed}}collapsed{{/if}}">
+<div class="description collapsible {{cssClass}} {{#if collapsed}}collapsed{{/if}} flex flexcol">
     <div class="flexrow" data-action="collapse">
         <a><i class="fas fa-caret-down"></i></a>
         <label>{{choose label (localize 'TFM.Generic.Description')}}</label>
     </div>
-    <div class="collapsible-content">
-        <div class="wrapper">
+    <div class="collapsible-content flexcol flex">
+        <div class="wrapper flexcol">
             {{#if name}}
-                <prose-mirror name="{{name}}" value="{{value}}" editable="{{editable}}" {{#if toggled}}toggled{{/if}}>
+                <prose-mirror class="flex" name="{{name}}" value="{{value}}" editable="{{editable}}" {{#if toggled}}toggled{{/if}}>
                     {{{enriched}}}
                 </prose-mirror>
             {{else}}
-                <div>
+                <div class="flex">
                     {{{enriched}}}
                 </div>
             {{/if}}
