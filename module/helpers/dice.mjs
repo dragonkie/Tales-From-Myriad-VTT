@@ -1,10 +1,11 @@
 import LOGGER from "./logger.mjs";
+import utils from "./utils.mjs";
 
 function keep(modifier) {
     const rgx = /k([hlf])?([0-9]+)?/i;
     const match = modifier.match(rgx);
     if (!match) return false;
-    let [direction, number] = match.slice(1);
+    const { direction, number } = match.slice(1);
 
     if (direction === `f`) {
         const results = this.results;
@@ -26,7 +27,18 @@ function keep(modifier) {
     }
 }
 
+async function miracle(modifier) {
+    // Check if a dice exploded at all
+    let exploded = false;
+    for (const r of this.results) if (r.exploded) exploded = true;
+    
+    // Trigger the explosions
+    const limit = modifier.match(/[0-9]+/)
+    if (exploded) while (this.results.length < limit) await this.roll({ explode: true });
+}
+
 /**Called on system init hook to register all the custom dice terms used by myriad */
 export default function registerDiceModifiers() {
-    tfm.utils.registerMod(`kf`, `keep`, keep);
+    utils.registerMod(`kf`, `keep`, keep);
+    utils.registerMod('m', 'miracle', miracle);
 }

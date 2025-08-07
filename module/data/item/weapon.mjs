@@ -195,9 +195,9 @@ export default class WeaponData extends ItemDataModel {
                 if (result == 'advantage') dice = '3d6dl1';
                 if (result == 'disadvantage') dice = '3d6dh1';
 
-                let formula = dice + explode + limit + `+ ${rollData.ability.mod}`;
+                const formula = dice + explode + limit + `+ ${rollData.ability.mod}`;
 
-                let attack = new Roll(formula, rollData);
+                const attack = new Roll(formula, rollData);
                 await attack.evaluate();
 
                 let msg_flavour = `Attack with ${this.parent.name}[${utils.localize(TFM.Abilities[rollData.ability.key])}]<br>`
@@ -214,7 +214,7 @@ export default class WeaponData extends ItemDataModel {
                     has_misses: false,
                     roll: await attack.render()
                 };
-                console.log(targets);
+
                 for (const t of targets) {
                     const d = {
                         uuid: t.doc.actor.uuid,
@@ -239,7 +239,8 @@ export default class WeaponData extends ItemDataModel {
                 });
 
                 // Add attack details to the message for parsing
-                msg.setFlag(game.system.id, {
+                msg.setFlag(game.system.id, 'context', {
+                    type: 'attack',
                     targets: msg_data.targets,
                     user: this.actor.uuid,
                     weapon: this.document.uuid,
