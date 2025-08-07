@@ -77,6 +77,10 @@
       "trinket": {
         "htmlFields": [ ],
         "filePathFields": { }
+      },
+      "feature": {
+        "htmlFields": [ ],
+        "filePathFields": { }
       }
     }
   },

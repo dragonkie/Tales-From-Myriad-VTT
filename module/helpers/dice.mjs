@@ -27,6 +27,10 @@ function keep(modifier) {
     }
 }
 
+/**
+ * if a previous dice exploded, rolls additional dice to meet the given number
+ * @param {String} modifier 
+ */
 async function miracle(modifier) {
     // Check if a dice exploded at all
     let exploded = false;

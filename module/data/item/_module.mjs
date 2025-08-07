@@ -3,13 +3,15 @@ import JobData from "./job.mjs";
 import SpelLData from "./spell.mjs";
 import TrinketData from "./trinket.mjs";
 import WeaponData from "./weapon.mjs";
+import FeatureData from "./feature.mjs";
 
 export {
     ArmourData,
     JobData,
     SpelLData,
     TrinketData,
-    WeaponData
+    WeaponData,
+    FeatureData,
 }
 
 export const config = {
@@ -17,5 +19,6 @@ export const config = {
     job: JobData,
     spell: SpelLData,
     trinket: TrinketData,
-    weapon: WeaponData
+    weapon: WeaponData,
+    feature: FeatureData
 }
