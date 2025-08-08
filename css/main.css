@@ -803,8 +803,10 @@
   height: 100%;
 }
 .sheet.item .tfm-job-features .tfm-job-paths .tfm-path > .tfm-feature {
-  border: 1px solid white;
+  background-color: var(--tfm-colour-secondary);
   flex: 1;
+  padding: 0.5rem;
+  border-radius: 5px;
 }
 .sheet.item .tfm-job-features .tfm-feature-implicit,
 .sheet.item .tfm-job-features .tfm-feature-generic {
@@ -1153,6 +1155,11 @@ prose-mirror .editor-content {
   padding: 0.5rem;
   border-radius: 0.3rem;
   background-color: var(--tfm-colour-primary);
+}
+
+a.content-link {
+  line-height: 1.5rem;
+  padding: 0 0.25rem;
 }
 
 /*# sourceMappingURL=main.css.map */
