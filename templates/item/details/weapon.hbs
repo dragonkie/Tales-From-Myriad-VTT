@@ -23,15 +23,17 @@
                 <div class="flexrow flex-gap-m" data-damage-index="{{index}}">
                     {{formInput part.formula.field value=part.formula.value name=part.formula.path}}
                     {{formInput part.type.field value=part.type.value name=part.type.path}}
-                    {{#unless (eq index 0)}}
+                    {{#if (and (not index 0) (@root.isEditMode))}}
                         <a data-action="removeDamage" style="flex: 0;">
                             <i class="fa-solid fa-trash"></i>
                         </a>
-                    {{/unless}}
+                    {{/if}}
                 </div>
             {{/each}}
         </ol>
-        <div class="flex-align-end"><a data-action="addDamage"><b>Add Damage Part +</b></a></div>
+        {{#if isEditMode}}
+            <div class="flex-align-end"><a data-action="addDamage"><b>Add Damage Part +</b></a></div>
+        {{/if}}
     </div>
 
     {{!-- Weapon special tags --}}
