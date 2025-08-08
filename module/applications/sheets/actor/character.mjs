@@ -22,6 +22,7 @@ export default class CharacterSheet extends TfmActorSheet {
             // tabs
             features: { template: `${tfm.filepath.template}/actor/character/features.hbs` },
             inventory: { template: `${tfm.filepath.template}/actor/character/inventory.hbs` },
+            spells: { template: `${tfm.filepath.template}/actor/character/spells.hbs` },
             effects: { template: `${tfm.filepath.template}/actor/shared/actor-effects.hbs` },
             details: { template: `${tfm.filepath.template}/actor/character/details.hbs` }
         }
@@ -68,7 +69,33 @@ export default class CharacterSheet extends TfmActorSheet {
                 context.inventory.contents.push(item);
             }
         });
-        
+
+        context.spellbooks = [];
+        for (const item of context.itemTypes.trinket) {
+            const data = {};
+            data.item = item;
+            data.uuid = item.uuid;
+            data.name = item.name;
+            data.type = item.system.type;
+            data.enriched = await utils.enrichHTML(item.system.description.identified);
+            data.system = item.system;
+
+            data.spells = [];
+            item.system.spells.forEach(async uuid => {
+                const sData = {};
+                const spell = await fromUuid(uuid);
+                if (spell) {
+                    sData.item = spell;
+                    sData.uuid = spell.uuid;
+                    sData.name = spell.name;
+                    sData.system = spell.system;
+                    sData.enriched = await utils.enrichHTML(spell.system.description.identified);
+                    data.spells.push(sData);
+                }
+            })
+            context.spellbooks.push(data);
+        }
+
         context.job = null;
         if (this.document.itemTypes.job.length > 0) context.job = this.document.itemTypes.job[0];
 

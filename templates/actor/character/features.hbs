@@ -52,8 +52,8 @@
                 </div>
             </li>
             {{#each itemTypes.feature as |item index|}}
-                <li class="item collapsible collapsed" data-action="collapse" data-uuid="{{item.uuid}}">
-                    <div class="flexrow">
+                <li class="item collapsible collapsed" data-uuid="{{item.uuid}}">
+                    <div class="flexrow" data-action="collapse">
                         <div class="item-name">
                             <div class="item-image" data-action="edit">
                                 <a><img src="{{item.img}}" title="{{item.name}}" width="30" height="30" /></a>

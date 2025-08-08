@@ -79,7 +79,6 @@ export default class TfmActorSheet extends TfmSheetMixin(foundry.applications.sh
 
         // Handle special management of specific item types
         // Usually means making additional items, or applying effects or stat changes
-        if (item.type == 'trinket') return this._onDropTrinket(event, item);
         if (item.type == 'job' && this.document.type != 'character') return;// Exclusive to characters only
 
         const modification = {
@@ -93,66 +92,6 @@ export default class TfmActorSheet extends TfmSheetMixin(foundry.applications.sh
         foundry.utils.getDocumentClass(type).create(itemData, { parent: this.document });
     }
 
-    //===============================================================================================
-    //>- Drop Trinket
-    //===============================================================================================
-    async _onDropTrinket(event, item) {
-        console.log('Recieved a trinket drop');
-        const { type, uuid } = utils.getDragEventData(event);
-        const modification = {
-            "-=_id": null,
-            "-=ownership": null,
-            "-=folder": null,
-            "-=sort": null
-        };
-
-        // When recieving a trinket, prompt the user and offer to place all the spells onto their sheet for them
-        let confirm = await TfmDialog.confirm({ content: `Add Magic spells to actor sheet?`, modal: true });
-
-        // adds the spells to the actor if confirmed to do so
-        const trinket_data = item.toObject();
-        if (confirm) {
-            // Prepare the list of spells
-            const spell_list = [];
-            for (const spell of item.system.spells) {
-                const spell_doc = await fromUuid(spell)
-                if (!spell_doc) throw new Error('One of the trinkets spells is damaged or missing and cannot be automatically added until repaired');
-                const item_data = spell_doc.toObject();
-                spell_list.push(foundry.utils.mergeObject(item_data, modification, { performDeletions: true }));
-            }
-
-            // create the spells
-            const created_spells = await foundry.utils.getDocumentClass(type).createDocuments(spell_list, { parent: this.document, renderSheet: false });
-
-            // link the new spells to the trinket
-            for (const spell of created_spells) {
-                trinket_data.system.links = [];
-                trinket_data.system.links.push(spell.uuid);
-            }
-        }
-
-        // add the trinket to the actor
-        console.log('td', trinket_data)
-        foundry.utils.mergeObject(trinket_data, modification, { performDeletions: true });
-
-        // Add the new items to the actor
-        const created_trinket = await foundry.utils.getDocumentClass(type).create(trinket_data, { parent: this.document, renderSheet: false });
-        const justify_link = [];
-        for (const link of created_trinket.system.links) {
-            let item = await fromUuid(link);
-            if (!item) throw new Error('Trinket is created but has damaged links');
-            justify_link.push({
-                _id: item.id,
-                system: {
-                    trinket: created_trinket.uuid
-                }
-            })
-        }
-
-        if (justify_link.length > 0) this.document.updateEmbeddedDocuments(type, justify_link);
-    }
-
-    async _onDropActor(event, actor) { }
     async _onDropActiveEffect(event, effect) {
         // Clears meta data from owned items if neccesary
         const modification = {
@@ -181,6 +120,8 @@ export default class TfmActorSheet extends TfmSheetMixin(foundry.applications.sh
         updates = updates.map(({ target, update }) => ({ _id: target.id, sort: update.sort }));
         this.document.updateEmbeddedDocuments("Item", updates);
     }
+
+    async _onDropActor(event, actor) { }
 
     //============================================================================================
     //> Sheet Actions

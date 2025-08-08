@@ -52,41 +52,6 @@ export default function TfmSheetMixin(Base) {
             }, {});
         }
 
-        //======================================================================================================
-        //> Sheet user focus control
-        //======================================================================================================
-        _lastFocusElement = null;
-
-        _setFocusElement() {
-            if (this.rendered && this.element.contains(document.activeElement)) {
-                const ele = document.activeElement;
-
-                var cList = '';
-                ele.classList.forEach(c => cList += `.${c}`);
-
-                this._lastFocusElement = {
-                    name: ele.name || '',
-                    value: ele.value || '',
-                    class: cList,
-                    tag: ele.tagName.toLowerCase()
-                }
-            }
-        }
-
-        _getFocusElement() {
-            if (this._lastFocusElement !== null) {
-                let selector = this._lastFocusElement.tag + this._lastFocusElement.class;
-                if (this._lastFocusElement.name) selector += `[name="${this._lastFocusElement.name}"]`;
-
-                /** @type {HTMLElement|undefined}*/
-                const targetElement = this.element.querySelector(selector);
-                if (targetElement) {
-                    targetElement.focus();
-                    if (targetElement.tagName == 'INPUT') targetElement.select();
-                }
-            }
-        }
-
         //============================================================================================
         //> Sheet Context
         //============================================================================================
@@ -235,6 +200,49 @@ export default function TfmSheetMixin(Base) {
         _syncPartState(partId, newElement, priorElement, state) {
             return super._syncPartState(partId, newElement, priorElement, state);
         }
+
+        //======================================================================================================
+        //> Sheet user focus control
+        //======================================================================================================
+        _lastFocusElement = null;
+
+        _setFocusElement() {
+            if (this.rendered && this.element.contains(document.activeElement)) {
+                const ele = document.activeElement;
+
+                var cList = '';
+                ele.classList.forEach(c => cList += `.${c}`);
+
+                this._lastFocusElement = {
+                    name: ele.name || '',
+                    value: ele.value || '',
+                    class: cList,
+                    tag: ele.tagName.toLowerCase()
+                }
+            }
+        }
+
+        _getFocusElement() {
+            if (this._lastFocusElement !== null) {
+                let selector = this._lastFocusElement.tag + this._lastFocusElement.class;
+                if (this._lastFocusElement.name) selector += `[name="${this._lastFocusElement.name}"]`;
+
+                /** @type {HTMLElement|undefined}*/
+                const targetElement = this.element.querySelector(selector);
+                if (targetElement) {
+                    targetElement.focus();
+                    if (targetElement.tagName == 'INPUT') targetElement.select();
+                }
+            }
+        }
+
+        //==============================================================================================================
+        //> Sheet collapsable menu persistence
+        //==============================================================================================================
+        _collapsedElements = [];
+        _setCollapsedElements() { }
+        _getCollapsedElements() { }
+
 
         //==============================================================================================================
         //> Drag & Drop
@@ -439,7 +447,8 @@ export default function TfmSheetMixin(Base) {
          * @returns 
          */
         static _onToggleCollapse(event, target) {
-            let container = target.querySelector('.collapsible') || target.closest('.collapsible');
+            const container = target.querySelector('.collapsible') || target.closest('.collapsible');
+            console.log(container);
             container.classList.toggle('collapsed');
         }
 

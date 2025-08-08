@@ -1,52 +1,60 @@
 <div class="tfm-tab-content flexcol flex-gap-s">
     <div class="resource flexrow">
         <p>Type:</p>
-        {{{selectors.spellSchool}}}
+        {{toFieldGroup system.schema 'type' value=system.type}}
     </div>
-    
+
     {{#if (eq system.type 'div')}}
         <div class="resource flexrow">
             <p>Empowered:</p>
             <input type="checkbox" name="system.empowered" {{#if system.empowered}}checked="true" {{/if}}>
         </div>
     {{/if}}
-    
-    <ol class="items-list">
-        {{#if (eq system.type 'occ')}}
+
+    {{#if (eq system.type 'occ')}}
+        <ol class="items-list">
             <li class="item flexrow items-header">
                 <div class="item-name">{{localize 'TFM.invocation'}}</div>
                 <div class="item-controls">{{localize 'TFM.controls'}}</div>
             </li>
-        {{/if}}
-    
+        </ol>
+    {{/if}}
+
+    <ol class="items-list">
         <li class="item flexrow items-header">
             <div class="item-name">{{localize 'TFM.spells'}}</div>
             <div class="item-controls">{{localize 'TFM.controls'}}</div>
         </li>
-        {{#each spells}}
-    
-            <li class="item flexrow" data-uuid="{{uuid}}">
-    
-                <div class="item-name" data-action="itemEdit" style="flex: 2 0 auto">
-                    {{#if isActive}}
-                        <img src="{{img}}" title="{{name}}" width="30" height="30" /></a>
-                    {{/if}}
-                    {{#unless isActive}}
-                        <i class="fa-solid fa-unlink fa-lg"></i>
-                    {{/unless}}
-                    <h4 style="padding-left: 4px;">{{name}}</h4>
+        {{#each spells as |spell|}}
+
+            <li class="item collapsible collapsed" data-uuid="{{spell.item.uuid}}">
+                <div class="flexrow" data-action="collapse">
+                    <div class="item-name flex-gap-s flexgrow">
+                        <img src="{{spell.item.img}}" title="{{spell.item.name}}" width="30" height="30" /></a>
+                        <h4>{{spell.item.name}}</h4>
+                    </div>
+                    <div class="text-left flex">
+                        <b>Casting: </b> <a data-action="cast">{{spell.item.system.casting.difficulty}}+ (x{{spell.item.system.casting.level}})</a>
+                    </div>
+                    <div class="item-controls" style="whitespace: nowrap;">
+                        <a class="item-control item-cast fas fa-book" title="Cast spell" data-action="cast"></a>
+                        {{#if @root.isEditMode}}
+                            <a class="item-control item-edit fas fa-edit" title="Edit spell" data-action="edit"></a>
+                            <a class="item-control item-delete fas fa-trash" title="Delete spell" data-action="delete"></a>
+                        {{/if}}
+                    </div>
                 </div>
-    
-                <div class="item-controls" style="whitespace: nowrap;">
-                    <a class="item-control item-edit" title="Edit Item" data-action="edit">
-                        <i class="fas fa-edit"></i>
-                    </a>
-                    <a class="item-control item-delete" title="Delete Item" data-action="deleteItem">
-                        <i class="fas fa-trash"></i>
-                    </a>
+                <div class="collapsible-content">
+                    <div class="wrapper">
+                        {{#if spell.enriched}}
+                            {{{spell.enriched}}}
+                        {{else}}
+                            Spell link was broken, you can manually fix the data in system.spells, or delete this entry and reconnect it
+                        {{/if}}
+                    </div>
                 </div>
             </li>
-    
+
         {{/each}}
     </ol>
 </div>

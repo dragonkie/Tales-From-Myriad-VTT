@@ -25,7 +25,10 @@ export default class TrinketData extends ItemDataModel {
         schema.charged = new BooleanField({ initial: true });
 
         // List of spell UUID's to reference
-        schema.spells = new ArrayField(new StringField({ initial: '', blank: true, ...this.RequiredConfig }), { initial: [] });
+        schema.spells = new ArrayField(
+            new StringField({ initial: '', blank: true, ...this.RequiredConfig })
+            , { initial: [] }
+        );
 
         // UUID referencing an invocation 
         schema.invocation = new StringField({ initial: '' });
@@ -53,6 +56,41 @@ export default class TrinketData extends ItemDataModel {
         Object.assign(schema, this.EquipmentFields());
 
         return schema;
+    }
+
+    async _preCreate(data, options, user) {
+        console.log({ data: data, options: options, user: user });
+
+        const modification = {
+            "-=_id": null,
+            "-=ownership": null,
+            "-=folder": null,
+            "-=sort": null
+        };
+        
+        if (this.actor) {
+            // When recieving a trinket, prompt the user and offer to place all the spells onto their sheet for them
+            const confirm = await TfmDialog.confirm({ content: `Add Magic spells to actor sheet?`, modal: true });
+
+            // adds the spells to the actor if confirmed to do so
+            if (confirm) {
+                // Prepare the list of spells
+                const spell_list = [];
+                for (const uuid of data.system.spells) {
+                    const spell = await fromUuid(uuid)
+                    if (!spell) {
+                        utils.error('TFM.Error.BrokenSpellLink');
+                        throw new Error('One of the trinkets spells is damaged or missing and cannot be automatically added until repaired');
+                    }
+                    const item_data = spell.toObject();
+                    spell_list.push(foundry.utils.mergeObject(item_data, modification, { performDeletions: true }));
+                }
+                this.actor.update({ items: spell_list});
+                console.log(spell_list)
+            }
+        }
+
+        return super._preCreate(data, options, user);
     }
 
     async _preDelete(options, user) {
