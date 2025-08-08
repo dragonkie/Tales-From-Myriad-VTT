@@ -36,15 +36,15 @@
         {{#if (isEmpty system.proficiency.weaponType)}}
             <div>No Weapon Type proficiencies, use edit mode to add some!</div>
         {{else}}
-        <div class="flexrow flex-gap-m">
-            {{#each system.proficiency.weaponType as |weapon key|}}
-                {{#if weapon}}
-                    <div class="tfm-border rounded tfm-pad-font flexshrink" data-weapon-type="{{key}}">
-                        {{toTitleCase (localize key)}}
-                    </div>
-                {{/if}}
-            {{/each}}
-        </div>
+            <div class="flexrow flex-gap-m">
+                {{#each system.proficiency.weaponType as |weapon key|}}
+                    {{#if weapon}}
+                        <div class="tfm-border rounded tfm-pad-font flexshrink" data-weapon-type="{{key}}">
+                            {{toTitleCase (localize key)}}
+                        </div>
+                    {{/if}}
+                {{/each}}
+            </div>
         {{/if}}
     </div>
 
@@ -72,50 +72,4 @@
             </div>
         {{/if}}
     </div>
-
-    {{!-- Skill tree for class features --}}
-    <div class="flexcol tfm-job-features flex-gap-m" style="min-height: 200px;">
-        {{!-- Features that are implicit, given to characters by default --}}
-        <div class="flex0">
-            <b style="padding-bottom: 10px;">Implicit Features:</b>
-            <div class="tfm-feature-implicit flex-gap-m">
-                <div class="tfm-feature">Powerful Build</div>
-                <div class="tfm-feature">Overwhelm</div>
-            </div>
-        </div>
-
-        {{!-- Features that can be taken at any time, and sometimes multiple --}}
-        <div class="flex0">
-            <b style="padding-bottom: 10px;">Universal Features:</b>
-            <div class="tfm-feature-generic flex-gap-m">
-                <div class="tfm-feature">Corruption</div>
-                <div class="tfm-feature">Cardio beats Chaos</div>
-            </div>
-        </div>
-
-        {{!-- Feature skill tree, must be taken in order, and meet level requirements to unlock --}}
-        <div class="flexcol flex-gap-m">
-            <b>{{#if @root.isEditMode}} <a class="fas fa-cog" data-action="configPaths" data-field="paths"></a> {{/if}}Feature paths:</b>
-            <div class="tfm-job-paths flexrow flex-gap-m">
-                {{#each system.paths as |path index|}}
-                    <div class="flexcol tfm-path flex-gap-m flexshrink">
-                        <b>{{path}}</b>
-                        <div class="tfm-feature">
-                            <b class="tfm-title">Feature</b>
-                            <div class="tfm-description">Description for the feature goes here, and takes up any remaining space needed</div>
-                        </div>
-                        <div class="tfm-feature">
-                            <b class="tfm-title">Feature</b>
-                            <div class="tfm-description">Description for the feature goes here, and takes up any remaining space needed</div>
-                        </div>
-                        <div class="tfm-feature">
-                            <b class="tfm-title">Feature</b>
-                            <div class="tfm-description">Description for the feature goes here, and takes up any remaining space needed</div>
-                        </div>
-                    </div>
-                {{/each}}
-            </div>
-        </div>
-    </div>
-
 </div>

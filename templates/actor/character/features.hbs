@@ -42,8 +42,34 @@
         <div class="tfm-group-primary rounded tfm-pad tfm-pad-s">{{> 'tfm.actor-resistance'}}</div>
 
     </div>
-    
-    <div>
 
+    <div>
+        <ol class="items-list" style="margin: 0; padding: 0;">
+            <li class="item flexrow items-header">
+                <div class="item-name">Name</div>
+                <div>Actions</div>
+                <div class="item-controls">
+                    <a class="item-control item-create" title="Create item" data-type="item"><i class="fas fa-plus"></i> Add item</a>
+                </div>
+            </li>
+            {{#each itemTypes.feature as |item index|}}
+                <li class="item flexrow" data-uuid="{{item.uuid}}">
+                    <div class="item-name">
+                        <div class="item-image" data-action="useItem">
+                            <a class="rollable" data-roll-type="item"><img src="{{item.img}}" title="{{item.name}}" width="30" height="30" /></a>
+                        </div>
+                        <h4 style="padding-left: 4px;">{{item.name}}</h4>
+                    </div>
+
+                    <div class="item-controls" style="whitespace: nowrap; flex: 0 1;">
+                        <a class="item-control item-edit" data-action="edit" title="Edit Item"><i class="fas fa-edit"></i></a>
+                        {{#if ../isEditMode}}
+                            <a class="item-control item-delete" data-action="deleteItem" title="Delete Item"><i class="fas fa-trash"></i></a>
+                        {{/if}}
+
+                    </div>
+                </li>
+            {{/each}}
+        </ol>
     </div>
 </div>

@@ -1,0 +1,71 @@
+<div class="tfm-tab-content flexcol flex-gap-l">
+    {{!-- Skill tree for class features --}}
+    <div class="flexcol tfm-job-features flex-gap-m" style="min-height: 200px;">
+        {{!-- Features that are implicit, given to characters by default --}}
+        <div class="flex0">
+            <b style="padding-bottom: 10px;">{{#if isEditMode}}<i class="fas fa-cog" data-action="addFeature" data-path="implicit"></i>{{/if}} Starting Features:</b>
+            <div class="tfm-feature-implicit flex-gap-m">
+                {{#if (isEmpty implicitFeats)}}
+                    <i class="tfm-s">No features, unlock sheet to add!</i>
+                {{else}}
+                    {{#each implicitFeats as |feature index|}}
+                        {{#if feature.item}}
+                            <a class="tfm-feature" data-action="edit" data-uuid="{{feature.item.uuid}}"><i class="fas fa-suitcase"></i> {{feature.item.name}}</a>
+                        {{else}}
+                            <div class="tfm-feature"><i class="fa-solid fa-link-simple-slash"></i>{{feature.name}}</div>
+                        {{/if}}
+                    {{/each}}
+                {{/if}}
+            </div>
+        </div>
+
+        {{!-- Features that can be taken at any time --}}
+        <div class="flex0">
+            <b style="padding-bottom: 10px;">{{#if isEditMode}}<i class="fas fa-cog" data-action="addFeature" data-path="general"></i>{{/if}} General Features:</b>
+            <div class="tfm-feature-generic flex-gap-m">
+                {{#if (isEmpty generalFeats)}}
+                    <i>No features, unlock sheet to add!</i>
+                {{else}}
+                    {{#each generalFeats as |feature index|}}
+                        {{#if feature.item}}
+                            <a class="tfm-feature" data-action="edit" data-uuid="{{feature.item.uuid}}"><i class="fas fa-suitcase"></i> {{feature.item.name}}</a>
+                        {{else}}
+                            <div class="tfm-feature"><i class="fa-solid fa-link-simple-slash"></i>{{feature.name}}</div>
+                        {{/if}}
+                    {{/each}}
+                {{/if}}
+            </div>
+        </div>
+
+        {{!-- Feature skill tree, must be taken in order, and meet level requirements to unlock --}}
+        <div class="flexcol flex-gap-m">
+            <b>{{#if @root.isEditMode}} <a class="fas fa-cog" data-action="configPaths" data-field="paths"></a> {{/if}}Feature paths:</b>
+            <div class="tfm-job-paths flexrow flex-gap-m">
+                {{#each class_paths as |path key|}}
+                    <div class="flexcol tfm-path flex-gap-m flexshrink" data-path="{{path.name}}">
+                        <b class="text-center">{{#if @root.isEditMode}}<a class="fas fa-cog" data-action="addFeature"></a>{{/if}} {{path.name}}</b>
+                        {{#if (isEmpty path.features)}}
+                            <div>No features in path</div>
+                        {{else}}
+                            {{#each path.features as |feature key|}}
+                                <div class="tfm-feature">
+                                    {{#if feature.item}}
+                                        <a class="content-link" draggable="true" data-link data-action="edit" data-uuid="{{item.uuid}}" data-id="{{item.id}}" data-type="Item" data-tooltip="Item" data-tooltip-text="{{item.type}} Item">
+                                            <i class="fas fa-suitcase"></i>
+                                            {{feature.item.name}}
+                                        </a>
+                                    {{else}}
+                                        <b>{{feature.name}}</b>
+                                        <div class="tfm-description">
+                                            Feature couldn't be found and must be re-linked.
+                                        </div>
+                                    {{/if}}
+                                </div>
+                            {{/each}}
+                        {{/if}}
+                    </div>
+                {{/each}}
+            </div>
+        </div>
+    </div>
+</div>

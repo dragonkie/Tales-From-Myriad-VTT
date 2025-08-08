@@ -3,6 +3,7 @@ import JobSheet from "./job.mjs";
 import SpellSheet from "./spell.mjs";
 import TrinketSheet from "./trinket.mjs";
 import WeaponSheet from "./weapon.mjs";
+import FeatureSheet from "./feature.mjs";
 
 export { ArmourSheet };
 export { JobSheet };
@@ -39,6 +40,12 @@ export const config = [{
         label: "TFM.ItemSheet.weapon",
         types: ['weapon']
     }
-},
+}, {
+    application: FeatureSheet,
+    options: {
+        label: "TFM.ItemSheet.feature",
+        types: ['feature']
+    }
+}
 
 ]

@@ -5,7 +5,9 @@ import { TFM } from "../../../config.mjs";
 
 export default class JobSheet extends TfmItemSheet {
     static DEFAULT_OPTIONS = {
+        position: { height: 'auto', width: 600, top: 60, left: 120 },
         actions: {
+            addFeature: this._onAddFeature,
             configWeaponProf: this._onConfigureWeaponProf,
             configSkills: this._onConfigureSkills,
             configPaths: this._onConfigurePaths
@@ -13,14 +15,165 @@ export default class JobSheet extends TfmItemSheet {
     }
 
     static get PARTS() {
-        const parts = super.PARTS;
-        parts.details = { template: `${tfm.filepath.template}/item/details/job.hbs` };
-        return parts;
+        return {
+            ...super.PARTS,
+            details: { template: `${tfm.filepath.template}/item/details/job.hbs` },
+            features: { template: `${tfm.filepath.template}/item/details/job-features.hbs` },
+        };
+    }
+
+    static get TABS() {
+        const tabs = {
+            ...super.TABS,
+            features: { id: 'features', group: 'primary', label: 'TFM.Tab.Features' }
+        };
+        delete tabs.rules
+        return tabs;
+    }
+
+    async _prepareContext() {
+        const context = await super._prepareContext();
+
+        // Add the feature path groupings
+        context.class_paths = {};
+        context.system.paths.forEach(f => {
+            context.class_paths[f] = {
+                name: f,
+                features: [] // Features should be ordered by level, and then by name
+            }
+        })
+        context.generalFeats = [];
+        context.implicitFeats = [];
+
+        // add the features to their relevant lists
+        context.system.features.forEach(async f => {
+            const d = utils.duplicate(f);
+            d.item = await fromUuid(d.uuid);
+
+            if (f.implicit) context.implicitFeats.push(d)
+            else if (f.general) context.generalFeats.push(d);
+            else Object.keys(context.class_paths).forEach(async key => {
+                if (f.path == key) context.class_paths[key].features.push(d);
+            })
+        })
+
+        // Adds in metadata to help with managing sheet to remove calculations from handlebars
+        Object.keys(context.class_paths).forEach(key => {
+            context.class_paths[key].count = context.class_paths[key].features.length;
+        })
+
+        return context;
     }
 
     //===========================================================================================
     //> Sheet actions
     //===========================================================================================
+
+    /**
+     * 
+     * @param {Event} event 
+     * @param {HTMLElement} target 
+     */
+    static async _onAddFeature(event, target) {
+        // Gather data relevant to the feature paths
+        const active_path = target.closest('[data-path]')?.dataset.path;
+        if (!active_path) throw new Error('No active feature path found');
+
+        // Create a list with the features that should remain unchanged
+        const remaining = [];
+        this.document.system.features.forEach(f => { if (f.path != active_path) remaining.push(f) });
+
+        // Render and enrich the template
+        const render = await utils.renderTemplate(`${tfm.filepath.template}/dialog/feature-config.hbs`, { active_path: active_path, ...this.document.system });
+        const enriched = await utils.enrichHTML(render);
+
+        //Create the application
+        const app = await new TfmDialog({
+            window: { title: 'TFM.Dialog.AddClassFeature' },
+            position: { height: 'auto', width: 400 },
+            actions: {
+                delete: (event, target) => {
+                    const ele = target.closest('[data-uuid]');
+                    ele.remove();
+                }
+            },
+            classes: ['tfm'],
+            content: enriched,
+            buttons: [{
+                action: 'cancel',
+                label: 'Cancel',
+                default: true,
+            }, {
+                action: 'confirm',
+                label: 'Confirm'
+            }],
+            submit: async result => {
+                if (result != 'confirm') return;
+
+                // if the path name changed, update everything to match
+                const nameEle = app.element.querySelector('[name=path-name]');
+                const path_name = nameEle?.value ?? active_path;
+                if (nameEle) {
+                    if (path_name != active_path && path_name != '') {
+                        let arr = duplicate(this.document.system.paths);
+                        let i = arr.indexOf(active_path);
+                        if (i > -1) arr.splice(i, 1);
+                        arr.push(path_name);
+                        await this.document.update({ system: { paths: arr } });
+                    }
+                }
+
+                // Create the new features list
+                let features = app.element.querySelectorAll(`.tfm-class-feature`);
+                const list = [];
+                for (const f of features) {
+                    const data = { uuid: f.querySelector('[data-uuid]')?.dataset.uuid };
+                    const item = await fromUuid(data.uuid);
+                    if (!item) throw new Error('Missing ID for a feature');
+
+                    // set data defaults
+                    data.name = item.name;
+                    data.level = f.querySelector('[name=level]')?.value
+                    data.path = '';
+
+                    // set derived data
+                    if (path_name == 'implicit') data.implicit = true;
+                    else if (path_name == 'general') data.general = true;
+                    else data.path = path_name;
+
+                    // push the data
+                    list.push(data);
+                }
+                // update the feature list
+                await this.document.update({ system: { features: [...remaining, ...list] } });
+            }
+        }).render(true);
+
+        // Bind the drop manager
+        const itemUuid = this.document.uuid;
+        const list_ele = app.element.querySelector('.tfm-feature-list');
+        const dd = new foundry.applications.ux.DragDrop.implementation({
+            dropSelector: ".application",
+            permissions: { drop: this.isEditable && this.document.isOwner },
+            callbacks: {
+                drop: async event => {
+                    const { type, uuid } = utils.getDragEventData(event);
+                    const item = await fromUuid(uuid);
+                    if (item.type == 'job' || uuid == itemUuid) return; // Jobs cant hold job items or themselves
+                    const e = document.createElement('DIV');
+                    e.innerHTML = await utils.enrichHTML(`
+                        <div class="flexrow flex-gap-s tfm-class-feature" data-uuid="${uuid}">
+                            <div>@UUID[${uuid}]</div>
+                            <input class="tfm-feature-level" name="level" style="flex: 0; width: 2rem;" type="number" placeholder="level" value="1">
+                        </div>
+                    `);
+                    list_ele.appendChild(e);
+                }
+            }
+        });
+        console.log(app.element)
+        dd.bind(app.element);
+    }
 
     /**
      * 
@@ -122,10 +275,7 @@ export default class JobSheet extends TfmItemSheet {
                 skills_list.splice(i, 1);
                 t.parentElement.removeChild(t);
             }
-
-
         })
-        console.log(app.element);
     }
 
     static async _onConfigurePaths(event, target) {
@@ -182,6 +332,5 @@ export default class JobSheet extends TfmItemSheet {
 
 
         })
-        console.log(app.element);
     }
 }

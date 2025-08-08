@@ -57,8 +57,8 @@ export default class JobData extends ItemDataModel {
             path: new StringField({ initial: '' }), // which skill path does this qualify as
             general: new BooleanField({ initial: false }),// features that can be learned at any point
             implicit: new BooleanField({ initial: false }),// features that you recieve when the job is given to an actor
-            name: new StringField(),
-            uuid: new StringField(),
+            name: new StringField({ initial: '' }),// The name for the skill in case it can't be found in linking
+            uuid: new StringField({ initial: '' }),// uuid to link the item with
         }), { initial: [] })
 
         return schema;
@@ -78,6 +78,16 @@ export default class JobData extends ItemDataModel {
                 if (confirm_stats) {
                     for (const key of Object.keys(this.abilities)) {
                         update_data[`system.abilities.${key}.value`] = this.abilities[key] + actor.system.abilities[key].value;
+                    }
+                }
+
+                // Add the implicit abilities to the actor'
+                let confirm_features = await TfmDialog.confirm({ content: `Would you like to add starting features?`, modal: true });
+                if (confirm_features) {
+                    update_data.items = [];
+                    for (const f of data.system.features) {
+                        const item = await fromUuid(f.uuid);
+                        if (item && f.implicit) update_data.items.push(item.toObject());
                     }
                 }
 
@@ -104,6 +114,7 @@ export default class JobData extends ItemDataModel {
             // confirm to remove stats
             let confirm_stats = await TfmDialog.confirm({ content: `Would you like to remove Job stat modifiers?`, modal: true });
             if (confirm_stats) {
+                console.log('confirmed stat change on delete')
                 for (const key of Object.keys(this.abilities)) {
                     update_data[`system.abilities.${key}.value`] = actor.system.abilities[key].value - this.abilities[key];
                 }

@@ -11,7 +11,7 @@
             </div>
         </li>
         {{#each inventory.contents as |item|}}
-            {{#unless (eq item.type 'spell')}}
+            {{#unless (or (eq item.type 'spell') (eq item.type 'feature'))}}
                 <li class="item flexrow" data-uuid="{{item.uuid}}">
                     <div class="item-name">
                         <div class="item-image" data-action="useItem">
