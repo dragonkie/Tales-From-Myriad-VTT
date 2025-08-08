@@ -78,7 +78,7 @@
     .item {
         align-items: center;
         padding: 0.1rem 2px; // to align with the header border
-        margin-bottom: 0.2rem;
+        margin-bottom: 0.25rem;
         border-bottom: 1px solid var(--tfm-colour-border);
 
         &:last-child {
@@ -126,6 +126,30 @@
             // font-size: 16px;
         }
     }
+
+    .item-description {
+        padding: 0.2rem;
+        overflow: hidden;
+    }
+
+    .tfm-grouped-item {
+        border-bottom: 0;
+        margin-bottom: 0.4rem;
+
+        .item-name {
+            margin: 0.2rem;
+        }
+    }
+}
+
+.tfm-grouped-item {
+    background-color: var(--tfm-colour-secondary);
+    border-radius: var(--tfm-border-radius, 8px);
+    padding: var(--tfm-padding);
+}
+
+.tfm-trinket-spell-list {
+    margin-left: 1rem;
 }
 
 .item-formula {

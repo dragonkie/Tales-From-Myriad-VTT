@@ -7,7 +7,7 @@
     color: var(--tfm-colour-text);
 
     &.active {
-        color: var(--tfm-colour-text);
+        color: var(--tfm-colour-text-selection);
         text-shadow: 0 0 8px var(--tfm-colour-text-selection-bg);
     }
 }
@@ -31,12 +31,12 @@
             transform: rotate(-90deg);
         }
 
-        .collapsible-content {
+        >.collapsible-content {
             grid-template-rows: 0fr;
         }
     }
 
-    .collapsible-content {
+    >.collapsible-content {
         display: grid;
         grid-template-rows: 1fr;
         transition: all 0.3s ease-in-out;
@@ -192,7 +192,8 @@
 //========================================================================================
 //> Text Alignment
 //========================================================================================
-.text-left, .text-start {
+.text-left,
+.text-start {
     text-align: left;
 }
 
@@ -200,7 +201,8 @@
     text-align: center;
 }
 
-.text-right, .text-end {
+.text-right,
+.text-end {
     text-align: right;
 }
 

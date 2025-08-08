@@ -228,7 +228,7 @@
   color: var(--tfm-colour-text);
 }
 .tfm nav.tabs .item.active {
-  color: var(--tfm-colour-text);
+  color: var(--tfm-colour-text-selection);
   text-shadow: 0 0 8px var(--tfm-colour-text-selection-bg);
 }
 
@@ -244,15 +244,15 @@
 .collapsible.collapsed .fa-caret-down {
   transform: rotate(-90deg);
 }
-.collapsible.collapsed .collapsible-content {
+.collapsible.collapsed > .collapsible-content {
   grid-template-rows: 0fr;
 }
-.collapsible .collapsible-content {
+.collapsible > .collapsible-content {
   display: grid;
   grid-template-rows: 1fr;
   transition: all 0.3s ease-in-out;
 }
-.collapsible .collapsible-content > .wrapper {
+.collapsible > .collapsible-content > .wrapper {
   overflow: hidden;
 }
 
@@ -371,7 +371,8 @@
   margin-bottom: var(--tfm-margin);
 }
 
-.text-left, .text-start {
+.text-left,
+.text-start {
   text-align: left;
 }
 
@@ -379,7 +380,8 @@
   text-align: center;
 }
 
-.text-right, .text-end {
+.text-right,
+.text-end {
   text-align: right;
 }
 
@@ -521,7 +523,7 @@
 .items-list .item {
   align-items: center;
   padding: 0.1rem 2px;
-  margin-bottom: 0.2rem;
+  margin-bottom: 0.25rem;
   border-bottom: 1px solid var(--tfm-colour-border);
 }
 .items-list .item:last-child {
@@ -559,6 +561,27 @@
 .items-list .items-header .item-name {
   padding-left: 5px;
   text-align: left;
+}
+.items-list .item-description {
+  padding: 0.2rem;
+  overflow: hidden;
+}
+.items-list .tfm-grouped-item {
+  border-bottom: 0;
+  margin-bottom: 0.4rem;
+}
+.items-list .tfm-grouped-item .item-name {
+  margin: 0.2rem;
+}
+
+.tfm-grouped-item {
+  background-color: var(--tfm-colour-secondary);
+  border-radius: var(--tfm-border-radius, 8px);
+  padding: var(--tfm-padding);
+}
+
+.tfm-trinket-spell-list {
+  margin-left: 1rem;
 }
 
 .item-formula {
@@ -917,7 +940,7 @@
   --tfm-colour-border: var(--tfm-colour-text);
   --tfm-colour-border: var(--tfm-colour-light-2);
   --tfm-colour-text-selection-bg: var(--tfm-colour-light-5);
-  --tfm-colour-text-selection: var(--tfm-colour-light-3);
+  --tfm-colour-text-selection: var(--tfm-colour-light-2);
   --tfm-colour-text: var(--tfm-colour-light-3);
   --tfm-colour-input-background: var(--tfm-colour-cool-3);
   --tfm-colour-input-background-disabled: var(--tfm-colour-cool-4);
