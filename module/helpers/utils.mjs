@@ -1,6 +1,10 @@
 import LOGGER from "./logger.mjs";
 
 export default class utils {
+    //================================================================================================
+    // Foundry quick references
+    //================================================================================================
+
     static notify(msg) {
         ui.notifications.notify(this.localize(msg));
     }
@@ -17,7 +21,21 @@ export default class utils {
         return game.i18n.localize(text) ?? text;
     }
 
+    static async renderTemplate(path, data) {
+        return foundry.applications.handlebars.renderTemplate(path, data);
+    }
 
+    static async enrichHTML(html) {
+        return foundry.applications.ux.TextEditor.enrichHTML(html);
+    }
+
+    static getDragEventData(data) {
+        return foundry.applications.ux.TextEditor.getDragEventData(data);
+    }
+
+    //================================================================================================
+    // Tfm utilities
+    //================================================================================================
     /** 
      * Returns the modifier for the given value
      * @param {Number} value Ability score
@@ -115,10 +133,6 @@ export default class utils {
         foundry.dice.terms.Die.prototype[label] = func;
     }
 
-    static getDragData(event) {
-        return JSON.parse(event.dataTransfer.getData("text/plain"));
-    }
-
     static getFormData(form, selectors) {
         const matches = form.querySelectorAll(selectors);
         const data = {};
@@ -179,15 +193,5 @@ export default class utils {
      */
     static duplicate(original) {
         return JSON.parse(JSON.stringify(original));
-    }
-
-    /**
-     * Returns the ending ID value from a foundry UUID
-     * @param {*} uuid 
-     * @returns 
-     */
-    static IdFromUuid(uuid) {
-        if (typeof uuid === 'string') return uuid.match(/[a-zA-Z1-9]+$/);
-        return null;
     }
 }

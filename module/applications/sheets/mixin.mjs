@@ -274,7 +274,7 @@ export default function TfmSheetMixin(Base) {
             event.preventDefault();
             if (!this.isEditable) return;
             const target = event.target;
-            const { type, uuid } = foundry.applications.ux.TextEditor.getDragEventData(event);
+            const { type, uuid } = utils.getDragEventData(event);
             const item = await fromUuid(uuid);
 
             if (!item) return;

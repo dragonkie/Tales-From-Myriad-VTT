@@ -9,7 +9,7 @@ export default class TrinketSheet extends TfmItemSheet {
     }
 
     async _onDropItem(event, item) {
-        const { type, uuid } = foundry.applications.ux.TextEditor.getDragEventData(event);
+        const { type, uuid } = utils.getDragEventData(event);
         const itemData = item.toObject();
 
         // Handle special management of specific item types

@@ -229,8 +229,8 @@ export default class WeaponData extends ItemDataModel {
                 }
 
                 // Enrich the content for enhanced html
-                const template = await foundry.applications.handlebars.renderTemplate(`${tfm.filepath.template}/chat/weapon-attack.hbs`, msg_data);
-                const enriched = await foundry.applications.ux.TextEditor.enrichHTML(template);
+                const template = await utils.renderTemplate(`${tfm.filepath.template}/chat/weapon-attack.hbs`, msg_data);
+                const enriched = await utils.enrichHTML(template);
 
                 // Push out the message
                 const msg = await attack.toMessage({

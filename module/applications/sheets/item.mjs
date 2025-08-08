@@ -1,4 +1,5 @@
 import LOGGER from "../../helpers/logger.mjs";
+import utils from "../../helpers/utils.mjs";
 import TfmSheetMixin from "./mixin.mjs";
 
 /**
@@ -57,19 +58,19 @@ export default class TfmItemSheet extends TfmSheetMixin(foundry.applications.she
                 label: tfm.utils.localize('TFM.Generic.Description'),
                 field: this.document.system.schema.getField('description.identified'),
                 value: this.document.system.description.identified,
-                enriched: await foundry.applications.ux.TextEditor.enrichHTML(context.system.description.identified, enrichmentOptions),
+                enriched: await utils.enrichHTML(context.system.description.identified, enrichmentOptions),
             },
             unidentified: {
                 label: `${tfm.utils.localize('TFM.Generic.Unidentified')} ${tfm.utils.localize('TFM.Generic.Description')}`,
                 field: this.document.system.schema.getField('description.unidentified'),
                 value: this.document.system.description.unidentified,
-                enriched: await foundry.applications.ux.TextEditor.enrichHTML(context.system.description.unidentified, enrichmentOptions),
+                enriched: await utils.enrichHTML(context.system.description.unidentified, enrichmentOptions),
             },
             chat: {
                 label: `${tfm.utils.localize('CHAT.Chat')} ${tfm.utils.localize('TFM.Generic.Description')}`,
                 field: this.document.system.schema.getField('description.chat'),
                 value: this.document.system.description.chat,
-                enriched: await foundry.applications.ux.TextEditor.enrichHTML(context.system.description.chat, enrichmentOptions),
+                enriched: await utils.enrichHTML(context.system.description.chat, enrichmentOptions),
             },
         }
 

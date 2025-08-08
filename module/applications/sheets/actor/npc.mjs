@@ -1,3 +1,4 @@
+import utils from "../../../helpers/utils.mjs";
 import TfmActorSheet from "../actor.mjs"
 
 export default class NpcSheet extends TfmActorSheet {
@@ -24,7 +25,7 @@ export default class NpcSheet extends TfmActorSheet {
     async _prepareContext() {
         const context = await super._prepareContext();
         context.enriched = {
-            description: await foundry.applications.ux.TextEditor.enrichHTML(context.system.description)
+            description: await utils.enrichHTML(context.system.description)
         }
         return context;
     }

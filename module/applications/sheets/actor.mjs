@@ -73,7 +73,7 @@ export default class TfmActorSheet extends TfmSheetMixin(foundry.applications.sh
     //> Drag & Drop
     //=================================================================================================================
     async _onDropItem(event, item) {
-        const { type, uuid } = foundry.applications.ux.TextEditor.getDragEventData(event);
+        const { type, uuid } = utils.getDragEventData(event);
         if (!Object.keys(this.document.constructor.metadata.embedded).includes(type)) return;
         const itemData = item.toObject();
 
@@ -98,7 +98,7 @@ export default class TfmActorSheet extends TfmSheetMixin(foundry.applications.sh
     //===============================================================================================
     async _onDropTrinket(event, item) {
         console.log('Recieved a trinket drop');
-        const { type, uuid } = foundry.applications.ux.TextEditor.getDragEventData(event);
+        const { type, uuid } = utils.getDragEventData(event);
         const modification = {
             "-=_id": null,
             "-=ownership": null,
