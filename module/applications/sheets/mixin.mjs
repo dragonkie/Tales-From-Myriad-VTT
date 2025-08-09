@@ -247,7 +247,6 @@ export default function TfmSheetMixin(Base) {
                 this._collapsedElements = [];
                 /** @type {NodeList|null} */
                 const elements = this.element.querySelectorAll('.collapsible');
-                console.log('Collapsible elements:', elements);
                 for (const element of elements) {
                     let selector = ``;
                     let ele = element;
@@ -273,7 +272,6 @@ export default function TfmSheetMixin(Base) {
                         selector: selector.replaceAll(/(.collapsed|.active)/gm, '')
                     });
                 }
-                console.log('Saved list:', this._collapsedElements);
                 return this._collapsedElements;
             }
             return null;
@@ -292,7 +290,6 @@ export default function TfmSheetMixin(Base) {
                     if (collapsed) ele.classList.add('collapsed');
                     else ele.classList.remove('collapsed');
                 })
-                console.log(list);
             }
         }
 
@@ -418,16 +415,19 @@ export default function TfmSheetMixin(Base) {
                 callback: () => document.sheet.render(true),
                 group: "manage"
             }, {
+                name: "TFM.ContextMenu.Gift",
+                icon: "<i class='fa-solid fa-fw fa-gift'></i>",
+                condition: () => {
+                    const whitelist = ['weapon', 'armour', 'trinket'];
+                    return whitelist.includes(document.type);
+                },
+                callback: () => { },
+                group: "manage"
+            }, {
                 name: "TFM.ContextMenu.Delete",
                 icon: "<i class='fa-solid fa-fw fa-trash'></i>",
                 condition: () => isOwner,
                 callback: () => document.delete(),
-                group: "manage"
-            }, {
-                name: "TFM.ContextMenu.Gift",
-                icon: "<i class='fa-solid fa-fw fa-gift'></i>",
-                condition: () => isOwner,
-                callback: () => { },
                 group: "manage"
             }];
 
@@ -484,7 +484,6 @@ export default function TfmSheetMixin(Base) {
         static _onToggleMode(event, target) {
             if (this.isPlayMode) this._sheetMode = this.constructor.SHEET_MODES.EDIT;
             else this._sheetMode = this.constructor.SHEET_MODES.PLAY;
-            LOGGER.log('Sheet mode toggled to:', this.sheetMode);
 
             const lock = this.window.header.querySelector('.fa-lock, .fa-lock-open');
             lock.classList.toggle('fa-lock');
@@ -501,7 +500,6 @@ export default function TfmSheetMixin(Base) {
          */
         static _onToggleCollapse(event, target) {
             const container = target.querySelector('.collapsible') || target.closest('.collapsible');
-            console.log(container);
             container.classList.toggle('collapsed');
         }
 
