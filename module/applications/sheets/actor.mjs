@@ -355,36 +355,4 @@ export default class TfmActorSheet extends TfmSheetMixin(foundry.applications.sh
             }
         }).render(true);
     }
-
-    //============================================================================================
-    //> Context Menu
-    //============================================================================================
-
-    _getItemContextOptions(item) {
-        const isOwner = item.isOwner;
-        const isCharacter = item.actor.type === "character";
-        const isNpc = item.actor.type === "npc";
-        const isEquipped = item.isEquipped;
-        const options = [{
-            name: "TFM.ContextMenu.Edit",
-            icon: "<i class='fa-solid fa-fw fa-edit'></i>",
-            condition: () => isOwner,
-            callback: () => item.sheet.render(true),
-            group: "manage"
-        }, {
-            name: "TFM.ContextMenu.Gift",
-            icon: "<i class='fa-solid fa-fw fa-gift'></i>",
-            condition: () => isOwner,
-            callback: () => tfm.socket.sendItem(item.uuid),
-            group: "manage"
-        }, {
-            name: "TFM.ContextMenu.Delete",
-            icon: "<i class='fa-solid fa-fw fa-trash'></i>",
-            condition: () => isOwner,
-            callback: () => item.delete(),
-            group: "manage"
-        }];
-
-        return options;
-    }
 }
