@@ -163,15 +163,6 @@ function registerHelpers() {
             fn: (target, id, label) => {
                 return `<a data-action="editLedger" data-target="${target}" data-id="${id}" data-label="${label}"><i class="fa-solid fa-memo-pad"></i></a>`
             }
-        }, {
-            name: 'contentLink',
-            fn: (strLink) => {
-                return new Handlebars.SafeString(
-                    `
-                    <a class="content-link" draggable="true" data-link="" data-uuid="Item.Y5EjfEgf5mHJhtq6" data-id="Y5EjfEgf5mHJhtq6" data-type="Item" data-tooltip="Item" data-tooltip-text="Feature Item"><i class="fa-solid fa-suitcase" inert=""></i>Camoflauge</a>
-                    `
-                );
-            }
         }
     ]
 
