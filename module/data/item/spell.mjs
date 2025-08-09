@@ -1,3 +1,4 @@
+import TfmDialog from "../../applications/dialog.mjs";
 import { TFM } from "../../config.mjs";
 import utils from "../../helpers/utils.mjs";
 import { ItemDataModel } from "../abstract.mjs";
@@ -5,7 +6,7 @@ import { ItemDataModel } from "../abstract.mjs";
 const { ArrayField, NumberField, SchemaField, SetField, StringField,
     HTMLField, ObjectField, DataField, BooleanField } = foundry.data.fields;
 
-export default class SpelLData extends ItemDataModel {
+export default class SpellData extends ItemDataModel {
     static defineSchema() {
         const schema = super.defineSchema();
         schema.casting = new SchemaField({
@@ -31,7 +32,7 @@ export default class SpelLData extends ItemDataModel {
             blank: false,
             ...this.RequiredConfig,
             choices: () => {
-                let options = {...TFM.MagicTypes};
+                let options = { ...TFM.MagicTypes };
                 for (const key of Object.keys(options)) options[key] = utils.localize(options[key]);
                 return options;
             }
@@ -44,5 +45,25 @@ export default class SpelLData extends ItemDataModel {
         schema.trinket = new StringField({ ...this.RequiredConfig, initial: '', blank: true });
 
         return schema;
+    }
+
+    async use(event, action = 'cast', options = {}) {
+        return this._onCastSpell(event, options);
+    }
+
+    async _onCastSpell(event, options) {
+        const template = await utils.renderTemplate(`${tfm.filepath.template}/dialog/roll/spell.hbs`);
+        const enriched = await utils.enrichHTML(template);
+        const app = new TfmDialog({
+            content: enriched,
+            buttons: [{
+                action: 'roll',
+                label: 'Roll'
+            }, {
+                action: 'cancel',
+                label: 'Cancel'
+            }]
+        }).render(true);
+        const roll = new Roll();
     }
 }
