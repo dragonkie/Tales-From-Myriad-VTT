@@ -126,6 +126,7 @@ export default function TfmSheetMixin(Base) {
 
         async _preRender(context, options) {
             this._setFocusElement();
+            this._setCollapsedElements();
             return super._preRender(context, options);
         }
 
@@ -156,6 +157,7 @@ export default function TfmSheetMixin(Base) {
             this._setupDragAndDrop();
 
             this._getFocusElement();
+            this._getCollapsedElements();
         }
 
         async _renderHTML(context, options) {
@@ -237,11 +239,62 @@ export default function TfmSheetMixin(Base) {
         }
 
         //==============================================================================================================
-        //> Sheet collapsable menu persistence
+        //> collapsable content persistence
         //==============================================================================================================
         _collapsedElements = [];
-        _setCollapsedElements() { }
-        _getCollapsedElements() { }
+        _setCollapsedElements() {
+            if (this.rendered) {
+                this._collapsedElements = [];
+                /** @type {NodeList|null} */
+                const elements = this.element.querySelectorAll('.collapsible');
+                console.log('Collapsible elements:', elements);
+                for (const element of elements) {
+                    let selector = ``;
+                    let ele = element;
+                    while (ele) {
+                        // Add parent selectors data
+                        let s = `${ele.nodeName}${ele.className != '' ? '.' : ''}${ele.className.replaceAll(' ', ".")}`; // classes
+                        for (let i = 0; i < ele.attributes.length; i++) {
+                            const a = ele.attributes[i];
+                            if (a.name == 'class' || a.name == 'style') s += `[${ele.attributes[i].name}]`;
+                            else s += `[${ele.attributes[i].name}="${ele.attributes[i].value}"]`;
+                        }
+                        selector = s + ' ' + selector;
+
+                        // Prevent hte check from leaving the scope of the sheet
+                        if (ele.classList.contains('window-content')) break;
+
+                        // Progress to the next parent
+                        ele = ele.parentElement;
+                    }
+
+                    this._collapsedElements.push({
+                        collapsed: element.classList.contains('collapsed'),
+                        selector: selector.replaceAll(/(.collapsed|.active)/gm, '')
+                    });
+                }
+                console.log('Saved list:', this._collapsedElements);
+                return this._collapsedElements;
+            }
+            return null;
+        }
+
+        _getCollapsedElements() {
+            if (this._collapsedElements.length > 0 && this.rendered) {
+                const list = [];
+                this._collapsedElements.forEach(({ selector, collapsed }) => {
+                    const ele = this.element.querySelector(selector);
+                    if (!ele) {
+                        console.error('Failed to get element with selector: ', { s: selector });
+                        return;
+                    }
+                    list.push({ ele: ele, sel: selector, collapsed: collapsed })
+                    if (collapsed) ele.classList.add('collapsed');
+                    else ele.classList.remove('collapsed');
+                })
+                console.log(list);
+            }
+        }
 
 
         //==============================================================================================================
