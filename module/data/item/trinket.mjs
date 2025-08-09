@@ -67,10 +67,10 @@ export default class TrinketData extends ItemDataModel {
             "-=folder": null,
             "-=sort": null
         };
-        
+
         if (this.actor) {
             // When recieving a trinket, prompt the user and offer to place all the spells onto their sheet for them
-            const confirm = await TfmDialog.confirm({ content: `Add Magic spells to actor sheet?`, modal: true });
+            const confirm = await TfmDialog.confirm({ content: `Add spells to actor sheet?`, modal: true });
 
             // adds the spells to the actor if confirmed to do so
             if (confirm) {
@@ -85,8 +85,17 @@ export default class TrinketData extends ItemDataModel {
                     const item_data = spell.toObject();
                     spell_list.push(foundry.utils.mergeObject(item_data, modification, { performDeletions: true }));
                 }
-                this.actor.update({ items: spell_list});
-                console.log(spell_list)
+                const items = await this.actor.createEmbeddedDocuments('Item', spell_list);
+                let linkID = foundry.utils.randomID();
+                let list = [];
+                items.forEach(async item => {
+                    list.push({
+                        name: item.name,
+                        uuid: item.uuid
+                    })
+                    await item.setFlag(game.system.id, 'trinket', linkID);
+                })
+                await this.document.updateSource({ flags: { tfm: { spells: { id: linkID, list: list } } } })
             }
         }
 
