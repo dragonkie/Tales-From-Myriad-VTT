@@ -1,0 +1,26 @@
+<div class="tfm tfm-chat tfm-chat-spell">
+    <a class="flexrow flex-align-center justify-center" style="margin-bottom: 0.25rem;" data-uuid="{{doc.uuid}}" data-action="edit">
+        <img class="flexshrink" src="{{doc.img}}" alt="" width="30" height="30">
+        <h5 class="text-left" style="margin: 0 0 0 0.5em;">{{doc.name}}</h5>
+    </a>
+    {{{rollRender}}}
+    <details>
+        <summary>Description</summary>
+        <div>{{{desc}}}</div>
+    </details>
+    <div>
+        <div>Rolled <b>{{roll.total}}</b> successes, needs <b>{{system.casting.level}}</b></div>
+        <b>
+            {{#if success}}
+                Succesful Cast!
+            {{else}}
+                Failed to cast
+            {{/if}}
+        </b>
+    </div>
+    {{#if (gt miscast 0)}}
+        <div class="tfm-chat-miscasts">
+            Suffered a <b>Tier {{miscast}} Miscast!</b>
+        </div>
+    {{/if}}
+</div>

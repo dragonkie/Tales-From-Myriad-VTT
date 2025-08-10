@@ -136,7 +136,8 @@ export default class TfmActorSheet extends TfmSheetMixin(foundry.applications.sh
         const item = await fromUuid(uuid);
 
         const action = target.closest("[data-use]")?.dataset.use;// the action the item is performing if applicable
-        const options = target.closest("[data-use-options]")?.dataset.useOptions;// configuration for the item action
+        const dataopts = target.closest("[data-use-options]")?.dataset.useOptions;// configuration for the item action
+        const options = { ...dataopts, actor: this.document, actorData: this.document.getRollData() };
 
         return item.use(event, action, options);
     }

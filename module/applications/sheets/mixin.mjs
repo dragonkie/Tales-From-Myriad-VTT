@@ -395,7 +395,6 @@ export default function TfmSheetMixin(Base) {
                     jQuery: false,
                     onClose: () => { },
                     onOpen: element => {
-                        console.log('open context menu on element: ', element);
                         const item = fromUuidSync(element.dataset.uuid);
                         if (!item) return;
                         ui.context.menuItems = this._getItemContextOptions(item);
@@ -501,6 +500,7 @@ export default function TfmSheetMixin(Base) {
         static _onToggleCollapse(event, target) {
             const container = target.querySelector('.collapsible') || target.closest('.collapsible');
             container.classList.toggle('collapsed');
+            this._setCollapsedElements();
         }
 
         static async _onDeleteEffect(event, target) {

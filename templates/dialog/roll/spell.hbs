@@ -1,9 +1,12 @@
 <div class="tfm tfm-dialog flexcol flex-gap-m">
-    <div class="form-group">
-        <label>Dice:</label>
-        <div class="form-fields">
-            <input name="diceCount" type="number" min="1" max="{{maxDice}}" value="{{mod}}" />
+    <div class="flexcol flex-gap-s">
+        <div class="form-group">
+            <label>Dice:</label>
+            <div class="form-fields">
+                <input name="dice" type="number" min="{{casting.level}}" max="{{maxDice}}" value="{{casting.level}}" placeholder="1" />
+            </div>
         </div>
+        <p><i>Spell requires at least {{casting.level}} dice of {{casting.difficulty}}+ to cast</i></p>
     </div>
 
     <div class="form-group">

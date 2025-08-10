@@ -70,8 +70,9 @@ export default class TrinketSheet extends TfmItemSheet {
         }
 
         const actor = this.document.actor;
-        const rollData = this.getRollData();
-        console.log(actor);
-        console.log(rollData);
+        console.log('trinket actor', actor);
+        const uuid = target.closest('[data-uuid]').dataset.uuid;
+        const spell = await fromUuid(uuid);
+        if (spell) return spell.system._onCastSpell(event, { actor: this.document.actor });
     }
 }

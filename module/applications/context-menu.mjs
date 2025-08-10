@@ -31,9 +31,6 @@ export default class TfmContextMenu extends foundry.applications.ux.ContextMenu.
 
     /** @override */
     _setPosition(html, target, options) {
-        console.log(html)
-        console.log(target)
-        console.log(options)
         document.body.appendChild(html);
         const { clientWidth, clientHeight } = document.documentElement;
         const { width, height } = html.getBoundingClientRect();
