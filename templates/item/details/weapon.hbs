@@ -1,5 +1,4 @@
 <div class="tfm-tab-content flexcol flex-gap-s">
-
     {{!-- Standard weapon fields --}}
     <div class="flexrow flex-gap-m flex-align-start">
         <div class="flexcol flex-gap-s">
@@ -23,7 +22,7 @@
                 <div class="flexrow flex-gap-m" data-damage-index="{{index}}">
                     {{formInput part.formula.field value=part.formula.value name=part.formula.path}}
                     {{formInput part.type.field value=part.type.value name=part.type.path}}
-                    {{#if (and (not index 0) (@root.isEditMode))}}
+                    {{#if (and (not (eq index 0)) @root.isEditMode)}}
                         <a data-action="removeDamage" style="flex: 0;">
                             <i class="fa-solid fa-trash"></i>
                         </a>
@@ -32,7 +31,7 @@
             {{/each}}
         </ol>
         {{#if isEditMode}}
-            <div class="flex-align-end"><a data-action="addDamage"><b>Add Damage Part +</b></a></div>
+            <div class="flex-align-end"><a data-action="addDamage"><b><i class="fas fa-plus"></i>Add Damage Part</b></a></div>
         {{/if}}
     </div>
 
@@ -57,6 +56,7 @@
             </div>
         </div>
     {{/if}}
+
     <div class="flexrow flex-gap-m">
         {{toFieldGroup system.schema 'lucky' value=system.lucky}}
         {{toFieldGroup system.schema 'oversized' value=system.oversized}}
