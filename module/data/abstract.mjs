@@ -70,15 +70,6 @@ export class SystemDataModel extends foundry.abstract.TypeDataModel {
         });
     }
 
-    static UuidField() {
-        return class UuidField extends StringField {
-            async isActive() {
-
-            }
-        }
-    }
-
-
     /**
      */
     static get RequiredConfig() {

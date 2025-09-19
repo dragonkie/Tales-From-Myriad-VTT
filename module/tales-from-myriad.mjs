@@ -20,7 +20,7 @@ import registerHandlebars from "./helpers/handlebars.mjs";
 import registerSystemSettings from "./helpers/settings.mjs";
 import LOGGER from "./helpers/logger.mjs";
 
-LOGGER.log('Gathering astral dust...')
+LOGGER.log('Gathering astral dust...');
 
 tfm.application = applications;
 tfm.document = documents;
