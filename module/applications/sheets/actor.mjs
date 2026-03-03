@@ -102,25 +102,6 @@ export default class TfmActorSheet extends TfmSheetMixin(foundry.applications.sh
         };
     }
 
-    async _onSortItem(item, target) {
-        if (item.documentName !== "Item") return;
-        LOGGER.debug('Sorting item');
-        const self = target.closest("[data-tab]")?.querySelector(`[data-uuid="${item.uuid}"]`);
-        if (!self || !target.closest("[data-uuid]")) return;
-
-        let sibling = target.closest("[data-uuid]") ?? null;
-        if (sibling?.dataset.uuid === item.uuid) return;
-        if (sibling) sibling = await fromUuid(sibling.dataset.uuid);
-
-        let siblings = target.closest("[data-tab]").querySelectorAll("[data-uuid]");
-        siblings = await Promise.all(Array.from(siblings).map(s => fromUuid(s.dataset.uuid)));
-        siblings.findSplice(i => i === item);
-
-        let updates = SortingHelpers.performIntegerSort(item, { target: sibling, siblings: siblings, sortKey: "sort" });
-        updates = updates.map(({ target, update }) => ({ _id: target.id, sort: update.sort }));
-        this.document.updateEmbeddedDocuments("Item", updates);
-    }
-
     async _onDropActor(event, actor) { }
 
     //============================================================================================
