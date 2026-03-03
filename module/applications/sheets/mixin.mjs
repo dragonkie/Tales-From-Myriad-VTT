@@ -161,7 +161,7 @@ export default function TfmSheetMixin(Base) {
         }
 
         async _preClose(options) {
-            let r = await this._preClose(options);
+            let r = await super._preClose(options);
             this._getCollapsedElements();
 
             return r;
