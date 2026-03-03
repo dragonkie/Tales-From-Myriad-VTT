@@ -35,10 +35,9 @@ npm-debug.log
 
 # Foundry
 *.lock
+LOCK
 jsconfig.json
 foundry
 *.log
 *.old
-MANIFEST*
 LOG
-*.ldb
