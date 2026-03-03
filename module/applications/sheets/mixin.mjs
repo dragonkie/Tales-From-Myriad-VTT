@@ -125,8 +125,8 @@ export default function TfmSheetMixin(Base) {
         }
 
         async _preRender(context, options) {
-            this._setFocusElement();
-            this._setCollapsedElements();
+            this._getFocusElement();
+            this._getCollapsedElements();
             return super._preRender(context, options);
         }
 
@@ -156,8 +156,15 @@ export default function TfmSheetMixin(Base) {
             }
             this._setupDragAndDrop();
 
-            this._getFocusElement();
+            this._setFocusElement();
+            this._setCollapsedElements();
+        }
+
+        async _preClose(options) {
+            let r = await this._preClose(options);
             this._getCollapsedElements();
+
+            return r;
         }
 
         async _renderHTML(context, options) {
@@ -208,7 +215,10 @@ export default function TfmSheetMixin(Base) {
         //======================================================================================================
         _lastFocusElement = null;
 
-        _setFocusElement() {
+        /**
+         * Saves the currently focused element as a selector
+         */
+        _getFocusElement() {
             if (this.rendered && this.element.contains(document.activeElement)) {
                 const ele = document.activeElement;
 
@@ -224,7 +234,10 @@ export default function TfmSheetMixin(Base) {
             }
         }
 
-        _getFocusElement() {
+        /**
+         * Sets the focused element to its previous state
+         */
+        _setFocusElement() {
             if (this._lastFocusElement !== null) {
                 let selector = this._lastFocusElement.tag + this._lastFocusElement.class;
                 if (this._lastFocusElement.name) selector += `[name="${this._lastFocusElement.name}"]`;
@@ -242,7 +255,12 @@ export default function TfmSheetMixin(Base) {
         //> collapsable content persistence
         //==============================================================================================================
         _collapsedElements = [];
-        _setCollapsedElements() {
+
+        /**
+         * Saves the list of elements to be collapsed and their state
+         * @returns 
+         */
+        _getCollapsedElements() {
             if (this.rendered) {
                 this._collapsedElements = [];
                 /** @type {NodeList|null} */
@@ -250,17 +268,21 @@ export default function TfmSheetMixin(Base) {
                 for (const element of elements) {
                     let selector = ``;
                     let ele = element;
+
                     while (ele) {
-                        // Add parent selectors data
-                        let s = `${ele.nodeName}${ele.className != '' ? '.' : ''}${ele.className.replaceAll(' ', ".")}`; // classes
-                        for (let i = 0; i < ele.attributes.length; i++) {
-                            const a = ele.attributes[i];
-                            if (a.name == 'class' || a.name == 'style') s += `[${ele.attributes[i].name}]`;
-                            else s += `[${ele.attributes[i].name}="${ele.attributes[i].value}"]`;
-                        }
+                        // Get element node
+                        let s = `${ele.nodeName}`; // classes
+
+                        // add elements classes
+                        for (const c of ele.classList) if (c != "collapsed" && c != "active" && c != 'animating') s += `.${c}`;
+
+                        // add element attributes
+                        for (const a of ele.attributes) if (a.name != 'class' && a.name != 'style') s += `[${a.name}="${a.value}"]`;
+
+                        // add this elements selector to the unique selector
                         selector = s + ' ' + selector;
 
-                        // Prevent hte check from leaving the scope of the sheet
+                        // Prevent the check from leaving the scope of the sheet
                         if (ele.classList.contains('window-content')) break;
 
                         // Progress to the next parent
@@ -269,17 +291,22 @@ export default function TfmSheetMixin(Base) {
 
                     this._collapsedElements.push({
                         collapsed: element.classList.contains('collapsed'),
-                        selector: selector.replaceAll(/(.collapsed|.active)/gm, '')
+                        selector: selector
                     });
                 }
                 return this._collapsedElements;
             }
-            return null;
+            return [];
         }
 
-        _getCollapsedElements() {
+        /**
+         * Sets the elements to their correct collapsed state
+         * @returns {Array}
+         */
+        _setCollapsedElements() {
+            const list = [];
             if (this._collapsedElements.length > 0 && this.rendered) {
-                const list = [];
+                let c = 0;
                 this._collapsedElements.forEach(({ selector, collapsed }) => {
                     const ele = this.element.querySelector(selector);
                     if (!ele) {
@@ -291,6 +318,8 @@ export default function TfmSheetMixin(Base) {
                     else ele.classList.remove('collapsed');
                 })
             }
+
+            return list;
         }
 
 
@@ -376,7 +405,7 @@ export default function TfmSheetMixin(Base) {
             siblings = await Promise.all(Array.from(siblings).map(s => fromUuid(s.dataset.uuid)));
             siblings.findSplice(i => i === item);
 
-            let updates = SortingHelpers.performIntegerSort(item, { target: sibling, siblings: siblings, sortKey: "sort" });
+            let updates = foundry.utils.performIntegerSort(item, { target: sibling, siblings: siblings, sortKey: "sort" });
             updates = updates.map(({ target, update }) => ({ _id: target.id, sort: update.sort }));
             this.document.updateEmbeddedDocuments("Item", updates);
         }
