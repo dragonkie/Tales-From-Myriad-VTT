@@ -1,15 +1,5 @@
 <div class="tfm-tab-content flexcol item-descriptions">
-    <div class="description collapsible">
-        <div class="flexrow" data-action="collapse">
-            <a><i class="fa-solid fa-caret-down"></i></a>
-            <label>{{descriptions.identified.label}}</label>
-        </div>
-        <div class="collapsible-content">
-            <div class="wrapper">
-                <prose-mirror name="system.description.identified" value="{{descriptions.identified.value}}" editable="false" toggled>
-                    {{{descriptions.identified.enriched}}}
-                </prose-mirror>
-            </div>
-        </div>
-    </div>
+    <prose-mirror name="system.description.identified" value="{{descriptions.identified.value}}" editable="false" toggled>
+        {{{descriptions.identified.enriched}}}
+    </prose-mirror>
 </div>
