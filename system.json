@@ -2,11 +2,11 @@
   "id": "tfm",
   "title": "Tales From Myriad",
   "description": "The Tales From Myriad system for FoundryVTT",
-  "version": "0.9.4",
+  "version": "1.0.0",
   "socket": true,
   "compatibility": {
     "minimum": "13",
-    "verified": "13.347",
+    "verified": "13.351",
     "maximum": "14"
   },
   "authors": [
