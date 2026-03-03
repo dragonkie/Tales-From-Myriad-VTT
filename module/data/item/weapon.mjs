@@ -122,6 +122,16 @@ export default class WeaponData extends ItemDataModel {
         return actor.system.proficiency.weaponType[this.proficiency].value;
     }
 
+    // used to render damage formula in other sheets as handlebars can call getter functions
+    get damageFormula() {
+        let formula = "";
+        for (const part of this.damage_parts) {
+            if (formula != "") formula += " + ";
+            formula += part.formula + ` ${part.type} `;
+        }
+        return formula;
+    }
+
     //============================================================================================
     // Item use actions
     //============================================================================================
