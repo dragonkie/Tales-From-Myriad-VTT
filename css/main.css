@@ -644,7 +644,7 @@
 }
 .sheet.actor .tfm-actor-header img {
   flex: 0;
-  background-color: var(--tfm-colour-primary, rgba(0, 0, 0, 0.2));
+  /* background-color: var(--tfm-colour-primary, rgba(0, 0, 0, 0.2)); */
 }
 .sheet.actor .tfm-actor-header > .wrapper {
   display: flex;
@@ -1177,7 +1177,7 @@ prose-mirror .editor-container {
 prose-mirror .editor-content {
   padding: 0.5rem;
   border-radius: 0.3rem;
-  background-color: var(--tfm-colour-primary);
+  /* background-color: var(--tfm-colour-primary); */
 }
 
 a.content-link {
