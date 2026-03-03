@@ -89,6 +89,7 @@ export default class JobSheet extends TfmItemSheet {
 
         //Create the application
         const app = await new TfmDialog({
+            id: `tfm-item-config-features-${this.document.id}`,
             window: { title: 'TFM.Dialog.AddClassFeature' },
             position: { height: 'auto', width: 400 },
             actions: {
@@ -134,7 +135,7 @@ export default class JobSheet extends TfmItemSheet {
                     // set data defaults
                     data.name = item.name;
                     data.level = f.querySelector('[name=level]')?.value
-                    data.path = '';
+                    data.path = path_name;
 
                     // set derived data
                     if (path_name == 'implicit') data.implicit = true;
@@ -144,6 +145,7 @@ export default class JobSheet extends TfmItemSheet {
                     // push the data
                     list.push(data);
                 }
+
                 // update the feature list
                 await this.document.update({ system: { features: [...remaining, ...list] } });
             }

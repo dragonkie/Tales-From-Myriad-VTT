@@ -16,6 +16,9 @@ export default class JobData extends ItemDataModel {
         for (const ability of Object.keys(TFM.Abilities)) ability_options[ability] = new NumberField({ ...this.RequiredConfig, integer: true, initial: 0 });
         schema.abilities = new SchemaField(ability_options);
 
+        // Features by default includes two guaranteed sets, general and implicit
+        // Implicit - Features that are given to an actor on recieving the job
+        // General - Features that can be taken at any level, and maybe multiple times
         schema.features = new ArrayField(new SchemaField({
             level: new NumberField({ initial: 0 }),// What level is this feature made available
             unlocked: new BooleanField({ initial: false }),// Was this feature unlocked
