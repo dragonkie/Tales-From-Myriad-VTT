@@ -155,7 +155,6 @@ export default function TfmSheetMixin(Base) {
                 })
             }
             this._setupDragAndDrop();
-
             this._setFocusElement();
             this._setCollapsedElements();
         }
@@ -529,7 +528,6 @@ export default function TfmSheetMixin(Base) {
         static _onToggleCollapse(event, target) {
             const container = target.querySelector('.collapsible') || target.closest('.collapsible');
             container.classList.toggle('collapsed');
-            this._setCollapsedElements();
         }
 
         static async _onDeleteEffect(event, target) {
