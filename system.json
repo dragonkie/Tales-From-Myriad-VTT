@@ -26,7 +26,7 @@
       "lang": "en",
       "name": "English",
       "path": "lang/en.json",
-      "flags": { }
+      "flags": {}
     }
   ],
   "primaryTokenAttribute": "hp",
@@ -41,52 +41,50 @@
   "documentTypes": {
     "Actor": {
       "character": {
-        "htmlFields": [ ],
-        "filePathFields": { }
+        "htmlFields": [],
+        "filePathFields": {}
       },
       "npc": {
-        "htmlFields": [ ],
-        "filePathFields": { }
+        "htmlFields": [],
+        "filePathFields": {}
       },
       "party": {
-        "htmlFields": [ ],
-        "filePathFields": { }
+        "htmlFields": [],
+        "filePathFields": {}
       },
       "shop": {
-        "htmlFields": [ ],
-        "filePathFields": { }
+        "htmlFields": [],
+        "filePathFields": {}
       }
     },
     "Item": {
       "weapon": {
-        "htmlFields": [ ],
-        "filePathFields": { }
+        "htmlFields": [],
+        "filePathFields": {}
       },
       "spell": {
-        "htmlFields": [ ],
-        "filePathFields": { }
+        "htmlFields": [],
+        "filePathFields": {}
       },
       "armour": {
-        "htmlFields": [ ],
-        "filePathFields": { }
+        "htmlFields": [],
+        "filePathFields": {}
       },
       "job": {
-        "htmlFields": [ ],
-        "filePathFields": { }
+        "htmlFields": [],
+        "filePathFields": {}
       },
       "trinket": {
-        "htmlFields": [ ],
-        "filePathFields": { }
+        "htmlFields": [],
+        "filePathFields": {}
       },
       "feature": {
-        "htmlFields": [ ],
-        "filePathFields": { }
+        "htmlFields": [],
+        "filePathFields": {}
       }
     }
   },
-  "packFolders": {
-
-  },
+  "packFolders": {},
   "packs": [
     {
       "label": "Core: Jobs",
@@ -100,7 +98,21 @@
         "PLAYER": "OBSERVER",
         "TRUSTED": "OBSERVER"
       }
-    }, {
+    },
+    {
+      "label": "Core: Features",
+      "name": "core-features",
+      "path": "packs/core/features",
+      "system": "",
+      "type": "Item",
+      "ownership": {
+        "ASSISTANT": "OBSERVER",
+        "GAMEMASTER": "OWNER",
+        "PLAYER": "OBSERVER",
+        "TRUSTED": "OBSERVER"
+      }
+    },
+    {
       "label": "Core: Weapons",
       "name": "core-weapon",
       "path": "packs/core/weapon",
@@ -112,7 +124,8 @@
         "PLAYER": "OBSERVER",
         "TRUSTED": "OBSERVER"
       }
-    }, {
+    },
+    {
       "label": "Core: Spells",
       "name": "core-spell",
       "path": "packs/core/spell",
