@@ -3,10 +3,19 @@
         <div class="form-group">
             <label>Dice:</label>
             <div class="form-fields">
-                <input name="dice" type="number" min="{{casting.level}}" max="{{maxDice}}" value="{{casting.level}}" placeholder="1" />
+                <input name="dice" type="number" min="{{casting.level}}" max="{{maxDice}}" value="{{casting.level}}" placeholder="{{casting.level}}" />
             </div>
         </div>
-        <p><i>Spell requires at least {{casting.level}} dice of {{casting.difficulty}}+ to cast</i></p>
+        <p>
+            <i>Spell needs at least <b>{{casting.level}}</b> dice of <b>{{casting.difficulty}}+</b> to cast</i><br>
+            {{#if (gte casting.ability.mod casting.level)}}
+                <i>You can use up to <b>{{casting.ability.mod}}</b> dice</i>
+            {{/if}}
+        </p>
+
+        {{#if (lt casting.ability.mod casting.level)}}
+            <p><b>Characters {{toTitleCase type}} is to low to cast this spell.</b></p>
+        {{/if}}
     </div>
 
     <div class="form-group">
