@@ -26,7 +26,7 @@ export default class SpellData extends ItemDataModel {
             }
         })
 
-        schema.school = new StringField({
+        schema.type = new StringField({
             label: "TFM.Generic.SpellSchool",
             initial: 'arc',
             blank: false,
@@ -47,20 +47,72 @@ export default class SpellData extends ItemDataModel {
         return schema;
     }
 
+    /**
+     * Define the data structure of the casting options
+     * @typedef SpellcastData
+     * @prop {Object} trinket - reference to a trinket document if cast from one
+     * @prop {Object} actor - reference to an actor document
+     */
+
+    /**
+     * @param {Event} event 
+     * @param {String} action 
+     * @param {SpellcastData} options 
+     * @returns 
+     */
     async use(event, action = 'cast', options = {}) {
         return this._onCastSpell(event, options);
     }
 
+    /**
+     * Casts this spell, using context in the options to procided additional details
+     * This includes setting which characteristic should be used if cast from a trinket
+     * @param {MouseEvent|KeyboardEvent} event 
+     * @param {SpellcastData} options 
+     */
     async _onCastSpell(event, options) {
-        // get roll data, actor data can be passed through trinkets to cast spells without an owning actor
-        let rolldata = { ...this.toObject(), doc: this.document };
-        if (this.actor) rolldata = { ...rolldata, actorData: this.actor.getRollData() };
-        else rolldata = { ...rolldata, actorData: options.actorData };
-        console.log('rolldata', rolldata);
-        console.log('options', options);
+        const { actor, trinket } = options;
+        // construct the roll context if there is one to be had
+        const rolldata = { ...this.toObject(), doc: this.document };
 
+        // adds actor rolldata
+        if (actor) {
+            rolldata.actor = actor;
+
+            // player features can change the dice being rolled
+            // eg. scholar rolling d8's for arcane spells
+
+            // Gather a list of components that could be used for this spell
+
+            // add extra context for a caster and trinket source for this item
+            if (trinket) {
+                rolldata.trinket = trinket;
+
+                // Trinkets override the default casting stat to be used in case of a mismatch
+                rolldata.type = trinket.system.type;
+                rolldata.casting.ability = {
+                    ...actor.system.abilities[TFM.MagicTypeKeys[trinket.system.type]]
+                }
+            } else {
+                rolldata.casting.ability = {
+                    ...actor.system.abilities[TFM.MagicTypeKeys[rolldata.type]]
+                }
+            }
+        }
+
+        console.log(rolldata);
+
+        // validate the casting request to ensure the player can cast it, or if its being overriden
+        if ((rolldata.casting.ability.mod < this.casting.level || rolldata.casting.ability.mod <= 0) && !event.shiftKey) {
+            utils.warn("TFM.Warn.LowCastingAbility");
+            return;
+        }
+
+        // render the dialog popup template
         const template = await utils.renderTemplate(`${tfm.filepath.template}/dialog/roll/spell.hbs`, rolldata);
         const enriched = await utils.enrichHTML(template);
+
+        // create the application
         const app = await new TfmDialog({
             window: { title: utils.localize('TFM.Dialog.CastingSpell') + ': ' + this.document.name },
             content: enriched,
@@ -72,6 +124,7 @@ export default class SpellData extends ItemDataModel {
                 label: 'Cancel'
             }],
             submit: async result => {
+                // callback for when the user confirms the roll
                 if (result != 'roll') return;
                 const inputs = app.element.querySelectorAll('input[name]');
                 const data = {};
@@ -80,8 +133,6 @@ export default class SpellData extends ItemDataModel {
                     else if (i.type == 'number') data[i.name] = +i.value;
                     else data[i.name] = i.value;
                 }
-
-                console.log(data);
 
                 // Create the dice roll
                 const roll = new Roll(`${data.dice}d6x6kf${Math.max(1, rolldata.actorData.lck) + data.dice}cs>=${rolldata.casting.difficulty}`);
@@ -97,9 +148,11 @@ export default class SpellData extends ItemDataModel {
                     }
                 }
 
+                // calculate the level of mishaps that occur
                 let miscast = 0
                 for (const k of Object.keys(miscastCounter)) miscast += Math.max(0, miscastCounter[k] - 1);
 
+                // prepare chat message rendering data
                 const chatData = {
                     doc: this.document,
                     system: this,
@@ -120,6 +173,6 @@ export default class SpellData extends ItemDataModel {
 
             }
         }).render(true);
-        const roll = new Roll();
+
     }
 }

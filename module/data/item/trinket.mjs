@@ -57,7 +57,7 @@ export default class TrinketData extends ItemDataModel {
 
         return schema;
     }
-
+    
     async _preCreate(data, options, user) {
         console.log({ data: data, options: options, user: user });
 
@@ -127,5 +127,27 @@ export default class TrinketData extends ItemDataModel {
         }
 
         return super._preDelete(options, user);
+    }
+
+    /**
+     * @override
+     * 
+     * Casts one of the spells stored inside the trinket
+     * The trinket provides itself as context so the spell can reference which casting stat to use
+     * 
+     * @param {*} action 
+     * @param {*} options 
+     */
+    async use(event, action, options) {
+        const uuid = event.target.closest("[data-spell]").dataset.spell;
+
+        for (const spell of this.spells) {
+            if (spell == uuid) {
+                const item = await fromUuid(spell);
+                return item.use(event, 'cast', { actor: this.document.actor, trinket: this.document });
+            }
+        }
+
+        console.error("Failed to find the spell");
     }
 }
