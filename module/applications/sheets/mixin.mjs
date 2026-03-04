@@ -492,7 +492,7 @@ export default function TfmSheetMixin(Base) {
         static _onEditImage(event, target) {
             if (!this.isEditable) return;
             const current = this.document.img;
-            const fp = new FilePicker({
+            const fp = new foundry.applications.apps.FilePicker.implementation({
                 type: "image",
                 current: current,
                 callback: path => this.document.update({ 'img': path }),
