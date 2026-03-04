@@ -19,9 +19,10 @@
                                 <a class="rollable" data-roll-type="item"><img src="{{item.img}}" title="{{item.name}}" width="30" height="30" /></a>
                             </div>
                             <h4 style="padding-left: 4px;">{{item.name}}</h4>
+                            {{#if item.system.broken}}<i class="fas fa-wine-glass-crack fa-xl" style="color: red; margin-left: 5px"></i>{{/if}}
                         </div>
                         <div class="item-actions item-prop flexrow">
-                            {{#if (eq item.type 'weapon')}}
+                            {{#if (and (eq item.type 'weapon') (not item.system.broken))}}
                                 <a data-action="useItem" data-use="attack">
                                     <i class="item-action fa-lg fa-solid fa-sword"></i>Attack
                                 </a>
@@ -45,7 +46,18 @@
                     <div class="collapsible-content">
                         <div class="wrapper">
                             {{#if (eq item.type 'weapon')}}
-                                <div class="tfm-item-damage">
+                                <div class="tfm-weapon-proficiency">
+                                    <b style="padding-right: 4px;">Type:</b>{{item.system.proficiency}}
+                                </div>
+                                <div class="tfm-weapon-tags flexrow">
+                                    <b class="flex0" style="margin-right: 4px;">Tags:</b>
+                                    {{#if item.system.finesse}}<div class="tfm-weapon-tag flex0">Finesse</div>{{/if}}
+                                    {{#if item.system.lucky}}<div class="tfm-weapon-tag flex0">Lucky</div>{{/if}}
+                                    {{#if item.system.reach}}<div class="tfm-weapon-tag flex0">Reach</div>{{/if}}
+                                    {{#if item.system.thrown}}<div class="tfm-weapon-tag flex0">Thrown</div>{{/if}}
+                                    {{log 'Finished'}}
+                                </div>
+                                <div class="tfm-weapon-damage">
                                     <b style="padding-right: 4px;">Damage:</b>{{item.system.damageFormula}}
                                 </div>
                             {{/if}}
