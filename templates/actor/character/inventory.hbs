@@ -44,23 +44,46 @@
 
                     {{!-- collapsible item details --}}
                     <div class="collapsible-content">
-                        <div class="wrapper">
+                        <div class="wrapper" style="padding-left: 38px;">
                             {{#if (eq item.type 'weapon')}}
                                 <div class="tfm-weapon-proficiency">
                                     <b style="padding-right: 4px;">Type:</b>{{item.system.proficiency}}
                                 </div>
                                 <div class="tfm-weapon-tags flexrow">
+                                    <style>
+                                        .tfm-weapon-tag {
+                                            padding: 0px 3px 0px 3px;
+                                        }
+                                    </style>
                                     <b class="flex0" style="margin-right: 4px;">Tags:</b>
-                                    {{#if item.system.finesse}}<div class="tfm-weapon-tag flex0">Finesse</div>{{/if}}
-                                    {{#if item.system.lucky}}<div class="tfm-weapon-tag flex0">Lucky</div>{{/if}}
-                                    {{#if item.system.reach}}<div class="tfm-weapon-tag flex0">Reach</div>{{/if}}
-                                    {{#if item.system.thrown}}<div class="tfm-weapon-tag flex0">Thrown</div>{{/if}}
+                                    {{#if item.system.finesse}}
+                                        <div class="tfm-weapon-tag flex0">Finesse</div>
+                                    {{/if}}
+                                    {{#if item.system.lucky}}
+                                        <div class="tfm-weapon-tag flex0">Lucky</div>
+                                    {{/if}}
+                                    {{#if item.system.reach}}
+                                        <div class="tfm-weapon-tag flex0">Reach</div>
+                                    {{/if}}
+                                    {{#if item.system.thrown}}
+                                        <div class="tfm-weapon-tag flex0">Thrown</div>
+                                    {{/if}}
                                     {{log 'Finished'}}
                                 </div>
                                 <div class="tfm-weapon-damage">
                                     <b style="padding-right: 4px;">Damage:</b>{{item.system.damageFormula}}
                                 </div>
                             {{/if}}
+
+                            {{#if (eq item.type 'armour')}}
+                                <div class="tfm-armour-type"><b>Type:</b> {{item.system.weight}}</div>
+                                <div class="tfm-armour-reduction"><b>Resistance:</b> {{item.system.damage_reduction.total}}</div>
+                            {{/if}}
+
+                            {{#if (eq item.type 'trinket')}}
+                                <div class="tfm-trinket-type"><b>{{item.system.type}} Trinket</b></div>
+                            {{/if}}
+
                             <div class="item-description">{{{item.system.description.identified}}}</div>
                         </div>
                     </div>
