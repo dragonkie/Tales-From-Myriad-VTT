@@ -22,9 +22,10 @@
         <label>Component:</label>
         <div class="form-fields">
             <select name="component">
-                <option value="itemUuid">Component 1</option>
-                <option value="itemUuid">Component 2</option>
-                <option value="itemUuid">Component 3</option>
+                {{#each components as |component|}}
+                    <option value="{{component.uuid}}">{{component.name}}</option>
+                {{/each}}
+
             </select>
             <input name="useComponent" type="checkbox" />
         </div>
@@ -35,6 +36,5 @@
         <div class="form-fields">
             <input name="miscast" type="checkbox" checked />
         </div>
-
     </div>
 </div>

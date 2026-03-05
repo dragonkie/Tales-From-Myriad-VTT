@@ -83,6 +83,15 @@ export default class SpellData extends ItemDataModel {
             // eg. scholar rolling d8's for arcane spells
 
             // Gather a list of components that could be used for this spell
+            rolldata.components = [];
+            for (const item of actor.items) {
+                if (item.type == 'consumable') {
+
+                }
+                else if (item.type == 'trinket' && item.system.type == 'div' && item.system.charged) {
+                    rolldata.components.push(item);
+                }
+            }
 
             // add extra context for a caster and trinket source for this item
             if (trinket) {
