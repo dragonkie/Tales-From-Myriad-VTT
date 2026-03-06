@@ -41,6 +41,9 @@ export default function registerHooks() {
             console.error('Failed to append TFM browser links to settings tab');
         }
 
+        //==========================================================================================================
+        //> Developer links
+        //==========================================================================================================
         try {
             const section = document.createElement('section');
             section.classList.add('flexcol');
