@@ -35,6 +35,7 @@ Hooks.once('init', async function () {
     LOGGER.log('Now arriving in Myriad!');
     // Add custom constants for configuration.
     CONFIG.TFM = TFM;
+    //CONFIG.debug.hooks = true;
 
     // Register document classes
     LOGGER.log('Registering documents');
