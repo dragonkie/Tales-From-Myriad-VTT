@@ -81,7 +81,7 @@
                             {{/if}}
 
                             {{#if (eq item.type 'trinket')}}
-                                <div class="tfm-trinket-type"><b>{{item.system.type}} Trinket</b></div>
+                                <div class="tfm-trinket-type"><b>{{localize (concat 'TFM.Magic.' (toTitleCase item.system.type))}} Trinket</b></div>
                             {{/if}}
 
                             <div class="item-description">{{{item.system.description.identified}}}</div>
