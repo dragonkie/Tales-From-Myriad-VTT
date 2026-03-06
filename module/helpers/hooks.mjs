@@ -48,7 +48,7 @@ export default function registerHooks() {
             // create the divider header
             const divider = document.createElement('h4');
             divider.classList.add('divider');
-            divider.textContent = 'Developer';
+            divider.textContent = 'System Developer';
 
             // System github
             const git = document.createElement('a');
