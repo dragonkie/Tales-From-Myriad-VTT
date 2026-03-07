@@ -164,7 +164,6 @@ TFM.WeaponTypes = {
     fist: 'TFM.Weapon.Fist',
     flail: 'TFM.Weapon.Flail',
     hammer: 'TFM.Weapon.Hammer',
-    katana: 'TFM.Weapon.Katana',
     natural: 'TFM.Weapon.Natural',
     polearm: 'TFM.Weapon.Polearm',
     scythe: 'TFM.Weapon.Scythe',
