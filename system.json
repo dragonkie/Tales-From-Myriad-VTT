@@ -15,8 +15,12 @@
       "url": "https://github.com/dragonkie"
     }
   ],
-  "esmodules": ["module/tales-from-myriad.mjs"],
-  "styles": ["css/main.css"],
+  "esmodules": [
+    "module/tales-from-myriad.mjs"
+  ],
+  "styles": [
+    "css/main.css"
+  ],
   "languages": [
     {
       "lang": "en",
