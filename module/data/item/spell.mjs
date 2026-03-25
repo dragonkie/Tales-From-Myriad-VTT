@@ -182,6 +182,5 @@ export default class SpellData extends ItemDataModel {
 
             }
         }).render(true);
-
     }
 }
