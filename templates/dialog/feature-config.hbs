@@ -1,13 +1,13 @@
-<div class="flexcol flex-gap-l">
+<div class="flexcol tfm-gap-l">
     {{#if (or (eq active_path 'general') (eq active_path 'implicit'))}}
         <div><b>Path: </b>{{active_path}}</div>
     {{else}}
         <div><b>Path:</b><input type="text" value="{{active_path}}" name="path-name" placeholder="path name"></div>
     {{/if}}
-    <div class="tfm-feature-list flexcol flex-gap-m">
+    <div class="tfm-feature-list flexcol tfm-gap-m">
         {{#each features as |feature index|}}
             {{#if (eq feature.path @root.active_path)}}
-                <div class="flexrow flex-gap-s tfm-class-feature" data-uuid="{{feature.uuid}}">
+                <div class="flexrow tfm-gap-s tfm-class-feature" data-uuid="{{feature.uuid}}">
                     <div>@UUID[{{feature.uuid}}]</div>
                     <input style="flex: 0; width: 2rem;" type="number" placeholder="level" value="1">
                     <a class="flexshrink"><i class="fas fa-trash" data-action="delete"></i></a>

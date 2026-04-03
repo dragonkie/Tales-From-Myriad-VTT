@@ -1,13 +1,13 @@
-<div class="tfm-tab-content flexcol flex-gap-s">
+<div class="tfm-tab-content flexcol tfm-gap-s">
     {{!-- Standard weapon fields --}}
-    <div class="flexrow flex-gap-m flex-align-start">
-        <div class="flexcol flex-gap-s">
+    <div class="flexrow tfm-gap-m flex-align-start">
+        <div class="flexcol tfm-gap-s">
             {{toFieldGroup system.schema 'proficiency' value=system.proficiency}}
             {{toFieldGroup system.schema 'ability' value=system.ability}}
             {{toFieldGroup system.schema 'penalty' value=system.penalty}}
             {{toFieldGroup system.schema 'price' value=system.price}}
         </div>
-        <div class="flexcol flex-gap-s">
+        <div class="flexcol tfm-gap-s">
             {{toFieldGroup system.schema 'equipped' value=system.equipped}}
             {{toFieldGroup system.schema 'ranged' value=system.ranged}}
             {{toFieldGroup system.schema 'broken' value=system.broken}}
@@ -17,9 +17,9 @@
     {{!-- Weapon damage pieces --}}
     <div class="tfm-weapon-damage">
         <div><b>Damage Parts:</b></div>
-        <ol class="tfm-damage-list flexcol flex-gap-m">
+        <ol class="tfm-damage-list flexcol tfm-gap-m">
             {{#each damage_parts as |part index|}}
-                <div class="flexrow flex-gap-m" data-damage-index="{{index}}">
+                <div class="flexrow tfm-gap-m" data-damage-index="{{index}}">
                     {{formInput part.formula.field value=part.formula.value name=part.formula.path}}
                     {{formInput part.type.field value=part.type.value name=part.type.path}}
                     {{#if (and (not (eq index 0)) @root.isEditMode)}}
@@ -39,7 +39,7 @@
     {{#if system.ranged}}
         <div>
             <b>Ranged Weapon Options:</b>
-            <div class="flexrow flex-gap-m">
+            <div class="flexrow tfm-gap-m">
                 {{toFieldGroup system.schema 'great' value=system.great}}
                 <div></div>
                 <div></div>
@@ -49,7 +49,7 @@
     {{else}}
         <div>
             <b>Melee Weapon Options:</b>
-            <div class="flexrow flex-gap-m">
+            <div class="flexrow tfm-gap-m">
                 {{toFieldGroup system.schema 'finesse' value=system.finesse}}
                 {{toFieldGroup system.schema 'thrown' value=system.thrown}}
                 {{toFieldGroup system.schema 'reach' value=system.reach}}
@@ -57,7 +57,7 @@
         </div>
     {{/if}}
 
-    <div class="flexrow flex-gap-m">
+    <div class="flexrow tfm-gap-m">
         {{toFieldGroup system.schema 'lucky' value=system.lucky}}
         {{toFieldGroup system.schema 'oversized' value=system.oversized}}
         <div></div>

@@ -1,16 +1,16 @@
-<div class="tfm-tab-content flexcol flex-gap-s">
+<div class="tfm-tab-content flexcol tfm-gap-s">
     {{toFieldGroup system.schema 'type' value=system.type label="Spell Type"}}
 
-    <div class="flexrow flex-gap-m">
+    <div class="flexrow tfm-gap-m">
         {{toFieldGroup system.schema 'casting.difficulty' value=system.casting.difficulty label='Difficulty'}}
         {{toFieldGroup system.schema 'casting.level' value=system.casting.level label='Level'}}
     </div>
-    <div class="flexrow flex-gap-m">
+    <div class="flexrow tfm-gap-m">
         {{toFieldGroup system.schema 'range' value=system.range label='Range'}}
         {{toFieldGroup system.schema 'targets' value=system.targets label='Targets'}}
     </div>
 
-    <div class="flexrow flex-gap-m">
+    <div class="flexrow tfm-gap-m">
         {{toFieldGroup system.schema 'channeled' value=system.channeled label='Channeled'}}
         {{toFieldGroup system.schema 'ritual' value=system.ritual label='Ritual'}}
     </div>

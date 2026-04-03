@@ -1,4 +1,4 @@
-<div class="tfm-tab-content flexcol flex-gap-s">
+<div class="tfm-tab-content flexcol tfm-gap-s">
     <div class="resource flexrow">
         <p>Type:</p>
         {{toFieldGroup system.schema 'type' value=system.type}}
@@ -29,7 +29,7 @@
 
             <li class="item collapsible collapsed" data-uuid="{{spell.item.uuid}}">
                 <div class="flexrow" data-action="collapse">
-                    <div class="item-name flex-gap-s flexgrow">
+                    <div class="item-name tfm-gap-s flexgrow">
                         <img src="{{spell.item.img}}" title="{{spell.item.name}}" width="30" height="30" /></a>
                         <h4>{{spell.item.name}}</h4>
                     </div>

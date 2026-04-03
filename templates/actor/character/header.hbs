@@ -1,11 +1,11 @@
-<div class="sheet-header tfm-actor-header flex-gap-m flex-align-center">
+<div class="sheet-header tfm-actor-header tfm-gap-m flex-align-center">
 
     <img class="profile-img" src="{{document.img}}" data-action="editImage" title="{{name}}" height="100" width="100" />
-    <div class="wrapper flex-gap-m">
-        <div class="flexrow flex-gap-l">
+    <div class="wrapper tfm-gap-m">
+        <div class="flexrow tfm-gap-l">
             <div>
                 <input class="tfm-actor-name" type="text" name="name" value="{{name}}" placeholder="{{localize 'TFM.generic.name'}}">
-                <div class="flexrow flex-gap-m">
+                <div class="flexrow tfm-gap-m">
                     <div class="tfm-health">
                         {{> 'tfm.resource-bar-inline' cssClass='tfm-health-bar bold' label='HP:' value=system.hp.value value_name='system.hp.value' max=system.hp.max max_name='system.hp.max'}}
                     </div>

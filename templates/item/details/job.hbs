@@ -1,9 +1,9 @@
-<div class="tfm-tab-content flexcol flex-gap-l">
+<div class="tfm-tab-content flexcol tfm-gap-l">
 
     {{!-- Ability score modifiers --}}
     <div class="tfm-ability-wrapper">
         <b>{{localize config.Generic.ability}}</b>
-        <div class="tfm-abilities-list flex-gap-m flexrow tfm-row">
+        <div class="tfm-abilities-list tfm-gap-m flexrow tfm-row">
             {{#each system.abilities as | ability key |}}
                 <div class="tfm-ability form-group stacked">
                     <label class="text-center">
@@ -36,7 +36,7 @@
         {{#if (isEmpty system.proficiency.weaponType)}}
             <div>No Weapon Type proficiencies, use edit mode to add some!</div>
         {{else}}
-            <div class="flexrow flex-gap-m">
+            <div class="flexrow tfm-gap-m">
                 {{#each system.proficiency.weaponType as |weapon key|}}
                     {{#if weapon}}
                         <div class="tfm-border rounded tfm-pad-font flexshrink" data-weapon-type="{{key}}">
@@ -65,7 +65,7 @@
         {{#if (isEmpty system.skills)}}
             <div>No skills, use edit mode to add some!</div>
         {{else}}
-            <div class="flexrow flex-gap-m">
+            <div class="flexrow tfm-gap-m">
                 {{#each system.skills as |skill key|}}
                     <div style="padding: 2px 5px;" class="tfm-border rounded flexshrink nowrap">{{skill}}</div>
                 {{/each}}

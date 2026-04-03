@@ -1,11 +1,11 @@
-<div class="tfm-tab-content flexcol flex-gap-l">
-    <div class="flexrow flex-gap-m flex-align-start">
-        <div class="flexcol flex-gap-s">
+<div class="tfm-tab-content flexcol tfm-gap-l">
+    <div class="flexrow tfm-gap-m flex-align-start">
+        <div class="flexcol tfm-gap-s">
             {{toFieldGroup system.schema 'weight' value=system.weight}}
             {{toFieldGroup system.schema 'damage_reduction.base' value=system.damage_reduction.base disabled=true label='Reduction'}}
             {{toFieldGroup system.schema 'damage_reduction.bonus' value=system.damage_reduction.bonus label='Bonus'}}
         </div>
-        <div class="flexcol flex-gap-s">
+        <div class="flexcol tfm-gap-s">
             {{toFieldGroup system.schema 'broken' value=system.broken}}
             {{toFieldGroup system.schema 'equipped' value=system.equipped}}
         </div>
@@ -20,10 +20,10 @@
             {{#if isEditMode}}<a data-action="editResistance"><i class="fas fa-cog"></i></a>{{/if}}
             <b>{{localize config.Generic.resistance}}</b>
         </div>
-        <div class="flex-align-start flexrow flex-gap-m">
-            <div class="tfm-resistance-group tfm-immune flexcol flex-gap-s flex-align-center">
+        <div class="flex-align-start flexrow tfm-gap-m">
+            <div class="tfm-resistance-group tfm-immune flexcol tfm-gap-s flex-align-center">
                 <b class="text-center"><i class="fas fa-shield"></i> {{localize 'TFM.Generic.Immune'}}</b>
-                <div class="flex-overflow flexrow flex-gap-s tfm-immune-list">
+                <div class="flex-overflow flexrow tfm-gap-s tfm-immune-list">
                     {{#each system.resistances as | resist index |}}
                         {{#if (eq resist.value 'immune')}}
                             <div class="tfm-border rounded text-center flexshrink tfm-xs tfm-pad-font">{{localize (lookup ../config.DamageTypes resist.type)}}</div>
@@ -32,9 +32,9 @@
                 </div>
             </div>
 
-            <div class="tfm-resistance-group tfm-resist flexcol flex-gap-s flex-align-center">
+            <div class="tfm-resistance-group tfm-resist flexcol tfm-gap-s flex-align-center">
                 <b class="text-center"><i class="fas fa-shield-halved"></i> {{localize 'TFM.Generic.Resistance'}}</b>
-                <div class="flex-overflow flexrow flex-gap-s tfm-resist-list">
+                <div class="flex-overflow flexrow tfm-gap-s tfm-resist-list">
                     {{#each system.resistances as | resist index |}}
                         {{#if (eq resist.value 'resist')}}
                             <div class="tfm-border rounded text-center flexshrink tfm-xs tfm-pad-font">{{localize (lookup ../config.DamageTypes resist.type)}}</div>
@@ -43,9 +43,9 @@
                 </div>
             </div>
 
-            <div class="tfm-resistance-group tfm-vulnerable flexcol flex-gap-s flex-align-center">
+            <div class="tfm-resistance-group tfm-vulnerable flexcol tfm-gap-s flex-align-center">
                 <b class="text-center"><i class="far fa-shield-slash"></i> {{localize 'TFM.Generic.Vulnerable'}}</b>
-                <div class="flex-overflow flexrow flex-gap-s tfm-vulnerable-list">
+                <div class="flex-overflow flexrow tfm-gap-s tfm-vulnerable-list">
                     {{#each system.resistances as | resist index |}}
                         {{#if (eq resist.value 'vulnerable')}}
                             <div class="tfm-border rounded text-center flexshrink tfm-xs tfm-pad-font">{{localize (lookup ../config.DamageTypes resist.type)}}</div>

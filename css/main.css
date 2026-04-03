@@ -195,15 +195,15 @@
   text-align: center;
 }
 
-.flex-gap-s {
+.tfm-gap-s {
   gap: 4px;
 }
 
-.flex-gap-m {
+.tfm-gap-m {
   gap: 8px;
 }
 
-.flex-gap-l {
+.tfm-gap-l {
   gap: 12px;
 }
 
