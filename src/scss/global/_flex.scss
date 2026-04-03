@@ -19,7 +19,7 @@
     text-align: right;
   }
 
-  .flexshrink {
+  .flexshrink, .flex0 {
     flex: 0;
   }
 
@@ -57,6 +57,7 @@
   gap: 4px;
 }
 
+.tfm-gap,
 .tfm-gap-m {
   gap: 8px;
 }
