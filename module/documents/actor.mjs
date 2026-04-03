@@ -1,7 +1,7 @@
 import LOGGER from "../helpers/logger.mjs";
 
 /**
- * Extend the base Actor document by defining a custom roll data structure which is ideal for the Simple system.
+ * Small augmentation of base actors
  * @extends {Actor}
  */
 export default class TfmActor extends foundry.documents.Actor {
@@ -56,7 +56,7 @@ export default class TfmActor extends foundry.documents.Actor {
     }
 
     /**
-     * Override getRollData() that's supplied to rolls.
+     * @override
      */
     getRollData() {
         const data = this.system.getRollData();
@@ -64,7 +64,7 @@ export default class TfmActor extends foundry.documents.Actor {
         // Copy the ability scores to the top level, so that rolls can use
         // formulas like `1d20 + @pwr`.
         // @pwr = abilities modifier
-        // @pwoer = abilities score
+        // @power = abilities score
         for (let [k, v] of Object.entries(this.system.abilities)) {
             data[k] = v.mod;
             data[tfm.utils.localize(tfm.config.Abilities[k]).toLowerCase()] = v.value;

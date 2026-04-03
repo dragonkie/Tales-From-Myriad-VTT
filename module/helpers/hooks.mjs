@@ -83,4 +83,28 @@ export default function registerHooks() {
             console.error('Failed to append TFM browser links to settings tab');
         }
     });
+
+    //==============================================================================================================
+    //> Chat message config
+    //==============================================================================================================
+    Hooks.on('renderChatMessageHTML', async (message, element, data) => {
+        // if a message context has been established, we handle setup here
+        if (message.flags?.tfm?.context) {
+            const context = message.flags.tfm.context;
+            if (context.type == "attack") {
+                const button = element.querySelector('.tfm-roll-damage');
+                button.addEventListener('click', async (event) => {
+                    const item = await fromUuid(context.weapon);
+                    console.log(item);
+                    item.system._onUseDamage();
+                })
+            } else if (context.type == "spell") {
+
+            }
+        }
+    })
+
+    Hooks.on('preRenderChatLog', async (chatlog, data, options) => {
+        console.warn("preRender chat log");
+    })
 }

@@ -146,6 +146,12 @@ export default class WeaponData extends ItemDataModel {
         if (action == 'damage') return this._onUseDamage(event, options);
     }
 
+    /**
+     * 
+     * @param {*} event 
+     * @param {*} options 
+     * @returns 
+     */
     async _onUseAttack(event, options) {
         if (!this.actor) return;
 
@@ -257,9 +263,13 @@ export default class WeaponData extends ItemDataModel {
                 });
             }
         }).render(true);
-
     }
 
+    /**
+     * 
+     * @param {*} event 
+     * @param {*} options 
+     */
     async _onUseDamage(event, options) {
         const rollData = this.getRollData();
 
@@ -296,5 +306,33 @@ export default class WeaponData extends ItemDataModel {
             content: msg_content
         });
         console.log(damage)
+    }
+
+    /**
+     * @typedef DamageData
+     * @prop {Array} targets - list of actors to deal damage too
+     * @prop {Object} user - the user who initiated this roll
+     * @prop {Object} attacker - the actor who triggered the attack
+     */
+
+    /**
+     * Helper function that parses chat message attack roll context to make damage rolls
+     */
+    async _getDamageData() {
+
+    }
+
+    /**
+     * compiles damage data from the saved context of a chat message
+     */
+    async _getMessageDamageData() {
+
+    }
+
+    /**
+     * compiles damage data from the triggering user
+     */
+    async _getUserDamageData() {
+
     }
 }
