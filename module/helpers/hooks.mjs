@@ -95,9 +95,11 @@ export default function registerHooks() {
                 const button = element.querySelector('.tfm-roll-damage');
                 button.addEventListener('click', async (event) => {
                     const item = await fromUuid(context.weapon);
-                    console.log(item);
-                    item.system._onUseDamage();
+                    console.log(context);
+                    item.system._onUseDamage(event, context);
                 })
+            } else if (context.type == "damage") {
+
             } else if (context.type == "spell") {
 
             }

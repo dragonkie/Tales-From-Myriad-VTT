@@ -120,7 +120,7 @@ export default class CharacterSheet extends TfmActorSheet {
         </div>`;
         content += '<div class="dialog-skill-list">'
         for (const skill of this.document.system.skills) {
-            content += `<div class="flexrow skill-wrapper flex-gap-m">${input_template.replace('{SKILL}', skill)}</div>`;
+            content += `<div class="flexrow skill-wrapper tfm-gap-m">${input_template.replace('{SKILL}', skill)}</div>`;
         }
         content += '</div>';
         content += `<div class="flexcol flex-align-end"><a data-action="add"><i class="fas fa-plus"></i> add</a></div>`;
@@ -160,7 +160,7 @@ export default class CharacterSheet extends TfmActorSheet {
                 for (const skill of skills_list) {
                     let node = document.createElement('DIV');
                     node.innerHTML = input_template.replace('{SKILL}', skill);
-                    node.classList = 'flexrow flex-gap-m skill-wrapper';
+                    node.classList = 'flexrow tfm-gap-m skill-wrapper';
                     list_ele.appendChild(node);
                 }
             }

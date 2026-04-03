@@ -268,10 +268,16 @@ export default class WeaponData extends ItemDataModel {
     /**
      * 
      * @param {*} event 
-     * @param {*} options 
+     * @param {Object} options 
+     * @param {Bool} options.isChatMessage
      */
     async _onUseDamage(event, options) {
         const rollData = this.getRollData();
+
+        // create the targets list to create apply damage buttons for
+        const targets = [];
+        if (options.targets) for (const t of options.targets) targets.push(await fromUuid(t.uuid))
+        else for (const t of game.user.targets.entries()) targets.push(t[0].actor);
 
         // formats the given dice formulas to match myriads standards
         let formulas = [];
@@ -287,52 +293,26 @@ export default class WeaponData extends ItemDataModel {
             formula += f;
         }
 
-        let damage = new Roll(formula, rollData);
+        // creates the roll object
+        const damage = new Roll(formula, rollData);
         await damage.evaluate();
-        let msg_content = await damage.render();
-        msg_content += `<div class="flexcol flex-gap-s">`
-        for (const t of game.user.targets.entries()) {
-            msg_content += `
-            <div class="flexrow">
-                <div>@UUID[${t[0].actor.uuid}]{${t[0].actor.name}}</div>
-                <div>${damage.total - t[0].actor.system.dr.total}</div>
-            </div>
-            `;
+
+        // Prepare context for rendering the chat message
+        const msg_data = {
+            targets: targets,
+            user: game.user,
+            roll: await damage.render(),
+            item: this.document
         }
-        msg_content += `</div>`
-        let msg = await damage.toMessage({
-            flavor: `Damage dealt by ${this.parent.name}`,
+
+        // Enrich the content for enhanced html
+        const template = await utils.renderTemplate(`${tfm.filepath.template}/chat/weapon-damage.hbs`, msg_data);
+        const enriched = await utils.enrichHTML(template);
+
+        // create the chat message
+        const msg = await damage.toMessage({
             speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-            content: msg_content
+            content: enriched
         });
-        console.log(damage)
-    }
-
-    /**
-     * @typedef DamageData
-     * @prop {Array} targets - list of actors to deal damage too
-     * @prop {Object} user - the user who initiated this roll
-     * @prop {Object} attacker - the actor who triggered the attack
-     */
-
-    /**
-     * Helper function that parses chat message attack roll context to make damage rolls
-     */
-    async _getDamageData() {
-
-    }
-
-    /**
-     * compiles damage data from the saved context of a chat message
-     */
-    async _getMessageDamageData() {
-
-    }
-
-    /**
-     * compiles damage data from the triggering user
-     */
-    async _getUserDamageData() {
-
     }
 }

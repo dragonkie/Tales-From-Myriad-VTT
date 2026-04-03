@@ -164,7 +164,7 @@ export default class JobSheet extends TfmItemSheet {
                     if (item.type == 'job' || uuid == itemUuid) return; // Jobs cant hold job items or themselves
                     const e = document.createElement('DIV');
                     e.innerHTML = await utils.enrichHTML(`
-                        <div class="flexrow flex-gap-s tfm-class-feature" data-uuid="${uuid}">
+                        <div class="flexrow tfm-gap-s tfm-class-feature" data-uuid="${uuid}">
                             <div>@UUID[${uuid}]</div>
                             <input class="tfm-feature-level" name="level" style="flex: 0; width: 2rem;" type="number" placeholder="level" value="1">
                         </div>
@@ -183,7 +183,7 @@ export default class JobSheet extends TfmItemSheet {
      * @param {HTMLElement} target 
      */
     static async _onConfigureWeaponProf(event, target) {
-        var content = '<div class="flex-gap-m" style="display: grid; grid-template-columns: 1fr 1fr;">';
+        var content = '<div class="tfm-gap-m" style="display: grid; grid-template-columns: 1fr 1fr;">';
         for (const [key, value] of Object.entries(this.document.system.proficiency.weaponType)) {
             const field = this.document.system.schema.getField(`proficiency.weaponType.${key}`);
             content += field.toFormGroup({ localize: true }, { value: value }).outerHTML;
@@ -226,7 +226,7 @@ export default class JobSheet extends TfmItemSheet {
             </div>`;
         content += '<div class="dialog-skill-list">'
         for (const skill of this.document.system.skills) {
-            content += `<div class="flexrow skill-wrapper flex-gap-m">${input_template.replace('{SKILL}', skill)}</div>`;
+            content += `<div class="flexrow skill-wrapper tfm-gap-m">${input_template.replace('{SKILL}', skill)}</div>`;
         }
         content += '</div>';
         content += `<div class="flex-align-end"><a data-action="add"><i class="fas fa-plus"></i> add</a></div>`;
@@ -266,7 +266,7 @@ export default class JobSheet extends TfmItemSheet {
                 for (const skill of skills_list) {
                     let node = document.createElement('DIV');
                     node.innerHTML = input_template.replace('{SKILL}', skill);
-                    node.classList = 'flexrow flex-gap-m skill-wrapper';
+                    node.classList = 'flexrow tfm-gap-m skill-wrapper';
                     list_ele.appendChild(node);
                 }
             }
@@ -288,7 +288,7 @@ export default class JobSheet extends TfmItemSheet {
             </div>`;
         content += '<div class="dialog-path-list">'
         for (const path of this.document.system.paths) {
-            content += `<div class="flexrow path-wrapper flex-gap-m">${input_template.replace('{PATH}', path)}</div>`;
+            content += `<div class="flexrow path-wrapper tfm-gap-m">${input_template.replace('{PATH}', path)}</div>`;
         }
         content += '</div>';
         content += `<div class="flex-align-end"><a data-action="add"><i class="fas fa-plus"></i>add</a></div>`;
@@ -324,7 +324,7 @@ export default class JobSheet extends TfmItemSheet {
             if (action == 'add') {
                 const node = document.createElement('DIV');
                 node.innerHTML = input_template.replace('{PATH}', 'New Path');
-                node.classList = 'flexrow flex-gap-m path-wrapper';
+                node.classList = 'flexrow tfm-gap-m path-wrapper';
                 list_ele.appendChild(node);
             } else if (action == 'delete') {
                 let t = target.closest('.path-wrapper');

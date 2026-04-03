@@ -1,0 +1,16 @@
+<div class="tfm tfm-message-content">
+    <div class="flexcol tfm-gap-m tfm-pad tfm-pad-s">
+        <div>Damage dealt with @UUID[{{item.uuid}}]</div>
+        {{{roll}}}
+        {{#if (gt (arrayLength targets) 0)}}
+            <div class="flexcol tfm-gap-s">
+                {{#each targets as |target|}}
+                    <div class="tfm-damage-target flexrow tfm-gap">
+                        <div class="tfm-target">@UUID[{{target.uuid}}]</div>
+                        <a class="fas fa-bolt flex0" data-action="applyDamage" title="Apply damage"></a>
+                    </div>
+                {{/each}}
+            </div>
+        {{/if}}
+    </div>
+</div>
