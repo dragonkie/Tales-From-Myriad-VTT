@@ -259,7 +259,7 @@ export default class WeaponData extends ItemDataModel {
                     type: 'attack',
                     targets: msg_data.targets,
                     user: this.actor.uuid,
-                    weapon: this.document.uuid,
+                    item: this.document.uuid,
                 });
             }
         }).render(true);
@@ -314,5 +314,12 @@ export default class WeaponData extends ItemDataModel {
             speaker: ChatMessage.getSpeaker({ actor: this.actor }),
             content: enriched
         });
+
+        msg.setFlag(game.system.id, 'context', {
+            type: 'damage',
+            targets: msg_data.targets,
+            user: this.actor.uuid,
+            item: this.document.uuid,
+        })
     }
 }

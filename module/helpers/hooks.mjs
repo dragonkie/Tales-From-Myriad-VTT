@@ -94,12 +94,24 @@ export default function registerHooks() {
             if (context.type == "attack") {
                 const button = element.querySelector('.tfm-roll-damage');
                 button.addEventListener('click', async (event) => {
-                    const item = await fromUuid(context.weapon);
-                    console.log(context);
+                    const item = await fromUuid(context.item);
                     item.system._onUseDamage(event, context);
                 })
             } else if (context.type == "damage") {
-
+                const targets = element.querySelectorAll('.tfm-damage-target');
+                for (const target of targets) {
+                    const uuid = target.dataset.uuid;
+                    const actor = await fromUuid(uuid);
+                    const button = target.querySelector("[data-action=applyDamage]");
+                    button.addEventListener('click', async (event) => {
+                        console.log("Applying damage to actor");
+                        var damage = 0;
+                        for (const roll of message.rolls) {
+                            damage += roll.total;
+                        }
+                        actor.update({"system.hp.value": actor.system.hp.value - damage})
+                    }, { once: true })
+                }
             } else if (context.type == "spell") {
 
             }

@@ -10,7 +10,7 @@ max_name - name of the input, if none, field is disabled
 <div class="tfm-bar tfm-inline-bar {{choose cssClass ''}}">
     {{#if label}}<label class="text-nowrap">{{toTitleCase (localize label)}}</label>{{/if}}
     <div class="wrapper">
-        <div class="fill" style="width: {{choose fill (multiply (divide value max) 100)}}%;"></div>
+        <div class="fill" style="width: {{clamp (choose fill (multiply (divide value max) 100)) 0 100}}%;"></div>
         <div class="flexrow bar-inputs">
             <input class="value-now" type="number" {{#if value_name}}name="{{value_name}}" {{else}}disabled{{/if}} value="{{value}}">
             /

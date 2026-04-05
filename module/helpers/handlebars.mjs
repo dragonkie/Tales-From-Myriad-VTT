@@ -81,6 +81,7 @@ function registerHelpers() {
         percent: (a, b) => a / b * 100,
         round: (a) => Math.ceil(a),
         subtraction: (a, b) => a - b,
+        clamp: (value, min, max) => Math.min(max, Math.max(value, min)),
         //======================================================================================
         //> Elements
         //======================================================================================
